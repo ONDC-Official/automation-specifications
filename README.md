@@ -1,7 +1,7 @@
 # ONDC:FIS13 — version 2.0.0
 
 **Branch:** `draft-FIS13-sachet`  
-**Use Cases:** N/A
+**Use Cases:** accidental-insurance, hospicash-insurance, transit-insurance
 
 ---
 
@@ -156,4 +156,6 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  (none)
+  - accidental-insurance
+  - hospicash-insurance
+  - transit-insurance
