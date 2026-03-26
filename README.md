@@ -1,7 +1,7 @@
 # ONDC:RET11 — version 1.2.5
 
 **Branch:** `draft-RET11-1.2.5`  
-**Use Cases:** B2C
+**Use Cases:** F&B
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - B2C
+  - F&B
