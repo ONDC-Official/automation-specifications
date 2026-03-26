@@ -1,7 +1,7 @@
 # ONDC:FIS12 — version 2.2.0
 
 **Branch:** `draft-FIS12-PF-2.2.0`  
-**Use Cases:** intra-city, metro
+**Use Cases:** PURCHASE FINANCE
 
 ---
 
@@ -156,5 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - intra-city
-  - metro
+  - PURCHASE FINANCE
