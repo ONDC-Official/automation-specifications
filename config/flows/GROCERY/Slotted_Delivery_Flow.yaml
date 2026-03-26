@@ -1,0 +1,4415 @@
+meta:
+  domain: ONDC:RET10
+  version: 1.2.5
+  flowId: Slotted_Delivery_Flow
+  config_version: 0.0.0001
+  description: Buyer Search & Quotation
+  use_case_id: GROCERY
+  flowName: Slotted Delivery Flow
+transaction_data:
+  transaction_id: fc7d5a36-c899-43fa-b689-2046ebf51c58
+  latest_timestamp: 1970-01-01T00:00:00.000Z
+  bap_id: bap.example.com
+  bap_uri: https://bap.example.com
+  bpp_id: bpp.example.com
+  bpp_uri: https://bpp.example.com
+steps:
+  - api: select
+    action_id: select
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: select
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: 065c3b3a-cab0-4550-bb3e-0af9ef70d43b
+          timestamp: 2026-03-18T12:42:33.015Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            fulfillments:
+              - end:
+                  location:
+                    address:
+                      area_code: "106321"
+                    gps: 28.666576, 77.233332
+            items:
+              - id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            offers:
+              - id: FLAT50
+            provider:
+              id: P1
+              locations:
+                - id: L1
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "select"
+        description: Auto-generated example for action "select" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: select
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: 065c3b3a-cab0-4550-bb3e-0af9ef70d43b
+            timestamp: 2026-03-18T12:42:33.015Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              fulfillments:
+                - end:
+                    location:
+                      address:
+                        area_code: "106321"
+                      gps: 28.666576, 77.233332
+              items:
+                - id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              offers:
+                - id: FLAT50
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+        type: request
+  - api: on_select
+    action_id: on_select_slotted_delivery
+    owner: BPP
+    responseFor: select
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_select
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: 065c3b3a-cab0-4550-bb3e-0af9ef70d43b
+          timestamp: 2026-03-18T12:42:33.108Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            fulfillments:
+              - "@ondc/org/category": Immediate Delivery
+                "@ondc/org/provider_name": LSP or Provider Name
+                end:
+                  time:
+                    range:
+                      end: 2026-03-18T15:42:33.107Z
+                      start: 2026-03-18T14:42:33.107Z
+                id: F1
+                state:
+                  descriptor:
+                    code: Serviceable
+                tracking: true
+                type: Delivery
+              - "@ondc/org/category": Immediate Delivery
+                "@ondc/org/provider_name": LSP or Provider Name
+                end:
+                  time:
+                    range:
+                      end: 2026-03-18T17:42:33.107Z
+                      start: 2026-03-18T16:42:33.107Z
+                id: F2
+                state:
+                  descriptor:
+                    code: Serviceable
+                tracking: true
+                type: Delivery
+              - "@ondc/org/category": Immediate Delivery
+                "@ondc/org/provider_name": LSP or Provider Name
+                end:
+                  time:
+                    range:
+                      end: 2026-03-18T19:42:33.107Z
+                      start: 2026-03-18T18:42:33.107Z
+                id: F3
+                state:
+                  descriptor:
+                    code: Serviceable
+                tracking: true
+                type: Delivery
+              - "@ondc/org/category": Immediate Delivery
+                "@ondc/org/provider_name": LSP or Provider Name
+                end:
+                  time:
+                    range:
+                      end: 2026-03-18T21:42:33.107Z
+                      start: 2026-03-18T20:42:33.107Z
+                id: F4
+                state:
+                  descriptor:
+                    code: Serviceable
+                tracking: true
+                type: Delivery
+            items:
+              - fulfillment_id: F1
+                id: I1
+              - fulfillment_id: F1
+                id: I2
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    quantity:
+                      available:
+                        count: "99"
+                      maximum:
+                        count: "99"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    quantity:
+                      available:
+                        count: "99"
+                      maximum:
+                        count: "99"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": F1
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F1
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": F3
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F3
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": F4
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F4
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_select"
+        description: Auto-generated example for action "on_select" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_select
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: 065c3b3a-cab0-4550-bb3e-0af9ef70d43b
+            timestamp: 2026-03-18T12:42:33.108Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              fulfillments:
+                - "@ondc/org/category": Immediate Delivery
+                  "@ondc/org/provider_name": LSP or Provider Name
+                  end:
+                    time:
+                      range:
+                        end: 2026-03-18T15:42:33.107Z
+                        start: 2026-03-18T14:42:33.107Z
+                  id: F1
+                  state:
+                    descriptor:
+                      code: Serviceable
+                  tracking: true
+                  type: Delivery
+                - "@ondc/org/category": Immediate Delivery
+                  "@ondc/org/provider_name": LSP or Provider Name
+                  end:
+                    time:
+                      range:
+                        end: 2026-03-18T17:42:33.107Z
+                        start: 2026-03-18T16:42:33.107Z
+                  id: F2
+                  state:
+                    descriptor:
+                      code: Serviceable
+                  tracking: true
+                  type: Delivery
+                - "@ondc/org/category": Immediate Delivery
+                  "@ondc/org/provider_name": LSP or Provider Name
+                  end:
+                    time:
+                      range:
+                        end: 2026-03-18T19:42:33.107Z
+                        start: 2026-03-18T18:42:33.107Z
+                  id: F3
+                  state:
+                    descriptor:
+                      code: Serviceable
+                  tracking: true
+                  type: Delivery
+                - "@ondc/org/category": Immediate Delivery
+                  "@ondc/org/provider_name": LSP or Provider Name
+                  end:
+                    time:
+                      range:
+                        end: 2026-03-18T21:42:33.107Z
+                        start: 2026-03-18T20:42:33.107Z
+                  id: F4
+                  state:
+                    descriptor:
+                      code: Serviceable
+                  tracking: true
+                  type: Delivery
+              items:
+                - fulfillment_id: F1
+                  id: I1
+                - fulfillment_id: F1
+                  id: I2
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                      quantity:
+                        available:
+                          count: "99"
+                        maximum:
+                          count: "99"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                      quantity:
+                        available:
+                          count: "99"
+                        maximum:
+                          count: "99"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": F1
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F1
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": F3
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F3
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": F4
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F4
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+        type: request
+  - api: init
+    action_id: init_slotted_delivery
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: init
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: d5eb80a2-40c9-49ca-a41c-d83ceb450e1c
+          timestamp: 2026-03-18T12:42:33.227Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            fulfillments:
+              - end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                id: F2
+                type: Delivery
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            offers:
+              - id: FLAT50
+                tags:
+                  - code: selection
+                    list:
+                      - code: apply
+                        value: yes
+            provider:
+              id: P1
+              locations:
+                - id: L1
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "init"
+        description: Auto-generated example for action "init" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: init
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: d5eb80a2-40c9-49ca-a41c-d83ceb450e1c
+            timestamp: 2026-03-18T12:42:33.227Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              fulfillments:
+                - end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                  id: F2
+                  type: Delivery
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              offers:
+                - id: FLAT50
+                  tags:
+                    - code: selection
+                      list:
+                        - code: apply
+                          value: yes
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+        type: request
+  - api: on_init
+    action_id: on_init_slotted_delivery
+    owner: BPP
+    responseFor: init_slotted_delivery
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_init
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: d5eb80a2-40c9-49ca-a41c-d83ceb450e1c
+          timestamp: 2026-03-18T12:42:33.304Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            fulfillments:
+              - end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                id: F2
+                tracking: true
+                type: Delivery
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_details":
+                - bank_name: XXXX
+                  beneficiary_name: xxxx
+                  branch_name: XXXX
+                  settlement_bank_account_no: XXXX
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: XXXX
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            tags:
+              - code: bpp_terms
+                list:
+                  - code: np_type
+                    value: MSN
+                  - code: tax_number
+                    value: 00ABCCH7409R1ZZ
+                  - code: provider_tax_number
+                    value: ABCDE1234F
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_init"
+        description: Auto-generated example for action "on_init" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_init
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: d5eb80a2-40c9-49ca-a41c-d83ceb450e1c
+            timestamp: 2026-03-18T12:42:33.304Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              fulfillments:
+                - end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                  id: F2
+                  tracking: true
+                  type: Delivery
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_details":
+                  - bank_name: XXXX
+                    beneficiary_name: xxxx
+                    branch_name: XXXX
+                    settlement_bank_account_no: XXXX
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: XXXX
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              tags:
+                - code: bpp_terms
+                  list:
+                    - code: np_type
+                      value: MSN
+                    - code: tax_number
+                      value: 00ABCCH7409R1ZZ
+                    - code: provider_tax_number
+                      value: ABCDE1234F
+        type: request
+  - api: confirm
+    action_id: confirm
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: confirm
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: 62205492-15d7-4033-84bb-ff912b709b86
+          timestamp: 2026-03-18T12:42:33.423Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/category": Immediate Delivery
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                id: F2
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Created
+            tags:
+              - code: bpp_terms
+                list:
+                  - code: np_type
+                    value: MSN
+                  - code: tax_number
+                    value: 00ABCCH7409R1ZZ
+                  - code: provider_tax_number
+                    value: ABCDE1234F
+              - code: bap_terms
+                list:
+                  - code: accept_bpp_terms
+                    value: Y
+                  - code: static_terms
+                    value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                  - code: tax_number
+                    value: 00ABCCH7409R1ZZ
+            updated_at: 2026-03-18T12:42:33.423Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "confirm"
+        description: Auto-generated example for action "confirm" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: confirm
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: 62205492-15d7-4033-84bb-ff912b709b86
+            timestamp: 2026-03-18T12:42:33.423Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/category": Immediate Delivery
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                  id: F2
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Created
+              tags:
+                - code: bpp_terms
+                  list:
+                    - code: np_type
+                      value: MSN
+                    - code: tax_number
+                      value: 00ABCCH7409R1ZZ
+                    - code: provider_tax_number
+                      value: ABCDE1234F
+                - code: bap_terms
+                  list:
+                    - code: accept_bpp_terms
+                      value: Y
+                    - code: static_terms
+                      value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                    - code: tax_number
+                      value: 00ABCCH7409R1ZZ
+              updated_at: 2026-03-18T12:42:33.423Z
+        type: request
+  - api: on_confirm
+    action_id: on_confirm
+    owner: BPP
+    responseFor: confirm
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_confirm
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: 62205492-15d7-4033-84bb-ff912b709b86
+          timestamp: 2026-03-18T12:42:33.500Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                state:
+                  descriptor:
+                    code: Pending
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Created
+            tags:
+              - code: bpp_terms
+                list:
+                  - code: np_type
+                    value: MSN
+                  - code: tax_number
+                    value: 00ABCCH7409R1ZZ
+                  - code: provider_tax_number
+                    value: ABCDE1234F
+                  - code: accept_bap_terms
+                    value: Y
+              - code: bap_terms
+                list:
+                  - code: static_terms
+                    value: https://github.com/ONDC-Official/protocol-network-extension/discussions/79
+                  - code: tax_number
+                    value: 00ABCCH7409R1ZZ
+            updated_at: 2026-03-18T12:42:33.499Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_confirm"
+        description: Auto-generated example for action "on_confirm" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_confirm
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: 62205492-15d7-4033-84bb-ff912b709b86
+            timestamp: 2026-03-18T12:42:33.500Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                  state:
+                    descriptor:
+                      code: Pending
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Created
+              tags:
+                - code: bpp_terms
+                  list:
+                    - code: np_type
+                      value: MSN
+                    - code: tax_number
+                      value: 00ABCCH7409R1ZZ
+                    - code: provider_tax_number
+                      value: ABCDE1234F
+                    - code: accept_bap_terms
+                      value: Y
+                - code: bap_terms
+                  list:
+                    - code: static_terms
+                      value: https://github.com/ONDC-Official/protocol-network-extension/discussions/79
+                    - code: tax_number
+                      value: 00ABCCH7409R1ZZ
+              updated_at: 2026-03-18T12:42:33.499Z
+        type: request
+  - api: on_status
+    action_id: on_status_accepted
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+  - api: on_status
+    action_id: on_status_packed
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+  - api: on_status
+    action_id: on_status_agent_assigned
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+  - api: on_status
+    action_id: on_status_picked
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+  - api: on_status
+    action_id: on_status_out_for_delivery
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+  - api: on_status
+    action_id: on_status_order_delivered
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+          city: std:011
+          core_version: 1.2.5
+          country: IND
+          domain: ONDC:RET10
+          message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+          timestamp: 2026-03-18T12:42:47.432Z
+          transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+          ttl: PT30S
+        message:
+          order:
+            billing:
+              address:
+                area_code: "400053"
+                building: my building name or house
+                city: Mumbai
+                country: IND
+                locality: my street name
+                name: my house or door or floor
+                state: Maharashtra
+              created_at: 2026-03-18T12:42:28.226Z
+              email: nobody@nomail.com
+              name: ONDC buyer
+              phone: "9898989898"
+              updated_at: 2026-03-18T12:42:28.226Z
+            created_at: 2026-03-18T12:42:33.423Z
+            fulfillments:
+              - "@ondc/org/provider_name": Store 1
+                end:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9898989898"
+                  location:
+                    address:
+                      area_code: "106321"
+                      building: mock-building
+                      city: mock-city
+                      country: IND
+                      locality: mock-locality
+                      name: mock-house-name
+                      state: mock-state
+                    gps: 28.666576, 77.233332
+                  person:
+                    name: mock-person
+                  time:
+                    range:
+                      end: 2026-03-18T12:52:47.431Z
+                      start: 2026-03-18T13:02:47.431Z
+                id: F2
+                start:
+                  contact:
+                    email: nobody@nomail.com
+                    phone: "9594663710"
+                  location:
+                    address:
+                      area_code: "400053"
+                      city: mock-seller-city
+                      locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                      state: mock-state
+                      street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                    descriptor:
+                      name: Store 1
+                    gps: 19.129076,72.825803
+                    id: L1
+                  time:
+                    range:
+                      end: 2026-03-18T13:02:47.431Z
+                      start: 2026-03-18T12:52:47.431Z
+                state:
+                  descriptor:
+                    code: Pending
+                tags:
+                  - code: routing
+                    list:
+                      - code: type
+                        value: P2H2P
+                  - code: tracking
+                    list:
+                      - code: gps_enabled
+                        value: no
+                      - code: url_enabled
+                        value: yes
+                      - code: url
+                        value: https://sellerNP.com/ondc/tracking_url
+                tracking: true
+                type: Delivery
+            id: "146471"
+            items:
+              - fulfillment_id: F2
+                id: I1
+                location_id: L1
+                quantity:
+                  count: 1
+              - fulfillment_id: F2
+                id: I2
+                location_id: L1
+                quantity:
+                  count: 1
+            payment:
+              "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/settlement_basis": delivery
+              "@ondc/org/settlement_details":
+                - bank_name: xxxx
+                  beneficiary_name: xxxx
+                  branch_name: xxxx
+                  settlement_bank_account_no: xxxx
+                  settlement_counterparty: seller-app
+                  settlement_ifsc_code: xxxx
+                  settlement_phase: sale-amount
+                  settlement_type: neft
+              "@ondc/org/settlement_window": P1D
+              "@ondc/org/withholding_amount": "00.00"
+              collected_by: BAP
+              params:
+                amount: "450.00"
+                currency: INR
+                transaction_id: mock_payment_id_123
+              status: PAID
+              type: ON-ORDER
+            provider:
+              id: P1
+              locations:
+                - id: L1
+            quote:
+              breakup:
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "200.00"
+                  price:
+                    currency: INR
+                    value: "200.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": I2
+                  "@ondc/org/item_quantity":
+                    count: 1
+                  "@ondc/org/title_type": item
+                  item:
+                    price:
+                      currency: INR
+                      value: "300.00"
+                  price:
+                    currency: INR
+                    value: "300.00"
+                  title: Plain Atta
+                - "@ondc/org/item_id": FLAT50
+                  "@ondc/org/title_type": offer
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: order
+                      - code: offer
+                        list:
+                          - code: id
+                            value: FLAT50
+                          - code: type
+                            value: discount
+                          - code: auto
+                            value: no
+                          - code: additive
+                            value: no
+                          - code: item_id
+                            value: ""
+                          - code: item_value
+                            value: ""
+                          - code: item_count
+                            value: ""
+                  price:
+                    currency: INR
+                    value: "-50.00"
+                  title: Flat discount of ₹50 on minimum cart value of ₹200
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": delivery
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Delivery charges
+                - "@ondc/org/item_id": F2
+                  "@ondc/org/title_type": misc
+                  price:
+                    currency: INR
+                    value: "00.00"
+                  title: Convenience Fee
+              price:
+                currency: INR
+                value: "450.00"
+              ttl: P1D
+            state: Accepted
+            updated_at: 2026-03-18T12:42:47.431Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs: {}
+    examples:
+      - name: Example for action "on_status"
+        description: Auto-generated example for action "on_status" in flow
+          "Slotted_Delivery_Flow"
+        payload:
+          context:
+            action: on_status
+            bap_id: dev-automation.ondc.org
+            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/buyer
+            bpp_id: dev-automation.ondc.org
+            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET10/1.2.5/seller
+            city: std:011
+            core_version: 1.2.5
+            country: IND
+            domain: ONDC:RET10
+            message_id: c9cf6646-b958-42ef-a51d-8c6715e74783
+            timestamp: 2026-03-18T12:42:47.432Z
+            transaction_id: fb92d69c-ca9f-46d8-814d-64ca1d6564a5
+            ttl: PT30S
+          message:
+            order:
+              billing:
+                address:
+                  area_code: "400053"
+                  building: my building name or house
+                  city: Mumbai
+                  country: IND
+                  locality: my street name
+                  name: my house or door or floor
+                  state: Maharashtra
+                created_at: 2026-03-18T12:42:28.226Z
+                email: nobody@nomail.com
+                name: ONDC buyer
+                phone: "9898989898"
+                updated_at: 2026-03-18T12:42:28.226Z
+              created_at: 2026-03-18T12:42:33.423Z
+              fulfillments:
+                - "@ondc/org/provider_name": Store 1
+                  end:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9898989898"
+                    location:
+                      address:
+                        area_code: "106321"
+                        building: mock-building
+                        city: mock-city
+                        country: IND
+                        locality: mock-locality
+                        name: mock-house-name
+                        state: mock-state
+                      gps: 28.666576, 77.233332
+                    person:
+                      name: mock-person
+                    time:
+                      range:
+                        end: 2026-03-18T12:52:47.431Z
+                        start: 2026-03-18T13:02:47.431Z
+                  id: F2
+                  start:
+                    contact:
+                      email: nobody@nomail.com
+                      phone: "9594663710"
+                    location:
+                      address:
+                        area_code: "400053"
+                        city: mock-seller-city
+                        locality: ANDHERI FOUR BUNGLOW AMAR JYOTI CHS
+                        state: mock-state
+                        street: 1 & 2,AMAR JYOTI CHS.BLDG.,OPP.NAND KRIPA HALL
+                      descriptor:
+                        name: Store 1
+                      gps: 19.129076,72.825803
+                      id: L1
+                    time:
+                      range:
+                        end: 2026-03-18T13:02:47.431Z
+                        start: 2026-03-18T12:52:47.431Z
+                  state:
+                    descriptor:
+                      code: Pending
+                  tags:
+                    - code: routing
+                      list:
+                        - code: type
+                          value: P2H2P
+                    - code: tracking
+                      list:
+                        - code: gps_enabled
+                          value: no
+                        - code: url_enabled
+                          value: yes
+                        - code: url
+                          value: https://sellerNP.com/ondc/tracking_url
+                  tracking: true
+                  type: Delivery
+              id: "146471"
+              items:
+                - fulfillment_id: F2
+                  id: I1
+                  location_id: L1
+                  quantity:
+                    count: 1
+                - fulfillment_id: F2
+                  id: I2
+                  location_id: L1
+                  quantity:
+                    count: 1
+              payment:
+                "@ondc/org/buyer_app_finder_fee_amount": "3.0"
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/settlement_basis": delivery
+                "@ondc/org/settlement_details":
+                  - bank_name: xxxx
+                    beneficiary_name: xxxx
+                    branch_name: xxxx
+                    settlement_bank_account_no: xxxx
+                    settlement_counterparty: seller-app
+                    settlement_ifsc_code: xxxx
+                    settlement_phase: sale-amount
+                    settlement_type: neft
+                "@ondc/org/settlement_window": P1D
+                "@ondc/org/withholding_amount": "00.00"
+                collected_by: BAP
+                params:
+                  amount: "450.00"
+                  currency: INR
+                  transaction_id: mock_payment_id_123
+                status: PAID
+                type: ON-ORDER
+              provider:
+                id: P1
+                locations:
+                  - id: L1
+              quote:
+                breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": I2
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    "@ondc/org/title_type": item
+                    item:
+                      price:
+                        currency: INR
+                        value: "300.00"
+                    price:
+                      currency: INR
+                      value: "300.00"
+                    title: Plain Atta
+                  - "@ondc/org/item_id": FLAT50
+                    "@ondc/org/title_type": offer
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: order
+                        - code: offer
+                          list:
+                            - code: id
+                              value: FLAT50
+                            - code: type
+                              value: discount
+                            - code: auto
+                              value: no
+                            - code: additive
+                              value: no
+                            - code: item_id
+                              value: ""
+                            - code: item_value
+                              value: ""
+                            - code: item_count
+                              value: ""
+                    price:
+                      currency: INR
+                      value: "-50.00"
+                    title: Flat discount of ₹50 on minimum cart value of ₹200
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": delivery
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Delivery charges
+                  - "@ondc/org/item_id": F2
+                    "@ondc/org/title_type": misc
+                    price:
+                      currency: INR
+                      value: "00.00"
+                    title: Convenience Fee
+                price:
+                  currency: INR
+                  value: "450.00"
+                ttl: P1D
+              state: Accepted
+              updated_at: 2026-03-18T12:42:47.431Z
+        type: request
+transaction_history: []
+validationLib: ""
+helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCmNvbnN0IGNyZWF0ZUZvcm1VUkwgPSAoZG9tYWluLGZvcm1JZCwgc2Vzc2lvbkRhdGEpID0+IHsKCWNvbnN0IGJhc2VVUkwgPSBzZXNzaW9uRGF0YS5tb2NrQmFzZVVybDsKCWNvbnN0IHRyYW5zYWN0aW9uSWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdOwoJY29uc3Qgc2Vzc2lvbklkID0gc2Vzc2lvbkRhdGEuc2Vzc2lvbklkOwoJcmV0dXJuIGAke2Jhc2VVUkx9L2Zvcm1zLyR7ZG9tYWlufS8ke2Zvcm1JZH0vP3RyYW5zYWN0aW9uX2lkPSR7dHJhbnNhY3Rpb25JZH0mc2Vzc2lvbl9pZD0ke3Nlc3Npb25JZH1gOwp9CgovLyBHZW5lcmF0ZXMgYSBVVUlEIHY0CmZ1bmN0aW9uIHV1aWR2NCgpIHsKCXJldHVybiAneHh4eHh4eHgteHh4eC00eHh4LXl4eHgteHh4eHh4eHh4eHh4Jy5yZXBsYWNlKC9beHldL2csIGZ1bmN0aW9uIChjKSB7CgkgIGNvbnN0IHIgPSBNYXRoLnJhbmRvbSgpICogMTYgfCAwOwoJICBjb25zdCB2ID0gYyA9PT0gJ3gnID8gciA6IChyICYgMHgzIHwgMHg4KTsKCSAgcmV0dXJuIHYudG9TdHJpbmcoMTYpOwoJfSk7Cn0KCi8vIEdlbmVyYXRlIGEgNiBkaWdpdCBzdHJpbmcgSUQKZnVuY3Rpb24gZ2VuZXJhdGU2RGlnaXRJZCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApLnRvU3RyaW5nKCk7Cn0KCi8vIFJldHVybnMgdGhlIGN1cnJlbnQgSVNPIHRpbWVzdGFtcApmdW5jdGlvbiBjdXJyZW50VGltZXN0YW1wKCkgewoJcmV0dXJuIG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKfQoKLy8gQ29udmVydHMgSVNPIDg2MDEgZHVyYXRpb24gc3RyaW5nIHRvIHRvdGFsIHNlY29uZHMKY29uc3QgaXNvRHVyVG9TZWMgPSAoZHVyYXRpb24pID0+IHsKICBjb25zdCBkdXJSRSA9IC9QKChkKylZKT8oKGQrKU0pPygoZCspVyk/KChkKylEKT9UPygoZCspSCk/KChkKylNKT8oKGQrKVMpPy87CiAgY29uc3QgcyA9IGR1clJFLmV4ZWMoZHVyYXRpb24pOwogIGlmICghcykgcmV0dXJuIDA7CiAgCiAgcmV0dXJuIChOdW1iZXIocz8uWzJdKSB8fCAwKSAqIDMxNTM2MDAwICsKCShOdW1iZXIocz8uWzRdKSB8fCAwKSAqIDI2MjgyODggKwoJKE51bWJlcihzPy5bNl0pIHx8IDApICogNjA0ODAwICsKCShOdW1iZXIocz8uWzhdKSB8fCAwKSAqIDg2NDAwICsKCShOdW1iZXIocz8uWzEwXSkgfHwgMCkgKiAzNjAwICsKCShOdW1iZXIocz8uWzEyXSkgfHwgMCkgKiA2MCArCgkoTnVtYmVyKHM/LlsxNF0pIHx8IDApOwp9OwoKY29uc3Qgc2V0Q2l0eUZyb21JbnB1dHMgPSAocGF5bG9hZCwgaW5wdXRzKSA9PiB7CglpZiAoIWlucHV0cykgcmV0dXJuICIqIjsKCWxldCB2ZXJzaW9uID0gcGF5bG9hZC5jb250ZXh0LnZlcnNpb24gfHwgcGF5bG9hZC5jb250ZXh0LmNvcmVfdmVyc2lvbiB8fCAiMi4wLjAiOwoJaWYgKHZlcnNpb24uc3RhcnRzV2l0aCgiMSIpKSB7CgkJcGF5bG9hZC5jb250ZXh0LmNpdHkgPSBpbnB1dHMuY2l0eV9jb2RlID8/ICIqIjsKCX0gZWxzZSB7CgkJcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IGlucHV0cy5jaXR5X2NvZGUgPz8gIioiOwoJfQp9Cg==
