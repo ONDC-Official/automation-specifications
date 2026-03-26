@@ -1,7 +1,7 @@
 # ONDC:FIS14 — version 2.1.0
 
 **Branch:** `draft-FIS14-2.1.0`  
-**Use Cases:** mutual-funds
+**Use Cases:** MUTUAL FUNDS
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - mutual-funds
+  - MUTUAL FUNDS
