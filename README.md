@@ -1,7 +1,7 @@
 # ONDC:FIS13 — version 2.0.1
 
 **Branch:** `draft-FIS13-HEALTH-2.0.1`  
-**Use Cases:** motor-insurance, health-insurance
+**Use Cases:** HEALTH INSURANCE, MOTOR INSURANCE
 
 ---
 
@@ -156,5 +156,5 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - motor-insurance
-  - health-insurance
+  - HEALTH INSURANCE
+  - MOTOR INSURANCE
