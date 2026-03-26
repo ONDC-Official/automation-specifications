@@ -1,7 +1,7 @@
 # ONDC:FIS12 — version 2.3.0
 
 **Branch:** `draft-FIS12-2.3.0`  
-**Use Cases:** Working-Capital-Loan
+**Use Cases:** UNIFIED CREDIT
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - Working-Capital-Loan
+  - UNIFIED CREDIT
