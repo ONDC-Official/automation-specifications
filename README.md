@@ -1,7 +1,7 @@
 # ONDC:RET16 — version 1.2.0
 
 **Branch:** `draft-RET16-1.2.0`  
-**Use Cases:** B2C
+**Use Cases:** HOME&KITCHEN
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - B2C
+  - HOME&KITCHEN
