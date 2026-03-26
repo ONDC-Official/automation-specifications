@@ -1,0 +1,5678 @@
+meta:
+  use_case_id: PURCHASE FINANCE
+attribute_set:
+  search:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: &a1
+                - code: IND
+                  description: Represents the country
+                  reference: <PR/Issue/Discussion Links md format text>
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: &a2
+                - code: std:080
+                  description: Bangalore
+                  reference: <PR/Issue/Discussion Links md format text>
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: &a3
+            - code: ONDC:TRV11
+              description: mobility domain Public Transit
+              reference: <PR/Issue/Discussion Links md format text>
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: search
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: search
+              description: Buyer app indicates the search intent
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      intent:
+        fulfillment:
+          stops:
+            type:
+              _description:
+                required: false
+                usage: START
+                info: A logical point in space and time during the fulfillment of an order.
+                owner: BAP
+                type: enum
+                enums: &a4
+                  - code: START
+                    description: Describes the initial fulfillment location.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: END
+                    description: Describes the final fulfillment location.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: INTERMEDIATE_STOP
+                    description: Describes the intermediate stops during fulfillment.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: TRANSIT_STOP
+                    description: Describes the transit stops during fulfillment.
+                    reference: <PR/Issue/Discussion Links md format text
+            location:
+              gps:
+                _description:
+                  required: false
+                  usage: 12.923608, 77.614629
+                  info: Describes a GPS coordinate
+                  owner: BAP
+                  type: string
+              descriptor:
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BAP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describe the descriptor of the location
+                  owner: BAP/BPP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: Describe the location of the stop
+                owner: BAP/BPP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: The list of logical stops encountered during the fulfillment of an order.
+              owner: BAP/BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes category of a vehicle
+                owner: BAP
+                type: enum
+                enums: &a5
+                  - code: BUS
+                    description: Describes the vehicle category as Bus
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: METRO
+                    description: Describes the vehicle category as Metro
+                    reference: <PR/Issue/Discussion Links md format text
+            _description:
+              required: true
+              usage: --
+              info: Describes a vehicle is a device that is designed or used to transport
+                people or cargo over land, water, air, or through space.<br>This
+                has properties like category, capacity, make, model,
+                size,variant,color,energy_type,registration
+              owner: BAP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BAP/BPP
+            type: object
+        payment:
+          collected_by:
+            _description:
+              required: false
+              usage: BPP
+              info: This field indicates the payment collector. If set to 'bap,' BAP collects
+                first and settles with BPP. If BPP agrees, no payment link is
+                sent. If set to 'bpp,' BPP collects payment directly.
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This helps the system to find out the purpose of the user behind choosing
+            any product or service. By using this intent the system can align
+            relevant options from available products or service.
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_search:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_search
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_search
+              description: Seller app provides catalog based on search intent.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      catalog:
+        descriptor:
+          name:
+            _description:
+              required: true
+              usage: Transit Solutions
+              info: Describes the catalog's name.
+              owner: BPP
+              type: string
+          images:
+            url:
+              _description:
+                required: false
+                usage: https://transitsolutions.in/logos/logo.ico
+                info: URL to the image. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: Describes the images's description.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the catalog's descriptor.
+            owner: BPP
+            type: object
+        providers:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          categories:
+            id:
+              _description:
+                required: true
+                usage: C1
+                info: Unique Id for the categories
+                owner: BPP
+                type: string
+            descriptor:
+              name:
+                _description:
+                  required: false
+                  usage: Ticket
+                  info: Describes the category name.
+                  owner: BPP
+                  type: string
+              code:
+                _description:
+                  required: true
+                  usage: TICKET
+                  info: Describes the category code.
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: TICKET
+                      description: Represents type of category
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: PASS
+                      description: Represents type of category
+                      reference: <PR/Issue/Discussion Links md format text
+              _description:
+                required: true
+                usage: --
+                info: Describes the provider's categories description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's categories.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period for individual category.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period for individual category.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes time in its various forms. It can be a single point in time;
+                duration; or a structured timetable of operations<br>This has
+                properties like label, time stamp,duration,range, days, schedule
+              owner: BPP
+              type: object
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the provider's name.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: false
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          fulfillments:
+            id:
+              _description:
+                required: true
+                usage: 3bd4ea25
+                info: Unique reference ID to the fulfillment of an order
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: ROUTE
+                info: A code that describes the mode of fulfillment. This is typically set when
+                  there are multiple ways an order can be fulfilled.
+                owner: BPP
+                type: enum
+                enums: &a7
+                  - code: ROUTE
+                    description: Describes the type of fulfillment.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: TRIP
+                    description: Describes the type of fulfillment.
+                    reference: <PR/Issue/Discussion Links md format text
+            stops:
+              id:
+                _description:
+                  required: true
+                  usage: 2
+                  info: Unique reference ID for individual stop
+                  owner: BPP
+                  type: string
+              parent_stop_id:
+                _description:
+                  required: false
+                  usage: 1
+                  info: Unique ID for referencing parent stop
+                  owner: BPP
+                  type: string
+              type:
+                _description:
+                  required: true
+                  usage: INTERMEDIATE_STOP
+                  info: The type of stop. Allowed values of this property can be defined by the
+                    network policy.
+                  owner: BPP
+                  type: enum
+                  enums: *a4
+              instructions:
+                name:
+                  _description:
+                    required: false
+                    usage: Stop 2
+                    info: Instructions name that need to be followed at the stop
+                    owner: BPP
+                    type: string
+                short_desc:
+                  _description:
+                    required: false
+                    usage: Please Change here for Yellow Line
+                    info: short description of instructions that need to be followed at the stop
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the fulfillments stops instructions.
+                  owner: BPP
+                  type: object
+              location:
+                descriptor:
+                  code:
+                    _description:
+                      required: false
+                      usage: KASHMERE_GATE
+                      info: Describes the code for a particular location.
+                      owner: BPP
+                      type: string
+                  name:
+                    _description:
+                      required: false
+                      usage: Kashmere Gate
+                      info: Describes the name for a particular location.
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: Describes the description of location.
+                    owner: BPP
+                    type: object
+                gps:
+                  _description:
+                    required: true
+                    usage: 28.707358, 77.180910
+                    info: The GPS co-ordinates of this location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the location of stops.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: Describes the fulfillments stops.
+                owner: BPP
+                type: object
+            vehicle:
+              category:
+                _description:
+                  required: true
+                  usage: METRO
+                  info: Describes category of a vehicle
+                  owner: BPP
+                  type: enum
+                  enums: *a5
+              _description:
+                required: true
+                usage: --
+                info: Describes the vehicle type.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes how a an order will be rendered/fulfilled to the end-customer
+              owner: BPP
+              type: object
+          items:
+            id:
+              _description:
+                required: false
+                usage: b2400168
+                info: ID of the item.
+                owner: BPP
+                type: string
+            descriptor:
+              code:
+                _description:
+                  required: false
+                  usage: Single Journey Ticket
+                  info: Describes the code for a particular item.
+                  owner: BPP
+                  type: enum
+                  enums: &a6
+                    - code: SJT
+                      description: Describes the kind of ticket Single Journey Ticket
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: SFSJT
+                      description: Describes the kind of ticket special fair Single Journey Ticket
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: RJT
+                      description: Describes the kind of ticket Return Journey Ticket
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: PASS
+                      description: Describes the kind of ticket Pass (multiple use ticket)
+                      reference: <PR/Issue/Discussion Links md format text
+              name:
+                _description:
+                  required: false
+                  usage: SJT
+                  info: Describes the name for a particular item.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the items description.
+                owner: BPP
+                type: object
+            price:
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              value:
+                _description:
+                  required: false
+                  usage: 60
+                  info: Describes the currency of a product or service
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the price of an item.
+                owner: BPP
+                type: object
+            quantity:
+              maximum:
+                count:
+                  _description:
+                    required: false
+                    usage: 6
+                    info: This represents the maximum quantity allowed for purchase of the item
+                    owner: BPP
+                    type: integer
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the maximum quantity of an item.
+                  owner: BPP
+                  type: object
+              minimum:
+                count:
+                  _description:
+                    required: false
+                    usage: 1
+                    info: This represents the minimum quantity allowed for purchase of the item
+                    owner: BPP
+                    type: integer
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the mimimum quantity of an item.
+                  owner: BPP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: Describes the quantity info of an item.
+                owner: BPP
+                type: object
+            fulfillment_ids:
+              _description:
+                required: false
+                usage: 3bd4ea25
+                info: Unique reference ID to the fulfillment of an order
+                owner: BPP
+                type: string
+            category_ids:
+              _description:
+                required: false
+                usage: C1
+                info: Unique reference ID to the categories of an order
+                owner: BPP
+                type: string
+            time:
+              duration:
+                _description:
+                  required: false
+                  usage: PT2D
+                  info: Time duration for servicibility
+                  owner: BPP
+                  type: string
+              label:
+                _description:
+                  required: false
+                  usage: Validity
+                  info: label for time
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Temporal attributes of this item. This property is used when the item
+                  exists on the catalog only for a limited period of time.
+                owner: BPP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: Describes a product or a service offered to the end consumer by the
+                provider. In the mobility sector, it can represent a fare
+                product like one way journey. In the logistics sector, it can
+                represent the delivery service offering. In the retail domain it
+                can represent a product like a grocery item.
+              owner: BPP
+              type: object
+          payments:
+            collected_by:
+              _description:
+                required: true
+                usage: BPP
+                info: This field indicates the payment collector. If set to 'bap,' BAP collects
+                  first and settles with BPP. If BPP agrees, no payment link is
+                  sent. If set to 'bpp,' BPP collects payment directly.
+                owner: BAP
+                type: enum
+                enums: &a9
+                  - code: BPP
+                    description: Describes when the seller app is collecting the payment.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: BAP
+                    description: Describes when the buyer app is collecting the payment.
+                    reference: <PR/Issue/Discussion Links md format text
+            _description:
+              required: true
+              usage: --
+              info: Describes the terms of settlement between the BAP and the BPP for a single
+                transaction
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: Describes the catalog's description.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  select:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: select
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: select
+              description: Buyer app communicates selected items and quantities.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: Describes the ID of the item.
+              owner: BPP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 1
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BAP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This decription refers to the comprehensive list of the products or
+              services selected and obtained within the specified order.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: This describes the complete formulated description of the loan provider
+              whose catalog items have been selected.
+            owner: BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_select:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_select
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_select
+              description: Seller app provides serviceability info, quotes, and O2D TAT for
+                selected items.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: ID of the item.
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: false
+                usage: Single Journey Ticket
+                info: Describes the name for a particular item.
+                owner: BPP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: SJT
+                info: Describes the code for a particular item.
+                owner: BPP
+                type: enum
+                enums: *a6
+            _description:
+              required: true
+              usage: --
+              info: Describes the items description.
+              owner: BPP
+              type: object
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Price of the selected item.
+                owner: BPP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the price of an item.
+              owner: BPP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 2
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          category_ids:
+            _description:
+              required: true
+              usage: C1
+              info: Unique reference ID to the categories of an order
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: PT2D
+                info: Time duration for servicibility
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: true
+                usage: Validity
+                info: label for time
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Temporal attributes of this item. This property is used when the item
+                exists on the catalog only for a limited period of time.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes a product or a service offered to the end consumer by the
+              provider. In the mobility sector, it can represent a fare product
+              like one way journey. In the logistics sector, it can represent
+              the delivery service offering. In the retail domain it can
+              represent a product like a grocery item.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the provider's name.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: false
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: TRIP
+              info: Denotes the fulfillment type
+              owner: BPP
+              type: enum
+              enums: *a7
+          stops:
+            id:
+              _description:
+                required: true
+                usage: 2
+                info: Unique reference ID for individual stop
+                owner: BPP
+                type: string
+            parent_stop_id:
+              _description:
+                required: false
+                usage: 1
+                info: Unique ID for referencing parent stop
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: INTERMEDIATE_STOP
+                info: The type of stop. Allowed values of this property can be defined by the
+                  network policy.
+                owner: BPP
+                type: enum
+                enums: *a4
+            instructions:
+              name:
+                _description:
+                  required: false
+                  usage: Stop 1
+                  info: |
+                    Describes the instructions name.
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Change for Pink Line
+                  info: |
+                    Describes the instructions short description.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the fulfillments stops instructions.
+                owner: BPP
+                type: object
+            location:
+              descriptor:
+                name:
+                  _description:
+                    required: false
+                    usage: Shaheed Sthal(New Bus Adda)
+                    info: Describes the name for a particular location.
+                    owner: BPP
+                    type: string
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the description of location.
+                  owner: BPP
+                  type: object
+              gps:
+                _description:
+                  required: true
+                  usage: 28.686576, 77.441632
+                  info: Describes a GPS coordinate
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the location of stops.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the fulfillments stops.
+              owner: BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes vehicle category
+                owner: BPP
+                type: enum
+                enums: *a5
+            _description:
+              required: true
+              usage: --
+              info: Describes the vehicle type.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BPP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes the price of a product or service
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency of a product or service
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BPP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: BASE_FARE
+                info: Breakup title of the total quoted price
+                owner: BPP
+                type: enum
+                enums: &a8
+                  - code: BASE_PRICE
+                    description: Describes the base price of an item.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: REFUND
+                    description: Describes the refund amount for an item.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: CANCELLATION_CHARGES
+                    description: Describes the CANCELLATION_CHARGES for an item.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: OFFER
+                    description: Describes the Offer for an item.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: TOLL
+                    description: Describes the Toll charges for an item.
+                    reference: <PR/Issue/Discussion Links md format text
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: I1
+                  info: ID of the item.
+                  owner: BPP
+                  type: string
+              price:
+                currency:
+                  _description:
+                    required: true
+                    usage: INR
+                    info: Describes the currency of breakup item
+                    owner: BPP
+                    type: string
+                value:
+                  _description:
+                    required: true
+                    usage: 60
+                    info: Describes the value of breakup item
+                    owner: BPP
+                    type: string
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item price description.
+                  owner: BPP
+                  type: object
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: true
+                      usage: 2
+                      info: Describes the count of breakup item
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: true
+                    usage: --
+                    info: This attribute describes the selected quantity.
+                    owner: BPP
+                    type: object
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item quantity description.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: This attribute describes the breakup's item description.
+                owner: BPP
+                type: object
+            price:
+              value:
+                _description:
+                  required: false
+                  usage: 120
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes the breakup price
+                owner: BPP
+                type: object
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This refers to the complete description of the mutually agreed upon
+              quotation for this order.
+            owner: BPP
+            type: object
+        cancellation_terms:
+          external_ref:
+            url:
+              _description:
+                required: true
+                usage: https://transitsolutions.com/mf/tnc.html
+                info: URL to the cancellation terms. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            mimetype:
+              _description:
+                required: true
+                usage: text/html
+                info: Describes the mimetype for provided url
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the external_ref for cancellation terms
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the cancellation_terms
+            owner: BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  init:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: init
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: init
+              description: Buyer and seller apps confirm terms & conditions before placing
+                orders.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: Describes the ID of the item.
+              owner: BPP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 1
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This decription refers to the comprehensive list of the products or
+              services selected and obtained within the specified order.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: This describes the complete formulated description of the loan provider
+              whose catalog items have been selected.
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        payments:
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BAP
+              type: string
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment status
+              owner: BAP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment Type
+              owner: BAP
+              type: string
+          params:
+            bank_code:
+              _description:
+                required: false
+                usage: XXXXXXXX
+                info: Bank code associated with payment activity
+                owner: BAP
+                type: string
+            bank_account_number:
+              _description:
+                required: false
+                usage: xxxxxxxxxxxxxx
+                info: Bank account number associated with payment activity
+                owner: BAP
+                type: string
+            virtual_payment_address:
+              _description:
+                required: false
+                usage: 9988199772@okicic
+                info: Virtual payment address associated with payment activity
+                owner: BAP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_init:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_init
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_init
+              description: Buyer and seller apps agree to terms & conditions before placing
+                orders.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: ID of the item.
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: false
+                usage: Single Journey Ticket
+                info: Describes the name for a particular item.
+                owner: BPP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: SJT
+                info: Describes the code for a particular item.
+                owner: BPP
+                type: enum
+                enums: *a6
+            _description:
+              required: true
+              usage: --
+              info: Describes the items description.
+              owner: BPP
+              type: object
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Price of the selected item.
+                owner: BPP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the price of an item.
+              owner: BPP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 2
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          category_ids:
+            _description:
+              required: true
+              usage: C1
+              info: Unique reference ID to the categories of an order
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: PT2D
+                info: Time duration for servicibility
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: true
+                usage: Validity
+                info: label for time
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Temporal attributes of this item. This property is used when the item
+                exists on the catalog only for a limited period of time.
+              owner: BPP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: Describes a product or a service offered to the end consumer by the
+              provider. In the mobility sector, it can represent a fare product
+              like one way journey. In the logistics sector, it can represent
+              the delivery service offering. In the retail domain it can
+              represent a product like a grocery item.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the provider's name.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: false
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes time in its various forms. It can be a single point in time;
+                duration; or a structured timetable of operations<br>This has
+                properties like label, time stamp,duration,range, days, schedule
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: 3bd4ea25-021d-46ba-aac1-5bab903adde1
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: TRIP
+              info: Denotes the fulfillment type
+              owner: BPP
+              type: enum
+              enums: *a7
+          stops:
+            id:
+              _description:
+                required: true
+                usage: 2
+                info: Unique reference ID for individual stop
+                owner: BPP
+                type: string
+            parent_stop_id:
+              _description:
+                required: false
+                usage: 1
+                info: Unique ID for referencing parent stop
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: INTERMEDIATE_STOP
+                info: The type of stop. Allowed values of this property can be defined by the
+                  network policy.
+                owner: BPP
+                type: enum
+                enums: *a4
+            instructions:
+              name:
+                _description:
+                  required: false
+                  usage: Stop 1
+                  info: Describes the instructions name.
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Change for Pink Line
+                  info: |
+                    Describes the instructions short description.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the fulfillments stops instructions.
+                owner: BPP
+                type: object
+            location:
+              descriptor:
+                name:
+                  _description:
+                    required: false
+                    usage: Shaheed Sthal(New Bus Adda)
+                    info: Describes the name for a particular location.
+                    owner: BPP
+                    type: string
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the description of location.
+                  owner: BPP
+                  type: object
+              gps:
+                _description:
+                  required: true
+                  usage: 28.686576, 77.441632
+                  info: Describes a GPS coordinate
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the location of stops.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the fulfillments stops.
+              owner: BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes vehicle category
+                owner: BPP
+                type: enum
+                enums: *a5
+            _description:
+              required: true
+              usage: --
+              info: Describes the vehicle type.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes the price of a product or service
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency of a product or service
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BPP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Base Fare
+                info: Breakup title of the total quoted price
+                owner: BPP
+                type: enum
+                enums: *a8
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: b2400168
+                  info: ID of the item.
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: true
+                      usage: 2
+                      info: Describes the count of breakup item
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: true
+                    usage: --
+                    info: This attribute describes the selected quantity.
+                    owner: BPP
+                    type: object
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item quantity description.
+                  owner: BPP
+                  type: object
+              price:
+                value:
+                  _description:
+                    required: true
+                    usage: 60
+                    info: Describes the value of breakup item
+                    owner: BPP
+                    type: string
+                currency:
+                  _description:
+                    required: true
+                    usage: INR
+                    info: Describes the currency to be paid in of a breakup item
+                    owner: BPP
+                    type: string
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item price description.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: This attribute describes the breakup's item description.
+                owner: BPP
+                type: object
+            price:
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              value:
+                _description:
+                  required: false
+                  usage: 120
+                  info: Describes the currency to be paid in of a product or service
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes the breakup price
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This refers to the complete description of the mutually agreed upon
+              quotation for this order.
+            owner: BPP
+            type: object
+        payments:
+          id:
+            _description:
+              required: true
+              usage: a1065fc5
+              info: ID of the payment term that can be referred at an item or an order level
+                in a catalog
+              owner: BPP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BPP
+              type: enum
+              enums: *a9
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment Status
+              owner: BPP
+              type: enum
+              enums: &a10
+                - code: NOT-PAID
+                  description: NOT-PAID indicates a payment status where the payment process has
+                    not been completed.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: PAID
+                  description: PAID indicates a payment status where the payment process has been
+                    successfully completed.
+                  reference: <PR/Issue/Discussion Links md format text
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment type
+              owner: BPP
+              type: enum
+              enums: &a11
+                - code: PRE-ORDER
+                  description: Payment occurs prior to order placement.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: ON-FULFILLMENT
+                  description: Payment occurs upon completion of the journey.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: POST-FULFILLMENT
+                  description: Payment occurs after the completion of the journey.
+                  reference: <PR/Issue/Discussion Links md format text
+          params:
+            bank_code:
+              _description:
+                required: true
+                usage: XXXXXXXX
+                info: Bank code associated with payment activity
+                owner: BPP
+                type: string
+            bank_account_number:
+              _description:
+                required: true
+                usage: xxxxxxxxxxxxxx
+                info: Bank account number associated with payment activity
+                owner: BPP
+                type: string
+            virtual_payment_address:
+              _description:
+                required: false
+                usage: 9988199772@okicic
+                info: Virtual payment address associated with payment activity
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        cancellation_terms:
+          external_ref:
+            url:
+              _description:
+                required: true
+                usage: https://transitsolutions.com/mf/tnc.html
+                info: URL to the cancellation terms. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            mimetype:
+              _description:
+                required: true
+                usage: text/html
+                info: Describes the mimetype for provided url
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the external_ref for cancellation terms
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the cancellation_terms
+            owner: BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  confirm:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: confirm
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: confirm
+              description: Buyer app submits orders on behalf of the buyer.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: Describes the ID of the item.
+              owner: BPP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 1
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This decription refers to the comprehensive list of the products or
+              services selected and obtained within the specified order.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: This describes the complete formulated description of the loan provider
+              whose catalog items have been selected.
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        payments:
+          id:
+            _description:
+              required: true
+              usage: a1065fc5
+              info: ID of the payment term that can be referred at an item or an order level
+                in a catalog
+              owner: BAP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BAP
+              type: enum
+              enums: *a9
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment status
+              owner: BAP
+              type: enum
+              enums: *a10
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment Type
+              owner: BAP
+              type: enum
+              enums: *a11
+          params:
+            transaction_id:
+              _description:
+                required: true
+                usage: 34cc9b0b
+                info: The reference transaction ID associated with a payment activity
+                owner: BAP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes currency value in string form
+                owner: BAP
+                type: string
+            amount:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BAP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_confirm:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_confirm
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_confirm
+              description: Seller app responds to the order with auto-acceptance, deferred
+                acceptance, or rejection.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        id:
+          _description:
+            required: true
+            usage: 077b248f
+            info: "Describes the ID of the order. "
+            owner: BPP
+            type: string
+        status:
+          _description:
+            required: true
+            usage: ACTIVE
+            info: Status of the order. Allowed values can be defined by the network policy
+            owner: BPP
+            type: string
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: ID of the item.
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Single Journey Ticket
+                info: Describes the name for a particular item.
+                owner: BPP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: SJT
+                info: Describes the code for a particular item.
+                owner: BPP
+                type: enum
+                enums: *a6
+            _description:
+              required: true
+              usage: --
+              info: Describes the items description.
+              owner: BPP
+              type: object
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Price of the selected item.
+                owner: BPP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: integer
+            _description:
+              required: true
+              usage: --
+              info: Describes the price of an item.
+              owner: BPP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 2
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          category_ids:
+            _description:
+              required: true
+              usage: C1
+              info: Unique reference ID to the categories of an order
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: PT2D
+                info: Time duration for servicibility
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: true
+                usage: Validity
+                info: label for time
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Temporal attributes of this item. This property is used when the item
+                exists on the catalog only for a limited period of time.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes a product or a service offered to the end consumer by the
+              provider. In the mobility sector, it can represent a fare product
+              like one way journey. In the logistics sector, it can represent
+              the delivery service offering. In the retail domain it can
+              represent a product like a grocery item.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the name for a particular provider.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: false
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes time in its various forms. It can be a single point in time;
+                duration; or a structured timetable of operations<br>This has
+                properties like label, time stamp,duration,range, days, schedule
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: TRIP
+              info: Denotes the fulfillment type
+              owner: BPP
+              type: enum
+              enums: *a7
+          stops:
+            id:
+              _description:
+                required: true
+                usage: 2
+                info: Unique reference ID for individual stop
+                owner: BPP
+                type: string
+            parent_stop_id:
+              _description:
+                required: false
+                usage: 1
+                info: Unique ID for referencing parent stop
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: START
+                info: The type of stop. Allowed values of this property can be defined by the
+                  network policy.
+                owner: BPP
+                type: enum
+                enums: *a4
+            authorization:
+              type:
+                _description:
+                  required: false
+                  usage: QR
+                  info: Denotes the authorization type
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: QR
+                      description: Describes QR as an authorization mechanism used to start or end the
+                        fulfillment of an order.
+                      reference: <PR/Issue/Discussion Links md format text
+              token:
+                _description:
+                  required: false
+                  usage: iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9AQAAAACn+1GIAAAApklEQVR4Xu2UMQ4EMQgD/QP+/0vK6zjsvayUMmavWxQpMAUBkwS12wcveAAkgNSCD3rR5Lkgoai3GUCMgWqbAEYR3HxAkZlzU/0MyBisYRsgI1ERFfcpBpA+ze6k56Cj7KTdXNigFWZvSOpsgqLfd18i2aAukXh9TXBNmdWt5gzA/oqzWkkN8HtA7G8CNOwYAiZt3wZixUfkA32OHNQq7Bxs9oI/gC/9fV8AVCkPjQAAAABJRU5ErkJggg==
+                  info: Denotes the authorization token
+                  owner: BPP
+                  type: string
+              valid_to:
+                _description:
+                  required: false
+                  usage: 2021-03-23T23:59:59.999Z
+                  info: Denotes the validity of token
+                  owner: BPP
+                  type: string
+              status:
+                _description:
+                  required: false
+                  usage: UNCLAIMED
+                  info: Denotes the token status
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: UNCLAIMED
+                      description: Describes current status of ticket whether is claimed or unclaimed.
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: CLAIMED
+                      description: Describes current status of ticket whether is claimed or unclaimed.
+                      reference: <PR/Issue/Discussion Links md format text
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            instructions:
+              name:
+                _description:
+                  required: false
+                  usage: Stop 1
+                  info: Describes the name for a particular instruction.
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Change for Pink Line
+                  info: |
+                    Describes the instructions short description.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the fulfillments stops instructions.
+                owner: BPP
+                type: object
+            location:
+              descriptor:
+                name:
+                  _description:
+                    required: false
+                    usage: Shaheed Sthal(New Bus Adda)
+                    info: Describes the name for a particular location.
+                    owner: BPP
+                    type: string
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the description of location.
+                  owner: BPP
+                  type: object
+              gps:
+                _description:
+                  required: true
+                  usage: 28.686576, 77.441632
+                  info: Describes a GPS coordinate
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the location of stops.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the fulfillments stops.
+              owner: BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes vehicle category
+                owner: BPP
+                type: enum
+                enums: *a5
+            _description:
+              required: true
+              usage: --
+              info: Describes the vehicle type.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes the price of a product or service
+                owner: BPP
+                type: integer
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency of a product or service
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BPP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Base Fare
+                info: Breakup title of the total quoted price
+                owner: BPP
+                type: enum
+                enums: *a8
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: b2400168
+                  info: ID of the item.
+                  owner: BPP
+                  type: string
+              price:
+                value:
+                  _description:
+                    required: true
+                    usage: 60
+                    info: Describes the value of breakup item
+                    owner: BPP
+                    type: string
+                currency:
+                  _description:
+                    required: true
+                    usage: INR
+                    info: Describes the currency to be paid in of a breakup item
+                    owner: BPP
+                    type: string
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item price description.
+                  owner: BPP
+                  type: object
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: true
+                      usage: 2
+                      info: Describes the count of breakup item
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: true
+                    usage: --
+                    info: This attribute describes the selected quantity.
+                    owner: BPP
+                    type: object
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item quantity description.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: This attribute describes the breakup's item description.
+                owner: BPP
+                type: object
+            price:
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              value:
+                _description:
+                  required: false
+                  usage: 120
+                  info: Describes the currency to be paid in of a product or service
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the breakup price
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This refers to the complete description of the mutually agreed upon
+              quotation for this order.
+            owner: BPP
+            type: object
+        payments:
+          id:
+            _description:
+              required: true
+              usage: a1065fc5
+              info: ID of the payment term that can be referred at an item or an order level
+                in a catalog
+              owner: BPP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BPP
+              type: enum
+              enums: *a9
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment Status
+              owner: BPP
+              type: enum
+              enums: *a10
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment type
+              owner: BPP
+              type: enum
+              enums: *a11
+          params:
+            transaction_id:
+              _description:
+                required: true
+                usage: 34cc9b0b
+                info: The reference transaction ID associated with a payment activity
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes currency value in string form
+                owner: BPP
+                type: string
+            amount:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: string
+            bank_code:
+              _description:
+                required: true
+                usage: XXXXXXXX
+                info: Bank code associated with payment activity
+                owner: BPP
+                type: string
+            bank_account_number:
+              _description:
+                required: true
+                usage: xxxxxxxxxxxxxx
+                info: Bank account number associated with payment activity
+                owner: BPP
+                type: string
+            virtual_payment_address:
+              _description:
+                required: false
+                usage: 9988199772@okicic
+                info: Virtual payment address associated with payment activity
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        cancellation_terms:
+          external_ref:
+            url:
+              _description:
+                required: true
+                usage: https://transitsolutions.com/mf/tnc.html
+                info: URL to the cancellation terms. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            mimetype:
+              _description:
+                required: true
+                usage: text/html
+                info: Describes the mimetype for provided url
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the external_ref for cancellation terms
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the cancellation_terms
+            owner: BPP
+            type: object
+        created_at:
+          _description:
+            required: true
+            usage: 2021-03-23T10:00:40.065Z
+            info: Denotes the timestamp when order got created
+            owner: BPP
+            type: string
+        updated_at:
+          _description:
+            required: true
+            usage: 2021-03-23T10:00:40.065Z
+            info: Denotes the timestamp when order was updated
+            owner: BPP
+            type: string
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  cancel:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: cancel
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: cancel
+              description: Buyer app requests order cancellation."
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      order_id:
+        _description:
+          required: true
+          usage: 077b248f
+          info: "Describes the  ID of the order. "
+          owner: BPP
+          type: string
+      cancellation_reason_id:
+        _description:
+          required: true
+          usage: 1
+          info: Describes the cancellation reason ID.
+          owner: BAP
+          type: string
+      descriptor:
+        code:
+          _description:
+            required: true
+            usage: SOFT_CANCEL
+            info: Describes the cancellation code.
+            owner: BAP
+            type: enum
+            enums:
+              - code: SOFT-CANCEL
+                description: Describes a soft-cancel request initiated by the buyer app, a step
+                  preceding cancellation.
+                reference: <PR/Issue/Discussion Links md format text
+              - code: CONFIRM-CANCEL
+                description: Describes a confirm-cancel request initiated by the buyer app,
+                  confirming the order cancellation
+                reference: <PR/Issue/Discussion Links md format text
+        name:
+          _description:
+            required: true
+            usage: Ride Cancellation
+            info: Describes the cancellation name.
+            owner: BAP
+            type: string
+        _description:
+          required: true
+          usage: --
+          info: Describes the descriptor of message
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_cancel:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_cancel
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_cancel
+              description: Seller app specifies the cancellation status.
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      order:
+        id:
+          _description:
+            required: true
+            usage: 077b248f
+            info: "Describes the ID of the order. "
+            owner: BPP
+            type: string
+        status:
+          _description:
+            required: true
+            usage: CANCELLED
+            info: Status of the order. Allowed values can be defined by the network policy
+            owner: BPP
+            type: string
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: ID of the item.
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Single Journey Ticket
+                info: Describes the name for a particular item.
+                owner: BPP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: SJT
+                info: Describes the code for a particular item.
+                owner: BPP
+                type: enum
+                enums: *a6
+            _description:
+              required: true
+              usage: --
+              info: Describes the items description.
+              owner: BPP
+              type: object
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Price of the selected item.
+                owner: BPP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: integer
+            _description:
+              required: true
+              usage: --
+              info: Describes the price of an item.
+              owner: BPP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 2
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          category_ids:
+            _description:
+              required: true
+              usage: C1
+              info: Unique reference ID to the categories of an order
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: PT2D
+                info: Time duration for servicibility
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: true
+                usage: Validity
+                info: label for time
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Temporal attributes of this item. This property is used when the item
+                exists on the catalog only for a limited period of time.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes a product or a service offered to the end consumer by the
+              provider. In the mobility sector, it can represent a fare product
+              like one way journey. In the logistics sector, it can represent
+              the delivery service offering. In the retail domain it can
+              represent a product like a grocery item.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the name for a particular provider.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: true
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes time in its various forms. It can be a single point in time;
+                duration; or a structured timetable of operations<br>This has
+                properties like label, time stamp,duration,range, days, schedule
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: TRIP
+              info: Denotes the fulfillment type
+              owner: BPP
+              type: enum
+              enums: *a7
+          stops:
+            id:
+              _description:
+                required: true
+                usage: 2
+                info: Unique reference ID for individual stop
+                owner: BPP
+                type: string
+            parent_stop_id:
+              _description:
+                required: false
+                usage: 1
+                info: Unique ID for referencing parent stop
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: START
+                info: The type of stop. Allowed values of this property can be defined by the
+                  network policy.
+                owner: BPP
+                type: enum
+                enums: *a4
+            instructions:
+              name:
+                _description:
+                  required: false
+                  usage: Stop 1
+                  info: Describes the name for an instruction.
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Change for Pink Line
+                  info: |
+                    Describes the instructions short description.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the fulfillments stops instructions.
+                owner: BPP
+                type: object
+            location:
+              descriptor:
+                name:
+                  _description:
+                    required: false
+                    usage: Shaheed Sthal(New Bus Adda)
+                    info: Describes the name for a particular location.
+                    owner: BPP
+                    type: string
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the description of location.
+                  owner: BPP
+                  type: object
+              gps:
+                _description:
+                  required: true
+                  usage: 28.686576, 77.441632
+                  info: Describes a GPS coordinate
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the location of stops.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the fulfillments stops.
+              owner: BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes vehicle category
+                owner: BPP
+                type: enum
+                enums: *a5
+            _description:
+              required: true
+              usage: --
+              info: Describes the vehicle type.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes the price of a product or service
+                owner: BPP
+                type: integer
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency of a product or service
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BPP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Base Fare
+                info: Breakup title of the total quoted price
+                owner: BPP
+                type: enum
+                enums: *a8
+            item:
+              id:
+                _description:
+                  required: false
+                  usage: b2400168
+                  info: ID of the item.
+                  owner: BPP
+                  type: string
+              price:
+                currency:
+                  _description:
+                    required: false
+                    usage: INR
+                    info: Describes the currency of breakup item
+                    owner: BPP
+                    type: string
+                value:
+                  _description:
+                    required: false
+                    usage: 60
+                    info: Describes the value of breakup item
+                    owner: BPP
+                    type: string
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item price description.
+                  owner: BPP
+                  type: object
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 2
+                      info: Describes the count of breakup item
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: true
+                    usage: --
+                    info: This attribute describes the selected quantity.
+                    owner: BPP
+                    type: object
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item quantity description.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: This attribute describes the breakup's item description.
+                owner: BPP
+                type: object
+            price:
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              value:
+                _description:
+                  required: false
+                  usage: 120
+                  info: Describes the currency to be paid in of a product or service
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the breakup price
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This refers to the complete description of the mutually agreed upon
+              quotation for this order.
+            owner: BPP
+            type: object
+        payments:
+          id:
+            _description:
+              required: true
+              usage: a1065fc5
+              info: ID of the payment term that can be referred at an item or an order level
+                in a catalog
+              owner: BPP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BPP
+              type: enum
+              enums: *a9
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment Status
+              owner: BPP
+              type: enum
+              enums: *a10
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment type
+              owner: BPP
+              type: enum
+              enums: *a11
+          params:
+            bank_code:
+              _description:
+                required: true
+                usage: XXXXXXXX
+                info: Bank code associated with payment activity
+                owner: BPP
+                type: string
+            bank_account_number:
+              _description:
+                required: true
+                usage: xxxxxxxxxxxxxx
+                info: Bank account number associated with payment activity
+                owner: BPP
+                type: string
+            virtual_payment_address:
+              _description:
+                required: false
+                usage: 9988199772@okicic
+                info: Virtual payment address associated with payment activity
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        cancellation_terms:
+          external_ref:
+            url:
+              _description:
+                required: true
+                usage: https://transitsolutions.com/mf/tnc.html
+                info: URL to the cancellation terms. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            mimetype:
+              _description:
+                required: true
+                usage: text/html
+                info: Describes the mimetype for provided url
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the external_ref for cancellation terms
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the cancellation_terms
+            owner: BPP
+            type: object
+        cancellation:
+          cancelled_by:
+            _description:
+              required: true
+              usage: CONSUMER
+              info: Denotes the person or entity who wants to cancel the order
+              owner: BPP
+              type: string
+          time:
+            _description:
+              required: true
+              usage: 2021-03-23T10:00:00.065Z
+              info: Denotes the time for cancellation
+              owner: BPP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The cancellation details of this order
+            owner: BPP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  status:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: status
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: status
+              description: Buyer app request for status of the order
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      order_id:
+        _description:
+          required: false
+          usage: 077b248f
+          info: "Describes the ID of the order. "
+          owner: BPP
+          type: string
+      ref_id:
+        _description:
+          required: false
+          usage: 6743e9e2
+          info: Describes the ref to the order
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_status:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: BAP
+              type: enum
+              enums: *a1
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: Describes the city code this location is, or is located within
+              owner: BAP
+              type: enum
+              enums: *a2
+          _description:
+            required: true
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV11
+          info: Describes domain code that is relevant to this transaction context
+          owner: BAP
+          type: enum
+          enums: *a3
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: Describes tme of request generation in RFC3339 format
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: api.example-bap.com
+          info: Describes subscriber ID of the BAP
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: 6743e9e2
+          info: Describes  a unique value which persists across all API calls
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: BAP
+          type: string
+      action:
+        _description:
+          required: true
+          usage: on_status
+          info: Describes the Beckn protocol method being called by the sender and
+            executed at the receiver.
+          owner: BAP
+          type: enum
+          enums:
+            - code: on_status
+              description: Seller app return order with status , Driver pickup - driver drop
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://api.example-bap.com/pilot/bap/cab/v1
+          info: Describes subscriber URL of the BAP for accepting callbacks from BPPs.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: BPP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: api.example-bpp.com
+          info: Describes subscriber ID of the BPP
+          owner: BPP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://api.example-bpp.com/dobpp/7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+          info: Describes subscriber URL of the BPP for accepting calls from BAPs.
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        id:
+          _description:
+            required: true
+            usage: 077b248f
+            info: "Describes the  ID of the order. "
+            owner: BPP
+            type: string
+        status:
+          _description:
+            required: true
+            usage: COMPLETE
+            info: Status of the order. Allowed values can be defined by the network policy
+            owner: BPP
+            type: string
+        items:
+          id:
+            _description:
+              required: true
+              usage: b2400168
+              info: ID of the item.
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Single Journey Ticket
+                info: Describes the name for a particular item.
+                owner: BPP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: SJT
+                info: Describes the code for a particular item.
+                owner: BPP
+                type: enum
+                enums: *a6
+            _description:
+              required: true
+              usage: --
+              info: Describes the items description.
+              owner: BPP
+              type: object
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Price of the selected item.
+                owner: BPP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: integer
+            _description:
+              required: true
+              usage: --
+              info: Describes the price of an item.
+              owner: BPP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: 2
+                  info: This represents the quantity selected for purchase of the item
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the selected quantity of an item.
+                owner: BAP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the quantity info of an item.
+              owner: BAP/BPP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          category_ids:
+            _description:
+              required: true
+              usage: C1
+              info: Unique reference ID to the categories of an order
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: PT2D
+                info: Time duration for servicibility
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: true
+                usage: Validity
+                info: label for time
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Temporal attributes of this item. This property is used when the item
+                exists on the catalog only for a limited period of time.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes a product or a service offered to the end consumer by the
+              provider. In the mobility sector, it can represent a fare product
+              like one way journey. In the logistics sector, it can represent
+              the delivery service offering. In the retail domain it can
+              represent a product like a grocery item.
+            owner: BAP/BPP
+            type: object
+        provider:
+          id:
+            _description:
+              required: true
+              usage: db1928f9
+              info: Id of the provider
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Delhi Metro Rail Limited
+                info: Describes the name for a particular provider.
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: true
+                  usage: https://delhimetrorail.com/logos/logo.ico
+                  info: URL to the image. This can be a data url or an remote url
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the images description.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the provider's description.
+              owner: BPP
+              type: object
+          time:
+            range:
+              start:
+                _description:
+                  required: true
+                  usage: 2023-09-14T05:30:00.000Z
+                  info: Describes the start time period.
+                  owner: BPP
+                  type: string
+              end:
+                _description:
+                  required: true
+                  usage: 2023-09-14T23:30:00.000Z
+                  info: Describes the end time period.
+                  owner: BPP
+                  type: string
+              _description:
+                required: true
+                usage: --
+                info: Describes time in its various forms. It can be a single point in time;
+                  duration; or a structured timetable of operations<br>This has
+                  properties like label, time stamp,duration,range, days,
+                  schedule
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes time in its various forms. It can be a single point in time;
+                duration; or a structured timetable of operations<br>This has
+                properties like label, time stamp,duration,range, days, schedule
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the provider's description.
+            owner: BPP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: 3bd4ea25
+              info: Unique reference ID to the fulfillment of an order
+              owner: BPP
+              type: string
+          type:
+            _description:
+              required: true
+              usage: TRIP
+              info: Denotes the fulfillment type
+              owner: BPP
+              type: enum
+              enums: *a7
+          stops:
+            id:
+              _description:
+                required: true
+                usage: 2
+                info: Unique reference ID for individual stop
+                owner: BPP
+                type: string
+            parent_stop_id:
+              _description:
+                required: false
+                usage: 1
+                info: Unique ID for referencing parent stop
+                owner: BPP
+                type: string
+            type:
+              _description:
+                required: true
+                usage: INTERMEDIATE_STOP
+                info: The type of stop. Allowed values of this property can be defined by the
+                  network policy.
+                owner: BPP
+                type: enum
+                enums: *a4
+            instructions:
+              name:
+                _description:
+                  required: false
+                  usage: Stop 1
+                  info: Describes the name for a particular instruction.
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Change for Pink Line
+                  info: |
+                    Describes the instructions short description.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the fulfillments stops instructions.
+                owner: BPP
+                type: object
+            location:
+              descriptor:
+                name:
+                  _description:
+                    required: false
+                    usage: Shaheed Sthal(New Bus Adda)
+                    info: Describes the name for a particular location.
+                    owner: BPP
+                    type: string
+                code:
+                  _description:
+                    required: false
+                    usage: SHAHEED_STHAL
+                    info: Describes the code for a particular location.
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: Describes the description of location.
+                  owner: BPP
+                  type: object
+              gps:
+                _description:
+                  required: true
+                  usage: 28.686576, 77.441632
+                  info: Describes a GPS coordinate
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: Describes the location of stops.
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: Describes the fulfillments stops.
+              owner: BPP
+              type: object
+          vehicle:
+            category:
+              _description:
+                required: true
+                usage: METRO
+                info: Describes vehicle category
+                owner: BPP
+                type: enum
+                enums: *a5
+            _description:
+              required: true
+              usage: --
+              info: Describes the vehicle type.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes how a an order will be rendered/fulfilled to the end-customer
+            owner: BPP
+            type: object
+        billing:
+          name:
+            _description:
+              required: false
+              usage: John Doe
+              info: Name of the billable entity
+              owner: BAP
+              type: string
+          email:
+            _description:
+              required: false
+              usage: john.doe@example.com
+              info: Email address where the bill is sent to
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: false
+              usage: 9897867564
+              info: Phone number of the billable entity
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: --
+            info: The billing details of this order
+            owner: BPP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 60
+                info: Describes the price of a product or service
+                owner: BPP
+                type: integer
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency of a product or service
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BPP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Base Fare
+                info: Breakup title of the total quoted price
+                owner: BPP
+                type: enum
+                enums: *a8
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: b2400168
+                  info: ID of the item.
+                  owner: BPP
+                  type: string
+              price:
+                currency:
+                  _description:
+                    required: true
+                    usage: INR
+                    info: Describes the currency of breakup item
+                    owner: BPP
+                    type: string
+                value:
+                  _description:
+                    required: true
+                    usage: 60
+                    info: Describes the value of breakup item
+                    owner: BPP
+                    type: string
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item price description.
+                  owner: BPP
+                  type: object
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: true
+                      usage: 2
+                      info: Describes the count of breakup item
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: true
+                    usage: --
+                    info: This attribute describes the selected quantity.
+                    owner: BPP
+                    type: object
+                _description:
+                  required: true
+                  usage: --
+                  info: This attribute describes the item quantity description.
+                  owner: BPP
+                  type: object
+              _description:
+                required: true
+                usage: --
+                info: This attribute describes the breakup's item description.
+                owner: BPP
+                type: object
+            price:
+              currency:
+                _description:
+                  required: false
+                  usage: INR
+                  info: Describes the price of a product or service
+                  owner: BPP
+                  type: string
+              value:
+                _description:
+                  required: false
+                  usage: 120
+                  info: Describes the currency to be paid in of a product or service
+                  owner: BPP
+                  type: integer
+              _description:
+                required: true
+                usage: --
+                info: Describes the breakup price
+                owner: BPP
+                type: object
+            _description:
+              required: true
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: This refers to the complete description of the mutually agreed upon
+              quotation for this order.
+            owner: BPP
+            type: object
+        payments:
+          id:
+            _description:
+              required: true
+              usage: a1065fc5
+              info: ID of the payment term that can be referred at an item or an order level
+                in a catalog
+              owner: BPP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BAP
+              info: "This field indicates who is the collector of payment. "
+              owner: BPP
+              type: enum
+              enums: *a9
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Payment Status
+              owner: BPP
+              type: enum
+              enums: *a10
+          type:
+            _description:
+              required: true
+              usage: PRE-ORDER
+              info: Payment type
+              owner: BPP
+              type: enum
+              enums: *a11
+          params:
+            transaction_id:
+              _description:
+                required: true
+                usage: 34cc9b0b
+                info: The reference transaction ID associated with a payment activity
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes currency value in string form
+                owner: BPP
+                type: string
+            amount:
+              _description:
+                required: true
+                usage: 60
+                info: Describes a numerical value in decimal form
+                owner: BPP
+                type: string
+            bank_code:
+              _description:
+                required: true
+                usage: XXXXXXXX
+                info: Bank code associated with payment activity
+                owner: BPP
+                type: string
+            bank_account_number:
+              _description:
+                required: true
+                usage: xxxxxxxxxxxxxx
+                info: Bank account number associated with payment activity
+                owner: BPP
+                type: string
+            virtual_payment_address:
+              _description:
+                required: false
+                usage: 9988199772@okicic
+                info: Virtual payment address associated with payment activity
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: This attribute defines the payment params for this order.
+              owner: BAP/BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: The terms of settlement for this order
+            owner: BAP/BPP
+            type: object
+        cancellation_terms:
+          external_ref:
+            url:
+              _description:
+                required: true
+                usage: https://transitsolutions.com/mf/tnc.html
+                info: URL to the cancellation terms. This can be a data url or an remote url
+                owner: BPP
+                type: string
+            mimetype:
+              _description:
+                required: true
+                usage: text/html
+                info: Describes the mimetype for provided url
+                owner: BPP
+                type: string
+            _description:
+              required: true
+              usage: --
+              info: Describes the external_ref for cancellation terms
+              owner: BPP
+              type: object
+          _description:
+            required: true
+            usage: --
+            info: Describes the cancellation_terms
+            owner: BPP
+            type: object
+        created_at:
+          _description:
+            required: true
+            usage: 2021-03-23T10:00:40.065Z
+            info: Denotes the timestamp when order got created
+            owner: BPP
+            type: string
+        updated_at:
+          _description:
+            required: true
+            usage: 2021-03-23T10:00:40.065Z
+            info: Denotes the timestamp when order was updated
+            owner: BPP
+            type: string
+        _description:
+          required: true
+          usage: --
+          info: This refers to the complete description of the legal contract created
+            between the buyer and the seller.
+          owner: BPP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
