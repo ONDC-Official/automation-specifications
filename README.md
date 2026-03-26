@@ -1,7 +1,7 @@
 # ONDC:LOG10 — version 1.2.5
 
 **Branch:** `draft-logistics-1.2.5`  
-**Use Cases:** logistics
+**Use Cases:** Logistics (P2P)
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - logistics
+  - Logistics (P2P)
