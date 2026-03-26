@@ -1,7 +1,7 @@
 # ONDC:TRV12 — version 2.0.0
 
 **Branch:** `draft-TRV12-2.0.0`  
-**Use Cases:** airline, inter-city
+**Use Cases:** Airline, Intercity
 
 ---
 
@@ -156,5 +156,5 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - airline
-  - inter-city
+  - Airline
+  - Intercity
