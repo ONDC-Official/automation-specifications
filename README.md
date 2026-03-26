@@ -1,7 +1,7 @@
 # ONDC:FIS12 — version 2.0.3
 
 **Branch:** `draft-FIS12-2.0.3`  
-**Use Cases:** personal-loan, gold-loan, credit-card
+**Use Cases:** CREDIT CARD, GOLD LOAN, PERSONAL LOAN
 
 ---
 
@@ -156,6 +156,6 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - personal-loan
-  - gold-loan
-  - credit-card
+  - CREDIT CARD
+  - GOLD LOAN
+  - PERSONAL LOAN
