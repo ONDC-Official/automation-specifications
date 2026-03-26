@@ -1,0 +1,52 @@
+import { readFileSync } from "fs";
+import yaml from "js-yaml";
+import path from "path";
+import {
+  MockAction,
+  MockOutput,
+  saveType,
+} from "../../../../classes/mock-action";
+import { SessionData } from "../../../../session-types";
+import { selectGenerator } from "./generator";
+
+export class MockSelectStationCode1Class extends MockAction {
+  get saveData(): saveType {
+    return yaml.load(
+      readFileSync(path.resolve(__dirname, "./save-data.yaml"), "utf8")
+    ) as saveType;
+  }
+  get defaultData(): any {
+    return yaml.load(
+      readFileSync(path.resolve(__dirname, "./default.yaml"), "utf8")
+    );
+  }
+  get inputs(): any {
+    return {};
+  }
+  name(): string {
+    return "select_default";
+  }
+  get description(): string {
+    return "Mock for select_default";
+  }
+  generator(existingPayload: any, sessionData: SessionData): Promise<any> {
+    return selectGenerator(existingPayload, sessionData);
+  }
+  async validate(targetPayload: any): Promise<MockOutput> {
+    return { valid: true };
+  }
+  async meetRequirements(sessionData: SessionData): Promise<MockOutput> {
+    const userSelectedItem = sessionData?.user_inputs?.selected_item;
+    if (userSelectedItem) {
+      if (!sessionData.item_ids.includes(userSelectedItem)) {
+        return {
+          valid: false,
+          message: `Selected item id ${userSelectedItem} is not present in available item ids ${sessionData.item_ids.join(
+            ", "
+          )}`,
+        };
+      }
+    }
+    return { valid: true };
+  }
+}
