@@ -1,0 +1,4362 @@
+meta:
+  use_case_id: gift-card
+attribute_set:
+  search:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: &a3
+                - code: IND
+                  description: Represents the country
+                  reference: <PR/Issue/Discussion Links md format text>
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: &a4
+                - code: std:080
+                  description: Represent the city code that identifies the cities. In case of '*'
+                    it will fetch all the cities where service is being
+                    provided.
+                  reference: <PR/Issue/Discussion Links md format text>
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: &a5
+            - code: ONDC:FIS10
+              description: Updated domain namespace
+              reference: <PR/Issue/Discussion Links md format text>
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: search
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: &a1
+            - code: search
+              description: buyer app specifies the search intent
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_search
+              description: seller app responds with the catalog based on the search intent
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: select
+              description: buyer app specifies the items & quantity selected by a buyer
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_select
+              description: seller app responds with the serviceability info, quote & O2D TAT
+                for selected items;
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: init
+              description: buyer & seller app specify & agree to the terms & conditions prior
+                to placing the order;
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_init
+              description: buyer & seller app specify & agree to the terms & conditions prior
+                to placing the order;
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: confirm
+              description: buyer app places the order on behalf of the buyer;
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_confirm
+              description: seller app responds to the order placed either through
+                auto-acceptance or deferred acceptance or rejection of the order
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: update
+              description: updates in the serviceable loc happens here
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_update
+              description: seller app responds with serviceable
+              reference: <PR/Issue/Discussion Links md format text
+            - code: cancel
+              description: Cancellation of ride
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_cancel
+              description: Specifiy the cancellation of the state
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: track
+              description: Track the order
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_track
+              description: Return tracking infomation of the order
+              reference: <PR/Issue/Discussion Links md format text
+            - code: status
+              description: Request for status of the vehicle
+              reference: <PR/Issue/Discussion Links md format text>
+            - code: on_status
+              description: Return order with status , Driver pickup - driver drop
+              reference: <PR/Issue/Discussion Links md format text>
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      intent:
+        category:
+          descriptor:
+            code:
+              _description:
+                required: false
+                usage: search from categories defined
+                info: This attribute refers to categorizing loans based on whether they are
+                  intended for personal use or are meant for invoices.
+                owner: BAP
+                type: enum
+                enums: &a2
+                  - code: CARD
+                    description: Describes the category type
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: PROMO
+                    description: Describes the category type
+                    reference: <PR/Issue/Discussion Links md format text>
+                  - code: E_PAY
+                    description: Describes the category type
+                    reference: <PR/Issue/Discussion Links md format text>
+                  - code: E_RUPI
+                    description: Describes the category type
+                    reference: <PR/Issue/Discussion Links md format text>
+            name:
+              _description:
+                required: false
+                usage: search from categories defined
+                info: This attribute refers to categorizing loans based on whether they are
+                  intended for personal use or are meant for invoices.
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This attribute refers to the category descriptor code
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to details on the item category.
+            owner: BAP
+            type: object
+        payment:
+          tags:
+            BUYER_FINDER_FEES:
+              _description:
+                required: true
+                usage: --
+                info: Describes Buyer finder fee
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This field refers to the details of the payment.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to intent to buy or avail a product or a service.
+            The BAP can declare the intent of the consumer containing
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_search:
+    context:
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: on_search
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://bpp.credit.becknprotocol.org
+          info: The subscriber URL of the Seller App (BPP) is the endpoint that accepts
+            callbacks from the Buyer App (BAP).
+          owner: BPP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: bpp.credit.becknprotocol.org
+          info: It explains the Explains the subscriber of the Seller App (BPP).
+          owner: BPP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      catalog:
+        descriptor:
+          name:
+            _description:
+              required: true
+              usage: Gift card store
+              info: Describes the descriptor name
+              owner: BPP
+              type: string
+          symbol:
+            _description:
+              required: true
+              usage: https://giftcard.com/images/1-image
+              info: Describes the descriptor symbol
+              owner: BPP
+              type: string
+          short_desc:
+            _description:
+              required: true
+              usage: Online Gift Card Store
+              info: Describes the descriptor short_desc
+              owner: BPP
+              type: string
+          long_desc:
+            _description:
+              required: true
+              usage: Online Gift Card Store
+              info: Describes the descriptor long_desc
+              owner: BPP
+              type: string
+          images:
+            url:
+              _description:
+                required: true
+                usage: https://giftcard.com/images/store-image
+                info: Describes the descriptor images
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to descriptor description
+            owner: BAP
+            type: object
+        fulfillments:
+          id:
+            _description:
+              required: true
+              usage: TYPE1
+              info: Describes the fulfillments id
+              owner: false
+              type: false
+          type:
+            _description:
+              required: true
+              usage: false
+              info: Describes the fulfillments type
+              owner: false
+              type: false
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        providers:
+          id:
+            _description:
+              required: true
+              usage: 1
+              info: Describes the provider id
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: ENABLE
+                info: Describes the time label
+                owner: BPP
+                type: string
+            timestamp:
+              _description:
+                required: true
+                usage: ENABLE
+                info: Describes the time label
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          ttl:
+            _description:
+              required: true
+              usage: P1D
+              info: Describes the provider ttl
+              owner: BPP
+              type: string
+          descriptor:
+            name:
+              _description:
+                required: true
+                usage: Gift card store
+                info: Describes the descriptor name
+                owner: BPP
+                type: string
+            symbol:
+              _description:
+                required: true
+                usage: https://giftcard.com/images/1-image
+                info: Describes the descriptor symbol
+                owner: BPP
+                type: string
+            short_desc:
+              _description:
+                required: true
+                usage: Online Gift Card Store
+                info: Describes the descriptor short_desc
+                owner: BPP
+                type: string
+            long_desc:
+              _description:
+                required: true
+                usage: Online Gift Card Store
+                info: Describes the descriptor long_desc
+                owner: BPP
+                type: string
+            images:
+              url:
+                _description:
+                  required: true
+                  usage: https://giftcard.com/images/store-image
+                  info: Describes the descriptor images
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: This attribute refers to the provider's images details
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute refers to the provider's descriptor details
+              owner: BAP
+              type: object
+          categories:
+            id:
+              _description:
+                required: true
+                usage: C1
+                info: Describes the categories id
+                owner: BPP
+                type: string
+            descriptor:
+              code:
+                _description:
+                  required: true
+                  usage: CARD
+                  info: Describes the categories code
+                  owner: BPP
+                  type: enum
+                  enums: *a2
+              _description:
+                required: false
+                usage: --
+                info: This attribute refers to the category descriptor
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute refers to the category description
+              owner: BAP
+              type: object
+          items:
+            id:
+              _description:
+                required: true
+                usage: BaseCard1
+                info: Describes the item id
+                owner: BPP
+                type: string
+            descriptor:
+              name:
+                _description:
+                  required: false
+                  usage: Gift card store
+                  info: Describes the descriptor name
+                  owner: BPP
+                  type: string
+              symbol:
+                _description:
+                  required: false
+                  usage: https://giftcard.com/images/1-image
+                  info: Describes the descriptor symbol
+                  owner: BPP
+                  type: string
+              short_desc:
+                _description:
+                  required: false
+                  usage: Online Gift Card Store
+                  info: Describes the descriptor short_desc
+                  owner: BPP
+                  type: string
+              long_desc:
+                _description:
+                  required: false
+                  usage: Online Gift Card Store
+                  info: Describes the descriptor long_desc
+                  owner: BPP
+                  type: string
+              images:
+                url:
+                  _description:
+                    required: false
+                    usage: https://giftcard.com/images/store-image
+                    info: Describes the descriptor images
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: This include the item's descriptor details.
+                owner: BAP
+                type: object
+            category_ids:
+              _description:
+                required: false
+                usage: C1
+                info: Describes the category id
+                owner: BPP
+                type: string
+            fulfillment_ids:
+              _description:
+                required: false
+                usage: TYPE1
+                info: Describes the fulfillment_ids id
+                owner: BPP
+                type: string
+            cancellation_terms:
+              cancel_eligible:
+                _description:
+                  required: false
+                  usage: false
+                  info: Describes the cancellation terms
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            return_terms:
+              return_eligible:
+                _description:
+                  required: false
+                  usage: false
+                  info: Describes the return_terms terms
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            parent_item_id:
+              _description:
+                required: false
+                usage: BaseCard1
+                info: Describes the parent item id
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This include the item details.
+              owner: BAP
+              type: object
+          offers:
+            id:
+              _description:
+                required: true
+                usage: DISCA100
+                info: Describes the offer id
+                owner: BPP
+                type: string
+            descriptor:
+              code:
+                _description:
+                  required: true
+                  usage: DISCOUNT
+                  info: Describes the offer descriptor code
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: DISCOUNT
+                      description: Describes the offer type
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: FREEBIE
+                      description: Describes the offer type
+                      reference: <PR/Issue/Discussion Links md format text
+              short_desc:
+                _description:
+                  required: false
+                  usage: Get 20% discount
+                  info: Describes the offer short description
+                  owner: BPP
+                  type: string
+              images:
+                url:
+                  _description:
+                    required: false
+                    usage: https://sellerapp.com/images/offerbanner.png
+                    info: Describes the offer images url
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            item_ids:
+              _description:
+                required: true
+                usage: GC1
+                info: Describes the offer item id
+                owner: BPP
+                type: string
+            time:
+              range:
+                start:
+                  _description:
+                    required: true
+                    usage: 2023-06-01T16:00:00.000Z
+                    info: Describes the start range
+                    owner: BPP
+                    type: string
+                end:
+                  _description:
+                    required: true
+                    usage: 2023-06-01T16:00:00.000Z
+                    info: Describes the end range
+                    owner: BPP
+                    type: string
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to the provider details
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to the catalog details of a seller
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  select:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: select
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describe the provider from which the customer wants to place to the order
+              from
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This describes the details about the fulfillments
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describe the details of the item that the consumer wants to order
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This refers to the deatils about the order.
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_select:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: on_select
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to the provider details
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          id:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describes how an order will be rendered/fulfilled to the end-customer
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            offered_value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This include the item's price details.
+              owner: BAP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: false
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: true
+                usage: VALIDITY
+                info: Describes the time label
+                owner: BPP
+                type: enum
+                enums: &a6
+                  - code: VALIDITY
+                    description: Describes the time label
+                    reference: <PR/Issue/Discussion Links md format text
+            duration:
+              _description:
+                required: true
+                usage: P1M
+                info: Describes the time duration
+                owner: BPP
+                type: string
+            timestamp:
+              _description:
+                required: true
+                usage: 2024-05-31T10:00:00.000Z
+                info: Describes the time timestamp
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This include the item details.
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 231800
+                info: This refers to the numerical value of the total quoted price.
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: This refers to the value of used currency of quoted price.
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BAP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Principal
+                info: This attribute describes the breakup of the total quoted price.
+                owner: BPP
+                type: enum
+                enums: &a7
+                  - code: ITEM
+                    description: Describes the quote breakup.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: CONVENIENCE_FEE
+                    description: Describes the quote breakup.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: OFFER
+                    description: Describes the quote breakup.
+                    reference: <PR/Issue/Discussion Links md format text
+                  - code: TAX
+                    description: Describes the quote breakup.
+                    reference: <PR/Issue/Discussion Links md format text
+            price:
+              value:
+                _description:
+                  required: true
+                  usage: 200000
+                  info: This describes the decimal value of the price of a product or service.
+                  owner: BPP
+                  type: string
+              currency:
+                _description:
+                  required: true
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              offered_value:
+                _description:
+                  required: false
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: This describes the quote value of the price of a product or service.
+                owner: BAP
+                type: object
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item id
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 3
+                      info: Describes the quantity count
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: <placeholder description>
+                    owner: BAP
+                    type: object
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This refers to the complete description of the mutully agreed upon
+              quotation for this order.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to the order details
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  init:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: init
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describe the provider from which the customer wants to place to the order
+              from
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          stops:
+            contact:
+              phone:
+                _description:
+                  required: true
+                  usage: 9999888867
+                  info: Describes the contact phone
+                  owner: BAP
+                  type: string
+              email:
+                _description:
+                  required: true
+                  usage: receiver1@test.com
+                  info: Describes the contact email
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            person:
+              name:
+                _description:
+                  required: true
+                  usage: Receiver Name 1
+                  info: Describes the person name
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This describes the details about the fulfillments
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describe the details of the item that the consumer wants to order
+            owner: BAP
+            type: object
+        billing:
+          name:
+            _description:
+              required: true
+              usage: "House #"
+              info: Describes the billing name
+              owner: BAP
+              type: string
+          address:
+            _description:
+              required: true
+              usage: B005 Aspire Heights
+              info: Describes the billing address
+              owner: BAP
+              type: string
+          city:
+            name:
+              _description:
+                required: true
+                usage: Bangalore
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: BAN
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            code:
+              _description:
+                required: true
+                usage: KA
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            name:
+              _description:
+                required: true
+                usage: Karnataka
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          email:
+            _description:
+              required: true
+              usage: Karnataka
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: true
+              usage: Karnataka
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This refers to the deatils about the order.
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_init:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: on_init
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to the provider details
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          id:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          stops:
+            contact:
+              phone:
+                _description:
+                  required: true
+                  usage: 9999888867
+                  info: Describes the contact phone
+                  owner: BAP
+                  type: string
+              email:
+                _description:
+                  required: true
+                  usage: receiver1@test.com
+                  info: Describes the contact email
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            person:
+              name:
+                _description:
+                  required: true
+                  usage: Receiver Name 1
+                  info: Describes the person name
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describes how an order will be rendered/fulfilled to the end-customer
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            offered_value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This include the item's price details.
+              owner: BAP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: false
+                usage: VALIDITY
+                info: Describes the time label
+                owner: BPP
+                type: enum
+                enums: *a6
+            duration:
+              _description:
+                required: false
+                usage: P1M
+                info: Describes the time duration
+                owner: BPP
+                type: string
+            timestamp:
+              _description:
+                required: false
+                usage: 2024-05-31T10:00:00.000Z
+                info: Describes the time timestamp
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This include the item details.
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 231800
+                info: This refers to the numerical value of the total quoted price.
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: This refers to the value of used currency of quoted price.
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BAP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Principal
+                info: This attribute describes the breakup of the total quoted price.
+                owner: BPP
+                type: enum
+                enums: *a7
+            price:
+              value:
+                _description:
+                  required: true
+                  usage: 200000
+                  info: This describes the decimal value of the price of a product or service.
+                  owner: BPP
+                  type: string
+              currency:
+                _description:
+                  required: true
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              offered_value:
+                _description:
+                  required: false
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: This describes the quote value of the price of a product or service.
+                owner: BAP
+                type: object
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item id
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 3
+                      info: Describes the quantity count
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: <placeholder description>
+                    owner: BAP
+                    type: object
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This refers to the complete description of the mutully agreed upon
+              quotation for this order.
+            owner: BAP
+            type: object
+        billing:
+          name:
+            _description:
+              required: true
+              usage: "House #"
+              info: Describes the billing name
+              owner: BAP
+              type: string
+          address:
+            _description:
+              required: true
+              usage: B005 Aspire Heights
+              info: Describes the billing address
+              owner: BAP
+              type: string
+          city:
+            name:
+              _description:
+                required: true
+                usage: Bangalore
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: BAN
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            code:
+              _description:
+                required: true
+                usage: KA
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            name:
+              _description:
+                required: true
+                usage: Karnataka
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          email:
+            _description:
+              required: true
+              usage: receiver1@test.com
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: true
+              usage: 9999888867
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        payments:
+          type:
+            _description:
+              required: true
+              usage: ON-ORDER
+              info: Describes the payment type
+              owner: BPP
+              type: enum
+              enums: &a8
+                - code: PRE-FULFILLMENT
+                  description: Payment happens pre completion of the service
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: ON-ORDER
+                  description: Payment happens on order placement
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: PRE-ORDER
+                  description: Payment happens before order placement
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: ON-FULFILLMENT
+                  description: Payment happens on completion of the service
+                  reference: <PR/Issue/Discussion Links md format text
+          collected_by:
+            _description:
+              required: true
+              usage: BPP
+              info: Describes the payment type
+              owner: BPP
+              type: enum
+              enums: &a9
+                - code: BPP
+                  description: When seller app is collecting the payment
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: BAP
+                  description: When buyer app is collecting the payment
+                  reference: <PR/Issue/Discussion Links md format text
+          url:
+            _description:
+              required: false
+              usage: https://sellerpaymentgateway.com/123456
+              info: Describes the payment url
+              owner: BPP
+              type: string
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Describes the payments status
+              owner: BPP
+              type: enum
+              enums: &a10
+                - code: PAID
+                  description: Reflects current status wheteher installment has been paid or not
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: NOT-PAID
+                  description: Reflects current status wheteher installment has been paid or not
+                  reference: <PR/Issue/Discussion Links md format text
+          _description:
+            required: false
+            usage: --
+            info: Describes the payments description
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to the order details
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  confirm:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: confirm
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describe the provider from which the customer wants to place to the order
+              from
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          stops:
+            contact:
+              phone:
+                _description:
+                  required: true
+                  usage: 9999888867
+                  info: Describes the contact phone
+                  owner: BAP
+                  type: string
+              email:
+                _description:
+                  required: true
+                  usage: receiver1@test.com
+                  info: Describes the contact email
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            person:
+              name:
+                _description:
+                  required: true
+                  usage: Receiver Name 1
+                  info: Describes the person name
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This describes the details about the fulfillments
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: Describe the details of the item that the consumer wants to order
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        billing:
+          name:
+            _description:
+              required: true
+              usage: "House #"
+              info: Describes the billing name
+              owner: BAP
+              type: string
+          address:
+            _description:
+              required: true
+              usage: B005 Aspire Heights
+              info: Describes the billing address
+              owner: BAP
+              type: string
+          city:
+            name:
+              _description:
+                required: true
+                usage: Bangalore
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: BAN
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            code:
+              _description:
+                required: true
+                usage: KA
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            name:
+              _description:
+                required: true
+                usage: Karnataka
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          email:
+            _description:
+              required: true
+              usage: Karnataka
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: true
+              usage: Karnataka
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        id:
+          _description:
+            required: true
+            usage: O1
+            info: Describes the order id
+            owner: BAP
+            type: string
+        status:
+          _description:
+            required: true
+            usage: CREATED
+            info: Describes the order status
+            owner: BAP
+            type: string
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 231800
+                info: This refers to the numerical value of the total quoted price.
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: This refers to the value of used currency of quoted price.
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Principal
+                info: This attribute describes the breakup of the total quoted price.
+                owner: BPP
+                type: string
+            price:
+              value:
+                _description:
+                  required: true
+                  usage: 200000
+                  info: This describes the decimal value of the price of a product or service.
+                  owner: BPP
+                  type: string
+              currency:
+                _description:
+                  required: true
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              offered_value:
+                _description:
+                  required: false
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item id
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 3
+                      info: Describes the quantity count
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: <placeholder description>
+                    owner: BAP
+                    type: object
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This refers to the deatils about the order.
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_confirm:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: enum
+              enums: *a4
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: enum
+          enums: *a5
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: on_confirm
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: enum
+          enums: *a1
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to the provider details
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: enum
+              enums:
+                - code: BPP_ONLINE_EMAIL_SMS
+                  description: Describes the fulfillment type.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: BPP_ONLINE_EMAIL
+                  description: Describes the fulfillment type.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: BPP_ONLINE_SMS
+                  description: Describes the fulfillment type.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: BPP_OFFLINE
+                  description: Describes the fulfillment type.
+                  reference: <PR/Issue/Discussion Links md format text
+                - code: BAP
+                  description: Describes the fulfillment type.
+                  reference: <PR/Issue/Discussion Links md format text
+          id:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          stops:
+            contact:
+              phone:
+                _description:
+                  required: true
+                  usage: 9999888867
+                  info: Describes the contact phone
+                  owner: BAP
+                  type: string
+              email:
+                _description:
+                  required: true
+                  usage: receiver1@test.com
+                  info: Describes the contact email
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            person:
+              name:
+                _description:
+                  required: true
+                  usage: Receiver Name 1
+                  info: Describes the person name
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            authorization:
+              type:
+                _description:
+                  required: false
+                  usage: CODE
+                  info: Describes the authorization type
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: CODE
+                      description: Describes the authorization type.
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: CODE_PIN
+                      description: Describes the authorization type.
+                      reference: <PR/Issue/Discussion Links md format text
+              token:
+                _description:
+                  required: false
+                  usage: "12383235623423467"
+                  info: Describes the authorization code
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            descriptor:
+              code:
+                _description:
+                  required: true
+                  usage: COMPLETED
+                  info: Describes the fulfillment code
+                  owner: BPP
+                  type: enum
+                  enums:
+                    - code: COMPLETED
+                      description: Describes if claim has been granted
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: PENDING
+                      description: Describes if claim has been granted
+                      reference: <PR/Issue/Discussion Links md format text
+                    - code: CANCELLED
+                      description: Describes if claim has been granted
+                      reference: <PR/Issue/Discussion Links md format text
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describes how an order will be rendered/fulfilled to the end-customer
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            offered_value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This include the item's price details.
+              owner: BAP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: false
+                usage: VALIDITY
+                info: Describes the time label
+                owner: BPP
+                type: enum
+                enums: *a6
+            duration:
+              _description:
+                required: false
+                usage: P1M
+                info: Describes the time duration
+                owner: BPP
+                type: string
+            timestamp:
+              _description:
+                required: false
+                usage: 2024-05-31T10:00:00.000Z
+                info: Describes the time timestamp
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This include the item details.
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 231800
+                info: This refers to the numerical value of the total quoted price.
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: This refers to the value of used currency of quoted price.
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BAP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Principal
+                info: This attribute describes the breakup of the total quoted price.
+                owner: BPP
+                type: enum
+                enums: *a7
+            price:
+              value:
+                _description:
+                  required: true
+                  usage: 200000
+                  info: This describes the decimal value of the price of a product or service.
+                  owner: BPP
+                  type: string
+              currency:
+                _description:
+                  required: true
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              offered_value:
+                _description:
+                  required: false
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: This describes the quote value of the price of a product or service.
+                owner: BAP
+                type: object
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item id
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 3
+                      info: Describes the quantity count
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: <placeholder description>
+                    owner: BAP
+                    type: object
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This refers to the complete description of the mutully agreed upon
+              quotation for this order.
+            owner: BAP
+            type: object
+        billing:
+          name:
+            _description:
+              required: true
+              usage: "House #"
+              info: Describes the billing name
+              owner: BAP
+              type: string
+          address:
+            _description:
+              required: true
+              usage: B005 Aspire Heights
+              info: Describes the billing address
+              owner: BAP
+              type: string
+          city:
+            name:
+              _description:
+                required: true
+                usage: Bangalore
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: BAN
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            code:
+              _description:
+                required: true
+                usage: KA
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            name:
+              _description:
+                required: true
+                usage: Karnataka
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          email:
+            _description:
+              required: true
+              usage: receiver1@test.com
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: true
+              usage: 9999888867
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        payments:
+          type:
+            _description:
+              required: true
+              usage: ON-ORDER
+              info: Describes the payment type
+              owner: BPP
+              type: enum
+              enums: *a8
+          collected_by:
+            _description:
+              required: true
+              usage: BPP
+              info: Describes the payment type
+              owner: BPP
+              type: enum
+              enums: *a9
+          url:
+            _description:
+              required: true
+              usage: https://sellerpaymentgateway.com/123456
+              info: Describes the payment url
+              owner: BPP
+              type: string
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Describes the payments status
+              owner: BPP
+              type: enum
+              enums: *a10
+          params:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the payments currency
+                owner: BPP
+                type: string
+            transaction_id:
+              _description:
+                required: true
+                usage: 122313
+                info: Describes the payments transaction id
+                owner: BPP
+                type: string
+            amount:
+              _description:
+                required: true
+                usage: 123
+                info: Describes the payments amount
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: Describes the param details
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describes the payments description
+            owner: BAP
+            type: object
+        created_at:
+          _description:
+            required: true
+            usage: 2023-01-15T10:00:00.469Z
+            info: Describes the order created_at
+            owner: BPP
+            type: string
+        updated_at:
+          _description:
+            required: true
+            usage: 2023-01-15T10:00:00.469Z
+            info: Describes the order created_at
+            owner: BPP
+            type: string
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to the order details
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  status:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: <placeholder description>
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: string
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: select
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: string
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      order_id:
+        _description:
+          required: true
+          usage: 1
+          info: Describes the order id
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_status:
+    context:
+      location:
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: >-
+                It Explains the country code in accordance with the ISO 3166-1
+                and ISO 3166-2 formats.
+                 
+                 The ISO 3166-1 standard includes 249 countries, with 193 sovereign states as UN members. Dependent territories in ISO 3166-1 are often detailed as subdivisions in ISO 3166-2 under their administering state.
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the country of location where the transaction is
+              meant to be completed.
+            owner: BAP
+            type: object
+        city:
+          code:
+            _description:
+              required: true
+              usage: "*"
+              info: This attribute describes the city code relevant to the location or the
+                area in which it is situated.
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute defines the city of location where the transaction is meant
+              to be completed.
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: This attribute defines the location where the transaction is meant to be
+            completed.
+          owner: BAP
+          type: object
+      domain:
+        _description:
+          required: true
+          usage: ONDC:FIS10
+          info: This is the domain code relevant to the context of this transaction. Here,
+            it is "ONDC:FIS10".
+          owner: BAP
+          type: string
+      timestamp:
+        _description:
+          required: true
+          usage: 2023-03-23T04:41:16Z
+          info: >-
+            It specifies the time of request generation in RFC3339 format.
+            RFC3339 is a date and time format defined by the Internet
+            Engineering Task Force (IETF) in the RFC 3339 standard.
+             YYYY: Four-digit year
+             MM: Two-digit month (01-12)
+             DD: Two-digit day of the month (01-31)
+             T: Separator between the date and time
+             HH: Two-digit hour (00-23)
+             MM: Two-digit minute (00-59)
+             SS: Two-digit second (00-59)
+             .sss: Fractional seconds (optional)
+             Z: Indicates the time is in UTC (optional; the time may also include an offset)
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: bap.credit.becknprotocol.io
+          info: This the subscriber ID of the BAP. It is the unique id for the buyer app.
+          owner: BAP
+          type: string
+      transaction_id:
+        _description:
+          required: true
+          usage: false
+          info: >-
+            It describes a unique identifier that remains consistent across all
+            API calls from search to confirm. 
+             It shows an active user session across multiple requests. BPPs can use it to send personalized recommendations and dynamic offers, even if they don't know the user active on the BAP.
+          owner: BAP
+          type: string
+      message_id:
+        _description:
+          required: true
+          usage: 13ba8018f176
+          info: >-
+            This is a mandatory and unique identifier that persists consistently
+            throughout a request/callback cycle.
+             This value can be utilized to filter out and ignore duplicate messages coming from the BPP.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.0.0
+          info: It explains the transaction protocol version utilized by the sender.
+          owner: BAP
+          type: integer
+      action:
+        _description:
+          required: true
+          usage: on_status
+          info: >-
+            The sender initiates the Beckn protocol method, which is then
+            carried out by the receiver.
+             Beckn is an open, interoperable and universal transaction protocol to enable a decentralised digital economy.
+          owner: BAP
+          type: string
+      bap_uri:
+        _description:
+          required: true
+          usage: https://bap.credit.becknprotocol.io/
+          info: This is the subscriber URL of the Buyer App (BAP) is the endpoint that
+            accepts callbacks from Seller App (BPPs).
+          owner: BAP
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: " This attribute defines the context of the transaction."
+        owner: BAP
+        type: object
+    message:
+      order:
+        provider:
+          id:
+            _description:
+              required: true
+              usage: P1
+              info: Describes the provider id
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: This attribute refers to the provider details
+            owner: BAP
+            type: object
+        fulfillments:
+          type:
+            _description:
+              required: true
+              usage: BPP_ONLINE_EMAIL_SMS
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          id:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment type
+              owner: BAP
+              type: string
+          stops:
+            contact:
+              phone:
+                _description:
+                  required: true
+                  usage: 9999888867
+                  info: Describes the contact phone
+                  owner: BAP
+                  type: string
+              email:
+                _description:
+                  required: true
+                  usage: receiver1@test.com
+                  info: Describes the contact email
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            person:
+              name:
+                _description:
+                  required: true
+                  usage: Receiver Name 1
+                  info: Describes the person name
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            authorization:
+              type:
+                _description:
+                  required: false
+                  usage: CODE
+                  info: Describes the authorization type
+                  owner: BPP
+                  type: string
+              token:
+                _description:
+                  required: false
+                  usage: "12383235623423467"
+                  info: Describes the authorization code
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describes how an order will be rendered/fulfilled to the end-customer
+            owner: BAP
+            type: object
+        items:
+          id:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the item id
+              owner: BAP
+              type: string
+          price:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            offered_value:
+              _description:
+                required: true
+                usage: 1500
+                info: Describes the currency type
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This include the item's price details.
+              owner: BAP
+              type: object
+          quantity:
+            selected:
+              count:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item quantity
+                  owner: BAP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          fulfillment_ids:
+            _description:
+              required: true
+              usage: F1
+              info: Describes the fulfillment_ids id
+              owner: BPP
+              type: string
+          time:
+            label:
+              _description:
+                required: false
+                usage: VALIDITY
+                info: Describes the time label
+                owner: BPP
+                type: string
+            duration:
+              _description:
+                required: false
+                usage: P1M
+                info: Describes the time duration
+                owner: BPP
+                type: string
+            timestamp:
+              _description:
+                required: false
+                usage: 2024-05-31T10:00:00.000Z
+                info: Describes the time timestamp
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This include the item details.
+            owner: BAP
+            type: object
+        offers:
+          id:
+            _description:
+              required: true
+              usage: DISCA100
+              info: Describes the offer id
+              owner: BPP
+              type: string
+          item_ids:
+            _description:
+              required: true
+              usage: GC1
+              info: Describes the offer item id
+              owner: BPP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        quote:
+          price:
+            value:
+              _description:
+                required: true
+                usage: 231800
+                info: This refers to the numerical value of the total quoted price.
+                owner: BPP
+                type: string
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: This refers to the value of used currency of quoted price.
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: This refers to the value of used currency of quoted price.
+              owner: BAP
+              type: object
+          breakup:
+            title:
+              _description:
+                required: true
+                usage: Principal
+                info: This attribute describes the breakup of the total quoted price.
+                owner: BPP
+                type: string
+            price:
+              value:
+                _description:
+                  required: true
+                  usage: 200000
+                  info: This describes the decimal value of the price of a product or service.
+                  owner: BPP
+                  type: string
+              currency:
+                _description:
+                  required: true
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              offered_value:
+                _description:
+                  required: false
+                  usage: INR
+                  info: This refers to the value of used currency of that particular quoted price
+                    breakup.
+                  owner: BPP
+                  type: string
+              _description:
+                required: false
+                usage: --
+                info: This describes the quote value of the price of a product or service.
+                owner: BAP
+                type: object
+            item:
+              id:
+                _description:
+                  required: true
+                  usage: GC1
+                  info: Describes the item id
+                  owner: BPP
+                  type: string
+              quantity:
+                selected:
+                  count:
+                    _description:
+                      required: false
+                      usage: 3
+                      info: Describes the quantity count
+                      owner: BPP
+                      type: string
+                  _description:
+                    required: false
+                    usage: --
+                    info: <placeholder description>
+                    owner: BAP
+                    type: object
+                _description:
+                  required: false
+                  usage: --
+                  info: <placeholder description>
+                  owner: BAP
+                  type: object
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: This attribute describes the breakup of the total quoted price.
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: This refers to the complete description of the mutully agreed upon
+              quotation for this order.
+            owner: BAP
+            type: object
+        billing:
+          name:
+            _description:
+              required: true
+              usage: "House #"
+              info: Describes the billing name
+              owner: BAP
+              type: string
+          address:
+            _description:
+              required: true
+              usage: B005 Aspire Heights
+              info: Describes the billing address
+              owner: BAP
+              type: string
+          city:
+            name:
+              _description:
+                required: true
+                usage: Bangalore
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            code:
+              _description:
+                required: true
+                usage: BAN
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          state:
+            code:
+              _description:
+                required: true
+                usage: KA
+                info: Describes the billing city code
+                owner: BAP
+                type: string
+            name:
+              _description:
+                required: true
+                usage: Karnataka
+                info: Describes the billing city name
+                owner: BAP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          email:
+            _description:
+              required: true
+              usage: receiver1@test.com
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          phone:
+            _description:
+              required: true
+              usage: 9999888867
+              info: Describes the billing city name
+              owner: BAP
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        payments:
+          type:
+            _description:
+              required: true
+              usage: ON-ORDER
+              info: Describes the payment type
+              owner: BPP
+              type: string
+          collected_by:
+            _description:
+              required: true
+              usage: BPP
+              info: Describes the payment type
+              owner: BPP
+              type: string
+          url:
+            _description:
+              required: true
+              usage: https://sellerpaymentgateway.com/123456
+              info: Describes the payment url
+              owner: BPP
+              type: string
+          status:
+            _description:
+              required: true
+              usage: NOT-PAID
+              info: Describes the payments status
+              owner: BPP
+              type: string
+          params:
+            currency:
+              _description:
+                required: true
+                usage: INR
+                info: Describes the payments currency
+                owner: BPP
+                type: string
+            transaction_id:
+              _description:
+                required: true
+                usage: 122313
+                info: Describes the payments transaction id
+                owner: BPP
+                type: string
+            amount:
+              _description:
+                required: true
+                usage: 123
+                info: Describes the payments amount
+                owner: BPP
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: Describes the param details
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: Describes the payments description
+            owner: BAP
+            type: object
+        created_at:
+          _description:
+            required: true
+            usage: 2023-01-15T10:00:00.469Z
+            info: Describes the order created_at
+            owner: BPP
+            type: string
+        updated_at:
+          _description:
+            required: true
+            usage: 2023-01-15T10:00:00.469Z
+            info: Describes the order created_at
+            owner: BPP
+            type: string
+        _description:
+          required: false
+          usage: --
+          info: This attribute refers to the order details
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: This attribute refers to the message of the transaction
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
