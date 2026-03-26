@@ -1,0 +1,402 @@
+openapi: 3.0.0
+info:
+  title: Reconciliation and Settlement Framework (RSF) for ONDC
+  description: ONDC  Reconciliation and Settlement Framework API Specification
+  version: 2.0.0
+  domain: ONDC:NTS10
+security:
+  - SubscriberAuth: []
+paths:
+  /recon:
+    post:
+      tags:
+        - Collector
+        - Receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  $ref: "#/components/schemas/Context"
+                message:
+                  type: object
+                  properties:
+                    orders:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Describes the order id
+                          amount:
+                            $ref: "#/components/schemas/Amount"
+                          settlements:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                payment_id:
+                                  type: string
+                                status:
+                                  type: string
+                                amount:
+                                  $ref: "#/components/schemas/Amount"
+                                commision:
+                                  $ref: "#/components/schemas/Amount"
+                                withholding_amount:
+                                  $ref: "#/components/schemas/Amount"
+                                tcs:
+                                  $ref: "#/components/schemas/Amount"
+                                tds:
+                                  $ref: "#/components/schemas/Amount"
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                settlement_ref_no:
+                                  type: string
+              required:
+                - context
+                - message
+      responses:
+        "200":
+          description: Acknowledgement of message received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: object
+                    properties:
+                      ack:
+                        $ref: "#/components/schemas/Ack"
+                    required:
+                      - ack
+                  error:
+                    $ref: "#/components/schemas/Error"
+                required:
+                  - message
+  /on_recon:
+    post:
+      tags:
+        - Collector
+        - Receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  $ref: "#/components/schemas/Context"
+                message:
+                  type: object
+                  properties:
+                    orders:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Describes the order id
+                          amount:
+                            $ref: "#/components/schemas/Amount"
+                          recon_accord:
+                            type: boolean
+                          settlements:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                payment_id:
+                                  type: string
+                                status:
+                                  type: string
+                                due_date:
+                                  type: string
+                                  format: date
+                                amount:
+                                  allOf:
+                                    - type: object
+                                      properties:
+                                        diff_value:
+                                          type: string
+                                    - $ref: "#/components/schemas/Amount"
+                                commision:
+                                  allOf:
+                                    - type: object
+                                      properties:
+                                        diff_value:
+                                          type: string
+                                    - $ref: "#/components/schemas/Amount"
+                                withholding_amount:
+                                  allOf:
+                                    - type: object
+                                      properties:
+                                        diff_value:
+                                          type: string
+                                    - $ref: "#/components/schemas/Amount"
+                                tcs:
+                                  allOf:
+                                    - type: object
+                                      properties:
+                                        diff_value:
+                                          type: string
+                                    - $ref: "#/components/schemas/Amount"
+                                tds:
+                                  allOf:
+                                    - type: object
+                                      properties:
+                                        diff_value:
+                                          type: string
+                                    - $ref: "#/components/schemas/Amount"
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                settlement_ref_no:
+                                  type: string
+              required:
+                - context
+      responses:
+        "200":
+          description: Acknowledgement of message received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: object
+                    properties:
+                      ack:
+                        $ref: "#/components/schemas/Ack"
+                    required:
+                      - ack
+                  error:
+                    $ref: "#/components/schemas/Error"
+                required:
+                  - message
+components:
+  securitySchemes:
+    SubscriberAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Signature of message body using Collector or Receiver subscriber's
+        signing public key. <br/><br/>Format:<br/><br/><code>Authorization :
+        Signature
+        keyId=\"{subscriber_id}|{unique_key_id}|{algorithm}\",algorithm=\"ed255\
+        19\",created=\"1606970629\",expires=\"1607030629\",headers=\"(created)
+        (expires) digest\",signature=\"Base64(signing string)\"</code>"
+  schemas:
+    Ack:
+      description: Describes the ACK response
+      type: object
+      properties:
+        status:
+          type: string
+          description: Describe the status of the ACK response. If schema validation
+            passes, status is ACK else it is NACK
+          enum:
+            - ACK
+            - NACK
+    Amount:
+      type: object
+      properties:
+        currency:
+          type: string
+          example: INR
+        value:
+          type: string
+          example: ""
+    BankDetails:
+      type: object
+      properties:
+        account_no:
+          type: string
+          example: ""
+        ifsc_code:
+          type: string
+          example: ""
+    Context:
+      description: Describes a beckn message context
+      type: object
+      properties:
+        domain:
+          type: string
+        location:
+          type: object
+          properties:
+            country:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: IND
+            city:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: "*"
+        action:
+          type: string
+          description: Defines the Beckn API call. Any actions other than the enumerated
+            actions are not supported by Beckn Protocol
+        version:
+          type: string
+          description: Version of Beckn core API specification being used
+        bap_id:
+          type: string
+          description: Unique id of the BAP. By default it is the fully qualified domain
+            name of the BAP
+        bap_uri:
+          type: string
+          format: uri
+          description: URI of the BAP for accepting callbacks. Must have the same domain
+            name as the bap_id
+        bpp_id:
+          type: string
+          description: Unique id of the BPP. By default it is the fully qualified domain
+            name of the BPP
+        bpp_uri:
+          type: string
+          format: uri
+          description: URI of the BPP. Must have the same domain name as the bap_id
+        transaction_id:
+          type: string
+          description: This is a unique value which persists across all API calls from
+            search through confirm
+        message_id:
+          type: string
+          description: This is a unique value which persists during a request / callback
+            cycle
+        timestamp:
+          type: string
+          format: date-time
+          description: Time of request generation in RFC3339 format
+        ttl:
+          type: string
+          description: The duration in ISO8601 format after timestamp for which this
+            message holds valid
+      required:
+        - domain
+        - action
+        - location
+        - version
+        - transaction_id
+        - message_id
+        - bap_id
+        - bap_uri
+        - timestamp
+    Error:
+      description: Describes an error object that is returned by a Collector or
+        Receiver as a response or callback to an action by another network
+        participant. This object is sent when any request received by a network
+        participant is unacceptable. This object can be sent either during Ack
+        or with the callback.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Standard error code. For full list of error codes, refer <a href =
+            https://ondc-official.github.io/ONDC-NTS-Specifications/#error>here</a>
+        message:
+          type: string
+          description: Human readable message describing the error. Used mainly for
+            logging. Not recommended to be shown to the user.
+    Orders:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            description: Describes the order id
+            type: string
+          inter_participant:
+            description: Provides details about the settlement amount, payable/ receivable
+              and status between the Collector and the Receiver
+            type: object
+            properties:
+              settled_amount:
+                $ref: "#/components/schemas/Amount"
+              amount:
+                $ref: "#/components/schemas/Amount"
+              status:
+                type: string
+                enum:
+                  - SETTLED
+                  - NOT_SETTLED
+              reference_no:
+                type: string
+              error:
+                $ref: "#/components/schemas/Error"
+          collector:
+            description: Provides details about the amount to be retained by the collector
+            type: object
+            properties:
+              amount:
+                $ref: "#/components/schemas/Amount"
+          provider:
+            description: Provides details about the amount to be settled to the Provider of
+              an NP.
+            type: object
+            properties:
+              id:
+                type: string
+                example: ""
+              name:
+                type: string
+                example: ""
+              bank_details:
+                $ref: "#/components/schemas/BankDetails"
+              status:
+                type: string
+                enum:
+                  - SETTLED
+                  - NOT_SETTLED
+              amount:
+                $ref: "#/components/schemas/Amount"
+              reference_no:
+                type: string
+              error:
+                $ref: "#/components/schemas/Error"
+          self:
+            type: object
+            description: Provides details about the amount for the NP to move to their
+              operative account
+            properties:
+              amount:
+                $ref: "#/components/schemas/Amount"
+              status:
+                type: string
+                enum:
+                  - SETTLED
+                  - NOT_SETTLED
+              reference_no:
+                type: string
+              error:
+                $ref: "#/components/schemas/Error"
+    Settlement:
+      description: >
+        - Describes the settlement of NP -NP - Describes the miscellaneous
+        settlement - Describes the NIL settlement
+      type: object
+      properties:
+        type:
+          description: Describes the type of the settlement
+          type: string
+        id:
+          description: |
+            * settlement id of the settlement file
+          type: string
+        order:
+          $ref: "#/components/schemas/Orders"

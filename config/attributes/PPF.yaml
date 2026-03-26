@@ -1,0 +1,708 @@
+meta:
+  use_case_id: PPF
+attribute_set:
+  recon:
+    context:
+      action:
+        _description:
+          required: false
+          usage: recon
+          info: Describes the method being called by the sender and executed at the
+            receiver.
+          owner: any
+          type: string
+      bap_id:
+        _description:
+          required: false
+          usage: collectorapp.com
+          info: Describes the subscriber id of the BNP
+          owner: any
+          type: string
+      bap_uri:
+        _description:
+          required: false
+          usage: https://collectorapp.com/ondc/1.0/
+          info: Describes the subscriber uri of the BNP
+          owner: any
+          type: string
+      bpp_id:
+        _description:
+          required: false
+          usage: receiver-app.com
+          info: Describes the subscriber id of the SNP
+          owner: any
+          type: string
+      bpp_uri:
+        _description:
+          required: false
+          usage: https://receiver-app.com/ondc/
+          info: Describes the subscriber uri of the SNP
+          owner: any
+          type: string
+      domain:
+        _description:
+          required: false
+          usage: ONDC:NTS10
+          info: Domain in which the settlement occurs
+          owner: any
+          type: enum
+          enums: &a1
+            - code: ONDC:NTS10
+              description: RSF
+      location:
+        city:
+          code:
+            _description:
+              required: false
+              usage: "*"
+              info: "Describes city "
+              owner: any
+              type: enum
+              enums: &a2
+                - code: "*"
+                  description: city
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        country:
+          code:
+            _description:
+              required: false
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: any
+              type: enum
+              enums: &a3
+                - code: IND
+                  description: Represents the country
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: <placeholder description>
+          owner: BAP
+          type: object
+      message_id:
+        _description:
+          required: false
+          usage: 841ef6d7-d74d-4411-ac06-a05469c0f9ac
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: any
+          type: string
+      timestamp:
+        _description:
+          required: false
+          usage: 2024-05-09T06:36:51.897Z
+          info: Describes time of request generation in RFC3339 format
+          owner: any
+          type: string
+      transaction_id:
+        _description:
+          required: false
+          usage: d73a366-aebb-4144-9314-808dda82c7e6
+          info: Describes  a unique value which persists across all API calls
+          owner: any
+          type: string
+      ttl:
+        _description:
+          required: false
+          usage: P1D
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: any
+          type: string
+      version:
+        _description:
+          required: false
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: any
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      orders:
+        amount:
+          currency:
+            _description:
+              required: false
+              usage: INR
+              info: Currency of the amount of the Order
+              owner: any
+              type: string
+          value:
+            _description:
+              required: false
+              usage: "300.00"
+              info: Value of the amount of the Order
+              owner: any
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        id:
+          _description:
+            required: false
+            usage: order-1234
+            info: Id of the order
+            owner: any
+            type: string
+        settlements:
+          amount:
+            currency:
+              _description:
+                required: false
+                usage: INR
+                info: Currency of the amount of the settlement
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Value of the amount of the settlement
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          commission:
+            currency:
+              _description:
+                required: false
+                usage: INR
+                info: Currency of the commission on the order
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Value of the commission on the order
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          id:
+            _description:
+              required: false
+              usage: settlement-id-456
+              info: Id of the settlement
+              owner: any
+              type: string
+          payment_id:
+            _description:
+              required: false
+              usage: pymnt-1
+              info: Payment ID of the settlement
+              owner: any
+              type: string
+          settlement_ref_no:
+            _description:
+              required: true
+              usage: utr-1234
+              info: Settlement Reference number of the settlement is required if settlement is
+                settled
+              owner: any
+              type: string
+          status:
+            _description:
+              required: false
+              usage: PENDING
+              info: Status of the settlement
+              owner: any
+              type: enum
+              enums: &a4
+                - code: SETTLED
+                  description: Successfully settled
+                - code: PENDING
+                  description: Settlement awaited due to reconciliation difference between NPs
+                - code: TO_BE_INITIATED
+                  description: Settlement to be initiated in a future settlement cycle
+          tcs:
+            currency:
+              _description:
+                required: false
+                usage: INR
+                info: Currency of tax collected at source
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Value of tax collected at source
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          tds:
+            currency:
+              _description:
+                required: false
+                usage: INR
+                info: Currency of tax deducted at source
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Value of tax deducted at source
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          updated_at:
+            _description:
+              required: false
+              usage: 2024-05-09T06:36:51.897Z
+              info: Settlement modification time
+              owner: any
+              type: string
+          withholding_amount:
+            currency:
+              _description:
+                required: false
+                usage: INR
+                info: Currency of the withholding amount
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Value of the withholding amount
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: <placeholder description>
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
+  on_recon:
+    context:
+      action:
+        _description:
+          required: false
+          usage: on_recon
+          info: Describes the method being called by the sender and executed at the
+            receiver.
+          owner: any
+          type: string
+      bap_id:
+        _description:
+          required: false
+          usage: collectorapp.com
+          info: Describes the subscriber id of the BNP
+          owner: any
+          type: string
+      bap_uri:
+        _description:
+          required: false
+          usage: https://collectorapp.com/ondc/1.0/
+          info: Describes the subscriber uri of the BNP
+          owner: any
+          type: string
+      bpp_id:
+        _description:
+          required: false
+          usage: receiver-app.com
+          info: Describes the subscriber id of the SNP
+          owner: any
+          type: string
+      bpp_uri:
+        _description:
+          required: false
+          usage: https://receiver-app.com/ondc/
+          info: Describes the subscriber uri of the SNP
+          owner: any
+          type: string
+      domain:
+        _description:
+          required: false
+          usage: ONDC:NTS10
+          info: Domain in which the settlement occurs
+          owner: any
+          type: enum
+          enums: *a1
+      location:
+        city:
+          code:
+            _description:
+              required: false
+              usage: "*"
+              info: "Describes city "
+              owner: any
+              type: enum
+              enums: *a2
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        country:
+          code:
+            _description:
+              required: false
+              usage: IND
+              info: Describes country code as per ISO 3166-1 and ISO 3166-2 format
+              owner: any
+              type: enum
+              enums: *a3
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: <placeholder description>
+          owner: BAP
+          type: object
+      message_id:
+        _description:
+          required: false
+          usage: 841ef6d7-d74d-4411-ac06-a05469c0f9ac
+          info: Describes a unique value which persists during a request / callback cycle.
+          owner: any
+          type: string
+      timestamp:
+        _description:
+          required: false
+          usage: 2024-05-09T06:36:51.897Z
+          info: Describes time of request generation in RFC3339 format
+          owner: any
+          type: string
+      transaction_id:
+        _description:
+          required: false
+          usage: d73a366-aebb-4144-9314-808dda82c7e6
+          info: Describes  a unique value which persists across all API calls
+          owner: any
+          type: string
+      ttl:
+        _description:
+          required: false
+          usage: P1D
+          info: Describes the duration in ISO8601 format after timestamp for which this
+            message holds valid
+          owner: any
+          type: string
+      version:
+        _description:
+          required: false
+          usage: 2.0.0
+          info: Describes the version of transaction protocol being used by the sender.
+          owner: any
+          type: string
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    message:
+      orders:
+        amount:
+          currency:
+            _description:
+              required: false
+              usage: INR
+              info: Currency of the amount of the Order
+              owner: any
+              type: string
+          value:
+            _description:
+              required: false
+              usage: "300.00"
+              info: Value of the amount of the Order
+              owner: any
+              type: string
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        id:
+          _description:
+            required: false
+            usage: order-1234
+            info: Id of the order
+            owner: any
+            type: string
+        recon_accord:
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        settlements:
+          amount:
+            currency:
+              _description:
+                required: false
+                usage: "10.00"
+                info: Currency of the amount of the settlement
+                owner: any
+                type: string
+            diff_amount:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Difference in the settlement amount incase recon_accord is FALSE
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: INR
+                info: Value of the amount of the settlement
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          commission:
+            currency:
+              _description:
+                required: false
+                usage: "10.00"
+                info: Currency of the commission on the order
+                owner: any
+                type: string
+            diff_amount:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Difference in the commission amount incase recon_accord is FALSE
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: settlement-id-456
+                info: Value of the commission on the order
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          id:
+            _description:
+              required: false
+              usage: pymnt-1
+              info: Id of the settlement
+              owner: any
+              type: string
+          payment_id:
+            _description:
+              required: false
+              usage: utr-1234
+              info: Payment_Id of the settlement
+              owner: any
+              type: string
+          settlement_ref_no:
+            _description:
+              required: true
+              usage: PENDING
+              info: "Settlement Reference number of the settlement is required if settlement
+                is settled "
+              owner: any
+              type: string
+          due_date:
+            _description:
+              required: false
+              usage: 2024-05-09
+              info: due date of settlement in case recon_accord is true
+              owner: any
+              type: string
+          status:
+            _description:
+              required: false
+              usage: INR
+              info: Status of the settlement
+              owner: any
+              type: enum
+              enums: *a4
+          tcs:
+            currency:
+              _description:
+                required: false
+                usage: "10.00"
+                info: Currency of tax collected at source
+                owner: any
+                type: string
+            diff_amount:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Difference in the tax collected at the source incase recon_accord is FALSE
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: INR
+                info: Value of tax collected at source
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          tds:
+            currency:
+              _description:
+                required: false
+                usage: "10.00"
+                info: Currency of tax deducted at source
+                owner: any
+                type: string
+            diff_amount:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Difference in the tax deducted at the source incase recon_accord is FALSE
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: 2024-05-09T06:36:51.897Z
+                info: Value of tax deducted at source
+                owner: any
+                type: string
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          updated_at:
+            _description:
+              required: false
+              usage: INR
+              info: Settlement modification time
+              owner: any
+              type: string
+          withholding_amount:
+            currency:
+              _description:
+                required: false
+                usage: "10.00"
+                info: Currency of the withholding amount
+                owner: any
+                type: string
+            diff_amount:
+              _description:
+                required: false
+                usage: "300.00"
+                info: Difference in the withholding amount incase recon_accord is FALSE
+                owner: any
+                type: string
+            value:
+              _description:
+                required: false
+                usage: --
+                info: <placeholder description>
+                owner: BAP
+                type: object
+            _description:
+              required: false
+              usage: --
+              info: <placeholder description>
+              owner: BAP
+              type: object
+          _description:
+            required: false
+            usage: --
+            info: <placeholder description>
+            owner: BAP
+            type: object
+        _description:
+          required: false
+          usage: --
+          info: <placeholder description>
+          owner: BAP
+          type: object
+      _description:
+        required: false
+        usage: --
+        info: <placeholder description>
+        owner: BAP
+        type: object
+    _description:
+      required: false
+      usage: --
+      info: <placeholder description>
+      owner: BAP
+      type: object
