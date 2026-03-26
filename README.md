@@ -1,7 +1,7 @@
 # ONDC:TRV10 — version 2.0.1
 
 **Branch:** `draft-TRV10-2.0.1`  
-**Use Cases:** on-demand
+**Use Cases:** Ride-hailing
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - on-demand
+  - Ride-hailing
