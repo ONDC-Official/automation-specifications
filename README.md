@@ -1,7 +1,7 @@
 # ONDC:TRV11 — version 2.0.0
 
 **Branch:** `draft-TRV11-2.0.0`  
-**Use Cases:** intra-city, metro
+**Use Cases:** Bus, Metro
 
 ---
 
@@ -156,5 +156,5 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - intra-city
-  - metro
+  - Bus
+  - Metro
