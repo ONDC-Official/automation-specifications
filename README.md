@@ -1,7 +1,7 @@
 # ONDC:TRV13 — version 2.0.1
 
 **Branch:** `draft-TRV13-2.0.1`  
-**Use Cases:** hotel
+**Use Cases:** Hotel-Booking-V2
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - hotel
+  - Hotel-Booking-V2
