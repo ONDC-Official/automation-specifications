@@ -1,7 +1,7 @@
 # ONDC:RET10 — version 1.2.0
 
 **Branch:** `draft-RET10-1.2.0`  
-**Use Cases:** B2C
+**Use Cases:** GROCERY
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - B2C
+  - GROCERY
