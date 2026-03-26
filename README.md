@@ -1,7 +1,7 @@
 # nic2004:60232 — version 1.2.0
 
 **Branch:** `draft-logistics-1.2.0`  
-**Use Cases:** logistics
+**Use Cases:** Logistics (NIC2004:60232)
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - logistics
+  - Logistics (NIC2004:60232)
