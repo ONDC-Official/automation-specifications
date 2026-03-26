@@ -1,0 +1,1942 @@
+_TESTS_:
+  search:
+    - _NAME_: SEARCH_CONTEXT
+      action:
+        - search
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: CONTEXT_REQUIRED
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_LOCATION_COUNTRY_CODE
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_LOCATION_CITY_CODE
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_LOCATION_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr all in enumList
+    - _NAME_: SEARCH_INTENT
+      action:
+        - search
+      _RETURN_:
+        - _NAME_: REQUIRED_CATEGORY_CODE
+          attr: $.message.intent.category.descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: VALID_ENUM_CATEGORY_CODE
+          attr: $.message.intent.category.descriptor.code
+          enumList:
+            - HOTEL
+          _RETURN_: attr all in enumList
+    - _NAME_: SEARCH_INTENT_TAGS
+      action:
+        - search
+      _RETURN_:
+        - _NAME_: TAG_GROUPS_REQUIRED
+          tagPath: $.message.intent.tags[*].descriptor.code
+          validTags:
+            - BAP_TERMS
+            - BUYER_FINDER_FEES
+            - CATALOG_INC
+          _RETURN_: tagPath all in validTags
+        - _NAME_: TAG_BAP_TERMS
+          _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')]
+          subTags: $.list[*].descriptor.code
+          validValues:
+            - STATIC_TERMS
+            - STATIC_TERMS_NEW
+            - EFFECTIVE_DATE
+          _RETURN_: subTags all in validValues
+        - _NAME_: TAG_BUYER_FINDER_FEES
+          _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+          subTags: $.list[*].descriptor.code
+          validValues:
+            - BUYER_FINDER_FEES_PERCENTAGE
+          _RETURN_: subTags all in validValues
+  on_search:
+    - _NAME_: ON_SEARCH_CONTEXT
+      action:
+        - on_search
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: CONTEXT_REQUIRED
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_LOCATION_COUNTRY_CODE
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_LOCATION_CITY_CODE
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_LOCATION_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_CATALOG_NAME
+          attr: $.message.catalog.descriptor.name
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CATALOG_CODE
+          attr: $.message.catalog.descriptor.code
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+    - _NAME_: PROVIDERS_REQUIRED
+      action:
+        - on_search
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.catalog.providers[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PROVIDER_NAME
+          attr: $.message.catalog.providers[*].descriptor.name
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PROVIDER_IMAGES
+          attr: $.message.catalog.providers[*].descriptor.images[*].url
+          reg:
+            - ^https://.*
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REQUIRED_PROVIDER_LOCATIONS
+          attr: $.message.catalog.providers[*].locations[*].id
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+    - _NAME_: PROVIDER_PAYMENTS
+      action:
+        - on_search
+      _RETURN_:
+        - _NAME_: VALID_PAYMENT_TYPES
+          enumPath: $.message.catalog.providers[*].payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _CONTINUE_: "!(enumPath are present)"
+          _RETURN_: enumPath all in enumList
+    - _NAME_: PROVIDER_ITEMS
+      action:
+        - on_search
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEM_ID
+          attr: $.message.catalog.providers[*].items[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_LABEL
+          attr: $.message.catalog.providers[*].items[*].time.label
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_TIMESTAMPS
+          attr: $.message.catalog.providers[*].items[*].time.timestamp
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_NAME
+          attr: $.message.catalog.providers[*].items[*].descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_CODE
+          attr: $.message.catalog.providers[*].items[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_IMAGES
+          attr: $.message.catalog.providers[*].items[*].descriptor.images[*].url
+          reg:
+            - ^https://.*
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REQUIRED_ITEM_PRICE
+          attr: $.message.catalog.providers[*].items[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_PRICE_CURRENCY
+          attr: $.message.catalog.providers[*].items[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_PRICE_MAX_VALUE
+          attr: $.message.catalog.providers[*].items[*].price.maximum_value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY_AVAILABLE
+          attr: $.message.catalog.providers[*].items[*].quantity.available.count
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY_MAXIMUM_COUNT
+          attr: $.message.catalog.providers[*].items[*].quantity.maximum.count
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_LOCATION_LINK
+          attr: $.message.catalog.providers[*].items[*].location_ids[*]
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_CATEGORY_LINK
+          attr: $.message.catalog.providers[*].items[*].category_ids[*]
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_PAYMENT_LINK
+          attr: $.message.catalog.providers[*].items[*].payment_ids[*]
+          _RETURN_: attr are present
+    - _NAME_: ITEM_ADDONS
+      action:
+        - on_search
+      _RETURN_:
+        - _NAME_: REQUIRED_ADDON_ID
+          attr: $.message.catalog.providers[*].items[*].add_ons[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ADDON_NAME
+          attr: $.message.catalog.providers[*].items[*].add_ons[*].descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ADDON_PRICE
+          attr: $.message.catalog.providers[*].items[*].add_ons[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ADDON_PRICE_CURRENCY
+          attr: $.message.catalog.providers[*].items[*].add_ons[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ADDON_PRICE_MAXIMUM_VALUE
+          attr: $.message.catalog.providers[*].items[*].add_ons[*].price.maximum_value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CANCELLATION_TERMS_URL
+          attr: $.message.catalog.providers[*].items[*].cancellation_terms[*].external_ref.url
+          reg:
+            - ^https://.*
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+  select:
+    - _NAME_: SELECT_CONTEXT
+      action:
+        - select
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: REQUIRED_CONTEXT_FIELDS
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_COUNTRY
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_CITY
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM_VALIDATION
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr any in enumList
+    - _NAME_: SELECT_ORDER
+      action:
+        - select
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PROVIDER_TIME_LABEL
+          attr: $.message.order.provider.time.label
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PROVIDER_TIME_RANGE
+          attr: $.message.order.provider.time.range.start
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PROVIDER_TIME_RANGE_END
+          attr: $.message.order.provider.time.range.end
+          _RETURN_: attr are present
+    - _NAME_: SELECT_ORDER_ITEMS
+      action:
+        - select
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEM_ID
+          attr: $.message.order.items[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_LOCATION
+          attr: $.message.order.items[*].location_ids[*]
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY_SELECTED
+          attr: $.message.order.items[*].quantity.selected.count
+          _RETURN_: attr are present
+    - _NAME_: SELECT_ORDER_FULFILLMENTS
+      action:
+        - select
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_TAGS
+          attr: $.message.order.fulfillments[*].tags[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: VALID_FULFILLMENT_TAG_GUESTS
+          attr: $.message.order.fulfillments[*].tags[*].descriptor.code
+          enumList:
+            - GUESTS
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_FULFILLMENT_SUBTAGS
+          attr: $.message.order.fulfillments[*].tags[*].list[*].descriptor.code
+          enumList:
+            - ADULTS
+            - CHILDREN
+          _RETURN_: attr all in enumList
+  on_select:
+    - _NAME_: ON_SELECT_CONTEXT
+      action:
+        - on_select
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: REQUIRED_CONTEXT_FIELDS
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_COUNTRY
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_CITY
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM_VALIDATION
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr any in enumList
+    - _NAME_: ON_SELECT_ORDER
+      action:
+        - on_select
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: ON_SELECT_ORDER_ITEMS
+      action:
+        - on_select
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEM_ID
+          attr: $.message.order.items[*].id
+          _RETURN_: attr are present
+    - _NAME_: ON_SELECT_ORDER_QUOTE
+      action:
+        - on_select
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: ON_SELECT_ORDER_PAYMENTS
+      action:
+        - on_select
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+  init:
+    - _NAME_: INIT_CONTEXT
+      action:
+        - init
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: REQUIRED_CONTEXT_FIELDS
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_COUNTRY
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_CITY
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM_VALIDATION
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr any in enumList
+    - _NAME_: INIT_ORDER_PROVIDER
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: INIT_ORDER_ITEMS
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEM_ID
+          attr: $.message.order.items[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_LOCATION_IDS
+          attr: $.message.order.items[*].location_ids[*]
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY
+          attr: $.message.order.items[*].quantity.selected.count
+          _RETURN_: attr are present
+    - _NAME_: INIT_ORDER_PAYMENTS
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_PARAMS
+          attr: $.message.order.payments[*].params.amount
+          _RETURN_: attr are present
+    - _NAME_: INIT_ORDER_BILLING
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: INIT_ORDER_FULFILLMENTS
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: INIT_ORDER_TAGS
+      action:
+        - init
+      _RETURN_:
+        - _NAME_: REQUIRED_BAP_TERMS
+          attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BUYER_FINDER_FEES
+          attr: $.message.order.tags[?(@.descriptor.code=='BUYER_FINDER_FEES')].list[*].descriptor.code
+          _RETURN_: attr are present
+  on_init:
+    - _NAME_: ON_INIT_CONTEXT
+      action:
+        - on_init
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: REQUIRED_CONTEXT_FIELDS
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_COUNTRY
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_CITY
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM_VALIDATION
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr any in enumList
+    - _NAME_: ON_INIT_ORDER_PROVIDER
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: ON_INIT_ITEMS
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEMS
+          _RETURN_:
+            - _NAME_: REQUIRED_MESSAGE_ITEMS_ID
+              attr: $.message.order.items[*].id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_LOCATIONS
+              attr: $.message.order.items[*].location_ids[*]
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_QUANTITY
+              attr: $.message.order.items[*].quantity.selected.count
+              _RETURN_: attr are present
+    - _NAME_: ON_INIT_ORDER_QUOTE
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: ON_INIT_PAYMENTS
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          enumList:
+            - PAID
+            - NOT-PAID
+          _RETURN_: attr all in enumList
+    - _NAME_: ON_INIT_ORDER_BILLING
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: ON_INIT_ORDER_FULFILLMENTS
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: ON_INIT_TAGS
+      action:
+        - on_init
+      _RETURN_:
+        - _NAME_: REQUIRED_TAG_GROUPS
+          attr: $.message.order.tags[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_TAG_VALUES
+          attr: $.message.order.tags[*].list[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: PAYMENT_TAG_GROUP
+          validTags:
+            - BAP_TERMS
+            - BUYER_FINDER_FEES
+            - BPP_TERMS
+          tagPath: $.message.order.tags[*].descriptor.code
+          _RETURN_: tagPath all in validTags
+        - _NAME_: REQUIRED_PAYMENT_TAG_BPP_TERMS
+          _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+          subTags: $.list[*].descriptor.code
+          validValues:
+            - MAX_LIABILITY
+            - MAX_LIABILITY_CAP
+            - MANDATORY_ARBITRATION
+            - COURT_JURISDICTION
+            - DELAY_INTEREST
+            - TAX_NUMBER
+          _CONTINUE_: "!(subTags are present)"
+          _RETURN_: subTags all in validValues
+  confirm:
+    - _NAME_: CONFIRM_CONTEXT
+      action:
+        - confirm
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_:
+        - _NAME_: REQUIRED_CONTEXT_FIELDS
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_COUNTRY
+              attr: $.context.location.country.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_CITY
+              attr: $.context.location.city.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_URI
+              attr: $.context.bap_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BAP_ID
+              attr: $.context.bap_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TTL
+              attr: $.context.ttl
+              _RETURN_: attr are present
+        - _NAME_: CONTEXT_ENUM_VALIDATION
+          _RETURN_:
+            - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+              attr: $.context.location.country.code
+              enumList:
+                - IND
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_CONTEXT_DOMAIN
+              attr: $.context.domain
+              enumList:
+                - ONDC:TRV13
+              _RETURN_: attr any in enumList
+    - _NAME_: CONFIRM_ORDER_PROVIDER
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: CONFIRM_ITEMS
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEMS
+          _RETURN_:
+            - _NAME_: REQUIRED_MESSAGE_ITEMS_ID
+              attr: $.message.order.items[*].id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_LOCATIONS
+              attr: $.message.order.items[*].location_ids[*]
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_QUANTITY
+              attr: $.message.order.items[*].quantity.selected.count
+              _RETURN_: attr are present
+    - _NAME_: CONFIRM_ORDER_QUOTE
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: CONFIRM_PAYMENTS
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          enumList:
+            - PAID
+            - NOT-PAID
+          _RETURN_: attr all in enumList
+    - _NAME_: CONFIRM_ORDER_BILLING
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: CONFIRM_ORDER_FULFILLMENTS
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: CONFIRM_TAGS
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_TAG_GROUPS
+          attr: $.message.order.tags[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: PAYMENT_TAG_GROUP
+          validTags:
+            - BAP_TERMS
+            - BUYER_FINDER_FEES
+            - BPP_TERMS
+          tagPath: $.message.order.tags[*].descriptor.code
+          _RETURN_: tagPath all in validTags
+        - _NAME_: REQUIRED_PAYMENT_TAG_BPP_TERMS
+          _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+          subTags: $.list[*].descriptor.code
+          validValues:
+            - MAX_LIABILITY
+            - MAX_LIABILITY_CAP
+            - MANDATORY_ARBITRATION
+            - COURT_JURISDICTION
+            - DELAY_INTEREST
+            - TAX_NUMBER
+          _CONTINUE_: "!(subTags are present)"
+          _RETURN_: subTags all in validValues
+    - _NAME_: CONFIRM_TIMESTAMPS
+      action:
+        - confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_CREATED_AT
+          attr: $.message.order.created_at
+          reg:
+            - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$
+          _RETURN_: attr follow regex reg
+        - _NAME_: REQUIRED_UPDATED_AT
+          attr: $.message.order.updated_at
+          reg:
+            - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$
+          _RETURN_: attr follow regex reg
+  on_confirm:
+    - _NAME_: ON_CONFIRM_CONTEXT
+      action:
+        - on_confirm
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: &a1
+        - _NAME_: REQUIRED_ON_CONFIRM_CONTEXT
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REGEX_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_CONFIRM_ORDER
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_ON_CONFIRM_ORDER
+          _RETURN_:
+            - _NAME_: REQUIRED_ORDER_ID
+              attr: $.message.order.id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ORDER_STATUS
+              attr: $.message.order.status
+              _RETURN_: attr are present
+            - _NAME_: VALID_ORDER_STATUS
+              attr: $.message.order.status
+              enumList:
+                - SOFT-CANCEL
+                - CONFIRM-CANCEL
+                - SOFT-UPDATE
+                - CONFIRM-UPDATE
+                - ACTIVE
+                - COMPLETE
+                - CANCELLED
+              _RETURN_: attr all in enumList
+            - _NAME_: REQUIRED_ON_CONFIRM_UPDATED_AT
+              attr: $.message.order.updated_at
+              _RETURN_: attr are present
+        - _NAME_: VALID_ENUM_ON_CONFIRM_ORDER
+          _RETURN_:
+            - _NAME_: VALID_ENUM_ORDER_STATUS
+              attr: $.message.order.status
+              enumList:
+                - SOFT_CANCEL
+                - CONFIRM_CANCEL
+                - ACTIVE
+                - COMPLETED
+                - CANCELLED
+              _RETURN_: attr any in enumList
+            - _NAME_: REGEX_ON_CONFIRM_UPDATED_AT
+              attr: $.message.order.updated_at
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_CONFIRM_ITEMS
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEMS
+          _RETURN_:
+            - _NAME_: REQUIRED_MESSAGE_ITEMS_ID
+              attr: $.message.order.items[*].id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_LOCATIONS
+              attr: $.message.order.items[*].location_ids[*]
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_QUANTITY
+              attr: $.message.order.items[*].quantity.selected.count
+              _RETURN_: attr are present
+    - _NAME_: ON_CONFIRM_ORDER_FULFILLMENTS
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: ON_CONFIRM_PROVIDER
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: ON_CONFIRM_ORDER_QUOTE
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: ON_CONFIRM_PAYMENTS
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          enumList:
+            - PAID
+            - NOT-PAID
+          _RETURN_: attr all in enumList
+    - _NAME_: ON_CONFIRM_ORDER_BILLING
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: ON_CONFIRM_TIMESTAMPS
+      action:
+        - on_confirm
+      _RETURN_:
+        - _NAME_: REQUIRED_UPDATED_AT
+          attr: $.message.order.updated_at
+          reg:
+            - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$
+          _RETURN_: attr follow regex reg
+  status:
+    - _NAME_: STATUS_CONTEXT
+      action:
+        - status
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: *a1
+    - _NAME_: REQUIRED_ORDER_ID
+      action:
+        - status
+      attr: $.message.order_id
+      _RETURN_: attr are present
+  on_status:
+    - _NAME_: ON_STATUS_CONTEXT
+      action:
+        - on_status
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: &a2
+        - _NAME_: REQUIRED_ON_STATUS_CONTEXT
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REGEX_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_STATUS_ORDER
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_ON_STATUS_ORDER
+          _RETURN_:
+            - _NAME_: REQUIRED_ORDER_ID
+              attr: $.message.order.id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ORDER_STATUS
+              attr: $.message.order.status
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ORDER_UPDATED_AT
+              attr: $.message.order.updated_at
+              _RETURN_: attr are present
+        - _NAME_: VALID_ENUM_ON_STATUS_ORDER
+          _RETURN_:
+            - _NAME_: VALID_ENUM_ORDER_STATUS
+              attr: $.message.order.status
+              enumList:
+                - SOFT_CANCEL
+                - CONFIRM_CANCEL
+                - ACTIVE
+                - COMPLETED
+                - CANCELLED
+              _RETURN_: attr any in enumList
+            - _NAME_: REGEX_ON_STATUS_UPDATED_AT
+              attr: $.message.order.updated_at
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_STATUS_ITEMS
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEMS
+          _RETURN_:
+            - _NAME_: REQUIRED_MESSAGE_ITEMS_ID
+              attr: $.message.order.items[*].id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_LOCATIONS
+              attr: $.message.order.items[*].location_ids[*]
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_QUANTITY
+              attr: $.message.order.items[*].quantity.selected.count
+              _RETURN_: attr are present
+    - _NAME_: ON_STATUS_ORDER_FULFILLMENTS
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: ON_STATUS_PROVIDER
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: ON_STATUS_ORDER_QUOTE
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: ON_STATUS_PAYMENTS
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          enumList:
+            - PAID
+            - NOT-PAID
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_ENUM_PAYMENTS
+          _RETURN_:
+            - _NAME_: VALID_ENUM_PAYMENTS_STATUS
+              attr: $.message.order.payments[*].status
+              enumList:
+                - PAID
+                - NOT-PAID
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_ENUM_PAYMENTS_TYPE
+              attr: $.message.order.payments[*].type
+              enumList:
+                - PRE-ORDER
+                - PART-PAYMENT
+                - ON-FULFILLMENT
+                - POST-FULFILLMENT
+              _RETURN_: attr any in enumList
+        - _NAME_: REQUIRED_PAYMENTS_LINKED_TAGS
+          _RETURN_:
+            - _NAME_: REQUIRED_LINKED_PAYMENT_TAG
+              attr: $.message.order.payments[*].tags[*].descriptor.code
+              enumList:
+                - LINKED-PAYMENTS
+                - ADV-DEPOSIT
+                - FINAL-PAYMENT
+              _RETURN_: attr any in enumList
+    - _NAME_: ON_STATUS_ORDER_BILLING
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: ON_STATUS_TAGS
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_TAGS
+          _RETURN_:
+            - _NAME_: REQUIRED_TAGS_DESCRIPTOR_CODE
+              attr: $.message.order.tags[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_TAGS_LIST_DESCRIPTOR_CODE
+              attr: $.message.order.tags[*].list[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_TAGS_LIST_VALUE
+              attr: $.message.order.tags[*].list[*].value
+              _RETURN_: attr are present
+    - _NAME_: ON_STATUS_DOCUMENTS
+      action:
+        - on_status
+      _RETURN_:
+        - _NAME_: REQUIRED_DOCUMENTS
+          _RETURN_:
+            - _NAME_: REQUIRED_DOCUMENTS_DESCRIPTOR_CODE
+              attr: $.message.order.documents[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_DOCUMENTS_URL
+              attr: $.message.order.documents[*].url
+              _RETURN_: attr are present
+  update:
+    - _NAME_: UPDATE_CONTEXT
+      action:
+        - update
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: *a2
+    - _NAME_: UPDATE_MESSAGE_1
+      action:
+        - update
+      _RETURN_:
+        - _NAME_: REQUIRED_UPDATE_TARGET
+          attr: $.message.update_target
+          _RETURN_: attr are present
+        - _NAME_: VALID_UPDATE_TARGET
+          attr: $.message.update_target
+          enumList:
+            - fulfillment
+            - payment
+            - billing
+            - items
+          _RETURN_: attr any in enumList
+        - _NAME_: REQUIRED_ORDER_ID
+          attr: $.message.order.id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_TAG_DESCRIPTOR_CODE
+          attr: $.message.order.fulfillments[*].tags[*].descriptor.code
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+        - _NAME_: VALID_TAG_DESCRIPTOR_CODE
+          attr: $.message.order.fulfillments[*].tags[*].descriptor.code
+          enumList:
+            - UPDATE_REQUEST
+            - MODIFY
+          _RETURN_: attr any in enumList
+        - _NAME_: REQUIRED_TAG_LIST_DESCRIPTOR_CODE
+          _CONTINUE_: "!(attr are present)"
+          attr: $.message.order.fulfillments[*].tags[*].list[*].descriptor.code
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_TAG_LIST_VALUE
+          attr: $.message.order.fulfillments[*].tags[*].list[*].value
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are present
+  on_update:
+    - _NAME_: ON_UPDATE_CONTEXT
+      action:
+        - on_update
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: &a3
+        - _NAME_: REQUIRED_ON_UPDATE_CONTEXT
+          _RETURN_:
+            - _NAME_: REQUIRED_CONTEXT_DOMAIN
+              attr: $.context.domain
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_ACTION
+              attr: $.context.action
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_VERSION
+              attr: $.context.version
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+              attr: $.context.message_id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+              attr: $.context.transaction_id
+              _RETURN_: attr are present
+            - _NAME_: REGEX_CONTEXT_TIMESTAMP
+              attr: $.context.timestamp
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_UPDATE_ORDER
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_ON_UPDATE_ORDER
+          _RETURN_:
+            - _NAME_: REQUIRED_ORDER_ID
+              attr: $.message.order.id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ORDER_STATUS
+              attr: $.message.order.status
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ORDER_UPDATED_AT
+              attr: $.message.order.updated_at
+              _RETURN_: attr are present
+        - _NAME_: VALID_ENUM_ON_UPDATE_ORDER
+          _RETURN_:
+            - _NAME_: VALID_ENUM_ORDER_STATUS
+              attr: $.message.order.status
+              enumList:
+                - SOFT-CANCEL
+                - CONFIRM-CANCEL
+                - SOFT-UPDATE
+                - CONFIRM-UPDATE
+                - ACTIVE
+                - COMPLETED
+                - CANCELLED
+              _RETURN_: attr any in enumList
+            - _NAME_: REGEX_ON_UPDATE_UPDATED_AT
+              attr: $.message.order.updated_at
+              reg:
+                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$
+              _RETURN_: attr follow regex reg
+    - _NAME_: ON_UPDATE_ITEMS
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_ITEMS
+          _RETURN_:
+            - _NAME_: REQUIRED_MESSAGE_ITEMS_ID
+              attr: $.message.order.items[*].id
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_LOCATIONS
+              attr: $.message.order.items[*].location_ids[*]
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_ITEMS_QUANTITY
+              attr: $.message.order.items[*].quantity.selected.count
+              _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_ORDER_FULFILLMENTS
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_FULFILLMENT_ID
+          attr: $.message.order.fulfillments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_NAME
+          attr: $.message.order.fulfillments[*].customer.person.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_AGE
+          attr: $.message.order.fulfillments[*].customer.person.age
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_DOB
+          attr: $.message.order.fulfillments[*].customer.person.dob
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_GENDER
+          attr: $.message.order.fulfillments[*].customer.person.gender
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT
+          attr: $.message.order.fulfillments[*].customer.contact.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CUSTOMER_CONTACT_EMAIL
+          attr: $.message.order.fulfillments[*].customer.contact.email
+          _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_PROVIDER
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_PROVIDER_ID
+          attr: $.message.order.provider.id
+          _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_ORDER_QUOTE
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_QUOTE_PRICE
+          attr: $.message.order.quote.price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_CURRENCY
+          attr: $.message.order.quote.price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP
+          attr: $.message.order.quote.breakup[*].price.value
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_PRICE_CURRENCY
+          attr: $.message.order.quote.breakup[*].price.currency
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_BREAKUP_TITLE
+          attr: $.message.order.quote.breakup[*].title
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_QUOTE_TTL
+          attr: $.message.order.quote.ttl
+          _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_PAYMENTS
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_PAYMENT_ID
+          attr: $.message.order.payments[*].id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_PAYMENT_TYPE
+          attr: $.message.order.payments[*].type
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_TYPES
+          attr: $.message.order.payments[*].type
+          enumList:
+            - PRE-ORDER
+            - ON-FULFILLMENT
+            - PART-PAYMENT
+          _RETURN_: attr all in enumList
+        - _NAME_: REQUIRED_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          _RETURN_: attr are present
+        - _NAME_: VALID_PAYMENT_STATUS
+          attr: $.message.order.payments[*].status
+          enumList:
+            - PAID
+            - NOT-PAID
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_ENUM_PAYMENTS
+          _RETURN_:
+            - _NAME_: VALID_ENUM_PAYMENTS_STATUS
+              attr: $.message.order.payments[*].status
+              enumList:
+                - PAID
+                - NOT-PAID
+              _RETURN_: attr any in enumList
+            - _NAME_: VALID_ENUM_PAYMENTS_TYPE
+              attr: $.message.order.payments[*].type
+              enumList:
+                - PRE-ORDER
+                - PART-PAYMENT
+                - ON-FULFILLMENT
+                - POST-FULFILLMENT
+              _RETURN_: attr any in enumList
+        - _NAME_: REQUIRED_PAYMENTS_LINKED_TAGS
+          _RETURN_:
+            - _NAME_: REQUIRED_LINKED_PAYMENT_TAG
+              attr: $.message.order.payments[*].tags[*].descriptor.code
+              enumList:
+                - LINKED-PAYMENTS
+                - ADV-DEPOSIT
+                - FINAL-PAYMENT
+              _RETURN_: attr any in enumList
+    - _NAME_: ON_UPDATE_ORDER_BILLING
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_BILLING_NAME
+          attr: $.message.order.billing.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ADDRESS
+          attr: $.message.order.billing.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_STATE_NAME
+          attr: $.message.order.billing.state.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_CITY_NAME
+          attr: $.message.order.billing.city.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_DESCRIPTOR_NAME
+          attr: $.message.order.billing.organization.descriptor.name
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_ORGANIZATION_ADDRESS
+          attr: $.message.order.billing.organization.address
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_EMAIL
+          attr: $.message.order.billing.email
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_PHONE
+          attr: $.message.order.billing.phone
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_BILLING_TAX_ID
+          attr: $.message.order.billing.tax_id
+          _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_TAGS
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_TAGS
+          _RETURN_:
+            - _NAME_: REQUIRED_TAGS_DESCRIPTOR_CODE
+              attr: $.message.order.tags[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_TAGS_LIST_DESCRIPTOR_CODE
+              attr: $.message.order.tags[*].list[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_TAGS_LIST_VALUE
+              attr: $.message.order.tags[*].list[*].value
+              _RETURN_: attr are present
+    - _NAME_: ON_UPDATE_DOCUMENTS
+      action:
+        - on_update
+      _RETURN_:
+        - _NAME_: REQUIRED_DOCUMENTS
+          _RETURN_:
+            - _NAME_: REQUIRED_DOCUMENTS_DESCRIPTOR_CODE
+              attr: $.message.order.documents[*].descriptor.code
+              _RETURN_: attr are present
+            - _NAME_: REQUIRED_DOCUMENTS_URL
+              attr: $.message.order.documents[*].url
+              _RETURN_: attr are present
+  cancel:
+    - _NAME_: CANCEL_CONTEXT
+      action:
+        - cancel
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: *a3
+    - _NAME_: CANCEL_MESSAGE_1
+      action:
+        - cancel
+      _RETURN_:
+        - _NAME_: REQUIRED_CANCELLATION_ID
+          attr: $.message.cancellation_reason_id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CANCELLATION_SHORT_DESC
+          attr: $.message.descriptor.short_desc
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CANCELLATION_LONG_DESC
+          attr: $.message.descriptor.long_desc
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ORDER_ID
+          attr: $.message.order_id
+          _RETURN_: attr are present
+        - _NAME_: VALID_CANCELLATION_REASON_ID
+          attr: $.message.cancellation_reason_id
+          enumList:
+            - "000"
+            - "001"
+            - "002"
+            - "003"
+            - "004"
+            - "005"
+            - "011"
+            - "012"
+            - "013"
+            - "014"
+          _RETURN_: attr any in enumList
+  on_cancel:
+    - _NAME_: ON_CANCEL_CONTEXT
+      action:
+        - on_cancel
+      domain:
+        - ONDC:TRV13
+      version:
+        - 2.0.0
+      _RETURN_: *a3
+    - _NAME_: ON_CANCEL_MESSAGE_1
+      action:
+        - on_cancel
+      _RETURN_:
+        - _NAME_: REQUIRED_ORDER_ID
+          attr: $.message.order.id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ORDER_STATUS
+          attr: $.message.order.status
+          _RETURN_: attr are present
+        - _NAME_: VALID_ORDER_STATUS
+          attr: $.message.order.status
+          enumList:
+            - CANCELLED
+          _RETURN_: attr any in enumList
+        - _NAME_: REQUIRED_CANCELLED_BY
+          attr: $.message.order.cancellation.cancelled_by
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CANCELLATION_REASON_ID
+          attr: $.message.order.cancellation.reason.id
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_UPDATED_AT
+          attr: $.message.order.updated_at
+          _RETURN_: attr are present
+        - _NAME_: VALID_CANCELLATION_REASON_ID
+          attr: $.message.order.cancellation.reason.id
+          enumList:
+            - "000"
+            - "001"
+            - "002"
+            - "003"
+            - "004"
+            - "005"
+            - "011"
+            - "012"
+            - "013"
+            - "014"
+          _RETURN_: attr any in enumList
+_SESSION_DATA_:
+  trans: {}
