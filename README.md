@@ -1,7 +1,7 @@
 # ONDC:RET15 — version 1.2.5
 
 **Branch:** `draft-RET15-1.2.5`  
-**Use Cases:** B2C
+**Use Cases:** APPLIANCES
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - B2C
+  - APPLIANCES
