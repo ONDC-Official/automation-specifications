@@ -7,7 +7,7 @@ meta:
   use_case_id: GROCERY
   flowName: Delivery Flow With IGM(v-2.0.0)
 transaction_data:
-  transaction_id: 0a7f1cc1-caf2-482e-b7c4-447891bc0d0b
+  transaction_id: fde6e1df-1271-4cf5-97fc-5ba7cfb90d50
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -70,7 +70,10 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: fashion_select
+            type: ret10_grocery_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -4838,7 +4841,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: resolution_accept
+            label: Enter resolution ID
+            type: text
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow
@@ -5278,7 +5285,15 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: rating
+            label: Select Rating
+            type: select
+            values:
+              - THUMBS_UP
+              - THUMBS_DOWN
+            default: THUMBS_UP
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow
