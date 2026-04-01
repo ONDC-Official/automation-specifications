@@ -7,7 +7,7 @@ meta:
   use_case_id: HEALTH&WELLNESS
   flowName: Merchant Side RTO and Part Order Cancellation Flow
 transaction_data:
-  transaction_id: 1da65f3f-5877-4f61-91f7-a7927f046aaf
+  transaction_id: 2d555898-35b1-42ff-ba2c-b4304e4324f0
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,48 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: ret10_grocery_select
+            type: ret10_grocery_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city_code:
+                  type: string
+                  default: std:011
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                    additionalProperties: true
+                    default: {}
+              additionalProperties: true
+              default: {}
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
