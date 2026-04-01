@@ -40,8 +40,12 @@ export async function select_2DefaultGenerator(
     }
 
     // Update form response with submission ID from investor_details_form
-    const submission_id = sessionData?.form_data?.investor_details_form?.form_submission_id;
-
+    const submission_id = sessionData.flow_id === "Lumpsum_New_Folio" ? sessionData?.form_data?.investor_details_form?.form_submission_id : sessionData?.kyc_details_form
+    // Ensure form ID matches from on_select
+    const formId = sessionData.flow_id === "Lumpsum_New_Folio" ? "investor_details_form" : "kyc_details_form"
+    if (formId && existingPayload.message?.order?.xinput?.form) {
+        existingPayload.message.order.xinput.form.id = formId;
+    }
     if (existingPayload.message?.order?.xinput?.form_response) {
         if (submission_id) {
             existingPayload.message.order.xinput.form_response.submission_id = submission_id;
@@ -51,11 +55,7 @@ export async function select_2DefaultGenerator(
         }
     }
 
-    // Ensure form ID matches from on_select
-    const formId = "investor_details_form";
-    if (formId && existingPayload.message?.order?.xinput?.form) {
-        existingPayload.message.order.xinput.form.id = formId;
-    }
+
 
     console.log("=== select_2 Generator End ===");
     return existingPayload;

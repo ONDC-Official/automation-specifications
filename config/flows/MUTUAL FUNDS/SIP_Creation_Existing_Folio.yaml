@@ -7,7 +7,7 @@ meta:
   use_case_id: MUTUAL FUNDS
   flowName: SIP Creation Existing Folio
 transaction_data:
-  transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
+  transaction_id: 294a1462-8583-4439-a75c-92f31d815618
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: select
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 333f7779-99fb-4994-8ed3-7b26c940a169
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 8ca74a32-a9ba-4071-b60d-f8cccfa7e6da
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -52,7 +52,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: fis14_mutul_fund_select
     examples: []
   - api: on_select
     action_id: on_select_existing_folio
@@ -68,9 +72,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_select
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 1786a0e6-87d3-4442-857f-b109432eceb8
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 5576621b-337e-4e0b-b68e-f1172c6b25c2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -108,9 +112,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: init
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 4b784664-ceb5-433d-8498-d1491f177ee7
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 8abd9b77-e680-4a0d-a17a-72bedddd0a39
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -148,9 +152,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_init
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 5746f1c8-f367-4ea4-9bcb-42552dc4290c
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 266f3dff-117b-4bb3-80f6-3d65e3a29c38
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -188,9 +192,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: confirm
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: fb5f7bf5-d6f0-4ed9-b2d1-ca3b5768a418
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: b0a2c8bd-a513-45f6-92a6-3d46b8ebc3b9
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -228,9 +232,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_confirm
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 0e8d1bed-ca7e-44b0-a79f-60529afa0d33
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 5bf28878-fd02-4f53-8358-f42e97b90647
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -266,7 +270,12 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload: {}
       saveData: {}
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: form_submission_id
+            label: Enter Payment Form ID
+            type: HTML_FORM
+            reference: $.reference_data.payment_mandate_form
       formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
     examples: []
   - api: on_status
@@ -283,9 +292,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_status
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: 2088e4f1-e803-4a56-8837-951d95b10c5f
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: 35cb1b94-6ba7-4371-9c69-3263858187bf
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -323,9 +332,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_update
-          timestamp: 2026-03-25T18:05:51.681Z
-          transaction_id: ccc1afa5-7b78-4771-b9cd-c898d890f0ae
-          message_id: af7473dd-f30c-4760-8e27-bb9006029707
+          timestamp: 2026-04-01T11:39:51.986Z
+          transaction_id: 294a1462-8583-4439-a75c-92f31d815618
+          message_id: c26a5b08-5329-4ff5-a9d1-18945be308bf
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S

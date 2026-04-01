@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { updateChecklist } from '../utils/updateChecklist';
 
 export async function on_status_unsolicitedDefaultGenerator(
     existingPayload: any,
@@ -22,9 +23,10 @@ export async function on_status_unsolicitedDefaultGenerator(
     // Update provider information from session data (carry-forward from previous flows)
     if (sessionData?.order) {
         existingPayload.message.order = sessionData?.order || {};
+        const order = existingPayload.message.order;
+
         if (existingPayload.message?.order) {
-            const order = existingPayload.message.order;
-            order.xinput = {
+            existingPayload.message.order.xinput = {
                 "form": {
                     "id": "F04"
                 },
@@ -33,10 +35,10 @@ export async function on_status_unsolicitedDefaultGenerator(
                     "submission_id": "F04_SUBMISSION_ID"
                 }
             }
-            if (order.xinput?.form) {
+            if (existingPayload.message.order.xinput?.form) {
                 // Use form ID from session data or default to FO3 (from on_select_2/on_status_unsolicited)
                 const formId = sessionData.form_id || "E_sign_verification_status";
-                order.xinput.form.id = formId;
+                existingPayload.message.order.xinput.form.id = formId;
                 console.log("Updated form ID:", formId);
 
                 const submission_id =
@@ -49,14 +51,24 @@ export async function on_status_unsolicitedDefaultGenerator(
                 //         : formId === "Emanadate_verification_status" ? sessionData?.form_data?.Emanadate_verification_status?.idType
                 //             : sessionData?.form_data?.Ekyc_details_verification_status?.idType;
                 // Set form status to OFFLINE_PENDING
-                if (order.xinput?.form_response) {
+                if (existingPayload.message.order.xinput?.form_response) {
                     if (submission_id) {
-                        order.xinput.form_response.submission_id = submission_id;
+                        existingPayload.message.order.xinput.form_response.submission_id = submission_id;
+                        existingPayload.message.order.xinput.form_response.status = "SUBMITTED";
                     }
                 }
 
             }
         }
     }
+
+    const updates = {
+        APPLICATION_FORM_WITH_KYC: sessionData?.kyc_details_form || "",
+        KYC: sessionData.verification_status || "",
+        ESIGN: sessionData.E_sign_verification_status || ""
+    };
+
+    const updatedOrder = updateChecklist(existingPayload.message.order, updates);
+    existingPayload.message.order = updatedOrder
     return existingPayload;
 }

@@ -52,6 +52,80 @@ export async function confirmDefaultGenerator(
         existingPayload.message.order.quote.id = sessionData.quote_id;
     }
 
+    const submission_id = sessionData?.flow_id === "Lumpsum_New_Folio" ? sessionData?.investor_details_form : sessionData?.form_data?.E_sign_verification_status?.form_submission_id || sessionData?.E_sign_verification_status
+
+    if (existingPayload.message?.order?.xinput?.form_response) {
+        if (submission_id) {
+            existingPayload.message.order.xinput.form_response.status = "SUCCESS"
+
+            existingPayload.message.order.xinput.form_response.submission_id = submission_id;
+            console.log("Updated form_response with submission_id:", submission_id);
+        } else {
+            console.warn("⚠️ No submission_id found for E_sign_verification_status");
+        }
+    }
+
+    // Ensure form ID matches from on_select
+    const formId = sessionData.flow_id === "Lumpsum_New_Folio" ? "investor_details_form" : sessionData?.form_id || "E_sign_verification_status";
+    if (existingPayload.message?.order?.xinput?.form) {
+        existingPayload.message.order.xinput.form.id = formId
+    }
     console.log("=== confirm Generator End ===");
+
+    if (sessionData.flow_id === "Lumpsum_Existing_Folio") {
+        existingPayload.message.order.fulfillments[0].customer.person.creds = [
+            {
+                "id": sessionData?.folio_number || "1562162434/45",
+                "type": "FOLIO"
+            },
+            {
+                "id": "115.245.207.90",
+                "type": "IP_ADDRESS"
+            }
+        ]
+        delete existingPayload.message?.order?.xinput;
+    }
+
+    if (sessionData?.flow_id === "Lumpsum_Payment_By_Buyer_App") {
+        existingPayload.message.order.fulfillments[0].customer.person.creds = [
+            {
+                "id": sessionData?.folio_number || "1562162434/45",
+                "type": "FOLIO"
+            },
+            {
+                "id": "115.245.207.90",
+                "type": "IP_ADDRESS"
+            }
+        ]
+
+        delete existingPayload.message?.order?.xinput;
+        existingPayload.message.order.payments = [
+            {
+                "id": "pmt_123",
+                "collected_by": "BAP",
+                "status": "NOT-PAID",
+                "params": {
+                    "amount": "3000",
+                    "currency": "INR"
+                },
+                "type": "PRE_FULFILLMENT"
+            }
+        ]
+    }
+
+    if (sessionData?.flow_id === "Lumpsum_Payment_Retry") {
+        existingPayload.message.order.fulfillments[0].customer.person.creds = [
+            {
+                "id": sessionData?.folio_number || "1562162434/45",
+                "type": "FOLIO"
+            },
+            {
+                "id": "115.245.207.90",
+                "type": "IP_ADDRESS"
+            }
+        ]
+
+        delete existingPayload.message?.order?.xinput;
+    }
     return existingPayload;
 }
