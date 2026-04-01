@@ -7,7 +7,7 @@ meta:
   use_case_id: Hotel-Booking-V2
   flowName: Hotel Booking Seller App Pagination Flow
 transaction_data:
-  transaction_id: 32ef11ea-f7d6-493d-b538-8ecae5abeec7
+  transaction_id: b5d30098-66ef-4fa5-bd2b-1239c5dd9ca3
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -73,7 +73,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "Hotel Booking

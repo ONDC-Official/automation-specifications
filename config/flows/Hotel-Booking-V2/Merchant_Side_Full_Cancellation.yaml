@@ -7,7 +7,7 @@ meta:
   use_case_id: Hotel-Booking-V2
   flowName: Merchant Side Full Cancellation
 transaction_data:
-  transaction_id: 95aa9586-18d1-4440-bb29-e3920677fe66
+  transaction_id: e476950f-e23f-4410-ad3b-232eb80c1007
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -73,7 +73,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "Merchant Side
@@ -902,7 +907,40 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: item_id
+            label: Enter item id (from on_search catalog)
+            type: text
+            payloadField: $.message.order.items[0].id
+          - name: quantity
+            label: Enter quantity
+            type: text
+            payloadField: $.message.order.items[0].quantity.selected.count
+          - name: start_time
+            label: Enter Check In Time (YYYY-MM-DD)
+            type: text
+            required: false
+            payloadField: $.message.order.provider.time.range.start
+          - name: end_time
+            label: Enter Check Out Time (YYYY-MM-DD)
+            type: text
+            required: false
+            payloadField: $.message.order.provider.time.range.end
+          - name: add_on_id
+            label: Enter add-on id (optional)
+            type: text
+            required: false
+            payloadField: $.message.order.items[0].add_ons[0].id
+          - name: adults_count
+            label: Number of adults
+            type: text
+            payloadField: $.message.order.fulfillments[0].tags[0].list[0].value
+          - name: children_count
+            label: Number of children
+            type: text
+            required: false
+            payloadField: $.message.order.fulfillments[0].tags[0].list[1].value
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "Merchant Side
