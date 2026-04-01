@@ -7,7 +7,7 @@ meta:
   use_case_id: gift-card
   flowName: Update Receiver Info
 transaction_data:
-  transaction_id: 25fb0fdd-1921-4a7c-b63a-c41112c51b66
+  transaction_id: ec2a1dd9-27f8-41e0-a376-32c2fb2c53d3
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -65,7 +65,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
