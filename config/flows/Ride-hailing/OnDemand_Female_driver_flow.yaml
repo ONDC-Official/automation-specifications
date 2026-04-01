@@ -7,7 +7,7 @@ meta:
   use_case_id: Ride-hailing
   flowName: OnDemand Female driver flow
 transaction_data:
-  transaction_id: 71f46830-c6e2-486f-91f7-b67c16db15a7
+  transaction_id: 7404c632-3fa2-4801-aee2-3bd5a005b143
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -85,7 +85,28 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.gps
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.gps
+          - name: collected_by
+            label: Selected Collected By
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.intent.payment.collected_by
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -535,7 +556,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv10_201_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
