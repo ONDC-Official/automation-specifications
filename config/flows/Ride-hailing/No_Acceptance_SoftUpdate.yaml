@@ -7,7 +7,7 @@ meta:
   use_case_id: Ride-hailing
   flowName: No Acceptance SoftUpdate
 transaction_data:
-  transaction_id: 65d88f20-5ce9-4651-a420-00a5daee3e2b
+  transaction_id: d5d74f9a-e7fb-4603-888c-90626f730ac4
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -90,7 +90,24 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.gps
+          - name: intermediate_gps
+            label: Enter intermediate gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='INTERMEDIATE_STOP')].location.gps
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.gps
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -705,7 +722,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv10_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -4286,7 +4307,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: updated_end_gps
+            label: Enter updated end gps coordinates
+            type: text
+            payloadField: $.message.order.fulfillments[*].stops[*].location.gps
     examples:
       - name: Example for action "update"
         description: Auto-generated example for action "update" in flow

@@ -7,7 +7,7 @@ meta:
   use_case_id: Ride-hailing
   flowName: OnDemand Rental
 transaction_data:
-  transaction_id: 4a2c7f78-cfe9-48f4-a253-5cb618ab3ab1
+  transaction_id: 8be5ccd3-6017-4460-8f73-bc9f0b249bae
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -76,7 +76,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.gps
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "OnDemand_Rental"
@@ -728,7 +737,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv10_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "OnDemand_Rental"
