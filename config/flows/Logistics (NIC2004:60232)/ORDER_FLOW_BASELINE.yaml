@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (NIC2004:60232)
   flowName: ORDER FLOW BASELINE
 transaction_data:
-  transaction_id: e0be5eab-099e-464b-a7ee-fd473505a2b9
+  transaction_id: 14aed258-36f8-4da6-aa7d-763beb77032f
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -93,7 +93,82 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: LogisticsSearchInput
+            type: LogisticsSearchInput
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                retailCategory:
+                  type: string
+                  description: Select retail item category
+                  enum:
+                    - F&B
+                    - Grocery
+                    - Fashion
+                    - BPC
+                    - Electronics
+                    - Appliances
+                    - Home & Kitchen
+                    - Health & Wellness
+                    - Pharma
+                    - Auto components
+                    - C2C parcels
+                  default: F&B
+                category:
+                  type: string
+                  description: Select a delivery category
+                  enum:
+                    - Immediate Delivery
+                    - Standard Delivery
+                    - Express Delivery
+                    - Next Day Delivery
+                    - Same Day Delivery
+                  default: Immediate Delivery
+                paymentType:
+                  type: string
+                  description: Select payment type
+                  enum:
+                    - POST-FULFILLMENT
+                    - ON-ORDER
+                  default: POST-FULFILLMENT
+                city_code:
+                  type: string
+                  description: City STD code
+                  pattern: ^std:\d+$
+                  default: std:080
+                start_gps:
+                  type: string
+                  description: Start GPS coordinates (lat,long)
+                  pattern: ^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$
+                  default: 12.4535,77.9283
+                end_gps:
+                  type: string
+                  description: End GPS coordinates (lat,long)
+                  pattern: ^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$
+                  default: 12.4535,77.9283
+                start_code:
+                  type: string
+                  description: Start area pincode
+                  pattern: ^\d{6}$
+                  default: "560001"
+                end_code:
+                  type: string
+                  description: End area pincode
+                  pattern: ^\d{6}$
+                  default: "560001"
+              required:
+                - retailCategory
+                - category
+                - paymentType
+                - city_code
+                - start_gps
+                - end_gps
+                - start_code
+                - end_code
+              additionalProperties: false
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -1099,7 +1174,23 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: ExampleInputId
+            type: ExampleInputId
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                returnToOrigin:
+                  type: string
+                  description: Do you want return to origin?
+                  enum:
+                    - yes
+                    - no
+                  default: yes
+              required: []
+              additionalProperties: false
     examples:
       - name: Example for action "confirm"
         description: Auto-generated example for action "confirm" in flow
