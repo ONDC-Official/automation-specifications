@@ -7,7 +7,7 @@ meta:
   use_case_id: ELECTRONICS
   flowName: Discovery Flow full catalog
 transaction_data:
-  transaction_id: a31656a3-d8b9-4f38-8964-240b6bdd87a3
+  transaction_id: 9fa89829-0087-45f2-8f04-07e9bbba7a6c
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -62,7 +62,24 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter the city code
+            type: text
+            payloadField: $.context.city
+          - name: feature_discovery
+            label: Features supported
+            type: checkbox
+            options:
+              - code: "007"
+                name: SNP collecting payment
+              - code: 00C
+                name: Exchange flow
+              - code: "0099"
+                name: Purchase finance
+              - code: "016"
+                name: Customization of input type text
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
