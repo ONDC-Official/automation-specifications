@@ -7,7 +7,7 @@ meta:
   use_case_id: Airline
   flowName: Purchase Journey(Code Based Flow)
 transaction_data:
-  transaction_id: d47e3a03-6ce8-4f55-bc50-6dbbfabe4be0
+  transaction_id: 14f6a14a-ac04-4a8f-a033-a99f0f4f88f5
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -96,7 +96,41 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_location
+            label: Enter start airport code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[0].location.descriptor.code
+          - name: end_location
+            label: Enter end airport code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[1].location.descriptor.code
+          - name: category
+            label: Select travel class
+            type: select
+            payloadField: $.message.intent.category.descriptor.code
+            values:
+              - ECONOMY
+              - BUSINESS
+              - FIRST_CLASS
+          - name: adult_ticket_count
+            label: Adult Ticket Count
+            type: text
+            payloadField: $.message.intent.provider.items[?(@.descriptor.code=='ADULT_TICKET')].quantity.count
+          - name: child_ticket_count
+            label: Child Ticket Count
+            type: text
+            required: false
+            payloadField: $.message.intent.provider.items[?(@.descriptor.code=='CHILD_TICKET')].quantity.count
+          - name: journey_date
+            label: Enter Journey date (YYYY-MM-DD)
+            type: date
+            payloadField: $.message.intent.fulfillment.stops[0].time.timestamp
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "Purchase
@@ -2785,7 +2819,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: airline_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "Purchase
@@ -3393,7 +3431,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: seat_selection
+            label: Select Seats
+            type: airline_seat_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "Purchase

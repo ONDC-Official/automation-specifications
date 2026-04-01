@@ -7,7 +7,7 @@ meta:
   use_case_id: Intercity
   flowName: Intercity(Bus) Cancel Flow(Buyer)
 transaction_data:
-  transaction_id: 65c0c2c3-e389-4805-88ab-e1825fb5bcd8
+  transaction_id: 437caf01-863f-44fd-95a6-999dcb5e1de3
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -79,7 +79,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_code
+            label: Enter start station code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.descriptor.code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -527,7 +536,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: end_code
+            label: Enter end station code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.descriptor.code
+          - name: journey_date
+            label: Enter Journey date (YYYY-MM-DD)
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[0].time.timestamp
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -1411,7 +1429,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: intercity_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -1967,7 +1989,10 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: seat_selection_count
+            type: trv12_bus_seat_selection
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -4105,7 +4130,23 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: cancellation_reason_id
+            label: Select Cancellation Reason Id
+            type: select
+            values:
+              - "001"
+              - "002"
+              - "003"
+              - "004"
+              - "005"
+              - "006"
+              - "007"
+              - "008"
+              - "009"
+            default: "001"
+            payloadField: $.message.cancellation_reason_id
     examples:
       - name: Example for action "cancel"
         description: Auto-generated example for action "cancel" in flow

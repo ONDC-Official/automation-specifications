@@ -7,7 +7,7 @@ meta:
   use_case_id: Airline
   flowName: Airlines - Seller App Pagination Flow
 transaction_data:
-  transaction_id: e5bace11-8041-41eb-9bff-135c992daf95
+  transaction_id: 86dee3fa-2f13-47f3-bcc6-ec27a34f29ed
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -102,7 +102,42 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_location
+            label: Enter start airport code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[0].location.descriptor.code
+          - name: end_location
+            label: Enter end airport code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[1].location.descriptor.code
+          - name: category
+            label: Select travel class
+            type: select
+            payloadField: $.message.intent.category.descriptor.code
+            values:
+              - ECONOMY
+              - BUSINESS
+              - FIRST_CLASS
+              - PREMIUM_ECONOMY
+          - name: adult_ticket_count
+            label: Adult Ticket Count
+            type: text
+            payloadField: $.message.intent.provider.items[?(@.descriptor.code=='ADULT_TICKET')].quantity.count
+          - name: child_ticket_count
+            label: Child Ticket Count
+            type: text
+            required: false
+            payloadField: $.message.intent.provider.items[?(@.descriptor.code=='CHILD_TICKET')].quantity.count
+          - name: journey_date
+            label: Enter Journey date (YYYY-MM-DD)
+            type: date
+            payloadField: $.message.intent.fulfillment.stops[0].time.timestamp
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "Airlines -

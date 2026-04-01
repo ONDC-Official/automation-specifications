@@ -7,7 +7,7 @@ meta:
   use_case_id: Intercity
   flowName: Intercity(Bus) Error Response(Soft Locking Time)
 transaction_data:
-  transaction_id: 42c2b212-13d3-422d-ac5c-fe8a96b382cb
+  transaction_id: 8f5143ca-e8e4-46a9-8301-bfceaab1f7d7
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -95,7 +95,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
