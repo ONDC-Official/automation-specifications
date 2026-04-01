@@ -7,7 +7,7 @@ meta:
   use_case_id: RETINVL
   flowName: RETINVL DISCOVERY FLOW
 transaction_data:
-  transaction_id: 8a65efcd-aa14-4f85-9ace-5738d0d35e64
+  transaction_id: 5e5ec091-c0b4-438d-8623-0b4593b02db7
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,67 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: RETINVL_Discovery_Input
+            type: RETINVL_Discovery_Input
+            schema:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  enum:
+                    - CATEGORY
+                    - PRODUCT
+                cityCode:
+                  type: string
+                  pattern: ^std:\d{3}$
+                gps:
+                  type: string
+                  pattern: ^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$
+                areaCode:
+                  type: string
+                  pattern: ^\d{6}$
+                finderFeeType:
+                  type: string
+                  enum:
+                    - percent
+                    - amount
+                finderFeeAmount:
+                  type: string
+                  pattern: ^[0-9]+(\.[0-9]{1,2})?$
+              required:
+                - mode
+                - cityCode
+                - gps
+                - areaCode
+                - finderFeeType
+                - finderFeeAmount
+              allOf:
+                - if:
+                    properties:
+                      mode:
+                        const: CATEGORY
+                  then:
+                    properties:
+                      category:
+                        type: string
+                        minLength: 2
+                        maxLength: 100
+                    required:
+                      - category
+                - if:
+                    properties:
+                      mode:
+                        const: PRODUCT
+                  then:
+                    properties:
+                      productName:
+                        type: string
+                        minLength: 2
+                        maxLength: 200
+                    required:
+                      - productName
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow

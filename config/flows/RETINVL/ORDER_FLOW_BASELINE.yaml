@@ -7,7 +7,7 @@ meta:
   use_case_id: RETINVL
   flowName: ORDER FLOW BASELINE
 transaction_data:
-  transaction_id: 05a886db-6aed-4831-9a76-adb11d34ba8d
+  transaction_id: 1ff3f7a8-17b6-474a-b8e5-536170266dca
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -78,7 +78,74 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retinvl_init
+            type: retinvl_init
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                order_type:
+                  type: string
+                  enum:
+                    - ILBN
+                    - ILFP
+                    - ILBP
+                  default: ILBN
+                city_code:
+                  type: string
+                  default: std:080
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                      estimated_price:
+                        type: string
+                        pattern: ^(\d+\.\d{1,2}|\d+)$
+                        default: ""
+                      gtin_code:
+                        type: string
+                        pattern: ^[0-9A-Za-z:#+-]{3,50}$
+                        default: 3:GTIN#
+                    required:
+                      - itemId
+                      - quantity
+                      - estimated_price
+                    additionalProperties: true
+                    default: {}
+              required:
+                - order_type
+                - provider
+                - provider_location
+                - location_gps
+                - location_pin_code
+                - items
+              additionalProperties: true
+              default: {}
     examples:
       - name: Example for action "init"
         description: Auto-generated example for action "init" in flow "ORDER_FLOW_BASELINE"
@@ -266,7 +333,29 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Retinvl_input
+            type: Retinvl_input
+            schema:
+              type: object
+              properties:
+                want_part_payment:
+                  type: boolean
+                  default: true
+                advance_amount:
+                  type: string
+                  pattern: ^(\d+\.\d{1,2}|\d+)$
+              required:
+                - want_part_payment
+              allOf:
+                - if:
+                    properties:
+                      want_part_payment:
+                        const: true
+                  then:
+                    required:
+                      - advance_amount
     examples:
       - name: Example for action "on_init"
         description: Auto-generated example for action "on_init" in flow
@@ -517,7 +606,54 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Retinvl_input
+            type: Retinvl_input
+            schema:
+              type: object
+              properties:
+                fulfillment_type:
+                  type: string
+                  enum:
+                    - Delivery
+                  default: Delivery
+                billing_name:
+                  type: string
+                  default: ONDC buyer
+                phone:
+                  type: string
+                  pattern: ^[0-9]{10}$
+                  default: "9886098860"
+                email:
+                  type: string
+                  format: email
+                  default: buyer@test.com
+                location_gps:
+                  type: string
+                  pattern: ^[-+]?([1-8]?\d|90)\.\d+,\s*[-+]?(180|1[0-7]\d|[1-9]?\d)\.\d+$
+                  default: 12.4535,77.9283
+                location_pin_code:
+                  type: string
+                  pattern: ^[0-9]{6}$
+                  default: "560002"
+                address_name:
+                  type: string
+                  default: My Address
+                address_building:
+                  type: string
+                  default: My Building
+                address_locality:
+                  type: string
+                  default: My Street
+                city_name:
+                  type: string
+                  default: Bengaluru
+                state_name:
+                  type: string
+                  default: Karnataka
+              required:
+                - fulfillment_type
     examples:
       - name: Example for action "confirm"
         description: Auto-generated example for action "confirm" in flow

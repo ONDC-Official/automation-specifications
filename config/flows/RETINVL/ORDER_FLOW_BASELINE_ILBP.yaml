@@ -7,7 +7,7 @@ meta:
   use_case_id: RETINVL
   flowName: ORDER FLOW BASELINE ILBP
 transaction_data:
-  transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
+  transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: init
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: c8a6795e-ad62-40fc-b97a-6fc752c3ac7e
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 089fb59a-06d8-452c-843e-f42037ca4074
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -49,7 +49,61 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retinvl_init
+            type: retinvl_init
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city_code:
+                  type: string
+                  default: std:080
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                      gtin_code:
+                        type: string
+                        pattern: ^[0-9A-Za-z:#+-]{3,50}$
+                        default: 3:GTIN#
+                    required:
+                      - itemId
+                      - quantity
+                    additionalProperties: true
+                    default: {}
+              required:
+                - provider
+                - provider_location
+                - location_gps
+                - location_pin_code
+                - items
+              additionalProperties: true
+              default: {}
     examples: []
   - api: on_init
     action_id: on_init_1
@@ -65,9 +119,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_init
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: a8a8819b-7418-4d84-8a4a-c6269c06d075
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 30aa3132-285d-4229-98bf-dd742956759a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -86,7 +140,29 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Retinvl_input
+            type: Retinvl_input
+            schema:
+              type: object
+              properties:
+                want_part_payment:
+                  type: boolean
+                  default: true
+                advance_amount:
+                  type: string
+                  pattern: ^(\d+\.\d{1,2}|\d+)$
+              required:
+                - want_part_payment
+              allOf:
+                - if:
+                    properties:
+                      want_part_payment:
+                        const: true
+                  then:
+                    required:
+                      - advance_amount
     examples: []
   - api: init
     action_id: init_2
@@ -102,9 +178,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: init
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 92ec810b-a426-457d-9a93-6b0a6e73495c
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: be751cd6-d5ab-4c37-9d56-2c6b4bc4422d
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -123,7 +199,66 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retinvl_init
+            type: retinvl_init
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city_code:
+                  type: string
+                  default: std:080
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                      bidding_price:
+                        type: string
+                        pattern: ^(\d+\.\d{1,2}|\d+)$
+                        default: ""
+                      gtin_code:
+                        type: string
+                        pattern: ^[0-9A-Za-z:#+-]{3,50}$
+                        default: 3:GTIN#
+                    required:
+                      - itemId
+                      - quantity
+                      - bidding_price
+                    additionalProperties: true
+                    default: {}
+              required:
+                - provider
+                - provider_location
+                - location_gps
+                - location_pin_code
+                - items
+              additionalProperties: true
+              default: {}
     examples: []
   - api: on_init
     action_id: on_init_2
@@ -139,9 +274,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_init
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 763f857d-78ea-442c-a485-8337e3d8d030
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: e46e2f03-2a59-4c04-868d-8bb30fedfc5a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -160,7 +295,29 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Retinvl_input
+            type: Retinvl_input
+            schema:
+              type: object
+              properties:
+                want_part_payment:
+                  type: boolean
+                  default: true
+                advance_amount:
+                  type: string
+                  pattern: ^(\d+\.\d{1,2}|\d+)$
+              required:
+                - want_part_payment
+              allOf:
+                - if:
+                    properties:
+                      want_part_payment:
+                        const: true
+                  then:
+                    required:
+                      - advance_amount
     examples: []
   - api: confirm
     action_id: confirm_1
@@ -176,9 +333,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: confirm
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: f762a86e-67c7-4aa8-b6b5-1ff59f1f2d78
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: c9c89e37-56e5-453a-a899-253da3d45f81
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -197,7 +354,54 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Retinvl_input
+            type: Retinvl_input
+            schema:
+              type: object
+              properties:
+                fulfillment_type:
+                  type: string
+                  enum:
+                    - Delivery
+                  default: Delivery
+                billing_name:
+                  type: string
+                  default: ONDC buyer
+                phone:
+                  type: string
+                  pattern: ^[0-9]{10}$
+                  default: "9886098860"
+                email:
+                  type: string
+                  format: email
+                  default: buyer@test.com
+                location_gps:
+                  type: string
+                  pattern: ^[-+]?([1-8]?\d|90)\.\d+,\s*[-+]?(180|1[0-7]\d|[1-9]?\d)\.\d+$
+                  default: 12.4535,77.9283
+                location_pin_code:
+                  type: string
+                  pattern: ^[0-9]{6}$
+                  default: "560002"
+                address_name:
+                  type: string
+                  default: My Address
+                address_building:
+                  type: string
+                  default: My Building
+                address_locality:
+                  type: string
+                  default: My Street
+                city_name:
+                  type: string
+                  default: Bengaluru
+                state_name:
+                  type: string
+                  default: Karnataka
+              required:
+                - fulfillment_type
     examples: []
   - api: on_confirm
     action_id: on_confirm_1
@@ -213,9 +417,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_confirm
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: aa0b753b-b175-4dea-b713-47f002437cb3
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: c5c02283-eb79-49ba-869f-c09928789622
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -250,9 +454,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 3724ea95-d534-4185-82fb-b6b0fa882f10
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: a7929152-1d87-49ac-9c1b-f177dee57584
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -287,9 +491,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: c278ce3b-6e13-4058-ae72-b0c37a74d7f2
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: afbe36a0-07ef-4569-b8f1-90a39b3cb182
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -324,9 +528,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 6d3754eb-1995-4efc-b6f1-4c4ff7470383
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 94f26b60-9d9c-47ca-99e8-1714a3ccd229
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -361,9 +565,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: track
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: e0473b8b-d3b8-470a-99ca-06488e564fde
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 890c1596-cfd2-4cb1-b7cb-42989ddda729
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -398,9 +602,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_track
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: e13dba91-7a97-41b4-8c22-a153f615d231
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 2b0e573f-207a-4f4c-9abd-684e7c33b94e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -435,9 +639,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 60532291-ae7e-4638-910a-43cead522640
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: ec74da22-8df2-46a2-ade9-d41180d6f042
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -472,9 +676,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 4df02b61-b823-4871-bfde-540875952b11
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: 78a7c13e-e4f8-4115-96db-7da735c61b7d
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -509,9 +713,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-03-25T18:05:50.118Z
-          transaction_id: ed5b9578-59d6-44b5-a612-d03bb64451ee
-          message_id: 942bbaae-4e7d-442c-9b44-002575bbcef8
+          timestamp: 2026-04-01T11:39:48.583Z
+          transaction_id: 032d15b9-46cd-40f5-8bf4-d73ca58b5a2a
+          message_id: c9932ea4-c7de-4319-8886-c449e105feb4
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
