@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (P2P)
   flowName: QUICK COMMERCE FLOW
 transaction_data:
-  transaction_id: eca37512-bb62-49c0-a08f-722277ef509b
+  transaction_id: c50ee71d-c018-483b-af3a-3c9cd255ce94
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -94,7 +94,70 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retailCategory
+            label: Select retail item category
+            type: select
+            values:
+              - F&B
+              - Grocery
+              - Fashion
+              - BPC
+              - Electronics
+              - Appliances
+              - Home & Kitchen
+              - Health & Wellness
+              - Pharma
+              - Auto components
+              - C2C parcels
+          - name: category
+            label: Select a category
+            type: select
+            values:
+              - Instant Delivery
+              - Immediate Delivery
+              - Next Day Delivery
+              - Same Day Delivery
+            payloadField: $.message.intent.category.id
+          - name: paymentType
+            label: Select payment type
+            type: select
+            values:
+              - POST-FULFILLMENT
+              - ON-ORDER
+              - ON-FULFILLMENT
+            payloadField: $.message.intent.payment.type
+          - name: fulfillRequest
+            label: Select fulfillment request parameter
+            type: select
+            values:
+              - Rider
+              - Order
+          - name: fulfillReqCount
+            label: Select Rider/Order count
+            type: text
+            default: "2"
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.city
+            default: std:080
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.gps
+            default: 12.4535,77.9283
+          - name: start_code
+            label: Enter start area code
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.address.area_code
+            default: "560001"
+          - name: end_code
+            label: Enter end area code
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.address.area_code
+            default: "560001"
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -330,7 +393,14 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: feature_discovery
+            display: false
+            default:
+              - "005"
+              - "006"
+              - "007"
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow

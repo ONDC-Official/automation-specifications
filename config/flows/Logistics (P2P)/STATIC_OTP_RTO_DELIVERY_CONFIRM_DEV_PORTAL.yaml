@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (P2P)
   flowName: STATIC OTP RTO DELIVERY CONFIRM DEV PORTAL
 transaction_data:
-  transaction_id: 9149bf67-d654-4fd8-81dd-3abb8c081c5a
+  transaction_id: 7ed903f2-46de-406e-bff7-d1c006425764
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -127,7 +127,64 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retailCategory
+            label: Select retail item category
+            type: select
+            values:
+              - F&B
+              - Grocery
+              - Fashion
+              - BPC
+              - Electronics
+              - Appliances
+              - Home & Kitchen
+              - Health & Wellness
+              - Pharma
+              - Auto components
+              - C2C parcels
+          - name: category
+            label: Select a category
+            type: select
+            values:
+              - Standard Delivery
+              - Next Day Delivery
+              - Same Day Delivery
+            payloadField: $.message.intent.category.id
+          - name: paymentType
+            label: Select payment type
+            type: select
+            values:
+              - POST-FULFILLMENT
+              - ON-ORDER
+              - ON-FULFILLMENT
+            payloadField: $.message.intent.payment.type
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.city
+            default: std:080
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.gps
+            default: 12.4535,77.9283
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.gps
+            default: 12.4535,77.9283
+          - name: start_code
+            label: Enter start area code
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.address.area_code
+            default: "560001"
+          - name: end_code
+            label: Enter end area code
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.address.area_code
+            default: "560001"
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -338,7 +395,13 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: default_feature
+            display: false
+            default:
+              - 00A
+              - "022"
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow
@@ -1136,7 +1199,14 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: returnToOrigin
+            label: Return to origin
+            type: select
+            values:
+              - yes
+              - no
     examples:
       - name: Example for action "confirm"
         description: Auto-generated example for action "confirm" in flow

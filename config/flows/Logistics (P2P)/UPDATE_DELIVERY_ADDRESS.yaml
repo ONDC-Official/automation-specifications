@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (P2P)
   flowName: UPDATE DELIVERY ADDRESS
 transaction_data:
-  transaction_id: 86c2230f-2c87-4268-9c60-869653f60f11
+  transaction_id: b9aa840a-0b57-42db-8d01-836be6060321
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -123,7 +123,64 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retailCategory
+            label: Select retail item category
+            type: select
+            values:
+              - F&B
+              - Grocery
+              - Fashion
+              - BPC
+              - Electronics
+              - Appliances
+              - Home & Kitchen
+              - Health & Wellness
+              - Pharma
+              - Auto components
+              - C2C parcels
+          - name: category
+            label: Select a category
+            type: select
+            values:
+              - Standard Delivery
+              - Next Day Delivery
+              - Same Day Delivery
+            payloadField: $.message.intent.category.id
+          - name: paymentType
+            label: Select payment type
+            type: select
+            values:
+              - POST-FULFILLMENT
+              - ON-ORDER
+              - ON-FULFILLMENT
+            payloadField: $.message.intent.payment.type
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.city
+            default: std:080
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.gps
+            default: 12.4535,77.9283
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.gps
+            default: 12.4535,77.9283
+          - name: start_code
+            label: Enter start area code
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.address.area_code
+            default: "560001"
+          - name: end_code
+            label: Enter end area code
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.address.area_code
+            default: "560001"
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -1992,7 +2049,81 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: delivery_section
+            label: Select section(s) to update
+            type: multiselect
+            values:
+              - location
+              - contact
+              - person
+          - name: delivery_location_gps
+            label: Enter delivery GPS coordinates
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.gps
+            default: 12.4535,77.9283
+            showIf: delivery_section contains "location"
+          - name: delivery_address_name
+            label: Enter delivery address
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.name
+            default: My store name 2
+            showIf: delivery_section contains "location"
+          - name: delivery_address_building
+            label: Enter building name
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.building
+            default: My building name 2
+            showIf: delivery_section contains "location"
+          - name: delivery_address_locality
+            label: Enter locality
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.locality
+            default: My street name 2
+            showIf: delivery_section contains "location"
+          - name: delivery_address_city
+            label: Enter city
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.city
+            default: my city name 2
+            showIf: delivery_section contains "location"
+          - name: delivery_address_state
+            label: Enter state
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.state
+            default: my state 2
+            showIf: delivery_section contains "location"
+          - name: delivery_address_country
+            label: Enter country
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.country
+            default: India
+            showIf: delivery_section contains "location"
+          - name: delivery_address_area_code
+            label: Enter area code
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.location.address.area_code
+            default: 560001
+            showIf: delivery_section contains "location"
+          - name: delivery_contact_phone
+            label: Enter phone number
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.contact.phone
+            default: 9123426789
+            showIf: end_section contains "contact"
+          - name: delivery_contact_email
+            label: Enter email address
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.contact.email
+            default: xyz.qweq@gmail.com
+            showIf: end_section contains "contact"
+          - name: delivery_person_name
+            label: Enter receiver name
+            type: text
+            payloadField: $.message.fulfillments[?(@.type=='Delivery')].end.person.name
+            default: person_name_2
+            showIf: delivery_section contains "person"
     examples:
       - name: Example for action "update"
         description: Auto-generated example for action "update" in flow
