@@ -7,7 +7,7 @@ meta:
   use_case_id: HEALTH&WELLNESS
   flowName: Discovery Flow full catalog
 transaction_data:
-  transaction_id: e98fe58c-cb66-40b5-9ae4-e11ce27ab187
+  transaction_id: 0cd1f8f3-0aa8-4162-be20-704307a7876e
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -62,7 +62,28 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter the city code
+            type: text
+            payloadField: $.context.city
+          - name: feature_discovery
+            label: Features supported
+            type: checkbox
+            options:
+              - code: "012"
+                name: Cash on delivery (COD) order
+              - code: "017"
+                name: Seller Creds
+              - code: 01A
+                name: Item Unitized Count
+              - code: 01B
+                name: Minimum Item Quantity
+              - code: 01B
+                name: Minimum order value
+              - code: "005"
+                name: Force cancellation
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow

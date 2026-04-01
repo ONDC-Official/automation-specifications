@@ -7,7 +7,7 @@ meta:
   use_case_id: HEALTH&WELLNESS
   flowName: Buyer Cancellation Flow
 transaction_data:
-  transaction_id: 9f2fe091-b486-44e2-b160-4de056301423
+  transaction_id: 6a12c8c8-cfea-4903-add1-333e6f4c60cb
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,10 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: fashion_select
+            type: ret10_grocery_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -1475,7 +1478,17 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: cancellation_reason_id
+            label: Select a reason_id
+            type: select
+            values:
+              - "051"
+              - "052"
+              - "053"
+              - "999"
+            default: "051"
     examples:
       - name: Example for action "cancel"
         description: Auto-generated example for action "cancel" in flow
