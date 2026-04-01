@@ -7,7 +7,7 @@ meta:
   use_case_id: APPLIANCES
   flowName: Discovery Flow full catalog
 transaction_data:
-  transaction_id: d1880550-af7a-4a86-be5b-c4db6901d364
+  transaction_id: bed33c54-9d1d-4e43-9f10-e395bc298d35
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -62,7 +62,24 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter the city code
+            type: text
+            payloadField: $.context.city
+          - name: feature_discovery
+            label: Features supported
+            type: checkbox
+            options:
+              - code: "007"
+                name: SNP collecting payment
+              - code: 00C
+                name: Exchange flow
+              - code: "0099"
+                name: Purchase finance
+              - code: "016"
+                name: Customization of input type text
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow

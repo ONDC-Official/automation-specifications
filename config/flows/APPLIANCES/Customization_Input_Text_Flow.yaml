@@ -7,7 +7,7 @@ meta:
   use_case_id: APPLIANCES
   flowName: Customization Input Text Flow
 transaction_data:
-  transaction_id: 89f156e8-c30e-4804-9c31-345a0f7dfd90
+  transaction_id: b1c08c70-acc7-428c-a6f3-0b712f87f904
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -94,7 +94,13 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: appliances_select
+            type: ret10_grocery_select
+          - name: custom_input_text
+            label: Enter text
+            type: text
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
