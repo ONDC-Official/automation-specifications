@@ -7,7 +7,7 @@ meta:
   use_case_id: FASHION
   flowName: Cancel Return Request Flow
 transaction_data:
-  transaction_id: d80d7db0-68a0-407d-abbf-572942374fb2
+  transaction_id: d384304a-a406-4938-b4f7-25faa0ea55fc
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,10 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: fashion_select
+            type: ret10_grocery_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -4456,7 +4459,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: Cancellation Return Reason Id
+            label: Select a reason_id
+            type: select
+            values:
+              - "001"
+              - "002"
+              - "003"
+            default: "001"
     examples:
       - name: Example for action "cancel"
         description: Auto-generated example for action "cancel" in flow
