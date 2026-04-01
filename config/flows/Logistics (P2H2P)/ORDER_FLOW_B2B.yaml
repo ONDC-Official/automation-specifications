@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (P2H2P)
   flowName: ORDER FLOW B2B
 transaction_data:
-  transaction_id: 64d93c32-20f8-4615-a7fa-2c149e0a4fca
+  transaction_id: 87e53732-812b-43d8-8059-d3f510e99de6
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -156,7 +156,97 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retailCategory
+            label: Select retail item category
+            type: select
+            values:
+              - Grocery
+              - Fashion
+              - BPC
+              - Electronics
+              - Appliances
+              - Home & Kitchen
+              - Health & Wellness
+              - Pharma
+              - Auto components
+              - C2C parcels
+          - name: cold_storage
+            label: Do you want cold storage?
+            type: select
+            values:
+              - yes
+              - no
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="cold_storage")].value
+          - name: insurance_required
+            label: Do you want insurance?
+            type: select
+            values:
+              - yes
+              - no
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="insurance_required")].value
+          - name: insurance_owner
+            label: Select insurance owner?
+            type: select
+            values:
+              - lsp
+              - lbnp
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="insurance_owner")].value
+          - name: fulfillmentType
+            label: Select a fulfillment type
+            type: select
+            values:
+              - FTL
+              - PTL
+            payloadField: $.message.intent.fulfillment.type
+          - name: dangerous_goods
+            label: Dangerous Goods?
+            type: select
+            default: no
+            values:
+              - no
+              - yes
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="dangerous_goods")].value
+          - name: fragile_handling
+            label: Fragile Handling?
+            type: select
+            values:
+              - no
+              - yes
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="fragile_handling")].value
+          - name: transit_risk_owner
+            label: Select Transit Risk Owner?
+            type: select
+            values:
+              - lbnp
+              - lsp
+            payloadField: $.message.intent.fulfillment.tags[?(@.code=="special_req")].list[?(@.code=="transit_risk_owner")].value
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.city
+            default: std:080
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.gps
+            default: 12.4535,77.9283
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.gps
+            default: 12.4535,77.9283
+          - name: start_code
+            label: Enter start area code
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.address.area_code
+            default: "560001"
+          - name: end_code
+            label: Enter end area code
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.address.area_code
+            default: "560001"
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "ORDER_FLOW_B2B"

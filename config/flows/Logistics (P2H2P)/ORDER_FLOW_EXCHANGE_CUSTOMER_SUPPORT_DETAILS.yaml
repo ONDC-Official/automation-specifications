@@ -7,7 +7,7 @@ meta:
   use_case_id: Logistics (P2H2P)
   flowName: ORDER FLOW EXCHANGE CUSTOMER SUPPORT DETAILS
 transaction_data:
-  transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
+  transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: search
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: b98461d9-7df3-4509-9f72-bc4e40556f9a
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 291e9088-0b84-48ae-bc9e-da749422c01a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -47,7 +47,63 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: retailCategory
+            label: Select retail item category
+            type: select
+            values:
+              - Grocery
+              - Fashion
+              - BPC
+              - Electronics
+              - Appliances
+              - Home & Kitchen
+              - Health & Wellness
+              - Pharma
+              - Auto components
+              - C2C parcels
+          - name: category
+            label: Select a category
+            type: select
+            values:
+              - Standard Delivery
+              - Next Day Delivery
+              - Same Day Delivery
+            payloadField: $.message.intent.category.id
+          - name: paymentType
+            label: Select payment type
+            type: select
+            values:
+              - POST-FULFILLMENT
+              - ON-ORDER
+              - ON-FULFILLMENT
+            payloadField: $.message.intent.payment.type
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.city
+            default: std:080
+          - name: start_gps
+            label: Enter start gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.gps
+            default: 12.4535,77.9283
+          - name: end_gps
+            label: Enter end gps coordinates
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.gps
+            default: 12.4535,77.9283
+          - name: start_code
+            label: Enter start area code
+            type: text
+            payloadField: $.message.intent.fulfillment.start.location.address.area_code
+            default: "560001"
+          - name: end_code
+            label: Enter end area code
+            type: text
+            payloadField: $.message.intent.fulfillment.end.location.address.area_code
+            default: "560001"
     examples: []
   - api: on_search
     action_id: on_search_LOGISTICS
@@ -63,9 +119,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_search
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: b95ee565-9546-4536-8104-24bf2ffe16f2
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 61b5fd1e-9e73-429a-b1e8-2847e347f77e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -100,9 +156,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: init
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: b4d13cf0-bf11-477e-a316-e9a4c13d3370
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 20d65a8e-665c-47bd-8872-c6d5f68f165a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -137,9 +193,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_init
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: bbee4d22-749d-4726-b452-8298d661647f
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 1117f243-1828-4446-9f1c-ecc8a2fdaf9a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -174,9 +230,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: confirm
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 465d7c2c-7473-4abd-9bbd-079cd31d1ba4
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 6d14e7a3-9c7d-4259-a215-b46133875cd5
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -211,9 +267,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_confirm
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 278cd813-d8da-46fd-a6d2-f62497db89eb
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: eab7c022-50b3-4933-98bb-0b8b0b30c991
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -248,9 +304,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: update
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 2c663d75-edb7-4c77-a483-2eac96796fdd
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: dcc9fdc3-175e-4548-9ce2-15ac2d7b7b25
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -285,9 +341,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_update
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: f5b50614-ee75-49ed-b085-d54a680c0b22
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 75fa5b3d-9aba-4b1a-9d53-937cb6a8b4f7
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -322,9 +378,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_status
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: be0dd5b0-1141-4837-b11e-ead3b466634d
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 69622847-85f4-40c2-8d0f-d4e9a45d6b07
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -359,9 +415,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_status
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 0fd91a5b-445b-4bfc-9c50-192689fac843
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: da50f32b-d592-4c34-8367-c9f1b096af9a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -396,9 +452,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: track
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: f4dd26c4-8369-45ba-bb88-f6e5923c742c
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: a6ab0950-c9d3-47b3-a84e-c585e3718054
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -433,9 +489,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_track
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 0f72ca3b-c8f1-43cf-bf79-c25576ef2132
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 331f2d80-f438-4458-9e3e-e6bede244dfb
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -470,9 +526,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_status
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: a3cfadc1-600b-4cda-9823-0b14c240812d
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: 88124da7-f17f-42c4-908c-94669c5c0224
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -507,9 +563,9 @@ steps:
         context:
           domain: ONDC:LOG11
           action: on_status
-          timestamp: 2026-03-25T18:05:51.532Z
-          transaction_id: 092ab04e-56f5-47eb-bd6a-e74590cc261a
-          message_id: 30c5a390-0956-4c94-be83-38ab158410a6
+          timestamp: 2026-04-01T11:39:51.733Z
+          transaction_id: dcc8db5f-d81f-4955-92f6-b321c23444ab
+          message_id: c5160702-4143-4719-8e03-11e23972f166
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
