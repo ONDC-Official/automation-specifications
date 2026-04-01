@@ -7,7 +7,7 @@ meta:
   use_case_id: Bus
   flowName: IntraCity Purchase Journey(Agent Based)
 transaction_data:
-  transaction_id: aa759fab-fc1f-4e9d-9ea7-f74e8f34a515
+  transaction_id: 55242bac-6971-4d37-a6bb-37f45ce527a4
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -192,7 +192,19 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.order.payments[0].collected_by
+          - name: item_quantity
+            label: Enter Item Quantity
+            type: text
     examples:
       - name: Example for action "confirm"
         description: Auto-generated example for action "confirm" in flow

@@ -7,7 +7,7 @@ meta:
   use_case_id: Metro
   flowName: TECHNICAL CANCELLATION FLOW
 transaction_data:
-  transaction_id: 05bc899c-476c-4576-a65a-4a62dc2567e0
+  transaction_id: 75a04b91-02f4-4f55-81e7-76b75e50d083
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.intent.payment.collected_by
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -2027,7 +2036,41 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv11_210_start_end_stop_selection
+          - name: vehicle_category
+            label: Select vehicle category
+            type: select
+            values:
+              - METRO
+            payloadField: $.message.intent.fulfillment.vehicle.category
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: start_code
+            label: Enter start station code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.descriptor.code
+          - name: end_code
+            label: Enter end station code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.descriptor.code
+          - name: bpp_id
+            label: enter your bpp_id
+            type: text
+            payloadField: $.context.bpp_id
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.intent.payment.collected_by
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -3976,7 +4019,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv11_210_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow

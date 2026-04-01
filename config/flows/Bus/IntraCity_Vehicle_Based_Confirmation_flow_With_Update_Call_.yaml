@@ -7,7 +7,7 @@ meta:
   use_case_id: Bus
   flowName: IntraCity Vehicle Based Confirmation flow(With Update Call)
 transaction_data:
-  transaction_id: cf701eee-acfe-44ea-9be6-f2d5d81a118d
+  transaction_id: 49a0b056-b13b-41b8-ab19-625fdd70dc4c
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -959,7 +959,38 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: vehicle_category
+            label: Select vehicle category
+            type: select
+            values:
+              - BUS
+            payloadField: $.message.intent.fulfillment.vehicle.category
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.intent.payment.collected_by
+          - name: start_code
+            label: Enter start station code (Eg:- MOCK_STATION_1)
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.descriptor.code
+          - name: end_code
+            label: Enter end station code (Eg:- MOCK_STATION_5)
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.descriptor.code
+          - name: bpp_id
+            label: enter your bpp_id
+            type: text
+            payloadField: $.context.bpp_id
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -1842,7 +1873,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv11_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow

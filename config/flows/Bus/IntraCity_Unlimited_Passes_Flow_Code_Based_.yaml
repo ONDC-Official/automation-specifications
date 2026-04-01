@@ -7,7 +7,7 @@ meta:
   use_case_id: Bus
   flowName: IntraCity Unlimited Passes Flow(Code Based)
 transaction_data:
-  transaction_id: 7f73079d-8162-4935-acf2-78634d0e41c4
+  transaction_id: 04be7a31-7420-4c7c-9062-6e1be53847bc
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -68,7 +68,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: pan_number
+            label: Enter PAN Number
+            type: text
+            payloadField: $.message.order.fulfillments[*].customer.person.creds[?(@.type=='PAN')].id
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -482,7 +487,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.order.payments[0].collected_by
     examples:
       - name: Example for action "init"
         description: Auto-generated example for action "init" in flow

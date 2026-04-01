@@ -7,7 +7,7 @@ meta:
   use_case_id: Metro
   flowName: METRO MASTER SEARCH FLOW
 transaction_data:
-  transaction_id: d161cdfd-44c7-4479-bd36-e6ce098e156c
+  transaction_id: 1df6e6cc-dcdd-4136-a33f-2ba924ef9dff
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,16 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: collected_by
+            label: Choose collected_by
+            type: select
+            values:
+              - BAP
+              - BPP
+            defaultValue: BPP
+            payloadField: $.message.intent.payment.collected_by
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
