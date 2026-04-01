@@ -7,7 +7,7 @@ meta:
   use_case_id: HOME&KITCHEN
   flowName: Buyer Initiated Return (Full Order and Partial Order)
 transaction_data:
-  transaction_id: b5127e87-845c-46e5-9a15-e8f7d3effec6
+  transaction_id: e99f5e8d-7988-47c0-acb8-5f1fa4dad87f
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,48 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: ret10_grocery_select
+            type: ret10_grocery_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city_code:
+                  type: string
+                  default: std:011
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                    additionalProperties: true
+                    default: {}
+              additionalProperties: true
+              default: {}
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
