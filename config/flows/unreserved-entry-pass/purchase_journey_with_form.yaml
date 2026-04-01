@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: purchase journey with form
 transaction_data:
-  transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
+  transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: search
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 1c4fbd4f-9737-4ecb-a0fb-14949e07dfa1
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 606ad371-c80f-466a-ab88-89cdf568a558
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -50,7 +50,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+          - name: start_time
+            label: Enter start time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.start
+          - name: end_time
+            label: Enter end time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
     examples: []
   - api: on_search
     action_id: on_search_incremental_pull_1
@@ -66,9 +79,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_search
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 58005166-3fce-4236-9bb9-2d95c7ba038e
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: b89b9ecb-df35-42d1-9fa9-604f0dfb3013
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -106,9 +119,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_search
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 1d730058-6ba4-4c9b-95d4-2992aed73453
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: aa1af1b9-a44c-47b7-a762-2e746ebc76b2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -146,9 +159,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_search
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: bc3867e4-427c-4194-bd15-d695130a7386
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 6eff595e-abf8-4c74-a1a0-1e2c9e3aa53d
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -186,9 +199,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: select
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: c8f6a26a-0659-4ef6-bbef-d0fb6fbcd2d3
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 0d507d4d-4294-4157-825d-d493ca9766f9
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -210,7 +223,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv_select
     examples: []
   - api: on_select
     action_id: on_select
@@ -226,9 +243,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_select
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 137b6550-91eb-4f9c-a464-cbbf84391edc
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 84fe6731-8a84-4a49-bdb2-739ecbbaf395
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -264,7 +281,12 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload: {}
       saveData: {}
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: form_submission_id
+            label: Enter Form Submission id
+            type: HTML_FORM
+            reference: $.reference_data.first_form_testing
       formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
     examples: []
   - api: select
@@ -281,9 +303,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: select
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 2727320b-c71b-4b26-aaad-4541f011bd35
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: c2e7ce75-2915-4e24-ba9b-89129a72851e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -321,9 +343,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_select
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: c0613a2c-2e7b-48ba-8cfa-671cc0075d92
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: f9fcb8a1-0b86-4f69-a4f6-9d4fd7328f3f
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -361,9 +383,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: init
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: f8cf48e8-d6bb-4884-b1fe-1018fca0d533
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 5999306e-4e28-4c4d-b63f-1b7c58f9a80b
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -401,9 +423,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_init
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 5d5f9c16-4d1a-466a-9285-a39186be57a4
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 6db421d5-18a1-4074-a937-10cd19c235a4
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -441,9 +463,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: confirm
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 991f54ef-7b5e-4f44-a052-1a74a34dd85e
+          timestamp: 2026-04-01T11:39:49.666Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 09e688e9-aba4-42f6-b010-077568c0e61c
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -481,9 +503,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_confirm
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: a44fc53d-443b-4757-a9f3-5263010a93f9
+          timestamp: 2026-04-01T11:39:49.667Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 5b0c9ca9-e01d-4b35-a630-3643d4daca68
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -521,9 +543,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: status
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: cc7c791a-4cd2-473f-bc29-a1738a0d19de
+          timestamp: 2026-04-01T11:39:49.667Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: f9d86dce-05a5-4a17-b2af-fe8501b5c5c8
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -561,9 +583,9 @@ steps:
         context:
           domain: ONDC:TRV14
           action: on_status
-          timestamp: 2026-03-25T18:05:50.739Z
-          transaction_id: 4b0f57c5-8a07-4f3c-8463-e1fd8a15bf22
-          message_id: 8990f34d-518f-4539-9879-13efb2ffb529
+          timestamp: 2026-04-01T11:39:49.667Z
+          transaction_id: 05b6bf38-129a-48c5-b1c0-9443de64dedd
+          message_id: 08f6508c-54df-4ac3-a1a4-2fed915d2e19
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S

@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: purchase journey without form with IGM(v-2.0.0)
 transaction_data:
-  transaction_id: b057a483-e682-40af-97e7-307ae91d81c4
+  transaction_id: 9122ffa4-0819-4f87-bcbf-b6814774afde
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -98,7 +98,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+          - name: start_time
+            label: Enter start time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.start
+          - name: end_time
+            label: Enter end time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -1281,7 +1294,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -5527,7 +5544,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: resolution_accept
+            label: Enter resolution ID
+            type: text
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow
@@ -5979,7 +6000,15 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: rating
+            label: Select Rating
+            type: select
+            values:
+              - THUMBS_UP
+              - THUMBS_DOWN
+            default: THUMBS_UP
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow

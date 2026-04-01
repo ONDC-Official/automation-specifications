@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: seller app pagination journey
 transaction_data:
-  transaction_id: 9bc01249-202c-4b6f-bf8f-912046a7237a
+  transaction_id: 6df66c5b-ab3a-40a3-8b76-85a1624a0126
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -89,7 +89,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+          - name: start_time
+            label: Enter start time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.start
+          - name: end_time
+            label: Enter end time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow

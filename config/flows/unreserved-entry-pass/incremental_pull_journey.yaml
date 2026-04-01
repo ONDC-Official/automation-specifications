@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: incremental pull journey
 transaction_data:
-  transaction_id: 9640b12d-7a43-4baa-8372-79173308e612
+  transaction_id: 183069bf-ea45-4527-bb3c-9f709bfab1e0
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -98,7 +98,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+          - name: start_time
+            label: Enter start time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.start
+          - name: end_time
+            label: Enter end time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow

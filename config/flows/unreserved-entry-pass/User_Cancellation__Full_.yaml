@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: User Cancellation (Full)
 transaction_data:
-  transaction_id: 12aa492f-d4cc-4206-af94-9d4f4c319185
+  transaction_id: 137e6a62-90ed-47db-ac2a-1dbf40a091ef
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -98,7 +98,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+          - name: start_time
+            label: Enter start time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.start
+          - name: end_time
+            label: Enter end time
+            type: datetime-local
+            payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "User
@@ -1286,7 +1299,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: trv_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "User
