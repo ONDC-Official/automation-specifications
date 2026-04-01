@@ -7,7 +7,7 @@ meta:
   use_case_id: ELECTRONICS
   flowName: Out of Stock(Error code)
 transaction_data:
-  transaction_id: 8296f986-f4c7-43d4-973f-d850c954535f
+  transaction_id: 369eb01c-4455-4372-9b81-3ceec9ee5ba7
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -69,7 +69,48 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: ret10_grocery_select
+            type: ret10_grocery_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city_code:
+                  type: string
+                  default: std:011
+                provider:
+                  type: string
+                  default: P1
+                provider_location:
+                  type: string
+                  default: L1
+                location_gps:
+                  type: string
+                  default: 19.129076,72.825803
+                location_pin_code:
+                  type: string
+                  default: "400053"
+                items:
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                    additionalProperties: true
+                    default: {}
+              additionalProperties: true
+              default: {}
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
