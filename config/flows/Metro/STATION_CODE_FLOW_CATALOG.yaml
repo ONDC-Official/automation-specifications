@@ -7,7 +7,7 @@ meta:
   use_case_id: Metro
   flowName: STATION CODE FLOW CATALOG
 transaction_data:
-  transaction_id: 299cba8f-0338-4e1e-ad3b-3e94c548f46f
+  transaction_id: 05f4e3ac-5706-47b5-95d7-106c33e9b3c1
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -77,7 +77,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: city_code
+            label: Enter city code
+            type: text
+            payloadField: $.context.location.city.code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
