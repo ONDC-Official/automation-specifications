@@ -7,7 +7,7 @@ meta:
   use_case_id: F&B
   flowName: DELIVERY FLOW WITH IGM No Action(v-2.0.0)
 transaction_data:
-  transaction_id: 88077b0b-d0de-443d-ad1d-c4621ad8e3c3
+  transaction_id: 5d8ffb67-b39b-447f-b04a-59321f87e34c
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -113,7 +113,25 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - label: Items
+            name: items
+            type: nestedSelect
+          - name: providerId
+            label: Enter provider id
+            type: text
+          - name: locationId
+            label: Enter location id
+            type: text
+          - name: gps
+            label: Enter gps coordinates
+            type: text
+            default: 77.1976,28.5671
+          - name: area_code
+            label: Enter area code
+            type: text
+            default: "110088"
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -9482,7 +9500,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: resolution_accept
+            label: Enter resolution ID
+            type: text
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow
@@ -9922,7 +9944,15 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: rating
+            label: Select Rating
+            type: select
+            values:
+              - THUMBS_UP
+              - THUMBS_DOWN
+            default: THUMBS_UP
     examples:
       - name: Example for action "issue"
         description: Auto-generated example for action "issue" in flow

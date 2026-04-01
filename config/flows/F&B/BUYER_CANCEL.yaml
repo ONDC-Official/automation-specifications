@@ -7,7 +7,7 @@ meta:
   use_case_id: F&B
   flowName: BUYER CANCEL
 transaction_data:
-  transaction_id: 579fa05c-1b61-4e88-8fa5-f27399b5c426
+  transaction_id: dc4b1f8f-a898-4ec3-909a-236576355b47
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -113,7 +113,25 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - label: Items
+            name: items
+            type: nestedSelect
+          - name: providerId
+            label: Enter provider id
+            type: text
+          - name: locationId
+            label: Enter location id
+            type: text
+          - name: gps
+            label: Enter gps coordinates
+            type: text
+            default: 77.1976,28.5671
+          - name: area_code
+            label: Enter area code
+            type: text
+            default: "560001"
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "BUYER_CANCEL"

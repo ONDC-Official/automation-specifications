@@ -7,7 +7,7 @@ meta:
   use_case_id: F&B
   flowName: FULL CATALOG
 transaction_data:
-  transaction_id: c78d377d-aa1a-42c7-ba32-306da9d769aa
+  transaction_id: 7eb5edaa-d409-4d63-99b5-16589197e86a
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -160,7 +160,20 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - label: Options
+            name: options
+            type: checkbox
+            options:
+              - code: promo
+                name: Promotions
+              - code: demandSignal
+                name: Demand Signal
+              - code: "001"
+                name: Item availability
+              - code: "008"
+                name: Minimum order value
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow "FULL_CATALOG"
@@ -2073,7 +2086,17 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: cityCode
+            label: Enter city code
+            type: text
+          - name: offers
+            label: Select offers
+            type: checkbox
+            options:
+              - code: discount
+                name: Discount
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow "FULL_CATALOG"

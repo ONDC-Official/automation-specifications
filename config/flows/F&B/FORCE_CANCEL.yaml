@@ -7,7 +7,7 @@ meta:
   use_case_id: F&B
   flowName: FORCE CANCEL
 transaction_data:
-  transaction_id: fc3e05b2-7c6d-4b27-a955-deaaba67e04b
+  transaction_id: d55f31d1-23ae-41d0-9e79-b92644e1604d
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -113,7 +113,25 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - label: Items
+            name: items
+            type: nestedSelect
+          - name: providerId
+            label: Enter provider id
+            type: text
+          - name: locationId
+            label: Enter location id
+            type: text
+          - name: gps
+            label: Enter gps coordinates
+            type: text
+            default: 77.1976,28.5671
+          - name: area_code
+            label: Enter area code
+            type: text
+            default: "560001"
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow "FORCE_CANCEL"
@@ -7043,7 +7061,14 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: cancellation_reason_id
+            label: Select a reason_id
+            type: select
+            values:
+              - "052"
+            default: "052"
     examples:
       - name: Example for action "cancel"
         description: Auto-generated example for action "cancel" in flow "FORCE_CANCEL"
@@ -7698,7 +7723,13 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: isForceCancel
+            label: Enter provider id
+            type: text
+            default: yes
+            display: false
     examples:
       - name: Example for action "on_cancel"
         description: Auto-generated example for action "on_cancel" in flow "FORCE_CANCEL"
@@ -8274,7 +8305,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: isRefund
+            type: text
+            default: yes
+            display: false
     examples:
       - name: Example for action "update"
         description: Auto-generated example for action "update" in flow "FORCE_CANCEL"
