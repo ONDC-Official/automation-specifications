@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Order to confirm to fulfillment (Prepaid)
 transaction_data:
-  transaction_id: d37222d2-23f3-4ce5-852a-23937d6f5d9b
+  transaction_id: 1e79ee7f-7a26-4324-97ae-469036c719dc
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -73,7 +73,90 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: reteb2b_select
+            type: reteb2b_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - new
+                    - existing
+                  description: Retailer type
+                customer_id:
+                  type: string
+                  description: Customer ID
+                phone_number:
+                  type: string
+                  description: Retailer phone number
+                email:
+                  type: string
+                  format: email
+                  description: Retailer email address
+                tax_number:
+                  type: string
+                  description: GST / Tax number
+                provider_tax_number:
+                  type: string
+                  description: PAN / Provider tax number
+                shop_name:
+                  type: string
+                  description: Retailer shop name
+                address:
+                  type: string
+                  description: Retailer address
+                city_code:
+                  type: string
+                  description: City code
+                state_code:
+                  type: string
+                  description: State code (default KA)
+                items:
+                  type: array
+                  minItems: 1
+                  maxItems: 3
+                  default: []
+                  items:
+                    type: object
+                    additionalProperties: true
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                        minimum: 1
+                      location:
+                        type: string
+                        default: L1
+                      fulfillment_id:
+                        type: string
+                        description: Fulfillment ID (e.g., F1, F2)
+                        default: F1
+                    default: {}
+              required:
+                - type
+                - city_code
+              allOf:
+                - if:
+                    properties:
+                      type:
+                        const: new
+                  then:
+                    required:
+                      - phone_number
+                      - email
+                      - tax_number
+                      - provider_tax_number
+                      - shop_name
+                      - address
+                      - state_code
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow

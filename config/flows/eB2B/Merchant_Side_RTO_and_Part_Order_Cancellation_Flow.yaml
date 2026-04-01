@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Merchant Side RTO and Part Order Cancellation Flow
 transaction_data:
-  transaction_id: 4801a6ab-2c4b-466d-a959-0b64f7706b92
+  transaction_id: 3dd34251-2a5b-4307-891a-931cc7013065
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -80,7 +80,104 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: reteb2b_select
+            type: reteb2b_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - new
+                    - existing
+                  description: Retailer type
+                  default: existing
+                customer_id:
+                  type: string
+                  description: Customer ID
+                  default: CUST-2024-001234
+                phone_number:
+                  type: string
+                  description: Retailer phone number
+                email:
+                  type: string
+                  format: email
+                  description: Retailer email address
+                tax_number:
+                  type: string
+                  description: GST / Tax number
+                provider_tax_number:
+                  type: string
+                  description: PAN / Provider tax number
+                shop_name:
+                  type: string
+                  description: Retailer shop name
+                address:
+                  type: string
+                  description: Retailer address
+                city_code:
+                  type: string
+                  description: City code
+                  default: std:60
+                state_code:
+                  type: string
+                  description: "State code "
+                items:
+                  type: array
+                  minItems: 2
+                  maxItems: 4
+                  default:
+                    - itemId: I1
+                      quantity: 1
+                      location: L1
+                      fulfillment_id: F1
+                    - itemId: I2
+                      quantity: 1
+                      location: L1
+                      fulfillment_id: F2
+                  description: Select minimum 2 items
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        minimum: 1
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                      fulfillment_id:
+                        type: string
+                        default: F1
+                    required:
+                      - itemId
+                      - quantity
+              required:
+                - type
+                - city_code
+                - items
+              allOf:
+                - if:
+                    properties:
+                      type:
+                        const: new
+                  then:
+                    required:
+                      - phone_number
+                      - email
+                      - tax_number
+                      - provider_tax_number
+                      - shop_name
+                      - address
+                      - state_code
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow

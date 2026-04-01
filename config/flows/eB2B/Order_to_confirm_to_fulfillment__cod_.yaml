@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Order to confirm to fulfillment (cod)
 transaction_data:
-  transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
+  transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: select
-          timestamp: 2026-03-25T18:05:50.682Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 407a0f62-b050-4c6c-be82-ebc6285ad5e6
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 0bdcef63-0846-4fdb-b8b5-de92b444b905
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -49,7 +49,90 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: reteb2b_select
+            type: reteb2b_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - new
+                    - existing
+                  description: Retailer type
+                customer_id:
+                  type: string
+                  description: Customer ID
+                phone_number:
+                  type: string
+                  description: Retailer phone number
+                email:
+                  type: string
+                  format: email
+                  description: Retailer email address
+                tax_number:
+                  type: string
+                  description: GST / Tax number
+                provider_tax_number:
+                  type: string
+                  description: PAN / Provider tax number
+                shop_name:
+                  type: string
+                  description: Retailer shop name
+                address:
+                  type: string
+                  description: Retailer address
+                city_code:
+                  type: string
+                  description: City code
+                state_code:
+                  type: string
+                  description: State code (default KA)
+                items:
+                  type: array
+                  minItems: 1
+                  maxItems: 3
+                  default: []
+                  items:
+                    type: object
+                    additionalProperties: true
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                        minimum: 1
+                      location:
+                        type: string
+                        default: L1
+                      fulfillment_id:
+                        type: string
+                        description: Fulfillment ID (e.g., F1, F2)
+                        default: F1
+                    default: {}
+              required:
+                - type
+                - city_code
+              allOf:
+                - if:
+                    properties:
+                      type:
+                        const: new
+                  then:
+                    required:
+                      - phone_number
+                      - email
+                      - tax_number
+                      - provider_tax_number
+                      - shop_name
+                      - address
+                      - state_code
     examples: []
   - api: on_select
     action_id: on_select
@@ -65,9 +148,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_select
-          timestamp: 2026-03-25T18:05:50.682Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 09570380-650e-470f-b3d8-d6363f71cacf
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: a96db00a-0108-46cc-b41a-0444cc6d36be
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -102,9 +185,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: init
-          timestamp: 2026-03-25T18:05:50.682Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: be81b3f0-4372-4137-a347-5c0057ff3b45
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: b33103e2-ffc5-4118-b157-73e6816accbc
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -139,9 +222,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_init
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 647ebf17-648f-4d7a-a33e-91c6ffc3a562
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 1a061dd7-dabb-4bc3-90c5-d926e41d6b1e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -176,9 +259,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: confirm
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: a8c74fbe-63b3-41b7-9123-37009d740355
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 2beef117-e0aa-439a-888c-4f329bd09efd
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -213,9 +296,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_confirm
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 7862a6bd-d06f-4086-a4cf-1c0f8befce9e
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 11ede938-eb89-4ecd-a686-2e55f17fb0f0
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -250,9 +333,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 40cf438c-0848-46fc-85ed-9051242ef0ad
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 421ebf72-9611-41af-8339-832d614350c3
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -287,9 +370,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: caf11abe-2649-44e2-87d5-c38bfe215f3b
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 4e62b44a-686f-4366-bfeb-50c5c0711593
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -324,9 +407,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: b53cdf47-74a8-44cb-88f6-65e31fdf73b5
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 7dd5e0a6-c17e-4d2a-a2b3-1d9d81a2074e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -361,9 +444,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 2ebec592-d361-4048-a66c-1360c1281d64
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 62b33e1e-bfcf-42ed-9fa3-129d5eda6ff2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -398,9 +481,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: track
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 1b78fb12-7dd3-4077-8dd0-40f9380bd53f
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 32a451d8-c06f-43f3-80cd-73ce4cedd72e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -435,9 +518,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_track
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 6012fab7-6016-47c9-a57a-eff5c186eba5
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 1d358fc9-84d9-4e30-b3a9-a35e9b3cefcd
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -472,9 +555,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: e9c04d0f-1d21-4491-9749-139e96562a0b
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: 77a82e85-4100-4560-89d5-26555c2a2194
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -509,9 +592,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-03-25T18:05:50.683Z
-          transaction_id: 879825f4-968a-4434-b75f-a5a5a0ee923f
-          message_id: 584710da-2630-4947-a15a-f2177cff168a
+          timestamp: 2026-04-01T11:39:49.553Z
+          transaction_id: dbef00b3-3aef-4a49-8d57-d353c6871bba
+          message_id: e9365bd4-150c-44db-964e-44696477e61c
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S

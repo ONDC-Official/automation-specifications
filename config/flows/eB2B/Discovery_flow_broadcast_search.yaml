@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Discovery flow broadcast search
 transaction_data:
-  transaction_id: 445ee46b-e2bf-40c0-bd53-13f81601338a
+  transaction_id: ab56cf2e-0c82-4a0d-a811-5d76a4b35810
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -68,7 +68,40 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: ExampleInputId
+            type: ExampleInputId
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              properties:
+                city:
+                  type: string
+                  description: Enter the city code
+                  minLength: 1
+                bap_features:
+                  type: object
+                  properties:
+                    01A:
+                      type: boolean
+                      title: 01A
+                    "0091":
+                      type: boolean
+                      title: "0091"
+                    "0092":
+                      type: boolean
+                      title: "0092"
+                    "0093":
+                      type: boolean
+                      title: "0093"
+                    "0094":
+                      type: boolean
+                      title: "0094"
+                  additionalProperties: false
+              required:
+                - city
+              additionalProperties: false
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -2243,7 +2276,88 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: RetailerCustomerInput
+            type: RetailerCustomerInput
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - new
+                    - existing
+                  description: Retailer type
+                customer_id:
+                  type: string
+                  description: Customer ID
+                phone_number:
+                  type: string
+                  description: Retailer phone number
+                email:
+                  type: string
+                  format: email
+                  description: Retailer email address
+                tax_number:
+                  type: string
+                  description: GST / Tax number
+                provider_tax_number:
+                  type: string
+                  description: PAN / Provider tax number
+                shop_name:
+                  type: string
+                  description: Retailer shop name
+                address:
+                  type: string
+                  description: Retailer address
+                city_code:
+                  type: string
+                  description: City code
+                state_code:
+                  type: string
+                  description: State code (default KA)
+              required:
+                - type
+              allOf:
+                - if:
+                    type: object
+                    properties:
+                      type:
+                        const: existing
+                    required:
+                      - type
+                  then:
+                    type: object
+                    anyOf:
+                      - type: object
+                        required:
+                          - customer_id
+                      - type: object
+                        required:
+                          - phone_number
+                          - provider_tax_number
+                          - tax_number
+                - if:
+                    type: object
+                    properties:
+                      type:
+                        const: new
+                    required:
+                      - type
+                  then:
+                    type: object
+                    required:
+                      - phone_number
+                      - email
+                      - tax_number
+                      - provider_tax_number
+                      - shop_name
+                      - address
+                      - city_code
+                      - state_code
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
