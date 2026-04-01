@@ -7,7 +7,7 @@ meta:
   use_case_id: hospicash-insurance
   flowName: CD Balance Error Hospicash Insurance
 transaction_data:
-  transaction_id: 975f02a6-119d-4fce-a93d-9e3b99996206
+  transaction_id: ab70259f-4147-440f-9a5f-4be6b93beb12
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -124,7 +124,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: hospicash_insurance_form
+            label: Hospicash Insurance Form
+            type: search_hospicash_fis13
+            payloadField: ""
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -804,7 +809,11 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: select_input
+            label: Enter
+            type: fis13_select
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -1219,7 +1228,32 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: nominee_name
+            label: Enter nominee name
+            type: text
+            payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="NOMINEE_NAME")].value
+          - name: nominee_dob
+            label: Enter nominee DOB
+            type: date
+            payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="NOMINEE_DOB")].value
+          - name: nominee_appointee_name
+            label: Enter nominee appointee name
+            type: text
+            payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="APPOINTEE_NAME")].value
+          - name: nominee_appointee_dob
+            label: Enter nominee appointee DOB
+            type: date
+            payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="APPOINTEE_DOB")].value
+          - name: nominee_good_health_declaration
+            label: Enter nominee good health declaration
+            type: select
+            values:
+              - Yes
+              - No
+            default: Yes
+            payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="GOOD_HEALTH_DECLARATION")].value
     examples:
       - name: Example for action "init"
         description: Auto-generated example for action "init" in flow

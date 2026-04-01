@@ -7,7 +7,7 @@ meta:
   use_case_id: transit-insurance
   flowName: Discovery of Products from Master Policies (Transit Insurance)
 transaction_data:
-  transaction_id: e9881268-35fc-48bb-8d3d-8524cf8b5e14
+  transaction_id: 9f8e6983-20c6-4aae-a0ee-bdfa4eb0def9
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -77,7 +77,12 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: pasted_on_search
+            label: pasted_on_search
+            type: search_discover_product_fis13
+            payloadField: ""
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
