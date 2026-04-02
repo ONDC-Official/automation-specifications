@@ -7,7 +7,7 @@ meta:
   use_case_id: metro-card-recharge
   flowName: Metro Card Balance - Failure
 transaction_data:
-  transaction_id: f443c32e-378b-463a-954b-5d884520eb44
+  transaction_id: 576cf0cd-034f-4720-a4b2-c9b9c6058d99
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -26,48 +26,21 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
         context:
-          action: search
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
           domain: ONDC:FIS11
-          location:
-            city:
-              code: std:080
-            country:
-              code: IND
-          message_id: 06d39ecd-902f-45ef-b009-00c93f5cab71
-          timestamp: 2026-03-24T12:28:32.922Z
-          transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
+          action: search
+          timestamp: 2026-04-02T07:29:22.773Z
+          transaction_id: 576cf0cd-034f-4720-a4b2-c9b9c6058d99
+          message_id: 430c612a-b333-4c72-b68a-abbaa72bf1ad
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
           ttl: PT30S
           version: 2.0.0
-        message:
-          intent:
-            category:
-              descriptor:
-                code: WALLET_MANAGEMENT
-            payment:
-              collected_by: BAP
-            tags:
-              - descriptor:
-                  code: BAP_TERMS
-                  name: BAP Terms of Engagement
-                display: false
-                list:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_PERCENTAGE
-                    value: "1"
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_TYPE
-                    value: percent
-                  - descriptor:
-                      code: STATIC_TERMS
-                    value: https://api.example-bap.com/booking/terms
-                  - descriptor:
-                      code: SETTLEMENT_BASIS
-                    value: https://api.example-bap.com/booking/terms
-                  - descriptor:
-                      code: SETTLEMENT_WINDOW
-                    value: P30D
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -83,55 +56,7 @@ steps:
             label: Enter city code
             type: text
             payloadField: $.context.location.city.code
-    examples:
-      - name: Example for action "search"
-        description: Auto-generated example for action "search" in flow "Metro Card
-          Balance - Failure"
-        payload:
-          context:
-            action: search
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-            domain: ONDC:FIS11
-            location:
-              city:
-                code: std:080
-              country:
-                code: IND
-            message_id: 06d39ecd-902f-45ef-b009-00c93f5cab71
-            timestamp: 2026-03-24T12:28:32.922Z
-            transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-            ttl: PT30S
-            version: 2.0.0
-          message:
-            intent:
-              category:
-                descriptor:
-                  code: WALLET_MANAGEMENT
-              payment:
-                collected_by: BAP
-              tags:
-                - descriptor:
-                    code: BAP_TERMS
-                    name: BAP Terms of Engagement
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://api.example-bap.com/booking/terms
-                    - descriptor:
-                        code: SETTLEMENT_BASIS
-                      value: https://api.example-bap.com/booking/terms
-                    - descriptor:
-                        code: SETTLEMENT_WINDOW
-                      value: P30D
-        type: request
+    examples: []
   - api: on_search
     action_id: on_search
     owner: BPP
@@ -144,117 +69,23 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
         context:
-          action: on_search
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-          bpp_id: dev-automation.ondc.org
-          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
           domain: ONDC:FIS11
+          action: on_search
+          timestamp: 2026-04-02T07:29:22.773Z
+          transaction_id: 576cf0cd-034f-4720-a4b2-c9b9c6058d99
+          message_id: 351ae040-5b62-476e-8000-0eb5eb14a120
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.0
           location:
-            city:
-              code: std:080
             country:
               code: IND
-          message_id: 06d39ecd-902f-45ef-b009-00c93f5cab71
-          timestamp: 2026-03-24T12:28:33.112Z
-          transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-          ttl: PT30S
-          version: 2.0.0
-        message:
-          catalog:
-            descriptor:
-              images:
-                - url: https://transitsolutions.in/logos/logo.icon
-              name: Transit Solutions
-            providers:
-              - categories:
-                  - descriptor:
-                      code: WALLET_MANAGEMENT
-                      name: Wallet Management
-                    id: C1
-                  - descriptor:
-                      code: RECHARGE
-                      name: Recharge
-                    id: C2
-                  - descriptor:
-                      code: BALANCE_CHECK
-                      name: Balance Check
-                    id: C3
-                descriptor:
-                  images:
-                    - url: https://delhimetrorail.com/logos/logo.ico
-                  name: Delhi Metro Rail Limited
-                fulfillments:
-                  - id: F1
-                    stops:
-                      - instructions:
-                          long_desc: description about how to use?
-                          name: How to use?
-                          short_desc: short description about how to use?
-                    type: ONLINE
-                id: P1
-                items:
-                  - category_ids:
-                      - C1
-                      - C2
-                    descriptor:
-                      code: RECHARGE
-                      images:
-                        - url: https://delhimetrorail.com/logos/logo.ico
-                      name: Metro Card Recharge
-                    fulfillment_ids:
-                      - F1
-                    id: I1
-                    price:
-                      currency: INR
-                      maximum_value: "500"
-                      minimum_value: "50"
-                      value: "200"
-                    time:
-                      duration: P1Y
-                      label: Validity
-                  - category_ids:
-                      - C1
-                      - C3
-                    descriptor:
-                      code: BALANCE_CHECK
-                      images:
-                        - url: https://delhimetrorail.com/logos/logo.ico
-                      name: Metro Balance Check
-                    fulfillment_ids:
-                      - F1
-                    id: I2
-                    price:
-                      currency: INR
-                      maximum_value: "0"
-                      minimum_value: "0"
-                      value: "0"
-                payments:
-                  - collected_by: BAP
-            tags:
-              - descriptor:
-                  code: BPP_TERMS
-                  name: BPP Terms of Engagement
-                display: false
-                list:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_PERCENTAGE
-                    value: "1"
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_TYPE
-                    value: percent
-                  - descriptor:
-                      code: STATIC_TERMS
-                    value: https://api.example-bap.com/booking/terms
-                  - descriptor:
-                      code: MANDATORY_ARBITRATION
-                    value: "true"
-                  - descriptor:
-                      code: COURT_JURISDICTION
-                    value: New Delhi
-                  - descriptor:
-                      code: DELAY_INTEREST
-                    value: 2.5 %
+            city:
+              code: "*"
+        message: {}
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -265,124 +96,7 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
       inputs: {}
-    examples:
-      - name: Example for action "on_search"
-        description: Auto-generated example for action "on_search" in flow "Metro Card
-          Balance - Failure"
-        payload:
-          context:
-            action: on_search
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-            bpp_id: dev-automation.ondc.org
-            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
-            domain: ONDC:FIS11
-            location:
-              city:
-                code: std:080
-              country:
-                code: IND
-            message_id: 06d39ecd-902f-45ef-b009-00c93f5cab71
-            timestamp: 2026-03-24T12:28:33.112Z
-            transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-            ttl: PT30S
-            version: 2.0.0
-          message:
-            catalog:
-              descriptor:
-                images:
-                  - url: https://transitsolutions.in/logos/logo.icon
-                name: Transit Solutions
-              providers:
-                - categories:
-                    - descriptor:
-                        code: WALLET_MANAGEMENT
-                        name: Wallet Management
-                      id: C1
-                    - descriptor:
-                        code: RECHARGE
-                        name: Recharge
-                      id: C2
-                    - descriptor:
-                        code: BALANCE_CHECK
-                        name: Balance Check
-                      id: C3
-                  descriptor:
-                    images:
-                      - url: https://delhimetrorail.com/logos/logo.ico
-                    name: Delhi Metro Rail Limited
-                  fulfillments:
-                    - id: F1
-                      stops:
-                        - instructions:
-                            long_desc: description about how to use?
-                            name: How to use?
-                            short_desc: short description about how to use?
-                      type: ONLINE
-                  id: P1
-                  items:
-                    - category_ids:
-                        - C1
-                        - C2
-                      descriptor:
-                        code: RECHARGE
-                        images:
-                          - url: https://delhimetrorail.com/logos/logo.ico
-                        name: Metro Card Recharge
-                      fulfillment_ids:
-                        - F1
-                      id: I1
-                      price:
-                        currency: INR
-                        maximum_value: "500"
-                        minimum_value: "50"
-                        value: "200"
-                      time:
-                        duration: P1Y
-                        label: Validity
-                    - category_ids:
-                        - C1
-                        - C3
-                      descriptor:
-                        code: BALANCE_CHECK
-                        images:
-                          - url: https://delhimetrorail.com/logos/logo.ico
-                        name: Metro Balance Check
-                      fulfillment_ids:
-                        - F1
-                      id: I2
-                      price:
-                        currency: INR
-                        maximum_value: "0"
-                        minimum_value: "0"
-                        value: "0"
-                  payments:
-                    - collected_by: BAP
-              tags:
-                - descriptor:
-                    code: BPP_TERMS
-                    name: BPP Terms of Engagement
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://api.example-bap.com/booking/terms
-                    - descriptor:
-                        code: MANDATORY_ARBITRATION
-                      value: "true"
-                    - descriptor:
-                        code: COURT_JURISDICTION
-                      value: New Delhi
-                    - descriptor:
-                        code: DELAY_INTEREST
-                      value: 2.5 %
-        type: request
+    examples: []
   - api: confirm
     action_id: confirm_card_balance_faliure
     owner: BAP
@@ -395,68 +109,23 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
         context:
-          action: confirm
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-          bpp_id: dev-automation.ondc.org
-          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
           domain: ONDC:FIS11
+          action: confirm
+          timestamp: 2026-04-02T07:29:22.773Z
+          transaction_id: 576cf0cd-034f-4720-a4b2-c9b9c6058d99
+          message_id: 75771f02-ead5-4f08-8fc8-fac5b0c7514a
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.0
           location:
-            city:
-              code: std:080
             country:
               code: IND
-          message_id: 00a48db2-2c0d-4e43-9b44-9da97d60b110
-          timestamp: 2026-03-24T12:28:33.271Z
-          transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-          ttl: PT30S
-          version: 2.0.0
-        message:
-          order:
-            billing:
-              email: john.doe@example.com
-              name: John Doe
-              phone: +91-9897867564
-            fulfillments:
-              - customer:
-                  contact:
-                    email: joe.adam@abc.org
-                    phone: +91-9999999999
-                  person:
-                    creds:
-                      - id: "00129812901"
-                        type: CARD_IDENTIFIER
-                    name: Joe Adam
-                id: F1
-                type: ONLINE
-            items:
-              - id: I2
-                quantity:
-                  selected:
-                    count: 1
-            provider:
-              id: P1
-            tags:
-              - descriptor:
-                  code: BAP_TERMS
-                  name: BAP Terms of Engagement
-                display: false
-                list:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_PERCENTAGE
-                    value: "1"
-                  - descriptor:
-                      code: BUYER_FINDER_FEES_TYPE
-                    value: percent
-                  - descriptor:
-                      code: STATIC_TERMS
-                    value: https://api.example-bap.com/booking/terms
-                  - descriptor:
-                      code: SETTLEMENT_BASIS
-                    value: https://api.example-bap.com/booking/terms
-                  - descriptor:
-                      code: SETTLEMENT_WINDOW
-                    value: P30D
+            city:
+              code: "*"
+        message: {}
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -467,75 +136,7 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
       inputs: {}
-    examples:
-      - name: Example for action "confirm"
-        description: Auto-generated example for action "confirm" in flow "Metro Card
-          Balance - Failure"
-        payload:
-          context:
-            action: confirm
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-            bpp_id: dev-automation.ondc.org
-            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
-            domain: ONDC:FIS11
-            location:
-              city:
-                code: std:080
-              country:
-                code: IND
-            message_id: 00a48db2-2c0d-4e43-9b44-9da97d60b110
-            timestamp: 2026-03-24T12:28:33.271Z
-            transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-            ttl: PT30S
-            version: 2.0.0
-          message:
-            order:
-              billing:
-                email: john.doe@example.com
-                name: John Doe
-                phone: +91-9897867564
-              fulfillments:
-                - customer:
-                    contact:
-                      email: joe.adam@abc.org
-                      phone: +91-9999999999
-                    person:
-                      creds:
-                        - id: "00129812901"
-                          type: CARD_IDENTIFIER
-                      name: Joe Adam
-                  id: F1
-                  type: ONLINE
-              items:
-                - id: I2
-                  quantity:
-                    selected:
-                      count: 1
-              provider:
-                id: P1
-              tags:
-                - descriptor:
-                    code: BAP_TERMS
-                    name: BAP Terms of Engagement
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://api.example-bap.com/booking/terms
-                    - descriptor:
-                        code: SETTLEMENT_BASIS
-                      value: https://api.example-bap.com/booking/terms
-                    - descriptor:
-                        code: SETTLEMENT_WINDOW
-                      value: P30D
-        type: request
+    examples: []
   - api: on_confirm
     action_id: on_confirm_card_balance_faliure
     owner: BPP
@@ -548,25 +149,23 @@ steps:
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
         context:
-          action: on_confirm
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-          bpp_id: dev-automation.ondc.org
-          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
           domain: ONDC:FIS11
+          action: on_confirm
+          timestamp: 2026-04-02T07:29:22.773Z
+          transaction_id: 576cf0cd-034f-4720-a4b2-c9b9c6058d99
+          message_id: 0a43ce16-2571-4714-b5de-31615361c6c8
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.0
           location:
-            city:
-              code: std:080
             country:
               code: IND
-          message_id: 00a48db2-2c0d-4e43-9b44-9da97d60b110
-          timestamp: 2026-03-24T12:28:33.416Z
-          transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-          ttl: PT30S
-          version: 2.0.0
-        error:
-          code: "80101"
-          message: Provided card details are invalid.
+            city:
+              code: "*"
+        message: {}
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -577,32 +176,7 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
       inputs: {}
-    examples:
-      - name: Example for action "on_confirm"
-        description: Auto-generated example for action "on_confirm" in flow "Metro Card
-          Balance - Failure"
-        payload:
-          context:
-            action: on_confirm
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/buyer
-            bpp_id: dev-automation.ondc.org
-            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:FIS11/2.0.0/seller
-            domain: ONDC:FIS11
-            location:
-              city:
-                code: std:080
-              country:
-                code: IND
-            message_id: 00a48db2-2c0d-4e43-9b44-9da97d60b110
-            timestamp: 2026-03-24T12:28:33.416Z
-            transaction_id: dce11bfb-18d7-45c8-ae28-7513a61c8ed3
-            ttl: PT30S
-            version: 2.0.0
-          error:
-            code: "80101"
-            message: Provided card details are invalid.
-        type: request
+    examples: []
 transaction_history: []
 validationLib: ""
 helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCmNvbnN0IGNyZWF0ZUZvcm1VUkwgPSAoZG9tYWluLGZvcm1JZCwgc2Vzc2lvbkRhdGEpID0+IHsKCWNvbnN0IGJhc2VVUkwgPSBzZXNzaW9uRGF0YS5tb2NrQmFzZVVybDsKCWNvbnN0IHRyYW5zYWN0aW9uSWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdOwoJY29uc3Qgc2Vzc2lvbklkID0gc2Vzc2lvbkRhdGEuc2Vzc2lvbklkOwoJcmV0dXJuIGAke2Jhc2VVUkx9L2Zvcm1zLyR7ZG9tYWlufS8ke2Zvcm1JZH0vP3RyYW5zYWN0aW9uX2lkPSR7dHJhbnNhY3Rpb25JZH0mc2Vzc2lvbl9pZD0ke3Nlc3Npb25JZH1gOwp9CgovLyBHZW5lcmF0ZXMgYSBVVUlEIHY0CmZ1bmN0aW9uIHV1aWR2NCgpIHsKCXJldHVybiAneHh4eHh4eHgteHh4eC00eHh4LXl4eHgteHh4eHh4eHh4eHh4Jy5yZXBsYWNlKC9beHldL2csIGZ1bmN0aW9uIChjKSB7CgkgIGNvbnN0IHIgPSBNYXRoLnJhbmRvbSgpICogMTYgfCAwOwoJICBjb25zdCB2ID0gYyA9PT0gJ3gnID8gciA6IChyICYgMHgzIHwgMHg4KTsKCSAgcmV0dXJuIHYudG9TdHJpbmcoMTYpOwoJfSk7Cn0KCi8vIEdlbmVyYXRlIGEgNiBkaWdpdCBzdHJpbmcgSUQKZnVuY3Rpb24gZ2VuZXJhdGU2RGlnaXRJZCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApLnRvU3RyaW5nKCk7Cn0KCi8vIFJldHVybnMgdGhlIGN1cnJlbnQgSVNPIHRpbWVzdGFtcApmdW5jdGlvbiBjdXJyZW50VGltZXN0YW1wKCkgewoJcmV0dXJuIG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKfQoKLy8gQ29udmVydHMgSVNPIDg2MDEgZHVyYXRpb24gc3RyaW5nIHRvIHRvdGFsIHNlY29uZHMKY29uc3QgaXNvRHVyVG9TZWMgPSAoZHVyYXRpb24pID0+IHsKICBjb25zdCBkdXJSRSA9IC9QKChkKylZKT8oKGQrKU0pPygoZCspVyk/KChkKylEKT9UPygoZCspSCk/KChkKylNKT8oKGQrKVMpPy87CiAgY29uc3QgcyA9IGR1clJFLmV4ZWMoZHVyYXRpb24pOwogIGlmICghcykgcmV0dXJuIDA7CiAgCiAgcmV0dXJuIChOdW1iZXIocz8uWzJdKSB8fCAwKSAqIDMxNTM2MDAwICsKCShOdW1iZXIocz8uWzRdKSB8fCAwKSAqIDI2MjgyODggKwoJKE51bWJlcihzPy5bNl0pIHx8IDApICogNjA0ODAwICsKCShOdW1iZXIocz8uWzhdKSB8fCAwKSAqIDg2NDAwICsKCShOdW1iZXIocz8uWzEwXSkgfHwgMCkgKiAzNjAwICsKCShOdW1iZXIocz8uWzEyXSkgfHwgMCkgKiA2MCArCgkoTnVtYmVyKHM/LlsxNF0pIHx8IDApOwp9OwoKY29uc3Qgc2V0Q2l0eUZyb21JbnB1dHMgPSAocGF5bG9hZCwgaW5wdXRzKSA9PiB7CglpZiAoIWlucHV0cykgcmV0dXJuICIqIjsKCWxldCB2ZXJzaW9uID0gcGF5bG9hZC5jb250ZXh0LnZlcnNpb24gfHwgcGF5bG9hZC5jb250ZXh0LmNvcmVfdmVyc2lvbiB8fCAiMi4wLjAiOwoJaWYgKHZlcnNpb24uc3RhcnRzV2l0aCgiMSIpKSB7CgkJcGF5bG9hZC5jb250ZXh0LmNpdHkgPSBpbnB1dHMuY2l0eV9jb2RlID8/ICIqIjsKCX0gZWxzZSB7CgkJcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IGlucHV0cy5jaXR5X2NvZGUgPz8gIioiOwoJfQp9Cg==
