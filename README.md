@@ -1,181 +1,160 @@
-# Workflows
+# ONDC:TRV11 — version 2.0.1
 
-GitHub Actions workflows for the ONDC spec pipeline. All workflows operate on the same `config/` directory convention and produce or consume `build.yaml` as the resolved artifact.
-
----
-
-## Config directory convention
-
-Every spec repository that uses these workflows must have a `config/` directory at its root with the following structure:
-
-```
-config/
-  index.yaml              ← root manifest; all other files are referenced via $ref
-  actions/
-    index.yaml            ← x-supported-actions block
-  attributes/
-    index.yaml
-    <use-case-id>.yaml    ← one attribute set per use case
-  docs/
-    overview.md
-    references.md
-    release-notes.md      ← markdown files auto-merged into x-docs
-  errors/
-    index.yaml            ← x-errorcodes block
-  flows/
-    index.yaml            ← flat list pointing to each flow file
-    <use-case>/
-      <FlowId>.yaml       ← one flow entry per file
-  specs/
-    openapi.yaml          ← OpenAPI 3.x spec (paths + components)
-  validations/
-    index.yaml            ← x-validations block
-```
-
-The `parse` command (`@ondc/build-tools parse`) resolves all `$ref` links recursively and merges everything into a single `build.yaml`.
+**Branch:** `draft-TRV11-2.0.1`  
+**Use Cases:** Bus, Metro
 
 ---
 
-## `build.yaml` structure
+## Directory Structure
 
-`build.yaml` is validated against the `BuildConfig` schema (`src/types/build-type.ts`). Top-level keys:
+```
+2.0.1/
+├── README.md                   ← This file
+└── config/
+    ├── index.yaml              ← Top-level manifest; mirrors build.yaml structure with $ref links
+    ├── specs/
+    │   └── openapi.yaml        ← Full OpenAPI spec: openapi, info, security, paths, components
+    ├── flows/
+    │   ├── index.yaml              ← Flat playground manifest: all flows across all use cases
+    │   └── <UseCase>/
+    │       └── <FlowId>.yaml       ← Individual transaction flow definition
+    ├── attributes/
+    │   ├── index.yaml          ← List of $ref entries pointing to each attribute file
+    │   └── <UseCaseId>.yaml    ← Attribute set for a specific use case
+    ├── validations/
+    │   └── index.yaml          ← All validation rules (x-validations from build.yaml)
+    ├── errors/
+    │   └── index.yaml          ← Error codes (x-errorcodes from build.yaml)
+    └── actions/
+        └── index.yaml          ← Supported actions & API properties (x-supported-actions)
+```
 
+---
+
+## File Schemas
+
+### `config/index.yaml`
+Top-level manifest that mimics the build.yaml structure but replaces inline content with `$ref` links.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `openapi` | string | OpenAPI version — matches `/^3\.\d+\.\d+$/` |
+| `info.title` | string? | Human-readable title |
+| `info.domain` | string | ONDC domain identifier (e.g. `ONDC:TRV11`) |
+| `info.description` | string? | Domain description |
+| `info.version` | string | Spec version (e.g. `2.0.1`) |
+| `info.x-usecases` | string[] | List of supported use case IDs |
+| `info.x-branch-name` | string? | Source git branch name |
+| `info.x-reporting` | boolean | Whether this domain/version is enabled for reporting |
+| `security` | Record<string, string[]>[]? | Security scheme references |
+| `paths` | `{$ref: ./specs/openapi.yaml#/paths}` | Reference to paths section in OpenAPI spec |
+| `components` | `{$ref: ./specs/openapi.yaml#/components}` | Reference to components in OpenAPI spec |
+| `x-attributes` | `{$ref: ./attributes/index.yaml}` | Reference to attribute definitions |
+| `x-validations` | `{$ref: ./validations/index.yaml}` | Reference to validation rules |
+| `x-errors-codes` | `{$ref: ./errors/index.yaml}` | Reference to error codes |
+| `x-supported-actions` | `{$ref: ./actions/index.yaml}` | Reference to supported actions |
+| `x-flows` | `{$ref: ./flows/index.yaml#/flows}` | Reference to flat flow list |
+| `x-docs` | `{$ref: ./docs}` | Reference to extra documentation |
+
+---
+
+### `config/specs/openapi.yaml`
+Complete OpenAPI 3.0 specification containing all API paths and component schemas. Referenced by `index.yaml` via JSON Pointer syntax: `$ref: ./specs/openapi.yaml#/paths` and `$ref: ./specs/openapi.yaml#/components`.
+
+---
+
+### `config/flows/index.yaml`
+Flat playground manifest listing **all flows across all use cases**:
 ```yaml
-openapi: "3.x.x"
-
-info:
-    domain: "ONDC:FIS10" # string — ONDC domain identifier
-    version: "2.1.0" # string — spec version
-    title: "..." # string (optional)
-    description: "..." # string (optional)
-    x-usecases: # string[] — all valid use-case IDs in this spec
-        - gift-card
-    x-branch-name: "main" # string (optional)
-    x-reporting: true # boolean — whether this domain reports to the registry
-
-paths: { ... } # OpenAPI 3.x paths object
-components: { ... } # OpenAPI 3.x components (schemas, securitySchemes)
-
-x-flows: # FlowEntry[]
-    - type: playground
-      id: "Buyer_App_Fulfilling_Code_On_Confirm"
-      usecase: "gift-card" # must exist in info.x-usecases
-      description: "..."
-      tags: ["buyer", "confirm"]
-      config: { ... } # MockPlaygroundConfig (validated by @ondc/automation-mock-runner)
-
-x-attributes: # AttributeSet[]
-    - meta:
-          use_case_id: "gift-card"
-      attribute_set:
-          message:
-              intent:
-                  <attribute-path>:
-                      required: true
-                      type: "string"
-                      usage: "..."
-                      info: "..."
-                      owner: "BAP"
-                      enums: [] # optional — list of valid enum values
-                      tags: [] # optional — AttributeTagEntry[]
-
-x-errorcodes:
-    code: # ErrorCodeEntry[]
-        - code: "30000"
-          Event: "search"
-          Description: "..."
-          From: "BPP"
-
-x-supported-actions:
-    supportedActions: # Record<action, nextActions[]>
-        search: [on_search]
-        on_search: []
-    apiProperties: # Record<action, { async_predecessor, transaction_partner[] }>
-        search:
-            async_predecessor: null
-            transaction_partner: [BPP]
-
-x-validations: { ... } # domain-specific validation rules (schema is open)
-
-x-docs: # Record<stem, markdownContent> — from docs/ directory
-    overview: "..."
-    references: "..."
-    release-notes: "..."
+flows:
+  - type: playground
+    id: <FlowId>
+    usecase: <UseCaseId>
+    tags: ["WORKBENCH", "PRAMAAN", "MANDATORY", "REPORTABLE"]
+    description: <description from outputs flow.json>
+    config:
+      $ref: ./<UseCase>/<FlowId>.yaml
 ```
 
-### Key type constraints
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | `"playground"` | Literal — always `playground` |
+| `id` | string | Flow identifier |
+| `usecase` | string | Use case this flow belongs to (matches subfolder name) |
+| `tags` | string[] | Labels sourced from `outputs/<domain>/<version>/<usecase>/<flowId>/flow.json` |
+| `description` | string | Description sourced from `flow.json` |
+| `config` | object | Flow config — see [automation-mock-runner](https://github.com/ONDC-Official/automation-mock-runner-lib) for schema |
 
-| Field                                  | Type                            | Notes                                                                                                             |
-| -------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `info.x-usecases`                      | `string[]`                      | Every flow's `usecase` and every attribute set's `meta.use_case_id` must match one of these                       |
-| `x-flows[].config`                     | `MockPlaygroundConfig`          | Validated by `validateConfigForDeployment()` from `@ondc/automation-mock-runner`                                  |
-| `x-attributes[].attribute_set`         | `Record<string, AttributeNode>` | Recursive — nodes are either nested maps or leaf `AttributeLeaf` objects (detected by presence of `required` key) |
-| `x-errorcodes.code`                    | `ErrorCodeEntry[]`              | `code` field accepts string or number                                                                             |
-| `x-supported-actions.supportedActions` | `Record<string, string[]>`      | Keys are action names; values are arrays of valid next actions                                                    |
+### `config/flows/<UseCase>/<FlowId>.yaml`
+Individual flow config file. Schema defined by `MockPlaygroundConfigSchema` from [@ondc/automation-mock-runner](https://github.com/ONDC-Official/automation-mock-runner-lib).
 
 ---
 
-## Workflows
+### `config/attributes/index.yaml`
+An ordered list of `$ref` entries pointing to per-use-case attribute files:
+```yaml
+- $ref: ./UseCaseId1.yaml
+- $ref: ./UseCaseId2.yaml
+```
+
+### `config/attributes/<UseCaseId>.yaml`
+Attribute definitions for a specific use case:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `meta.use_case_id` | string? | Use case identifier |
+| `attribute_set` | object? | Keyed by action name (e.g. `search`, `on_search`) |
+| `attribute_set.<action>.<path>._description` | object | Leaf attribute descriptor |
+| `._description.required` | boolean | Whether the attribute is required |
+| `._description.usage` | string | Example value |
+| `._description.info` | string | Description of the attribute |
+| `._description.owner` | string | Who sets this field (`BAP`/`BPP`) |
+| `._description.type` | string | Data type |
+| `._description.enums` | `{code, description, reference}[]`? | Allowed enum values |
+| `._description.enumrefs` | `{label, href}[]`? | External references for enum values |
+| `._description.tags` | `AttributeTagEntry[]`? | Nested tag group descriptors |
+
+**`AttributeTagEntry`**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `code` | string | Tag group code (e.g. `BAP_TERMS`) |
+| `_description` | AttributeLeaf | Descriptor for the tag group itself |
+| `list` | `{code: string, _description: AttributeLeaf}[]`? | Individual tag items within the group |
 
 ---
 
-### `spec-workflow.yml` — Spec CI Pipeline
-
-**Trigger**: push to `main` or any `draft-*` branch when anything under `config/**` changes, or manual dispatch.
-
-**What it does**:
-
-```
-config/          →  [parse]  →  build.yaml  →  [validate]  →  [gen-rag-table]  →  [push-to-db]
-```
-
-| Step               | Command                                                                             | Output                             | Notes                                                                              |
-| ------------------ | ----------------------------------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------- |
-| Parse config       | `parse -i config -o build.yaml`                                                     | `build.yaml`                       | Resolves all `$ref`s into a single file                                            |
-| Upload artifact    | actions/upload-artifact@v4                                                          | `build-artifact` (7-day retention) | Makes `build.yaml` downloadable from the Actions run                               |
-| Validate           | `validate -i build.yaml`                                                            | —                                  | Schema check + semantic pipeline; fails the job on any error                       |
-| Generate RAG table | `gen-rag-table -i build.yaml -o generated`                                          | `generated/raw_table.json`         | Flattens the config into rows for RAG / vector indexing                            |
-| Push to DB         | `push-to-db -f build.yaml -t generated/raw_table.json -u $API_BASE_URL -k $API_KEY` | —                                  | Skipped on pull requests; requires `API_KEY` and optionally `API_BASE_URL` secrets |
-
-**Required secrets**:
-
-| Secret         | Required | Default                   | Description                                     |
-| -------------- | -------- | ------------------------- | ----------------------------------------------- |
-| `API_KEY`      | Yes      | —                         | Auth token for the config service push endpoint |
-| `API_BASE_URL` | No       | `https://api.example.com` | Base URL of the config service                  |
-
-**Artifact**: the parsed `build.yaml` is uploaded as `build-artifact` and retained for 7 days — useful for debugging or downloading the resolved config without running locally.
-
-### `deploy-onix.yaml` — ONIX Deployment Workflow
-
-**Trigger**: push to `draft-*` branch when anything under `config/**` changes, or manual dispatch.
-
-**What it does**:
-
-```
-config/ →  [parse]  →  build.yaml  →  [validate]  →  [deploy-onix]
-
-```
-
-### `update-rags.yaml` — RAG Table Update Workflow
+### `config/validations/index.yaml`
+See schema documentation: [automation-validation-compiler README](https://github.com/ONDC-Official/automation-validation-compiler/blob/package/README.md)
 
 ---
 
-<!-- ADD NEW WORKFLOWS BELOW THIS LINE -->
+### `config/errors/index.yaml`
+Error codes for this domain:
 
-<!--
-### `<workflow-name>.yml` — <Short description>
-
-**Trigger**: ...
-
-**What it does**: ...
-
-| Step | Command | Output | Notes |
-|------|---------|--------|-------|
-
-**Required secrets**: ...
+| Field | Type | Description |
+|-------|------|-------------|
+| `code` | array | List of error code objects |
+| `code[].code` | string \| number | Numeric error code |
+| `code[].Event` | string | Human-readable event description |
+| `code[].From` | string | Who raises this error (`BAP`/`BPP`) |
+| `code[].Description` | string | Where/how the error is used |
 
 ---
--->
 
->
+### `config/actions/index.yaml`
+Supported actions and API orchestration properties:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `supportedActions` | object | Maps each action to allowed next actions |
+| `apiProperties` | object | Per-action async and transaction-partner metadata |
+| `apiProperties.<action>.async_predecessor` | string\|null | The action this is a response to |
+| `apiProperties.<action>.transaction_partner` | string[] | Actions sharing the same transaction |
+
+---
+
+## Use Cases in this version
+
+  - Bus
+  - Metro
