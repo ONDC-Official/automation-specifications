@@ -1,13 +1,13 @@
 meta:
   domain: ONDC:RET11
   version: 1.2.5
-  flowId: BUYER_CANCEL
+  flowId: COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW
   config_version: 0.0.0001
   description: Buyer Search & Quotation
   use_case_id: F&B
-  flowName: BUYER CANCEL
+  flowName: COMMERCIAL MODEL FOR BNP/SNP FLOW
 transaction_data:
-  transaction_id: cbff5aee-bfd7-4d66-a28b-7b05435e57b7
+  transaction_id: 76dae367-19db-4b4a-8a18-b0094e79b661
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -31,13 +31,13 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: 3379560d-5052-4da9-9a55-a16ebd15a6e3
-          timestamp: 2026-03-13T11:21:32.165Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: b8c7699f-16a4-4a6f-90d8-17f6f58d4f71
+          timestamp: 2026-03-16T11:10:36.275Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
@@ -45,7 +45,7 @@ steps:
               - end:
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                     gps: 77.1976,28.5671
             items:
               - id: I1
@@ -131,10 +131,11 @@ steps:
           - name: area_code
             label: Enter area code
             type: text
-            default: "560001"
+            default: "110088"
     examples:
       - name: Example for action "select"
-        description: Auto-generated example for action "select" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "select" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: select
@@ -142,13 +143,13 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: 3379560d-5052-4da9-9a55-a16ebd15a6e3
-            timestamp: 2026-03-13T11:21:32.165Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: b8c7699f-16a4-4a6f-90d8-17f6f58d4f71
+            timestamp: 2026-03-16T11:10:36.275Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
@@ -156,7 +157,7 @@ steps:
                 - end:
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                       gps: 77.1976,28.5671
               items:
                 - id: I1
@@ -217,7 +218,7 @@ steps:
                   - id: L1
         type: request
   - api: on_select
-    action_id: on_select
+    action_id: on_select_commercial_model
     owner: BPP
     responseFor: select
     unsolicited: false
@@ -233,13 +234,13 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: 3379560d-5052-4da9-9a55-a16ebd15a6e3
-          timestamp: 2026-03-13T11:21:32.313Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: b8c7699f-16a4-4a6f-90d8-17f6f58d4f71
+          timestamp: 2026-03-16T11:10:36.429Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
@@ -332,6 +333,84 @@ steps:
                     value: "269"
                   title: Farm House Pizza
                 - "@ondc/org/item_id": I1
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                          - code: channel_margin_type
+                            value: percent
+                          - code: channel_margin_value
+                            value: "0.50"
+                  price:
+                    currency: INR
+                    value: "0.50"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                          - code: channel_margin_type
+                            value: amount
+                          - code: channel_margin_value
+                            value: "7.00"
+                  price:
+                    currency: INR
+                    value: "7.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                  price:
+                    currency: INR
+                    value: "0.09"
+                  title: Tax
+                - "@ondc/org/item_id": I1
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                  price:
+                    currency: INR
+                    value: "1.26"
+                  title: Tax
+                - "@ondc/org/item_id": I1
                   "@ondc/org/title_type": tax
                   item:
                     parent_item_id: P0
@@ -371,6 +450,84 @@ steps:
                     currency: INR
                     value: "0"
                   title: New Hand Tossed
+                - "@ondc/org/item_id": C1
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                          - code: channel_margin_type
+                            value: percent
+                          - code: channel_margin_value
+                            value: "0.50"
+                  price:
+                    currency: INR
+                    value: "0.50"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C1
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                          - code: channel_margin_type
+                            value: amount
+                          - code: channel_margin_value
+                            value: "7.00"
+                  price:
+                    currency: INR
+                    value: "7.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C1
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                  price:
+                    currency: INR
+                    value: "0.09"
+                  title: Tax
+                - "@ondc/org/item_id": C1
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                  price:
+                    currency: INR
+                    value: "1.26"
+                  title: Tax
                 - "@ondc/org/item_id": C1
                   "@ondc/org/title_type": tax
                   item:
@@ -416,6 +573,84 @@ steps:
                     value: "0"
                   title: Regular
                 - "@ondc/org/item_id": C3
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                          - code: channel_margin_type
+                            value: percent
+                          - code: channel_margin_value
+                            value: "0.50"
+                  price:
+                    currency: INR
+                    value: "0.50"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C3
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                          - code: channel_margin_type
+                            value: amount
+                          - code: channel_margin_value
+                            value: "7.00"
+                  price:
+                    currency: INR
+                    value: "7.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C3
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                  price:
+                    currency: INR
+                    value: "0.09"
+                  title: Tax
+                - "@ondc/org/item_id": C3
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                  price:
+                    currency: INR
+                    value: "1.26"
+                  title: Tax
+                - "@ondc/org/item_id": C3
                   "@ondc/org/title_type": tax
                   item:
                     parent_item_id: P0
@@ -460,6 +695,84 @@ steps:
                     value: "35"
                   title: Grilled Mushrooms
                 - "@ondc/org/item_id": C8
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                          - code: channel_margin_type
+                            value: percent
+                          - code: channel_margin_value
+                            value: "0.50"
+                  price:
+                    currency: INR
+                    value: "0.50"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C8
+                  "@ondc/org/title_type": misc
+                  item:
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                          - code: channel_margin_type
+                            value: amount
+                          - code: channel_margin_value
+                            value: "7.00"
+                  price:
+                    currency: INR
+                    value: "7.00"
+                  title: Convenience Fee
+                - "@ondc/org/item_id": C8
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
+                  price:
+                    currency: INR
+                    value: "0.09"
+                  title: Tax
+                - "@ondc/org/item_id": C8
+                  "@ondc/org/title_type": tax
+                  item:
+                    parent_item_id: P0
+                    tags:
+                      - code: quote
+                        list:
+                          - code: type
+                            value: item
+                          - code: subtype
+                            value: misc
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "2"
+                  price:
+                    currency: INR
+                    value: "1.26"
+                  title: Tax
+                - "@ondc/org/item_id": C8
                   "@ondc/org/title_type": tax
                   item:
                     parent_item_id: P0
@@ -490,7 +803,7 @@ steps:
                   title: Packing charges
               price:
                 currency: INR
-                value: "394.20"
+                value: "429.60"
               ttl: P1D
       saveData:
         transactionId: $.context.transaction_id
@@ -504,7 +817,8 @@ steps:
       inputs: {}
     examples:
       - name: Example for action "on_select"
-        description: Auto-generated example for action "on_select" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "on_select" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: on_select
@@ -512,13 +826,13 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: 3379560d-5052-4da9-9a55-a16ebd15a6e3
-            timestamp: 2026-03-13T11:21:32.313Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: b8c7699f-16a4-4a6f-90d8-17f6f58d4f71
+            timestamp: 2026-03-16T11:10:36.429Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
@@ -611,6 +925,84 @@ steps:
                       value: "269"
                     title: Farm House Pizza
                   - "@ondc/org/item_id": I1
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                            - code: channel_margin_type
+                              value: percent
+                            - code: channel_margin_value
+                              value: "0.50"
+                    price:
+                      currency: INR
+                      value: "0.50"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                            - code: channel_margin_type
+                              value: amount
+                            - code: channel_margin_value
+                              value: "7.00"
+                    price:
+                      currency: INR
+                      value: "7.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                    price:
+                      currency: INR
+                      value: "0.09"
+                    title: Tax
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                    price:
+                      currency: INR
+                      value: "1.26"
+                    title: Tax
+                  - "@ondc/org/item_id": I1
                     "@ondc/org/title_type": tax
                     item:
                       parent_item_id: P0
@@ -650,6 +1042,84 @@ steps:
                       currency: INR
                       value: "0"
                     title: New Hand Tossed
+                  - "@ondc/org/item_id": C1
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                            - code: channel_margin_type
+                              value: percent
+                            - code: channel_margin_value
+                              value: "0.50"
+                    price:
+                      currency: INR
+                      value: "0.50"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C1
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                            - code: channel_margin_type
+                              value: amount
+                            - code: channel_margin_value
+                              value: "7.00"
+                    price:
+                      currency: INR
+                      value: "7.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C1
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                    price:
+                      currency: INR
+                      value: "0.09"
+                    title: Tax
+                  - "@ondc/org/item_id": C1
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                    price:
+                      currency: INR
+                      value: "1.26"
+                    title: Tax
                   - "@ondc/org/item_id": C1
                     "@ondc/org/title_type": tax
                     item:
@@ -695,6 +1165,84 @@ steps:
                       value: "0"
                     title: Regular
                   - "@ondc/org/item_id": C3
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                            - code: channel_margin_type
+                              value: percent
+                            - code: channel_margin_value
+                              value: "0.50"
+                    price:
+                      currency: INR
+                      value: "0.50"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C3
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                            - code: channel_margin_type
+                              value: amount
+                            - code: channel_margin_value
+                              value: "7.00"
+                    price:
+                      currency: INR
+                      value: "7.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C3
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                    price:
+                      currency: INR
+                      value: "0.09"
+                    title: Tax
+                  - "@ondc/org/item_id": C3
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                    price:
+                      currency: INR
+                      value: "1.26"
+                    title: Tax
+                  - "@ondc/org/item_id": C3
                     "@ondc/org/title_type": tax
                     item:
                       parent_item_id: P0
@@ -739,6 +1287,84 @@ steps:
                       value: "35"
                     title: Grilled Mushrooms
                   - "@ondc/org/item_id": C8
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                            - code: channel_margin_type
+                              value: percent
+                            - code: channel_margin_value
+                              value: "0.50"
+                    price:
+                      currency: INR
+                      value: "0.50"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C8
+                    "@ondc/org/title_type": misc
+                    item:
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                            - code: channel_margin_type
+                              value: amount
+                            - code: channel_margin_value
+                              value: "7.00"
+                    price:
+                      currency: INR
+                      value: "7.00"
+                    title: Convenience Fee
+                  - "@ondc/org/item_id": C8
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
+                    price:
+                      currency: INR
+                      value: "0.09"
+                    title: Tax
+                  - "@ondc/org/item_id": C8
+                    "@ondc/org/title_type": tax
+                    item:
+                      parent_item_id: P0
+                      tags:
+                        - code: quote
+                          list:
+                            - code: type
+                              value: item
+                            - code: subtype
+                              value: misc
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "2"
+                    price:
+                      currency: INR
+                      value: "1.26"
+                    title: Tax
+                  - "@ondc/org/item_id": C8
                     "@ondc/org/title_type": tax
                     item:
                       parent_item_id: P0
@@ -769,11 +1395,11 @@ steps:
                     title: Packing charges
                 price:
                   currency: INR
-                  value: "394.20"
+                  value: "429.60"
                 ttl: P1D
         type: request
   - api: init
-    action_id: init
+    action_id: init_commercial_model
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -789,37 +1415,37 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: db966721-96f8-4064-a0eb-0de4e8b48590
-          timestamp: 2026-03-13T11:21:32.456Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: 28abc439-8cc7-4769-990f-dfbacf7cd744
+          timestamp: 2026-03-16T11:10:44.439Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
             billing:
               address:
-                area_code: "560001"
+                area_code: "110088"
                 building: "my building name or house #"
                 city: my city
                 country: IND
                 locality: my street name
                 name: "my house or door or floor #"
                 state: my state
-              created_at: 2026-03-13T11:21:32.456Z
+              created_at: 2026-03-16T11:10:44.439Z
               email: nobody@nomail.com
               name: ONDC buyer
               phone: "9886098860"
-              updated_at: 2026-03-13T11:21:32.456Z
+              updated_at: 2026-03-16T11:10:44.439Z
             fulfillments:
               - end:
                   contact:
                     phone: "9886098860"
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                       building: "my building name or house #"
                       city: my city
                       country: IND
@@ -841,6 +1467,10 @@ steps:
                     list:
                       - code: type
                         value: item
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C1
                 location_id: L1
@@ -856,6 +1486,10 @@ steps:
                     list:
                       - code: id
                         value: CG1
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C3
                 location_id: L1
@@ -871,6 +1505,10 @@ steps:
                     list:
                       - code: id
                         value: CG2
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C8
                 location_id: L1
@@ -886,6 +1524,10 @@ steps:
                     list:
                       - code: id
                         value: CG4
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
             provider:
               id: P1
               locations:
@@ -899,10 +1541,29 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: np_fees
+            label: Select NP Fees (choose one per item)
+            type: checkbox
+            options:
+              - code: I1_npf_1
+                name: np_fee 1 for I1
+              - code: I1_npf_2
+                name: np_fee 2  for I1
+              - code: I2_npf_1
+                name: np_fee 1 for I2
+              - code: I2_npf_2
+                name: np_fee 2 for I2
+              - code: I3_npf_1
+                name: np_fee 1 for I3
+              - code: I3_npf_2
+                name: np_fee 2 for I3
+            description: BNP selects np_fees option (channel margin) per item
     examples:
       - name: Example for action "init"
-        description: Auto-generated example for action "init" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "init" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: init
@@ -910,37 +1571,37 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: db966721-96f8-4064-a0eb-0de4e8b48590
-            timestamp: 2026-03-13T11:21:32.456Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: 28abc439-8cc7-4769-990f-dfbacf7cd744
+            timestamp: 2026-03-16T11:10:44.439Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
               billing:
                 address:
-                  area_code: "560001"
+                  area_code: "110088"
                   building: "my building name or house #"
                   city: my city
                   country: IND
                   locality: my street name
                   name: "my house or door or floor #"
                   state: my state
-                created_at: 2026-03-13T11:21:32.456Z
+                created_at: 2026-03-16T11:10:44.439Z
                 email: nobody@nomail.com
                 name: ONDC buyer
                 phone: "9886098860"
-                updated_at: 2026-03-13T11:21:32.456Z
+                updated_at: 2026-03-16T11:10:44.439Z
               fulfillments:
                 - end:
                     contact:
                       phone: "9886098860"
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                         building: "my building name or house #"
                         city: my city
                         country: IND
@@ -962,6 +1623,10 @@ steps:
                       list:
                         - code: type
                           value: item
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C1
                   location_id: L1
@@ -977,6 +1642,10 @@ steps:
                       list:
                         - code: id
                           value: CG1
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C3
                   location_id: L1
@@ -992,6 +1661,10 @@ steps:
                       list:
                         - code: id
                           value: CG2
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C8
                   location_id: L1
@@ -1007,15 +1680,19 @@ steps:
                       list:
                         - code: id
                           value: CG4
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
               provider:
                 id: P1
                 locations:
                   - id: L1
         type: request
   - api: on_init
-    action_id: on_init
+    action_id: on_init_commercial_model
     owner: BPP
-    responseFor: init
+    responseFor: init_commercial_model
     unsolicited: false
     description: please add relevant description
     mock:
@@ -1029,30 +1706,30 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: db966721-96f8-4064-a0eb-0de4e8b48590
-          timestamp: 2026-03-13T11:21:32.584Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: 28abc439-8cc7-4769-990f-dfbacf7cd744
+          timestamp: 2026-03-16T11:10:44.562Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
             billing:
               address:
-                area_code: "560001"
+                area_code: "110088"
                 building: "my building name or house #"
                 city: my city
                 country: IND
                 locality: my street name
                 name: "my house or door or floor #"
                 state: my state
-              created_at: 2026-03-13T11:21:32.456Z
+              created_at: 2026-03-16T11:10:44.439Z
               email: nobody@nomail.com
               name: ONDC buyer
               phone: "9886098860"
-              updated_at: 2026-03-13T11:21:32.456Z
+              updated_at: 2026-03-16T11:10:44.439Z
             cancellation_terms:
               - cancellation_fee:
                   percentage: "0.00"
@@ -1090,7 +1767,7 @@ steps:
                     phone: "9886098860"
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                       building: "my building name or house #"
                       city: my city
                       country: IND
@@ -1113,6 +1790,10 @@ steps:
                     list:
                       - code: type
                         value: item
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
                   - code: rto_action
                     list:
                       - code: return_to_origin
@@ -1132,6 +1813,10 @@ steps:
                     list:
                       - code: id
                         value: CG1
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
                   - code: rto_action
                     list:
                       - code: return_to_origin
@@ -1151,6 +1836,10 @@ steps:
                     list:
                       - code: id
                         value: CG2
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
                   - code: rto_action
                     list:
                       - code: return_to_origin
@@ -1170,6 +1859,10 @@ steps:
                     list:
                       - code: id
                         value: CG4
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
                   - code: rto_action
                     list:
                       - code: return_to_origin
@@ -1201,16 +1894,15 @@ steps:
                     price:
                       currency: INR
                       value: "269.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "269"
@@ -1224,6 +1916,10 @@ steps:
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "13.45"
@@ -1237,11 +1933,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -1251,6 +1942,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -1268,6 +1963,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -1281,11 +1980,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -1295,6 +1989,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -1312,6 +2010,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -1325,11 +2027,6 @@ steps:
                     price:
                       currency: INR
                       value: "35.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -1339,6 +2036,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "35"
@@ -1356,6 +2057,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "1.75"
@@ -1397,7 +2102,8 @@ steps:
       inputs: {}
     examples:
       - name: Example for action "on_init"
-        description: Auto-generated example for action "on_init" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "on_init" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: on_init
@@ -1405,30 +2111,30 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: db966721-96f8-4064-a0eb-0de4e8b48590
-            timestamp: 2026-03-13T11:21:32.584Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: 28abc439-8cc7-4769-990f-dfbacf7cd744
+            timestamp: 2026-03-16T11:10:44.562Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
               billing:
                 address:
-                  area_code: "560001"
+                  area_code: "110088"
                   building: "my building name or house #"
                   city: my city
                   country: IND
                   locality: my street name
                   name: "my house or door or floor #"
                   state: my state
-                created_at: 2026-03-13T11:21:32.456Z
+                created_at: 2026-03-16T11:10:44.439Z
                 email: nobody@nomail.com
                 name: ONDC buyer
                 phone: "9886098860"
-                updated_at: 2026-03-13T11:21:32.456Z
+                updated_at: 2026-03-16T11:10:44.439Z
               cancellation_terms:
                 - cancellation_fee:
                     percentage: "0.00"
@@ -1466,7 +2172,7 @@ steps:
                       phone: "9886098860"
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                         building: "my building name or house #"
                         city: my city
                         country: IND
@@ -1489,6 +2195,10 @@ steps:
                       list:
                         - code: type
                           value: item
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                     - code: rto_action
                       list:
                         - code: return_to_origin
@@ -1508,6 +2218,10 @@ steps:
                       list:
                         - code: id
                           value: CG1
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                     - code: rto_action
                       list:
                         - code: return_to_origin
@@ -1527,6 +2241,10 @@ steps:
                       list:
                         - code: id
                           value: CG2
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                     - code: rto_action
                       list:
                         - code: return_to_origin
@@ -1546,6 +2264,10 @@ steps:
                       list:
                         - code: id
                           value: CG4
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                     - code: rto_action
                       list:
                         - code: return_to_origin
@@ -1577,16 +2299,15 @@ steps:
                       price:
                         currency: INR
                         value: "269.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "269"
@@ -1600,6 +2321,10 @@ steps:
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "13.45"
@@ -1613,11 +2338,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -1627,6 +2347,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -1644,6 +2368,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -1657,11 +2385,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -1671,6 +2394,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -1688,6 +2415,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -1701,11 +2432,6 @@ steps:
                       price:
                         currency: INR
                         value: "35.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -1715,6 +2441,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "35"
@@ -1732,6 +2462,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "1.75"
@@ -1763,7 +2497,7 @@ steps:
                       value: MSN
         type: request
   - api: confirm
-    action_id: confirm
+    action_id: confirm_commercial_model
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -1779,31 +2513,31 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: f80c4529-a3dc-4b5b-80ff-6405c85980dc
-          timestamp: 2026-03-13T11:21:32.719Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: b75ea9c3-baa3-464b-9a83-12ae94fe84a2
+          timestamp: 2026-03-16T11:10:44.704Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
             billing:
               address:
-                area_code: "560001"
+                area_code: "110088"
                 building: "my building name or house #"
                 city: my city
                 country: IND
                 locality: my street name
                 name: "my house or door or floor #"
                 state: my state
-              created_at: 2026-03-13T11:21:32.456Z
+              created_at: 2026-03-16T11:10:44.439Z
               email: nobody@nomail.com
               name: ONDC buyer
               phone: "9886098860"
-              updated_at: 2026-03-13T11:21:32.456Z
-            created_at: 2026-03-13T11:21:32.719Z
+              updated_at: 2026-03-16T11:10:44.439Z
+            created_at: 2026-03-16T11:10:44.704Z
             fulfillments:
               - "@ondc/org/TAT": PT60M
                 end:
@@ -1811,7 +2545,7 @@ steps:
                     phone: "9886098860"
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                       building: "my building name or house #"
                       city: my city
                       country: IND
@@ -1824,7 +2558,7 @@ steps:
                 id: F1
                 tracking: true
                 type: Delivery
-            id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
+            id: eb6a3545-f603-403e-a878-a5895ff4e508
             items:
               - fulfillment_id: F1
                 id: I1
@@ -1837,6 +2571,10 @@ steps:
                     list:
                       - code: type
                         value: item
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C1
                 location_id: L1
@@ -1852,6 +2590,10 @@ steps:
                     list:
                       - code: id
                         value: CG1
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C3
                 location_id: L1
@@ -1867,6 +2609,10 @@ steps:
                     list:
                       - code: id
                         value: CG2
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C8
                 location_id: L1
@@ -1882,6 +2628,10 @@ steps:
                     list:
                       - code: id
                         value: CG4
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
             payment:
               "@ondc/org/buyer_app_finder_fee_amount": "3.54"
               "@ondc/org/buyer_app_finder_fee_type": percent
@@ -1919,16 +2669,15 @@ steps:
                     price:
                       currency: INR
                       value: "269.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "269"
@@ -1942,6 +2691,10 @@ steps:
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "13.45"
@@ -1955,11 +2708,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -1969,6 +2717,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -1986,6 +2738,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -1999,11 +2755,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -2013,6 +2764,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -2030,6 +2785,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -2043,11 +2802,6 @@ steps:
                     price:
                       currency: INR
                       value: "35.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -2057,6 +2811,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "35"
@@ -2074,6 +2832,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "1.75"
@@ -2112,7 +2874,15 @@ steps:
                     value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
                   - code: tax_number
                     value: 12ABCDE3456FGZJ
-            updated_at: 2026-03-13T11:21:32.719Z
+              - code: bnp_receivables_claim
+                list:
+                  - code: type
+                    value: misc
+                  - code: currency
+                    value: INR
+                  - code: value
+                    value: "20.0"
+            updated_at: 2026-03-16T11:10:44.704Z
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -2125,7 +2895,8 @@ steps:
       inputs: {}
     examples:
       - name: Example for action "confirm"
-        description: Auto-generated example for action "confirm" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "confirm" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: confirm
@@ -2133,31 +2904,31 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: f80c4529-a3dc-4b5b-80ff-6405c85980dc
-            timestamp: 2026-03-13T11:21:32.719Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: b75ea9c3-baa3-464b-9a83-12ae94fe84a2
+            timestamp: 2026-03-16T11:10:44.704Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
               billing:
                 address:
-                  area_code: "560001"
+                  area_code: "110088"
                   building: "my building name or house #"
                   city: my city
                   country: IND
                   locality: my street name
                   name: "my house or door or floor #"
                   state: my state
-                created_at: 2026-03-13T11:21:32.456Z
+                created_at: 2026-03-16T11:10:44.439Z
                 email: nobody@nomail.com
                 name: ONDC buyer
                 phone: "9886098860"
-                updated_at: 2026-03-13T11:21:32.456Z
-              created_at: 2026-03-13T11:21:32.719Z
+                updated_at: 2026-03-16T11:10:44.439Z
+              created_at: 2026-03-16T11:10:44.704Z
               fulfillments:
                 - "@ondc/org/TAT": PT60M
                   end:
@@ -2165,7 +2936,7 @@ steps:
                       phone: "9886098860"
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                         building: "my building name or house #"
                         city: my city
                         country: IND
@@ -2178,7 +2949,7 @@ steps:
                   id: F1
                   tracking: true
                   type: Delivery
-              id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
+              id: eb6a3545-f603-403e-a878-a5895ff4e508
               items:
                 - fulfillment_id: F1
                   id: I1
@@ -2191,6 +2962,10 @@ steps:
                       list:
                         - code: type
                           value: item
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C1
                   location_id: L1
@@ -2206,6 +2981,10 @@ steps:
                       list:
                         - code: id
                           value: CG1
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C3
                   location_id: L1
@@ -2221,6 +3000,10 @@ steps:
                       list:
                         - code: id
                           value: CG2
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C8
                   location_id: L1
@@ -2236,6 +3019,10 @@ steps:
                       list:
                         - code: id
                           value: CG4
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
               payment:
                 "@ondc/org/buyer_app_finder_fee_amount": "3.54"
                 "@ondc/org/buyer_app_finder_fee_type": percent
@@ -2273,16 +3060,15 @@ steps:
                       price:
                         currency: INR
                         value: "269.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "269"
@@ -2296,6 +3082,10 @@ steps:
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "13.45"
@@ -2309,11 +3099,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -2323,6 +3108,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -2340,6 +3129,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -2353,11 +3146,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -2367,6 +3155,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -2384,6 +3176,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -2397,11 +3193,6 @@ steps:
                       price:
                         currency: INR
                         value: "35.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -2411,6 +3202,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "35"
@@ -2428,6 +3223,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "1.75"
@@ -2466,12 +3265,20 @@ steps:
                       value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
                     - code: tax_number
                       value: 12ABCDE3456FGZJ
-              updated_at: 2026-03-13T11:21:32.719Z
+                - code: bnp_receivables_claim
+                  list:
+                    - code: type
+                      value: misc
+                    - code: currency
+                      value: INR
+                    - code: value
+                      value: "20.0"
+              updated_at: 2026-03-16T11:10:44.704Z
         type: request
   - api: on_confirm
-    action_id: on_confirm
+    action_id: on_confirm_commercial_model
     owner: BPP
-    responseFor: confirm
+    responseFor: confirm_commercial_model
     unsolicited: false
     description: please add relevant description
     mock:
@@ -2485,30 +3292,30 @@ steps:
           bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
           bpp_id: dev-automation.ondc.org
           bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
+          city: std:011
           core_version: 1.2.5
           country: IND
           domain: ONDC:RET11
-          message_id: f80c4529-a3dc-4b5b-80ff-6405c85980dc
-          timestamp: 2026-03-13T11:21:32.863Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+          message_id: b75ea9c3-baa3-464b-9a83-12ae94fe84a2
+          timestamp: 2026-03-16T11:10:44.844Z
+          transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
           ttl: PT30S
         message:
           order:
             billing:
               address:
-                area_code: "560001"
+                area_code: "110088"
                 building: "my building name or house #"
                 city: my city
                 country: IND
                 locality: my street name
                 name: "my house or door or floor #"
                 state: my state
-              created_at: 2026-03-13T11:21:32.456Z
+              created_at: 2026-03-16T11:10:44.439Z
               email: nobody@nomail.com
               name: ONDC buyer
               phone: "9886098860"
-              updated_at: 2026-03-13T11:21:32.456Z
+              updated_at: 2026-03-16T11:10:44.439Z
             cancellation_terms:
               - cancellation_fee:
                   percentage: "0.00"
@@ -2540,7 +3347,7 @@ steps:
                   descriptor:
                     code: At-delivery
                     short_desc: 010,011,012,013,014,015
-            created_at: 2026-03-13T11:21:32.719Z
+            created_at: 2026-03-16T11:10:44.704Z
             fulfillments:
               - "@ondc/org/provider_name": LSP Provider
                 end:
@@ -2548,7 +3355,7 @@ steps:
                     phone: "9886098860"
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                       building: "my building name or house #"
                       city: my city
                       country: IND
@@ -2565,7 +3372,7 @@ steps:
                     phone: "9886098860"
                   location:
                     address:
-                      area_code: "560001"
+                      area_code: "110088"
                       city: my store city
                       locality: my store locality
                       state: my store state
@@ -2578,7 +3385,7 @@ steps:
                     code: Pending
                 tracking: true
                 type: Delivery
-            id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
+            id: eb6a3545-f603-403e-a878-a5895ff4e508
             items:
               - fulfillment_id: F1
                 id: I1
@@ -2591,6 +3398,10 @@ steps:
                     list:
                       - code: type
                         value: item
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C1
                 location_id: L1
@@ -2606,6 +3417,10 @@ steps:
                     list:
                       - code: id
                         value: CG1
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C3
                 location_id: L1
@@ -2621,6 +3436,10 @@ steps:
                     list:
                       - code: id
                         value: CG2
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
               - fulfillment_id: F1
                 id: C8
                 location_id: L1
@@ -2636,6 +3455,10 @@ steps:
                     list:
                       - code: id
                         value: CG4
+                  - code: np_fees
+                    list:
+                      - code: id
+                        value: "1"
             payment:
               "@ondc/org/buyer_app_finder_fee_amount": "3.54"
               "@ondc/org/buyer_app_finder_fee_type": percent
@@ -2673,16 +3496,15 @@ steps:
                     price:
                       currency: INR
                       value: "269.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "269"
@@ -2696,6 +3518,10 @@ steps:
                         list:
                           - code: type
                             value: item
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "13.45"
@@ -2709,11 +3535,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -2723,6 +3544,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -2740,6 +3565,10 @@ steps:
                         list:
                           - code: id
                             value: CG1
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -2753,11 +3582,6 @@ steps:
                     price:
                       currency: INR
                       value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -2767,6 +3591,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0"
@@ -2784,6 +3612,10 @@ steps:
                         list:
                           - code: id
                             value: CG2
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "0.00"
@@ -2797,11 +3629,6 @@ steps:
                     price:
                       currency: INR
                       value: "35.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
                     tags:
                       - code: type
                         list:
@@ -2811,6 +3638,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "35"
@@ -2828,6 +3659,10 @@ steps:
                         list:
                           - code: id
                             value: CG4
+                      - code: np_fees
+                        list:
+                          - code: id
+                            value: "1"
                   price:
                     currency: INR
                     value: "1.75"
@@ -2868,7 +3703,15 @@ steps:
                     value: 12ABCDE3456FGZJ
                   - code: accept_bpp_terms
                     value: Y
-            updated_at: 2026-03-13T11:21:32.863Z
+              - code: bnp_receivables_claim
+                list:
+                  - code: type
+                    value: misc
+                  - code: currency
+                    value: INR
+                  - code: value
+                    value: "20.00"
+            updated_at: 2026-03-16T11:10:44.844Z
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -2881,7 +3724,8 @@ steps:
       inputs: {}
     examples:
       - name: Example for action "on_confirm"
-        description: Auto-generated example for action "on_confirm" in flow "BUYER_CANCEL"
+        description: Auto-generated example for action "on_confirm" in flow
+          "COMMERCIAL_MODEL_FOR_BNP/SNP_FLOW"
         payload:
           context:
             action: on_confirm
@@ -2889,30 +3733,30 @@ steps:
             bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
             bpp_id: dev-automation.ondc.org
             bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
+            city: std:011
             core_version: 1.2.5
             country: IND
             domain: ONDC:RET11
-            message_id: f80c4529-a3dc-4b5b-80ff-6405c85980dc
-            timestamp: 2026-03-13T11:21:32.863Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
+            message_id: b75ea9c3-baa3-464b-9a83-12ae94fe84a2
+            timestamp: 2026-03-16T11:10:44.844Z
+            transaction_id: b9204ece-0440-4021-a828-19dcc5a5db40
             ttl: PT30S
           message:
             order:
               billing:
                 address:
-                  area_code: "560001"
+                  area_code: "110088"
                   building: "my building name or house #"
                   city: my city
                   country: IND
                   locality: my street name
                   name: "my house or door or floor #"
                   state: my state
-                created_at: 2026-03-13T11:21:32.456Z
+                created_at: 2026-03-16T11:10:44.439Z
                 email: nobody@nomail.com
                 name: ONDC buyer
                 phone: "9886098860"
-                updated_at: 2026-03-13T11:21:32.456Z
+                updated_at: 2026-03-16T11:10:44.439Z
               cancellation_terms:
                 - cancellation_fee:
                     percentage: "0.00"
@@ -2944,7 +3788,7 @@ steps:
                     descriptor:
                       code: At-delivery
                       short_desc: 010,011,012,013,014,015
-              created_at: 2026-03-13T11:21:32.719Z
+              created_at: 2026-03-16T11:10:44.704Z
               fulfillments:
                 - "@ondc/org/provider_name": LSP Provider
                   end:
@@ -2952,7 +3796,7 @@ steps:
                       phone: "9886098860"
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                         building: "my building name or house #"
                         city: my city
                         country: IND
@@ -2969,7 +3813,7 @@ steps:
                       phone: "9886098860"
                     location:
                       address:
-                        area_code: "560001"
+                        area_code: "110088"
                         city: my store city
                         locality: my store locality
                         state: my store state
@@ -2982,7 +3826,7 @@ steps:
                       code: Pending
                   tracking: true
                   type: Delivery
-              id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
+              id: eb6a3545-f603-403e-a878-a5895ff4e508
               items:
                 - fulfillment_id: F1
                   id: I1
@@ -2995,6 +3839,10 @@ steps:
                       list:
                         - code: type
                           value: item
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C1
                   location_id: L1
@@ -3010,6 +3858,10 @@ steps:
                       list:
                         - code: id
                           value: CG1
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C3
                   location_id: L1
@@ -3025,6 +3877,10 @@ steps:
                       list:
                         - code: id
                           value: CG2
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
                 - fulfillment_id: F1
                   id: C8
                   location_id: L1
@@ -3040,6 +3896,10 @@ steps:
                       list:
                         - code: id
                           value: CG4
+                    - code: np_fees
+                      list:
+                        - code: id
+                          value: "1"
               payment:
                 "@ondc/org/buyer_app_finder_fee_amount": "3.54"
                 "@ondc/org/buyer_app_finder_fee_type": percent
@@ -3077,16 +3937,15 @@ steps:
                       price:
                         currency: INR
                         value: "269.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "269"
@@ -3100,6 +3959,10 @@ steps:
                           list:
                             - code: type
                               value: item
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "13.45"
@@ -3113,11 +3976,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -3127,6 +3985,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -3144,6 +4006,10 @@ steps:
                           list:
                             - code: id
                               value: CG1
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -3157,11 +4023,6 @@ steps:
                       price:
                         currency: INR
                         value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -3171,6 +4032,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0"
@@ -3188,6 +4053,10 @@ steps:
                           list:
                             - code: id
                               value: CG2
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "0.00"
@@ -3201,11 +4070,6 @@ steps:
                       price:
                         currency: INR
                         value: "35.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
                       tags:
                         - code: type
                           list:
@@ -3215,6 +4079,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "35"
@@ -3232,6 +4100,10 @@ steps:
                           list:
                             - code: id
                               value: CG4
+                        - code: np_fees
+                          list:
+                            - code: id
+                              value: "1"
                     price:
                       currency: INR
                       value: "1.75"
@@ -3272,1059 +4144,15 @@ steps:
                       value: 12ABCDE3456FGZJ
                     - code: accept_bpp_terms
                       value: Y
-              updated_at: 2026-03-13T11:21:32.863Z
-        type: request
-  - api: cancel
-    action_id: cancel
-    owner: BAP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          action: cancel
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
-          bpp_id: dev-automation.ondc.org
-          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
-          core_version: 1.2.5
-          country: IND
-          domain: ONDC:RET11
-          message_id: 96791fbd-da58-43a5-9350-cde582548421
-          timestamp: 2026-03-13T11:21:33.013Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
-          ttl: PT30S
-        message:
-          cancellation_reason_id: "016"
-          order_id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.city
-      inputs: {}
-    examples:
-      - name: Example for action "cancel"
-        description: Auto-generated example for action "cancel" in flow "BUYER_CANCEL"
-        payload:
-          context:
-            action: cancel
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
-            bpp_id: dev-automation.ondc.org
-            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
-            core_version: 1.2.5
-            country: IND
-            domain: ONDC:RET11
-            message_id: 96791fbd-da58-43a5-9350-cde582548421
-            timestamp: 2026-03-13T11:21:33.013Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
-            ttl: PT30S
-          message:
-            cancellation_reason_id: "016"
-            order_id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
-        type: request
-  - api: on_cancel
-    action_id: on_cancel
-    owner: BPP
-    responseFor: cancel
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          action: on_cancel
-          bap_id: dev-automation.ondc.org
-          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
-          bpp_id: dev-automation.ondc.org
-          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-          city: std:080
-          core_version: 1.2.5
-          country: IND
-          domain: ONDC:RET11
-          message_id: 96791fbd-da58-43a5-9350-cde582548421
-          timestamp: 2026-03-13T11:21:33.125Z
-          transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
-          ttl: PT30S
-        message:
-          order:
-            billing:
-              address:
-                area_code: "560001"
-                building: "my building name or house #"
-                city: my city
-                country: IND
-                locality: my street name
-                name: "my house or door or floor #"
-                state: my state
-              created_at: 2026-03-13T11:21:32.456Z
-              email: nobody@nomail.com
-              name: ONDC buyer
-              phone: "9886098860"
-              updated_at: 2026-03-13T11:21:32.456Z
-            cancellation:
-              cancelled_by: dev-automation.ondc.org
-              reason:
-                id: "016"
-            created_at: 2026-03-13T11:21:32.719Z
-            fulfillments:
-              - "@ondc/org/provider_name": LSP Provider
-                end:
-                  contact:
-                    phone: "9886098860"
-                  location:
-                    address:
-                      area_code: "560001"
-                      building: "my building name or house #"
-                      city: my city
-                      country: IND
-                      locality: my street name
-                      name: "my house or door or floor #"
-                      state: my state
-                    gps: 77.1976,28.5671
-                  person:
-                    name: name_of_person
-                id: F1
-                start:
-                  contact:
-                    email: nobody@nomail.com
-                    phone: "9886098860"
-                  location:
-                    address:
-                      area_code: "560001"
-                      city: my store city
-                      locality: my store locality
-                      state: my store state
-                    descriptor:
-                      name: ABC Store
-                    gps: 77.2039,28.5705
-                    id: L1
-                state:
-                  descriptor:
-                    code: Cancelled
-                tags:
-                  - code: cancel_request
-                    list:
-                      - code: reason_id
-                        value: "001"
-                      - code: initiated_by
-                        value: dev-automation.ondc.org
-                  - code: precancel_state
-                    list:
-                      - code: fulfillment_state
-                        value: Pending
-                      - code: updated_at
-                        value: 2026-03-13T11:21:32.719Z
-                tracking: true
-                type: Delivery
-              - id: C1
-                state:
-                  descriptor:
-                    code: Cancelled
-                tags:
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: item
-                      - code: subtype
-                        value: item
-                      - code: parent_item_id
-                        value: P0
-                      - code: id
-                        value: I1
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-269"
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: tax
-                      - code: subtype
-                        value: item
-                      - code: parent_item_id
-                        value: P0
-                      - code: id
-                        value: I1
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-13.45"
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: item
-                      - code: subtype
-                        value: customization
-                      - code: parent_item_id
-                        value: P0
-                      - code: id
-                        value: C8
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-35"
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: tax
-                      - code: subtype
-                        value: customization
-                      - code: parent_item_id
-                        value: P0
-                      - code: id
-                        value: C8
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-1.75"
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: delivery
-                      - code: id
-                        value: F1
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-50.00"
-                  - code: quote_trail
-                    list:
-                      - code: type
-                        value: packing
-                      - code: id
-                        value: F1
-                      - code: currency
-                        value: INR
-                      - code: value
-                        value: "-25.00"
-                type: Cancel
-            id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
-            items:
-              - fulfillment_id: F1
-                id: I1
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 0
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: item
-              - fulfillment_id: C1
-                id: I1
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 1
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: item
-              - fulfillment_id: F1
-                id: C1
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 0
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG1
-              - fulfillment_id: C1
-                id: C1
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 1
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG1
-              - fulfillment_id: F1
-                id: C3
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 0
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG2
-              - fulfillment_id: C1
-                id: C3
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 1
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG2
-              - fulfillment_id: F1
-                id: C8
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 0
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG4
-              - fulfillment_id: C1
-                id: C8
-                location_id: L1
-                parent_item_id: P0
-                quantity:
-                  count: 1
-                tags:
-                  - code: type
-                    list:
-                      - code: type
-                        value: customization
-                  - code: parent
-                    list:
-                      - code: id
-                        value: CG4
-            payment:
-              "@ondc/org/buyer_app_finder_fee_amount": "3.54"
-              "@ondc/org/buyer_app_finder_fee_type": percent
-              "@ondc/org/settlement_basis": delivery
-              "@ondc/org/settlement_details":
-                - bank_name: xxxx
-                  branch_name: xxxx
-                  settlement_bank_account_no: XXXXXXXXXX
-                  settlement_counterparty: seller-app
-                  settlement_ifsc_code: XXXXXXXXX
-                  settlement_phase: sale-amount
-                  settlement_type: neft
-                  upi_address: gft@oksbi
-              "@ondc/org/settlement_window": P1D
-              "@ondc/org/withholding_amount": "0.00"
-              collected_by: BAP
-              params:
-                amount: "394.20"
-                currency: INR
-                transaction_id: "3937"
-              status: PAID
-              type: ON-ORDER
-            provider:
-              id: P1
-              locations:
-                - id: L1
-            quote:
-              breakup:
-                - "@ondc/org/item_id": I1
-                  "@ondc/org/item_quantity":
-                    count: 0
-                  "@ondc/org/title_type": item
-                  item:
-                    parent_item_id: P0
-                    price:
-                      currency: INR
-                      value: "269.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: item
-                  price:
-                    currency: INR
-                    value: "0"
-                  title: Farm House Pizza
-                - "@ondc/org/item_id": I1
-                  "@ondc/org/title_type": tax
-                  item:
-                    parent_item_id: P0
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: item
-                  price:
-                    currency: INR
-                    value: "0.00"
-                  title: Tax
-                - "@ondc/org/item_id": C1
-                  "@ondc/org/item_quantity":
-                    count: 0
-                  "@ondc/org/title_type": item
-                  item:
-                    parent_item_id: P0
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG1
-                  price:
-                    currency: INR
-                    value: "0"
-                  title: New Hand Tossed
-                - "@ondc/org/item_id": C1
-                  "@ondc/org/title_type": tax
-                  item:
-                    parent_item_id: P0
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG1
-                  price:
-                    currency: INR
-                    value: "0.00"
-                  title: Tax
-                - "@ondc/org/item_id": C3
-                  "@ondc/org/item_quantity":
-                    count: 0
-                  "@ondc/org/title_type": item
-                  item:
-                    parent_item_id: P0
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG2
-                  price:
-                    currency: INR
-                    value: "0"
-                  title: Regular
-                - "@ondc/org/item_id": C3
-                  "@ondc/org/title_type": tax
-                  item:
-                    parent_item_id: P0
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG2
-                  price:
-                    currency: INR
-                    value: "0.00"
-                  title: Tax
-                - "@ondc/org/item_id": C8
-                  "@ondc/org/item_quantity":
-                    count: 0
-                  "@ondc/org/title_type": item
-                  item:
-                    parent_item_id: P0
-                    price:
-                      currency: INR
-                      value: "35.00"
-                    quantity:
-                      available:
-                        count: "99"
-                      maximum:
-                        count: "99"
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG4
-                  price:
-                    currency: INR
-                    value: "0"
-                  title: Grilled Mushrooms
-                - "@ondc/org/item_id": C8
-                  "@ondc/org/title_type": tax
-                  item:
-                    parent_item_id: P0
-                    tags:
-                      - code: type
-                        list:
-                          - code: type
-                            value: customization
-                      - code: parent
-                        list:
-                          - code: id
-                            value: CG4
-                  price:
-                    currency: INR
-                    value: "0.00"
-                  title: Tax
-              price:
-                currency: INR
-                value: "0.00"
-              ttl: P1D
-            state: Cancelled
-            updated_at: 2026-03-13T11:21:33.125Z
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.city
-      inputs: {}
-    examples:
-      - name: Example for action "on_cancel"
-        description: Auto-generated example for action "on_cancel" in flow "BUYER_CANCEL"
-        payload:
-          context:
-            action: on_cancel
-            bap_id: dev-automation.ondc.org
-            bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/buyer
-            bpp_id: dev-automation.ondc.org
-            bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET11/1.2.5/seller
-            city: std:080
-            core_version: 1.2.5
-            country: IND
-            domain: ONDC:RET11
-            message_id: 96791fbd-da58-43a5-9350-cde582548421
-            timestamp: 2026-03-13T11:21:33.125Z
-            transaction_id: 3c3e7f79-4011-40ac-b0c6-32892addf2ca
-            ttl: PT30S
-          message:
-            order:
-              billing:
-                address:
-                  area_code: "560001"
-                  building: "my building name or house #"
-                  city: my city
-                  country: IND
-                  locality: my street name
-                  name: "my house or door or floor #"
-                  state: my state
-                created_at: 2026-03-13T11:21:32.456Z
-                email: nobody@nomail.com
-                name: ONDC buyer
-                phone: "9886098860"
-                updated_at: 2026-03-13T11:21:32.456Z
-              cancellation:
-                cancelled_by: dev-automation.ondc.org
-                reason:
-                  id: "016"
-              created_at: 2026-03-13T11:21:32.719Z
-              fulfillments:
-                - "@ondc/org/provider_name": LSP Provider
-                  end:
-                    contact:
-                      phone: "9886098860"
-                    location:
-                      address:
-                        area_code: "560001"
-                        building: "my building name or house #"
-                        city: my city
-                        country: IND
-                        locality: my street name
-                        name: "my house or door or floor #"
-                        state: my state
-                      gps: 77.1976,28.5671
-                    person:
-                      name: name_of_person
-                  id: F1
-                  start:
-                    contact:
-                      email: nobody@nomail.com
-                      phone: "9886098860"
-                    location:
-                      address:
-                        area_code: "560001"
-                        city: my store city
-                        locality: my store locality
-                        state: my store state
-                      descriptor:
-                        name: ABC Store
-                      gps: 77.2039,28.5705
-                      id: L1
-                  state:
-                    descriptor:
-                      code: Cancelled
-                  tags:
-                    - code: cancel_request
-                      list:
-                        - code: reason_id
-                          value: "001"
-                        - code: initiated_by
-                          value: dev-automation.ondc.org
-                    - code: precancel_state
-                      list:
-                        - code: fulfillment_state
-                          value: Pending
-                        - code: updated_at
-                          value: 2026-03-13T11:21:32.719Z
-                  tracking: true
-                  type: Delivery
-                - id: C1
-                  state:
-                    descriptor:
-                      code: Cancelled
-                  tags:
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: item
-                        - code: subtype
-                          value: item
-                        - code: parent_item_id
-                          value: P0
-                        - code: id
-                          value: I1
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-269"
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: tax
-                        - code: subtype
-                          value: item
-                        - code: parent_item_id
-                          value: P0
-                        - code: id
-                          value: I1
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-13.45"
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: item
-                        - code: subtype
-                          value: customization
-                        - code: parent_item_id
-                          value: P0
-                        - code: id
-                          value: C8
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-35"
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: tax
-                        - code: subtype
-                          value: customization
-                        - code: parent_item_id
-                          value: P0
-                        - code: id
-                          value: C8
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-1.75"
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: delivery
-                        - code: id
-                          value: F1
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-50.00"
-                    - code: quote_trail
-                      list:
-                        - code: type
-                          value: packing
-                        - code: id
-                          value: F1
-                        - code: currency
-                          value: INR
-                        - code: value
-                          value: "-25.00"
-                  type: Cancel
-              id: 18d3de5f-d7f8-4423-9636-c1af06d55dab
-              items:
-                - fulfillment_id: F1
-                  id: I1
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 0
-                  tags:
+                - code: bnp_receivables_claim
+                  list:
                     - code: type
-                      list:
-                        - code: type
-                          value: item
-                - fulfillment_id: C1
-                  id: I1
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 1
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: item
-                - fulfillment_id: F1
-                  id: C1
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 0
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG1
-                - fulfillment_id: C1
-                  id: C1
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 1
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG1
-                - fulfillment_id: F1
-                  id: C3
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 0
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG2
-                - fulfillment_id: C1
-                  id: C3
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 1
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG2
-                - fulfillment_id: F1
-                  id: C8
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 0
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG4
-                - fulfillment_id: C1
-                  id: C8
-                  location_id: L1
-                  parent_item_id: P0
-                  quantity:
-                    count: 1
-                  tags:
-                    - code: type
-                      list:
-                        - code: type
-                          value: customization
-                    - code: parent
-                      list:
-                        - code: id
-                          value: CG4
-              payment:
-                "@ondc/org/buyer_app_finder_fee_amount": "3.54"
-                "@ondc/org/buyer_app_finder_fee_type": percent
-                "@ondc/org/settlement_basis": delivery
-                "@ondc/org/settlement_details":
-                  - bank_name: xxxx
-                    branch_name: xxxx
-                    settlement_bank_account_no: XXXXXXXXXX
-                    settlement_counterparty: seller-app
-                    settlement_ifsc_code: XXXXXXXXX
-                    settlement_phase: sale-amount
-                    settlement_type: neft
-                    upi_address: gft@oksbi
-                "@ondc/org/settlement_window": P1D
-                "@ondc/org/withholding_amount": "0.00"
-                collected_by: BAP
-                params:
-                  amount: "394.20"
-                  currency: INR
-                  transaction_id: "3937"
-                status: PAID
-                type: ON-ORDER
-              provider:
-                id: P1
-                locations:
-                  - id: L1
-              quote:
-                breakup:
-                  - "@ondc/org/item_id": I1
-                    "@ondc/org/item_quantity":
-                      count: 0
-                    "@ondc/org/title_type": item
-                    item:
-                      parent_item_id: P0
-                      price:
-                        currency: INR
-                        value: "269.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: item
-                    price:
-                      currency: INR
-                      value: "0"
-                    title: Farm House Pizza
-                  - "@ondc/org/item_id": I1
-                    "@ondc/org/title_type": tax
-                    item:
-                      parent_item_id: P0
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: item
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    title: Tax
-                  - "@ondc/org/item_id": C1
-                    "@ondc/org/item_quantity":
-                      count: 0
-                    "@ondc/org/title_type": item
-                    item:
-                      parent_item_id: P0
-                      price:
-                        currency: INR
-                        value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG1
-                    price:
-                      currency: INR
-                      value: "0"
-                    title: New Hand Tossed
-                  - "@ondc/org/item_id": C1
-                    "@ondc/org/title_type": tax
-                    item:
-                      parent_item_id: P0
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG1
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    title: Tax
-                  - "@ondc/org/item_id": C3
-                    "@ondc/org/item_quantity":
-                      count: 0
-                    "@ondc/org/title_type": item
-                    item:
-                      parent_item_id: P0
-                      price:
-                        currency: INR
-                        value: "0.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG2
-                    price:
-                      currency: INR
-                      value: "0"
-                    title: Regular
-                  - "@ondc/org/item_id": C3
-                    "@ondc/org/title_type": tax
-                    item:
-                      parent_item_id: P0
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG2
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    title: Tax
-                  - "@ondc/org/item_id": C8
-                    "@ondc/org/item_quantity":
-                      count: 0
-                    "@ondc/org/title_type": item
-                    item:
-                      parent_item_id: P0
-                      price:
-                        currency: INR
-                        value: "35.00"
-                      quantity:
-                        available:
-                          count: "99"
-                        maximum:
-                          count: "99"
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG4
-                    price:
-                      currency: INR
-                      value: "0"
-                    title: Grilled Mushrooms
-                  - "@ondc/org/item_id": C8
-                    "@ondc/org/title_type": tax
-                    item:
-                      parent_item_id: P0
-                      tags:
-                        - code: type
-                          list:
-                            - code: type
-                              value: customization
-                        - code: parent
-                          list:
-                            - code: id
-                              value: CG4
-                    price:
-                      currency: INR
-                      value: "0.00"
-                    title: Tax
-                price:
-                  currency: INR
-                  value: "0.00"
-                ttl: P1D
-              state: Cancelled
-              updated_at: 2026-03-13T11:21:33.125Z
+                      value: misc
+                    - code: currency
+                      value: INR
+                    - code: value
+                      value: "20.00"
+              updated_at: 2026-03-16T11:10:44.844Z
         type: request
 transaction_history: []
 validationLib: ""
