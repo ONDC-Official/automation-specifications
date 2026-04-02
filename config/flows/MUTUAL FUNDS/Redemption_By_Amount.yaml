@@ -7,7 +7,7 @@ meta:
   use_case_id: MUTUAL FUNDS
   flowName: Redemption By Amount
 transaction_data:
-  transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
+  transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -15,7 +15,7 @@ transaction_data:
   bpp_uri: https://bpp.example.com
 steps:
   - api: select
-    action_id: select
+    action_id: select_redemption
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: select
-          timestamp: 2026-04-01T11:39:51.628Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: f0dda5f7-f8c3-4d43-9d46-2c0d29217dd4
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 6f3ec73a-d970-4fd9-9932-138223b4cb2f
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -54,14 +54,14 @@ steps:
         city_code: $.context.location.city.code
       inputs:
         oldInputs:
-          - name: select_input
+          - name: redemption_select
             label: Enter
-            type: fis14_mutul_fund_select
+            type: fis14_mf_redemption_select
     examples: []
   - api: on_select
     action_id: on_select_redemption
     owner: BPP
-    responseFor: select
+    responseFor: select_redemption
     unsolicited: false
     description: please add relevant description
     mock:
@@ -72,9 +72,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_select
-          timestamp: 2026-04-01T11:39:51.628Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: 6397222a-6390-4d16-a3ff-2bc34a3bbb92
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 8b9d7531-1d74-474d-baed-4aae9f8052a3
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -99,7 +99,7 @@ steps:
       inputs: {}
     examples: []
   - api: init
-    action_id: init
+    action_id: init_redemption
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -112,9 +112,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: init
-          timestamp: 2026-04-01T11:39:51.629Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: c7e07c89-2118-4539-9b55-b85824c6df11
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 9694237c-999a-40d8-b376-05bbb131edcd
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -139,9 +139,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_init
-    action_id: on_init
+    action_id: on_init_redemption
     owner: BPP
-    responseFor: init
+    responseFor: init_redemption
     unsolicited: false
     description: please add relevant description
     mock:
@@ -152,9 +152,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_init
-          timestamp: 2026-04-01T11:39:51.629Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: 2228182c-b9c7-455f-af5a-4356ab8f38c2
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: b9a1f7c5-774b-42be-84ca-b341b5e146f2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -179,7 +179,7 @@ steps:
       inputs: {}
     examples: []
   - api: confirm
-    action_id: confirm
+    action_id: confirm_redemption
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -192,9 +192,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: confirm
-          timestamp: 2026-04-01T11:39:51.629Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: 348796cf-9227-4819-958c-c572b9355150
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 82772160-bf3e-40cd-b951-b571b67a628a
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -219,9 +219,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_confirm
-    action_id: on_confirm
+    action_id: on_confirm_redemption
     owner: BPP
-    responseFor: confirm
+    responseFor: confirm_redemption
     unsolicited: false
     description: please add relevant description
     mock:
@@ -232,9 +232,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_confirm
-          timestamp: 2026-04-01T11:39:51.629Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: ab8a9d28-b5ab-4cdf-b199-4539b3dede34
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 31b2288f-a650-442d-9cc3-5dbcde00a8be
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -258,7 +258,7 @@ steps:
         city_code: $.context.location.city.code
       inputs: {}
     examples: []
-  - api: on_update_redemption
+  - api: on_update
     action_id: on_update_redemption
     owner: BPP
     responseFor: null
@@ -271,10 +271,10 @@ steps:
       defaultPayload:
         context:
           domain: ONDC:FIS14
-          action: on_update_redemption
-          timestamp: 2026-04-01T11:39:51.629Z
-          transaction_id: 14804849-a461-43e6-a7df-e7554c901c36
-          message_id: 7bf0c6fc-e79d-4217-af69-edade0a8b3ce
+          action: on_update
+          timestamp: 2026-04-02T07:29:24.110Z
+          transaction_id: 419b6ffe-cd4e-433e-b927-edf76b0d5d60
+          message_id: 6d68631b-a61a-40db-a9f5-6dbd8f23d1be
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -296,7 +296,14 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: redemption_status
+            label: Status
+            type: select
+            values:
+              - CANCELLED
+              - COMPLETED
     examples: []
 transaction_history: []
 validationLib: ""

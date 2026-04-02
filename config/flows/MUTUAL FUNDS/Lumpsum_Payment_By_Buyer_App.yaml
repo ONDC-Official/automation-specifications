@@ -7,7 +7,7 @@ meta:
   use_case_id: MUTUAL FUNDS
   flowName: Lumpsum Payment By Buyer App
 transaction_data:
-  transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
+  transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: select
-          timestamp: 2026-04-01T11:39:50.403Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 892730a0-7524-4a47-92f6-911d7d365797
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: 69c0267c-be58-46d7-9968-3f36c2e538c3
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -59,7 +59,7 @@ steps:
             type: fis14_mutul_fund_select
     examples: []
   - api: on_select
-    action_id: on_select
+    action_id: on_select_existing_folio
     owner: BPP
     responseFor: select
     unsolicited: false
@@ -72,9 +72,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_select
-          timestamp: 2026-04-01T11:39:50.403Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 4fa52a6c-3031-4315-869c-50b4b392b534
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: 30158400-58d0-4d99-9efd-51e5d0d42a88
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -112,9 +112,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: init
-          timestamp: 2026-04-01T11:39:50.404Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 815aa036-a3a9-4d09-96d8-a76be74582db
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: e99c05bb-d2fc-43c1-b161-8f976733e475
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -139,7 +139,7 @@ steps:
       inputs: {}
     examples: []
   - api: on_init
-    action_id: on_init
+    action_id: on_init_existing_folio
     owner: BPP
     responseFor: init
     unsolicited: false
@@ -152,9 +152,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_init
-          timestamp: 2026-04-01T11:39:50.404Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 41b93eac-acf4-4b38-b2d1-21bb762edc2d
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: 8db3b06e-63e0-400c-8aed-c815f8514040
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -192,9 +192,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: confirm
-          timestamp: 2026-04-01T11:39:50.404Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 15627ecc-7ca3-4428-8258-aeb66e77e0fa
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: e5ed39b0-aa08-46b7-87df-65d6fa638853
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -219,7 +219,7 @@ steps:
       inputs: {}
     examples: []
   - api: on_confirm
-    action_id: on_confirm
+    action_id: on_confirm_existing_folio
     owner: BPP
     responseFor: confirm
     unsolicited: false
@@ -232,9 +232,49 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_confirm
-          timestamp: 2026-04-01T11:39:50.404Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: d29b6037-b459-4a54-9017-c8208f96f17f
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: bcb71f95-e6de-4303-9988-5983bbd4dbdb
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.1.0
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs: {}
+    examples: []
+  - api: update
+    action_id: update_buyer_payment
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:FIS14
+          action: update
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: ed053a10-9b9b-4b93-a251-dc71c15aca29
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -259,7 +299,47 @@ steps:
       inputs: {}
     examples: []
   - api: on_update
-    action_id: on_update
+    action_id: on_update_buyer_payment
+    owner: BPP
+    responseFor: update_buyer_payment
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:FIS14
+          action: on_update
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: 6289b9ae-e378-4c88-8036-4a179c40ea1e
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.1.0
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs: {}
+    examples: []
+  - api: on_update
+    action_id: on_update_unsolicited_existing_folio
     owner: BPP
     responseFor: null
     unsolicited: true
@@ -272,9 +352,9 @@ steps:
         context:
           domain: ONDC:FIS14
           action: on_update
-          timestamp: 2026-04-01T11:39:50.404Z
-          transaction_id: e1cd7c89-7520-4e97-b97d-0be579107649
-          message_id: 94ba670d-4699-44a3-9600-5684822c27e2
+          timestamp: 2026-04-02T07:29:23.352Z
+          transaction_id: 3de9c61c-2526-491a-b0e7-0d1a12a77f64
+          message_id: 74066ce7-a463-487e-8481-283fdd06ecc3
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
