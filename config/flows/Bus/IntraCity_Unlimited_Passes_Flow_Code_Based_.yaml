@@ -7,7 +7,7 @@ meta:
   use_case_id: Bus
   flowName: IntraCity Unlimited Passes Flow(Code Based)
 transaction_data:
-  transaction_id: 6168855f-2f96-4cba-a7d2-8ba6cbec5b9c
+  transaction_id: 39adb30b-53ce-4105-a40b-e5b296761315
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -74,6 +74,7 @@ steps:
             label: Enter PAN Number
             type: text
             payloadField: $.message.order.fulfillments[*].customer.person.creds[?(@.type=='PAN')].id
+        id: old_inputs
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -261,7 +262,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_select"
         description: Auto-generated example for action "on_select" in flow
@@ -497,6 +499,7 @@ steps:
               - BPP
             defaultValue: BPP
             payloadField: $.message.order.payments[0].collected_by
+        id: old_inputs
     examples:
       - name: Example for action "init"
         description: Auto-generated example for action "init" in flow
@@ -774,7 +777,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_init"
         description: Auto-generated example for action "on_init" in flow
@@ -1105,7 +1109,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "confirm"
         description: Auto-generated example for action "confirm" in flow
@@ -1488,7 +1493,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_confirm"
         description: Auto-generated example for action "on_confirm" in flow
