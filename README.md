@@ -1,7 +1,7 @@
 # ONDC:NTS10 — version 2.0.0
 
 **Branch:** `draft-NTS10-2.0.0`  
-**Use Cases:** PPF
+**Use Cases:** RECONCILIATION
 
 ---
 
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - PPF
+  - RECONCILIATION
