@@ -7,7 +7,7 @@ meta:
   use_case_id: unreserved-entry-pass
   flowName: incremental pull journey
 transaction_data:
-  transaction_id: 96d5ac5e-92db-474c-bcc7-fc6413b492a7
+  transaction_id: 82ea9834-db25-4eea-b64a-ffde8f225a71
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -112,6 +112,7 @@ steps:
             label: Enter end time
             type: datetime-local
             payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].time.range.end
+        id: old_inputs
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -365,7 +366,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow
@@ -718,7 +720,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow
@@ -1071,7 +1074,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow
