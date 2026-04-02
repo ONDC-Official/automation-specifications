@@ -7,7 +7,7 @@ meta:
   use_case_id: APPLIANCES
   flowName: Out Of Stock Flow(Error-code)
 transaction_data:
-  transaction_id: 04e3ee84-aa90-4f7f-8db5-86d48d8e7cb7
+  transaction_id: aa5711e0-24b2-49a1-bb46-4fd6f0dcf0c4
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -73,6 +73,7 @@ steps:
         oldInputs:
           - name: appliances_select
             type: ret10_grocery_select
+        id: old_inputs
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -213,7 +214,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_select"
         description: Auto-generated example for action "on_select" in flow
