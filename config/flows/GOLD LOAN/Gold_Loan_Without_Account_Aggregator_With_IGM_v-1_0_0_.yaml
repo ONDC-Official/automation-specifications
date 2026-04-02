@@ -1,13 +1,13 @@
 meta:
   domain: ONDC:FIS12
   version: 2.0.3
-  flowId: Personal_Loan_Pre_Part_Payment_With_Account_Aggregator
+  flowId: Gold_Loan_Without_Account_Aggregator_With_IGM(v-1.0.0)
   config_version: 0.0.0001
-  description: Gold Loan with Account Aggregator
-  use_case_id: PERSONAL LOAN
-  flowName: Personal Loan Pre Part Payment With Account Aggregator
+  description: Gold Loan without Account Aggregator
+  use_case_id: GOLD LOAN
+  flowName: Gold Loan Without Account Aggregator With IGM(v-1.0.0)
 transaction_data:
-  transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
+  transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -15,7 +15,7 @@ transaction_data:
   bpp_uri: https://bpp.example.com
 steps:
   - api: search
-    action_id: search_personal_loan_3
+    action_id: search
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: search
-          timestamp: 2026-04-01T11:39:51.717Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 973a0659-2e11-43d9-bffc-c6592719069c
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: b38800b2-6018-45e9-8671-e5f86cf9f72b
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -53,9 +53,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_search
-    action_id: on_search_personal_loan_3
+    action_id: on_search
     owner: BPP
-    responseFor: search_personal_loan_3
+    responseFor: search
     unsolicited: false
     description: please add relevant description
     mock:
@@ -66,9 +66,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_search
-          timestamp: 2026-04-01T11:39:51.717Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 9ef794f7-0832-414d-884f-c23bdd03ea39
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 71ddb133-85df-476b-bb31-c724c9f2a470
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -93,7 +93,7 @@ steps:
       inputs: {}
     examples: []
   - api: HTML_FORM
-    action_id: personal_loan_information_form
+    action_id: consumer_information_form
     owner: BPP
     responseFor: null
     unsolicited: false
@@ -109,11 +109,11 @@ steps:
           - name: form_submission_id
             label: Enter Form Submission id
             type: HTML_FORM
-            reference: $.reference_data.personal_loan_information_form
+            reference: $.reference_data.consumer_information_form
       formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
     examples: []
   - api: select
-    action_id: select_1_personal_loan_3
+    action_id: select_adjust_loan_amount
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -126,9 +126,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: select
-          timestamp: 2026-04-01T11:39:51.717Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: f046235f-0760-4ef2-b5fa-f5442e2abd18
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: d9926a9c-c0c7-4a66-8b37-2ab31014d9fb
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -153,9 +153,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_select
-    action_id: on_select_1_personal_loan_3
+    action_id: on_select_adjust_loan_amount
     owner: BPP
-    responseFor: select_1_personal_loan_3
+    responseFor: select_adjust_loan_amount
     unsolicited: false
     description: please add relevant description
     mock:
@@ -166,94 +166,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_select
-          timestamp: 2026-04-01T11:39:51.717Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: cd006c05-8e11-4904-a2c4-da9d69f748b1
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: select
-    action_id: select_2_personal_loan_3
-    owner: BAP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: select
-          timestamp: 2026-04-01T11:39:51.717Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: e3b1c9e1-7f81-4eeb-a959-91364bbf5713
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs:
-        oldInputs:
-          - name: finvu_verification
-            label: Complete Account Aggregator Verification
-            type: FINVU_REDIRECT
-            payloadField: $.context.aa_consent_verified
-    examples: []
-  - api: on_select
-    action_id: on_select_2_personal_loan_3
-    owner: BPP
-    responseFor: select_2_personal_loan_3
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_select
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 5294b6e7-616c-42e1-960d-97fc291dd7cc
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 38585f03-e65f-4e49-b576-c28cbd324fd0
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -278,7 +193,7 @@ steps:
       inputs: {}
     examples: []
   - api: HTML_FORM
-    action_id: loan_amount_adjustment_form_pl
+    action_id: loan_amount_adjustment_form
     owner: BPP
     responseFor: null
     unsolicited: false
@@ -298,7 +213,7 @@ steps:
       formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
     examples: []
   - api: select
-    action_id: select_3_personal_loan_3
+    action_id: select_2
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -311,9 +226,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: select
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: ed65c4ca-6b71-4420-afb2-acfd3a1b89ce
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: a24d1807-e30a-4d1e-b184-d683b2f9adf0
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -338,9 +253,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_select
-    action_id: on_select_3_personal_loan_3
+    action_id: on_select_2
     owner: BPP
-    responseFor: select_3_personal_loan_3
+    responseFor: select_2
     unsolicited: false
     description: please add relevant description
     mock:
@@ -351,9 +266,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_select
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 16a061c6-e7e3-41cb-b896-ac981dc9a81d
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: fdeb299a-1031-4c39-bba7-7bf821a5df8d
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -378,7 +293,7 @@ steps:
       inputs: {}
     examples: []
   - api: DYNAMIC_FORM
-    action_id: kyc_verification_status_pl
+    action_id: verification_status
     owner: BPP
     responseFor: null
     unsolicited: false
@@ -395,251 +310,11 @@ steps:
             label: Enter Form Submission id
             type: DYNAMIC_FORM
             payloadField: form_submission_id
-            reference: $.reference_data.Ekyc_details_form
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
-    examples: []
-  - api: on_status
-    action_id: on_status_kyc_verification
-    owner: BPP
-    responseFor: null
-    unsolicited: true
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_status
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: bfad4ed6-4405-4521-9a05-6e6b45f5409f
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: init
-    action_id: init_1_personal_loan_3
-    owner: BAP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: a9d32db3-7f71-4c77-91ee-513c53a38426
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: on_init
-    action_id: on_init_1_personal_loan_3
-    owner: BPP
-    responseFor: init_1_personal_loan_3
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: a614a88b-0fda-4a93-8e1a-792aba486201
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: HTML_FORM
-    action_id: manadate_details_form_pl
-    owner: BPP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload: {}
-      saveData: {}
-      inputs:
-        oldInputs:
-          - name: form_submission_id
-            label: Enter Form Submission id
-            type: HTML_FORM
-            reference: $.reference_data.manadate_details_form
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
-    examples: []
-  - api: init
-    action_id: init_2_personal_loan_3
-    owner: BAP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: df822a11-c5ca-4d87-80eb-88103230725c
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: on_init
-    action_id: on_init_2_personal_loan_3
-    owner: BPP
-    responseFor: init_2_personal_loan_3
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 970f1000-48f9-425b-89d7-06a7947ff5d7
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: DYNAMIC_FORM
-    action_id: verification_status_e_mandate
-    owner: BPP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload: {}
-      saveData: {}
-      inputs:
-        oldInputs:
-          - name: form_submission_id
-            label: Enter Form Submission id
-            type: DYNAMIC_FORM
             reference: $.reference_data.verification_status
       formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
     examples: []
   - api: on_status
-    action_id: on_status_emandate_verification
+    action_id: on_status_unsolicited
     owner: BPP
     responseFor: null
     unsolicited: true
@@ -652,9 +327,89 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_status
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 52a138d7-83bd-4084-928e-1fd77b50abba
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: e54d4527-3c2e-4e2e-8c58-37be8870c39b
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.3
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs: {}
+    examples: []
+  - api: status
+    action_id: status
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:FIS12
+          action: status
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: b4b52afc-3b83-4d81-883d-dbbc33ee2b99
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.3
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs: {}
+    examples: []
+  - api: on_status
+    action_id: on_status
+    owner: BPP
+    responseFor: status
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:FIS12
+          action: on_status
+          timestamp: 2026-04-02T07:29:24.958Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 4d519d40-cfd9-440e-bf8a-b40ed21c5f20
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -679,7 +434,7 @@ steps:
       inputs: {}
     examples: []
   - api: init
-    action_id: init_3_personal_loan_3
+    action_id: init
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -692,9 +447,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: a9c0d7c8-4595-4be3-aceb-4020168b4114
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: e82348ce-a500-40ce-9114-253d98226418
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -719,9 +474,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_init
-    action_id: on_init_3_personal_loan_3
+    action_id: on_init
     owner: BPP
-    responseFor: init_3_personal_loan_3
+    responseFor: init
     unsolicited: false
     description: please add relevant description
     mock:
@@ -732,69 +487,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_init
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: bd49909a-93f7-4b59-bf5d-50ef4d64d04c
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: DYNAMIC_FORM
-    action_id: loan_agreement_esign_form
-    owner: BPP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload: {}
-      saveData: {}
-      inputs:
-        oldInputs:
-          - name: form_submission_id
-            label: Enter Form Submission id
-            type: DYNAMIC_FORM
-            reference: $.reference_data.loan_agreement_esign_form
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
-    examples: []
-  - api: on_status
-    action_id: on_status_esign_verification
-    owner: BPP
-    responseFor: null
-    unsolicited: true
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_status
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 84c9a91c-a069-4651-9c2c-6e421b61d62a
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: b4e9f639-6bc6-416d-8b7e-99f153e79301
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -819,7 +514,7 @@ steps:
       inputs: {}
     examples: []
   - api: confirm
-    action_id: confirm_personal_loan_3
+    action_id: confirm
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -832,9 +527,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: confirm
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 3a906e77-183b-4840-928a-ec928a069017
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 40da71f9-91e7-417e-97c2-bd65bc28c467
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -859,9 +554,9 @@ steps:
       inputs: {}
     examples: []
   - api: on_confirm
-    action_id: on_confirm_personal_loan_3
+    action_id: on_confirm
     owner: BPP
-    responseFor: confirm_personal_loan_3
+    responseFor: confirm
     unsolicited: false
     description: please add relevant description
     mock:
@@ -872,9 +567,9 @@ steps:
         context:
           domain: ONDC:FIS12
           action: on_confirm
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 3ea65d4d-a016-4386-8a1f-33f6a4b694ee
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 81c84029-7ad8-42f8-8a37-943a6ddb76b9
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -898,48 +593,8 @@ steps:
         city_code: $.context.location.city.code
       inputs: {}
     examples: []
-  - api: on_status
-    action_id: on_status_unsolicited_personal_loan_3
-    owner: BPP
-    responseFor: null
-    unsolicited: true
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:FIS12
-          action: on_status
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 1a2dee77-ba36-4112-b851-bf3d64d5f7fe
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.3
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-      inputs: {}
-    examples: []
-  - api: update
-    action_id: update_personal_loan_3
+  - api: issue
+    action_id: issue_open_GD_100
     owner: BAP
     responseFor: null
     unsolicited: false
@@ -951,10 +606,10 @@ steps:
       defaultPayload:
         context:
           domain: ONDC:FIS12
-          action: update
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: 3dd24f5a-5df7-45fb-b5f5-e70a01ef8c79
+          action: issue
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 31cabc4f-d137-4fa2-8506-261f25eb8ec0
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -978,10 +633,10 @@ steps:
         city_code: $.context.location.city.code
       inputs: {}
     examples: []
-  - api: on_update
-    action_id: on_update_pre_part_payment
+  - api: on_issue
+    action_id: on_issue_processing_GD_100
     owner: BPP
-    responseFor: update_personal_loan_3
+    responseFor: issue_open_GD_100
     unsolicited: false
     description: please add relevant description
     mock:
@@ -991,10 +646,10 @@ steps:
       defaultPayload:
         context:
           domain: ONDC:FIS12
-          action: on_update
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: bfb14813-5c84-4e63-95d9-f775f5fbad84
+          action: on_issue
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 063c2ef3-52c1-49fb-bb8e-df7b3e785f7b
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -1018,29 +673,8 @@ steps:
         city_code: $.context.location.city.code
       inputs: {}
     examples: []
-  - api: DYNAMIC_FORM
-    action_id: payment_url_form
-    owner: BPP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload: {}
-      saveData: {}
-      inputs:
-        oldInputs:
-          - name: form_submission_id
-            label: Enter Form Submission id
-            type: DYNAMIC_FORM
-            payloadField: form_submission_id
-            reference: $.reference_data.payment_url_form
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPkVOVEVSIEZPUk0gVElUTEUgSEVSRTwvdGl0bGU+CjwvaGVhZD4KCjxib2R5PgogIDwhLS0gbm90ZTogdXBkYXRlIHRoZSBmb3JtIGlkIGhlcmUgYW5kIGRvbid0IGNoYW5nZSB0aGUgYWN0aW9uVXJsIHRlbXBsYXRlIC0tPgogIDxmb3JtIGlkPSJhZGRpdGlvbmFsRGV0YWlsc0Zvcm0iIG1ldGhvZD0iUE9TVCIgYWN0aW9uPSI8JT0gYWN0aW9uVXJsICU+Ij4KICAgIDxsYWJlbCBmb3I9Im5hbWUiPk5hbWU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJuYW1lIiBuYW1lPSJuYW1lIiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnkiPkNvdW50cnk8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5IiBuYW1lPSJjb3VudHJ5IiAvPgoKICAgIDxsYWJlbCBmb3I9ImNvdW50cnlDb2RlIj5Db3VudHJ5IENvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJjb3VudHJ5Q29kZSIgbmFtZT0iY291bnRyeUNvZGUiIC8+CgogICAgPGxhYmVsIGZvcj0iYWdlIj5BZ2U8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJhZ2UiIG5hbWU9ImFnZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgSUQ8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXI8L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJnZW5kZXIiIGlkPSJnZW5kZXIiPgogICAgICA8b3B0aW9uIHZhbHVlPSJtYWxlIj5NYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9ImZlbWFsZSI+RmVtYWxlPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgPC9zZWxlY3Q+CgogICAgPGxhYmVsIGZvcj0icGhvbmVOdW1iZXIiPlBob25lIG51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBob25lTnVtYmVyIiBuYW1lPSJwaG9uZU51bWJlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJpZFByb29mIj5JRCBQcm9vZjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImlkUHJvb2YiIGlkPSJpZFByb29mIj4KICAgICAgPG9wdGlvbiB2YWx1ZT0icGFzc3BvcnQiPlBhc3Nwb3J0PC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJwYXNzcG9ydE51bWJlciI+UGFzc3BvcnQgTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFzc3BvcnROdW1iZXIiIG5hbWU9InBhc3Nwb3J0TnVtYmVyIiAvPgogIAk8IS0tIG5vdGU6IGRvIG5vdCByZW1vdmUgdGhlIHN1Ym1pdCBidXR0b24tLT4KICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPg==
-    examples: []
-  - api: on_update
-    action_id: on_update_unsolicited_personal_loan_3
+  - api: on_issue_status
+    action_id: on_issue_resolved_GD_100
     owner: BPP
     responseFor: null
     unsolicited: true
@@ -1052,10 +686,10 @@ steps:
       defaultPayload:
         context:
           domain: ONDC:FIS12
-          action: on_update
-          timestamp: 2026-04-01T11:39:51.718Z
-          transaction_id: c1fe14e6-7d1c-40e9-8156-517185981098
-          message_id: af3bcbf1-b5c7-4d54-b51b-3706d4129857
+          action: on_issue_status
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: e79b1bb5-476b-4fed-8413-25582734c4f3
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -1078,6 +712,54 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
       inputs: {}
+    examples: []
+  - api: issue
+    action_id: issue_close_GD_100
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:FIS12
+          action: issue
+          timestamp: 2026-04-02T07:29:24.959Z
+          transaction_id: 9eb324a4-45dd-4c07-832e-7afefbfef328
+          message_id: 6f4ce893-b5f8-4073-bd33-3676ec0c8003
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          version: 2.0.3
+          location:
+            country:
+              code: IND
+            city:
+              code: "*"
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs:
+        oldInputs:
+          - name: rating
+            label: Select Rating
+            type: select
+            values:
+              - THUMBS_UP
+              - THUMBS_DOWN
+            default: THUMBS_UP
     examples: []
 transaction_history: []
 validationLib: ""
