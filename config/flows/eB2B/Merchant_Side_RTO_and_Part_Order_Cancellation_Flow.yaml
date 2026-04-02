@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Merchant Side RTO and Part Order Cancellation Flow
 transaction_data:
-  transaction_id: 3dd34251-2a5b-4307-891a-931cc7013065
+  transaction_id: e62588da-080f-4f88-99a2-5c9b0f7ed7bb
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -94,62 +94,26 @@ steps:
                   enum:
                     - new
                     - existing
-                  description: Retailer type
+                  description: Retailer registration type
                   default: existing
                 customer_id:
                   type: string
-                  description: Customer ID
-                  default: CUST-2024-001234
-                phone_number:
-                  type: string
-                  description: Retailer phone number
-                email:
-                  type: string
-                  format: email
-                  description: Retailer email address
-                tax_number:
-                  type: string
-                  description: GST / Tax number
-                provider_tax_number:
-                  type: string
-                  description: PAN / Provider tax number
-                shop_name:
-                  type: string
-                  description: Retailer shop name
-                address:
-                  type: string
-                  description: Retailer address
+                  default: CUST-2024-0015421
                 city_code:
                   type: string
-                  description: City code
-                  default: std:60
-                state_code:
-                  type: string
-                  description: "State code "
+                  default: std:060
                 items:
                   type: array
-                  minItems: 2
-                  maxItems: 4
-                  default:
-                    - itemId: I1
-                      quantity: 1
-                      location: L1
-                      fulfillment_id: F1
-                    - itemId: I2
-                      quantity: 1
-                      location: L1
-                      fulfillment_id: F2
-                  description: Select minimum 2 items
+                  minItems: 1
+                  maxItems: 3
                   items:
                     type: object
-                    additionalProperties: false
                     properties:
                       itemId:
                         type: string
                         default: I1
                       quantity:
                         type: number
-                        minimum: 1
                         default: 1
                       location:
                         type: string
@@ -157,27 +121,57 @@ steps:
                       fulfillment_id:
                         type: string
                         default: F1
-                    required:
-                      - itemId
-                      - quantity
+                available_offers:
+                  type: array
+                  description: "🎁 Select Offers (Note: Slab/Freebie/BuyXGetY are NON-ADDITIVE and
+                    will override others)"
+                  uniqueItems: true
+                  items:
+                    type: string
+                    oneOf:
+                      - const: discp10
+                        title: "discp10: 10% Discount"
+                        description: Applicable on Items I1-I4. Requires Min. Cart Value of ₹500.
+                          [ADDITIVE]
+                      - const: flat150
+                        title: "flat150: Flat ₹150 Off"
+                        description: Applicable on Items I5-I8. Requires Min. Cart Value of ₹1000.
+                          [ADDITIVE]
+                      - const: slab1
+                        title: "slab1: 15% Bulk Slab"
+                        description: Applicable on Item I5 only. Requires Quantity 10-19. [NON-ADDITIVE]
+                      - const: slab2
+                        title: "slab2: 10% High Volume Slab"
+                        description: Applicable on Item I2 only. Requires Quantity 20+. [NON-ADDITIVE]
+                      - const: freebie1
+                        title: "freebie1: Free Gift Item"
+                        description: Applicable on Item I1. Triggered at exactly 50 Units.
+                          [NON-ADDITIVE]
+                      - const: buy2get3
+                        title: "buy2get3: Buy 2 Get 3"
+                        description: Applicable on Items I1 or I2. Triggered at Quantity 2.
+                          [NON-ADDITIVE]
+                  default: []
+                phone_number:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                tax_number:
+                  type: string
+                  title: GSTIN
+                provider_tax_number:
+                  type: string
+                  title: PAN
+                shop_name:
+                  type: string
+                address:
+                  type: string
+                state_code:
+                  type: string
               required:
                 - type
                 - city_code
-                - items
-              allOf:
-                - if:
-                    properties:
-                      type:
-                        const: new
-                  then:
-                    required:
-                      - phone_number
-                      - email
-                      - tax_number
-                      - provider_tax_number
-                      - shop_name
-                      - address
-                      - state_code
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -4944,7 +4938,98 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.city
-      inputs: {}
+      inputs:
+        oldInputs:
+          - name: reteb2b_select
+            type: reteb2b_select
+            schema:
+              $schema: http://json-schema.org/draft-07/schema#
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - new
+                    - existing
+                  description: Retailer registration type
+                  default: existing
+                customer_id:
+                  type: string
+                  default: CUST-2024-0015421
+                city_code:
+                  type: string
+                  default: std:060
+                items:
+                  type: array
+                  minItems: 1
+                  maxItems: 3
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                        default: I1
+                      quantity:
+                        type: number
+                        default: 1
+                      location:
+                        type: string
+                        default: L1
+                      fulfillment_id:
+                        type: string
+                        default: F1
+                available_offers:
+                  type: array
+                  description: "🎁 Select Offers (Note: Slab/Freebie/BuyXGetY are NON-ADDITIVE and
+                    will override others)"
+                  uniqueItems: true
+                  items:
+                    type: string
+                    oneOf:
+                      - const: discp10
+                        title: "discp10: 10% Discount"
+                        description: Applicable on Items I1-I4. Requires Min. Cart Value of ₹500.
+                          [ADDITIVE]
+                      - const: flat150
+                        title: "flat150: Flat ₹150 Off"
+                        description: Applicable on Items I5-I8. Requires Min. Cart Value of ₹1000.
+                          [ADDITIVE]
+                      - const: slab1
+                        title: "slab1: 15% Bulk Slab"
+                        description: Applicable on Item I5 only. Requires Quantity 10-19. [NON-ADDITIVE]
+                      - const: slab2
+                        title: "slab2: 10% High Volume Slab"
+                        description: Applicable on Item I2 only. Requires Quantity 20+. [NON-ADDITIVE]
+                      - const: freebie1
+                        title: "freebie1: Free Gift Item"
+                        description: Applicable on Item I1. Triggered at exactly 50 Units.
+                          [NON-ADDITIVE]
+                      - const: buy2get3
+                        title: "buy2get3: Buy 2 Get 3"
+                        description: Applicable on Items I1 or I2. Triggered at Quantity 2.
+                          [NON-ADDITIVE]
+                  default: []
+                phone_number:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                tax_number:
+                  type: string
+                  title: GSTIN
+                provider_tax_number:
+                  type: string
+                  title: PAN
+                shop_name:
+                  type: string
+                address:
+                  type: string
+                state_code:
+                  type: string
+              required:
+                - type
+                - city_code
     examples:
       - name: Example for action "on_status"
         description: Auto-generated example for action "on_status" in flow
