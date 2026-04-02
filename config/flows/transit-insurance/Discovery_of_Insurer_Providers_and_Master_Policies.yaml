@@ -7,7 +7,7 @@ meta:
   use_case_id: transit-insurance
   flowName: Discovery of Insurer Providers and Master Policies
 transaction_data:
-  transaction_id: 47c50e55-63ed-4045-96bc-403f12ec2af2
+  transaction_id: 191ed7de-2e1c-4049-bda4-04b95f56d9cb
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -78,6 +78,7 @@ steps:
             label: Enter person id
             type: text
             payloadField: $.message.intent.fulfillment.agent.person.id
+        id: old_inputs
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -204,7 +205,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow

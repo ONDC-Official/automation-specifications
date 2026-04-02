@@ -7,7 +7,7 @@ meta:
   use_case_id: hospicash-insurance
   flowName: CD Balance Error Hospicash Insurance
 transaction_data:
-  transaction_id: 6be1f3f9-2efa-4178-977c-58d4bfa0088a
+  transaction_id: 3efab484-141c-4ffe-b5aa-5d8e3b6a1d03
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -130,6 +130,7 @@ steps:
             label: Hospicash Insurance Form
             type: search_hospicash_fis13
             payloadField: ""
+        id: old_inputs
     examples:
       - name: Example for action "search"
         description: Auto-generated example for action "search" in flow
@@ -502,7 +503,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_search"
         description: Auto-generated example for action "on_search" in flow
@@ -814,6 +816,7 @@ steps:
           - name: select_input
             label: Enter
             type: fis13_select
+        id: old_inputs
     examples:
       - name: Example for action "select"
         description: Auto-generated example for action "select" in flow
@@ -994,7 +997,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_select"
         description: Auto-generated example for action "on_select" in flow
@@ -1254,6 +1258,7 @@ steps:
               - No
             default: Yes
             payloadField: $.message.order.fulfillments[*].tags[*].list[?(@.descriptor.code=="GOOD_HEALTH_DECLARATION")].value
+        id: old_inputs
     examples:
       - name: Example for action "init"
         description: Auto-generated example for action "init" in flow
@@ -1377,7 +1382,8 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-      inputs: {}
+      inputs:
+        id: old_inputs
     examples:
       - name: Example for action "on_init"
         description: Auto-generated example for action "on_init" in flow
