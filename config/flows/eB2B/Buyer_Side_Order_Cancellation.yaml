@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Buyer Side Order Cancellation
 transaction_data:
-  transaction_id: 4bde4043-d4c5-410e-8941-33ab0f2cd4d9
+  transaction_id: 5499d4cc-3072-4191-8d37-ac982d43fa92
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -90,82 +90,105 @@ steps:
               properties:
                 type:
                   type: string
+                  description: Retailer registration type
                   enum:
                     - new
                     - existing
-                  description: Retailer type
                   default: existing
                 customer_id:
                   type: string
-                  description: Customer ID
-                  default: CUST-2024-001231
-                phone_number:
-                  type: string
-                  description: Retailer phone number
-                email:
-                  type: string
-                  format: email
-                  description: Retailer email address
-                tax_number:
-                  type: string
-                  description: GST / Tax number
-                provider_tax_number:
-                  type: string
-                  description: PAN / Provider tax number
-                shop_name:
-                  type: string
-                  description: Retailer shop name
-                address:
-                  type: string
-                  description: Retailer address
+                  title: Customer ID
+                  default: CUST-2024-0015421
                 city_code:
                   type: string
-                  description: City code
-                  default: std:070
-                state_code:
-                  type: string
-                  description: State code (default KA)
+                  title: City Code
+                  default: std:060
+                live_catalog:
+                  type: object
+                  title: Live Catalog Session Data
+                  description: Captures the live on_search catalog payload dynamically
+                  additionalProperties: true
                 items:
                   type: array
+                  title: 🛒 Cart Items
                   minItems: 1
-                  maxItems: 3
-                  default: []
+                  maxItems: 5
                   items:
                     type: object
-                    additionalProperties: true
                     properties:
                       itemId:
                         type: string
+                        title: Item
                         default: I1
                       quantity:
                         type: number
-                        default: 1
+                        title: Quantity
                         minimum: 1
+                        default: 1
                       location:
                         type: string
+                        title: Location
                         default: L1
                       fulfillment_id:
                         type: string
-                        description: Fulfillment ID (e.g., F1, F2)
+                        title: Fulfillment
                         default: F1
-                    default: {}
+                    required:
+                      - itemId
+                      - quantity
+                available_offers:
+                  type: array
+                  title: 🎁 available_offers
+                  description: Click 'Add Offer' to apply promotions
+                  minItems: 0
+                  maxItems: 5
+                  items:
+                    type: object
+                    properties:
+                      offerId:
+                        type: string
+                        title: Select Offer
+                        oneOf:
+                          - const: discp10
+                            title: 10% Discount (discp10)
+                          - const: flat150
+                            title: Flat ₹150 Off (flat150)
+                          - const: slab1
+                            title: 15% Bulk Slab (slab1)
+                          - const: slab2
+                            title: 10% High Volume (slab2)
+                          - const: freebie1
+                            title: Free Gift (freebie1)
+                          - const: buy2get3
+                            title: Buy 2 Get 3 (buy2get3)
+                    required:
+                      - offerId
+                phone_number:
+                  type: string
+                  title: Phone Number
+                email:
+                  type: string
+                  format: email
+                  title: Email Address
+                tax_number:
+                  type: string
+                  title: GSTIN
+                provider_tax_number:
+                  type: string
+                  title: PAN
+                shop_name:
+                  type: string
+                  title: Shop Name
+                address:
+                  type: string
+                  title: Address
+                state_code:
+                  type: string
+                  title: State Code
               required:
                 - type
                 - city_code
-              allOf:
-                - if:
-                    properties:
-                      type:
-                        const: new
-                  then:
-                    required:
-                      - phone_number
-                      - email
-                      - tax_number
-                      - provider_tax_number
-                      - shop_name
-                      - address
-                      - state_code
+                - items
         id: old_inputs
     examples:
       - name: Example for action "select"

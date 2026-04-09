@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Merchant Side RTO and Part Order Cancellation Flow
 transaction_data:
-  transaction_id: ee026afd-dae8-4336-9dca-2fec5460cd65
+  transaction_id: 72439e48-2628-439c-b4ee-c6b2fb03310b
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -91,72 +91,86 @@ steps:
               properties:
                 type:
                   type: string
+                  description: Retailer registration type
                   enum:
                     - new
                     - existing
-                  description: Retailer registration type
                   default: existing
                 customer_id:
                   type: string
+                  title: Customer ID
                   default: CUST-2024-0015421
                 city_code:
                   type: string
+                  title: City Code
                   default: std:060
+                live_catalog:
+                  type: object
+                  title: Live Catalog Session Data
+                  description: Captures the live on_search catalog payload dynamically
+                  additionalProperties: true
                 items:
                   type: array
+                  title: 🛒 Cart Items
                   minItems: 1
-                  maxItems: 3
+                  maxItems: 5
                   items:
                     type: object
                     properties:
                       itemId:
                         type: string
+                        title: Item
                         default: I1
                       quantity:
                         type: number
+                        title: Quantity
+                        minimum: 1
                         default: 1
                       location:
                         type: string
+                        title: Location
                         default: L1
                       fulfillment_id:
                         type: string
+                        title: Fulfillment
                         default: F1
+                    required:
+                      - itemId
+                      - quantity
                 available_offers:
                   type: array
-                  description: "🎁 Select Offers (Note: Slab/Freebie/BuyXGetY are NON-ADDITIVE and
-                    will override others)"
-                  uniqueItems: true
+                  title: 🎁 available_offers
+                  description: Click 'Add Offer' to apply promotions
+                  minItems: 0
+                  maxItems: 5
                   items:
-                    type: string
-                    oneOf:
-                      - const: discp10
-                        title: "discp10: 10% Discount"
-                        description: Applicable on Items I1-I4. Requires Min. Cart Value of ₹500.
-                          [ADDITIVE]
-                      - const: flat150
-                        title: "flat150: Flat ₹150 Off"
-                        description: Applicable on Items I5-I8. Requires Min. Cart Value of ₹1000.
-                          [ADDITIVE]
-                      - const: slab1
-                        title: "slab1: 15% Bulk Slab"
-                        description: Applicable on Item I5 only. Requires Quantity 10-19. [NON-ADDITIVE]
-                      - const: slab2
-                        title: "slab2: 10% High Volume Slab"
-                        description: Applicable on Item I2 only. Requires Quantity 20+. [NON-ADDITIVE]
-                      - const: freebie1
-                        title: "freebie1: Free Gift Item"
-                        description: Applicable on Item I1. Triggered at exactly 50 Units.
-                          [NON-ADDITIVE]
-                      - const: buy2get3
-                        title: "buy2get3: Buy 2 Get 3"
-                        description: Applicable on Items I1 or I2. Triggered at Quantity 2.
-                          [NON-ADDITIVE]
-                  default: []
+                    type: object
+                    properties:
+                      offerId:
+                        type: string
+                        title: Select Offer
+                        oneOf:
+                          - const: discp10
+                            title: 10% Discount (discp10)
+                          - const: flat150
+                            title: Flat ₹150 Off (flat150)
+                          - const: slab1
+                            title: 15% Bulk Slab (slab1)
+                          - const: slab2
+                            title: 10% High Volume (slab2)
+                          - const: freebie1
+                            title: Free Gift (freebie1)
+                          - const: buy2get3
+                            title: Buy 2 Get 3 (buy2get3)
+                    required:
+                      - offerId
                 phone_number:
                   type: string
+                  title: Phone Number
                 email:
                   type: string
                   format: email
+                  title: Email Address
                 tax_number:
                   type: string
                   title: GSTIN
@@ -165,13 +179,17 @@ steps:
                   title: PAN
                 shop_name:
                   type: string
+                  title: Shop Name
                 address:
                   type: string
+                  title: Address
                 state_code:
                   type: string
+                  title: State Code
               required:
                 - type
                 - city_code
+                - items
         id: old_inputs
     examples:
       - name: Example for action "select"

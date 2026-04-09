@@ -7,7 +7,7 @@ meta:
   use_case_id: eB2B
   flowName: Order to confirm to fulfillment (cod)
 transaction_data:
-  transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
+  transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -28,9 +28,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: select
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 53e45019-3542-4d5f-8d59-8fbf2ae9b4d8
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 8fdbddf7-135f-4632-9e72-e84a32797eda
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -60,72 +60,86 @@ steps:
               properties:
                 type:
                   type: string
+                  description: Retailer registration type
                   enum:
                     - new
                     - existing
-                  description: Retailer registration type
                   default: existing
                 customer_id:
                   type: string
+                  title: Customer ID
                   default: CUST-2024-0015421
                 city_code:
                   type: string
+                  title: City Code
                   default: std:060
+                live_catalog:
+                  type: object
+                  title: Live Catalog Session Data
+                  description: Captures the live on_search catalog payload dynamically
+                  additionalProperties: true
                 items:
                   type: array
+                  title: 🛒 Cart Items
                   minItems: 1
-                  maxItems: 3
+                  maxItems: 5
                   items:
                     type: object
                     properties:
                       itemId:
                         type: string
+                        title: Item
                         default: I1
                       quantity:
                         type: number
+                        title: Quantity
+                        minimum: 1
                         default: 1
                       location:
                         type: string
+                        title: Location
                         default: L1
                       fulfillment_id:
                         type: string
+                        title: Fulfillment
                         default: F1
+                    required:
+                      - itemId
+                      - quantity
                 available_offers:
                   type: array
-                  description: "🎁 Select Offers (Note: Slab/Freebie/BuyXGetY are NON-ADDITIVE and
-                    will override others)"
-                  uniqueItems: true
+                  title: 🎁 available_offers
+                  description: Click 'Add Offer' to apply promotions
+                  minItems: 0
+                  maxItems: 5
                   items:
-                    type: string
-                    oneOf:
-                      - const: discp10
-                        title: "discp10: 10% Discount"
-                        description: Applicable on Items I1-I4. Requires Min. Cart Value of ₹500.
-                          [ADDITIVE]
-                      - const: flat150
-                        title: "flat150: Flat ₹150 Off"
-                        description: Applicable on Items I5-I8. Requires Min. Cart Value of ₹1000.
-                          [ADDITIVE]
-                      - const: slab1
-                        title: "slab1: 15% Bulk Slab"
-                        description: Applicable on Item I5 only. Requires Quantity 10-19. [NON-ADDITIVE]
-                      - const: slab2
-                        title: "slab2: 10% High Volume Slab"
-                        description: Applicable on Item I2 only. Requires Quantity 20+. [NON-ADDITIVE]
-                      - const: freebie1
-                        title: "freebie1: Free Gift Item"
-                        description: Applicable on Item I1. Triggered at exactly 50 Units.
-                          [NON-ADDITIVE]
-                      - const: buy2get3
-                        title: "buy2get3: Buy 2 Get 3"
-                        description: Applicable on Items I1 or I2. Triggered at Quantity 2.
-                          [NON-ADDITIVE]
-                  default: []
+                    type: object
+                    properties:
+                      offerId:
+                        type: string
+                        title: Select Offer
+                        oneOf:
+                          - const: discp10
+                            title: 10% Discount (discp10)
+                          - const: flat150
+                            title: Flat ₹150 Off (flat150)
+                          - const: slab1
+                            title: 15% Bulk Slab (slab1)
+                          - const: slab2
+                            title: 10% High Volume (slab2)
+                          - const: freebie1
+                            title: Free Gift (freebie1)
+                          - const: buy2get3
+                            title: Buy 2 Get 3 (buy2get3)
+                    required:
+                      - offerId
                 phone_number:
                   type: string
+                  title: Phone Number
                 email:
                   type: string
                   format: email
+                  title: Email Address
                 tax_number:
                   type: string
                   title: GSTIN
@@ -134,13 +148,17 @@ steps:
                   title: PAN
                 shop_name:
                   type: string
+                  title: Shop Name
                 address:
                   type: string
+                  title: Address
                 state_code:
                   type: string
+                  title: State Code
               required:
                 - type
                 - city_code
+                - items
         id: old_inputs
     examples: []
   - api: on_select
@@ -157,9 +175,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_select
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 2170166d-8df1-48fc-9cad-2b2a9a8ac909
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 8af388be-78ea-4630-b8cc-9a8019d6575e
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -195,9 +213,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: init
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 79c8d2b1-55dc-4ba6-b3a1-a5b99ada103a
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: fca91728-a7da-44bd-af08-25fef22cce9c
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -233,9 +251,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_init
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 09d46df0-c8fe-442b-b7e3-8d5b3285ed46
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: f7ba41d2-e81c-4a8f-a9f6-645a1c0e26a6
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -271,9 +289,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: confirm
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: a09ce758-fe87-4961-a7d3-01271b954032
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 17fcaad3-5c2b-4e73-aa7f-f7c433f4c2aa
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -309,9 +327,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_confirm
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 0ad2c09e-4ce7-4d15-9397-56ffcd2333a7
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: c5ed16c6-b1b2-45b3-8fce-3d9e7db34c89
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -347,9 +365,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: b7d03452-9b69-40d7-96fb-f9f4851b7fbb
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 4df86f8a-c844-4e30-8b9a-ada82a3b7406
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -385,9 +403,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: b6e6b945-c1f5-4b0d-bd66-b273dbcbff5c
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 43cd3ab7-dbe5-488e-b706-3f2388b47029
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -423,9 +441,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: d9e31507-54c1-4d58-a8c8-8506eb1cd8e4
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 401f98f9-4450-41db-b63c-bbda1a007b8b
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -461,9 +479,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: a1cc3208-5a4b-4af3-831e-7a56d7ca83c3
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 8c940111-90c3-4978-8719-17d0426d9e81
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -499,9 +517,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: track
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 91d9d59e-e644-4938-acb0-0f8f0955b335
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: 2cfe8c7b-ef3f-44e6-a852-2e3d426fd9f2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -537,9 +555,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_track
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: fe010de2-6895-4269-bce1-5c0b41013a35
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: ab7a6c1b-3409-4f4a-90b7-a1ad9823d767
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -575,9 +593,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 3d741571-5b81-40bd-929b-183f40e782c1
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: d230aeb1-cba7-49bf-91fe-f1f743d8c6e9
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -613,9 +631,9 @@ steps:
         context:
           domain: ONDC:RETeB2B
           action: on_status
-          timestamp: 2026-04-02T11:12:20.103Z
-          transaction_id: efabf344-2727-4613-a5f6-058a1d92d6e1
-          message_id: 22975e27-4924-4b56-b494-3a6ceab97d36
+          timestamp: 2026-04-09T06:50:15.401Z
+          transaction_id: 4cce3c20-4487-4947-8800-be2005a69ed4
+          message_id: e205cb8f-6a70-446e-9f60-01e3e30b720c
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
