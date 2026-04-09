@@ -496,7 +496,6 @@ _TESTS_:
               _RETURN_: attr are present
             - _NAME_: PROVIDERS_RATING
               attr: $.message.catalog['bpp/providers'][*].rating
-              _CONTINUE_: "!(attr are present)"
               rating_reg:
                 - ^(?:[1-4](?:\\.\\d+)?|5(?:\\.0+)?|\\s*)$
               _RETURN_: attr follow regex rating_reg
@@ -716,7 +715,6 @@ _TESTS_:
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_RATING
                   attr: $.message.catalog['bpp/providers'][*].items[*].rating
-                  _CONTINUE_: "!(attr are present)"
                   rating_reg:
                     - ^(?:[1-4](?:\\.\\d+)?|5(?:\\.0+)?|\\s*)$
                   _RETURN_: attr follow regex rating_reg
@@ -1190,6 +1188,12 @@ _TESTS_:
                             - item_count_upper
                             - item_id
                           _RETURN_: attr all in tag_enum
+                        - _NAME_: TAGS_QUALIFIER_ITEM_COUNT
+                          attr: $.message.catalog['bpp/providers'][*].offers[*].tags[?(@.code=='qualifier')].list[?(@.code=='item_count')].value
+                          _CONTINUE_: "!(attr are present)"
+                          reg:
+                            - ^[0-9]+$
+                          _RETURN_: attr follow regex reg
                     - _NAME_: TAGS_BENEFIT
                       _RETURN_:
                         - _NAME_: TAGS_BENEFIT_VALID_TAGS
