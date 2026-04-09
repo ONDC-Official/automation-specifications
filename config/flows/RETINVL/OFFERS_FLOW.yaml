@@ -1,19 +1,153 @@
 meta:
   domain: ONDC:RETINVL
   version: 1.2.5
-  flowId: ORDER_FLOW_BASELINE_ILBP
+  flowId: OFFERS_FLOW
   config_version: 0.0.0001
   description: Buyer Search & Quotation
   use_case_id: RETINVL
-  flowName: ORDER FLOW BASELINE ILBP
+  flowName: OFFERS FLOW
 transaction_data:
-  transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
+  transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
   bpp_id: bpp.example.com
   bpp_uri: https://bpp.example.com
 steps:
+  - api: search
+    action_id: search_1
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:RETINVL
+          action: search
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 442be49b-2834-4211-85b6-4b57a3e9a654
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          country: IND
+          city: "*"
+          core_version: 1.2.5
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs:
+        oldInputs:
+          - name: RETINVL_Discovery_Input
+            type: RETINVL_Discovery_Input
+            schema:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  enum:
+                    - CATEGORY
+                    - PRODUCT
+                cityCode:
+                  type: string
+                  pattern: ^std:\d{3}$
+                gps:
+                  type: string
+                  pattern: ^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$
+                areaCode:
+                  type: string
+                  pattern: ^\d{6}$
+                finderFeeType:
+                  type: string
+                  enum:
+                    - percent
+                    - amount
+                finderFeeAmount:
+                  type: string
+                  pattern: ^[0-9]+(\.[0-9]{1,2})?$
+              required:
+                - mode
+                - cityCode
+                - gps
+                - areaCode
+                - finderFeeType
+                - finderFeeAmount
+              allOf:
+                - if:
+                    properties:
+                      mode:
+                        const: CATEGORY
+                  then:
+                    properties:
+                      category:
+                        type: string
+                        minLength: 2
+                        maxLength: 100
+                    required:
+                      - category
+                - if:
+                    properties:
+                      mode:
+                        const: PRODUCT
+                  then:
+                    properties:
+                      productName:
+                        type: string
+                        minLength: 2
+                        maxLength: 200
+                    required:
+                      - productName
+        id: old_inputs
+    examples: []
+  - api: on_search
+    action_id: on_search_1
+    owner: BPP
+    responseFor: search_1
+    unsolicited: false
+    description: please add relevant description
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          domain: ONDC:RETINVL
+          action: on_search
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 6219e536-a3cb-4334-bd41-1c0bc6f69584
+          bap_id: bap.example.com
+          bap_uri: https://bap.example.com
+          ttl: PT30S
+          bpp_id: bpp.example.com
+          bpp_uri: https://bpp.example.com
+          country: IND
+          city: "*"
+          core_version: 1.2.5
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.city
+      inputs:
+        id: old_inputs
+    examples: []
   - api: init
     action_id: init_1
     owner: BAP
@@ -28,9 +162,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: init
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: fa4601ca-038e-41b1-954f-ceb8a4cb29a9
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 05ab3b99-976b-4a85-b07e-66e63877eecd
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -51,12 +185,19 @@ steps:
         city_code: $.context.city
       inputs:
         oldInputs:
-          - name: retinvl_init
-            type: retinvl_init
+          - name: retinvl_init_offers
+            type: retinvl_init_offers
             schema:
               $schema: http://json-schema.org/draft-07/schema#
               type: object
               properties:
+                order_type:
+                  type: string
+                  enum:
+                    - ILBN
+                    - ILFP
+                    - ILBP
+                  default: ILBN
                 city_code:
                   type: string
                   default: std:080
@@ -87,6 +228,10 @@ steps:
                       location:
                         type: string
                         default: L1
+                      estimated_price:
+                        type: string
+                        pattern: ^(\d+\.\d{1,2}|\d+)$
+                        default: ""
                       gtin_code:
                         type: string
                         pattern: ^[0-9A-Za-z:#+-]{3,50}$
@@ -94,9 +239,11 @@ steps:
                     required:
                       - itemId
                       - quantity
+                      - estimated_price
                     additionalProperties: true
                     default: {}
               required:
+                - order_type
                 - provider
                 - provider_location
                 - location_gps
@@ -120,166 +267,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_init
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: ea8dccf4-2166-41fb-aa33-98d338cdcd99
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          country: IND
-          city: "*"
-          core_version: 1.2.5
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.city
-      inputs:
-        oldInputs:
-          - name: Retinvl_input
-            type: Retinvl_input
-            schema:
-              type: object
-              properties:
-                want_part_payment:
-                  type: boolean
-                  default: true
-                advance_amount:
-                  type: string
-                  pattern: ^(\d+\.\d{1,2}|\d+)$
-              required:
-                - want_part_payment
-              allOf:
-                - if:
-                    properties:
-                      want_part_payment:
-                        const: true
-                  then:
-                    required:
-                      - advance_amount
-        id: old_inputs
-    examples: []
-  - api: init
-    action_id: init_2
-    owner: BAP
-    responseFor: null
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:RETINVL
-          action: init
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: d493d08d-c1ab-4b0a-bff7-92243b5b393c
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          country: IND
-          city: "*"
-          core_version: 1.2.5
-        message: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.city
-      inputs:
-        oldInputs:
-          - name: retinvl_init_ilbp
-            type: retinvl_init_ilbp
-            schema:
-              $schema: http://json-schema.org/draft-07/schema#
-              type: object
-              properties:
-                city_code:
-                  type: string
-                  default: std:080
-                provider:
-                  type: string
-                  default: P1
-                provider_location:
-                  type: string
-                  default: L1
-                location_gps:
-                  type: string
-                  default: 19.129076,72.825803
-                location_pin_code:
-                  type: string
-                  default: "400053"
-                items:
-                  type: array
-                  default: []
-                  items:
-                    type: object
-                    properties:
-                      itemId:
-                        type: string
-                        default: I1
-                      quantity:
-                        type: number
-                        default: 1
-                      location:
-                        type: string
-                        default: L1
-                      bidding_price:
-                        type: string
-                        pattern: ^(\d+\.\d{1,2}|\d+)$
-                        default: ""
-                      gtin_code:
-                        type: string
-                        pattern: ^[0-9A-Za-z:#+-]{3,50}$
-                        default: 3:GTIN#
-                    required:
-                      - itemId
-                      - quantity
-                      - bidding_price
-                    additionalProperties: true
-                    default: {}
-              required:
-                - provider
-                - provider_location
-                - location_gps
-                - location_pin_code
-                - items
-              additionalProperties: true
-              default: {}
-        id: old_inputs
-    examples: []
-  - api: on_init
-    action_id: on_init_2
-    owner: BPP
-    responseFor: init_2
-    unsolicited: false
-    description: please add relevant description
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
-      defaultPayload:
-        context:
-          domain: ONDC:RETINVL
-          action: on_init
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 235f81bd-2cf5-4db3-ae54-8f42885e2716
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 4eda7479-0802-4ae5-a1d9-4c1e78141887
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -337,9 +327,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: confirm
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 133ac41e-6d74-4553-a493-afc8c32f53e3
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 90d492e3-3f0b-414e-8b5c-104d222c02e2
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -422,9 +412,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_confirm
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: bc8e3113-802a-4134-b7ad-edc9b585a225
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 1f196107-fcd0-4a28-b83d-0e45aa372504
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -460,9 +450,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 27157af9-a705-4f9f-8cf1-363b6a9b459b
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 1434323c-69e9-4c78-8632-0dc5124b98e1
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -498,9 +488,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: b9b92664-0380-4d52-af23-f57c5fee1376
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: ee34229e-1e1e-4882-aea3-bbaaf96bd781
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -536,9 +526,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.881Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 6a582765-848d-4f39-b81e-87964654d997
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 3a0abab7-28ac-4665-9585-0cb708aeb7c4
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -574,9 +564,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: track
-          timestamp: 2026-04-09T06:50:14.882Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: ae27931d-9dd4-4c2e-883f-0b1f05c5af20
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: de7a9107-7fd3-46b0-bec0-21e105919a67
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -612,9 +602,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_track
-          timestamp: 2026-04-09T06:50:14.882Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: c7470ccc-ea40-4e3e-94d7-707670231f59
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 1c2295ae-8731-4a5d-bada-f2db0bab16d9
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -650,9 +640,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.882Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 90c1b79f-22ec-42a4-9098-7d95a93f9b40
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: fc323a0d-1378-4621-80a8-da3d2574cb32
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -688,9 +678,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.882Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: 601ace6a-b4ef-42e8-acba-16568fcde2db
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: f2197357-3cce-4b2f-8053-27b6958525ff
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
@@ -726,9 +716,9 @@ steps:
         context:
           domain: ONDC:RETINVL
           action: on_status
-          timestamp: 2026-04-09T06:50:14.882Z
-          transaction_id: 3af0e769-8758-4a41-bfbb-90ea6457d8c5
-          message_id: c04ea1c5-511e-47c2-b33c-60f7896b446f
+          timestamp: 2026-04-09T06:50:14.270Z
+          transaction_id: 58e1351a-ab81-4c0e-a2b1-f95cd9304efa
+          message_id: 4ac12ecf-23d7-45e3-ab58-03a55f2b499d
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
           ttl: PT30S
