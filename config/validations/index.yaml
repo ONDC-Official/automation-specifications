@@ -25,10 +25,17 @@ _TESTS_:
               _RETURN_: attr are present
               _NAME_: REQUIRED_context_version
             - &a6
+              _NAME_: VALIDATE_CITY_CODE_FORMAT
+              _SCOPE_: $.context.location.city
+              subTags: $.code
+              match1:
+                - ^std:0\d+$
+              _RETURN_: subTags follow regex match1
+            - &a7
               attr: $.context.bap_uri
               _RETURN_: attr are present
               _NAME_: REQUIRED_context_bap_uri
-            - &a7
+            - &a8
               attr: $.context.ttl
               reg:
                 - ^P(?=\\d|T)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+S)?)?$
@@ -45,13 +52,13 @@ _TESTS_:
               _NAME_: REQUIRED_context_ttl
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - &a8
+            - &a9
               attr: $.context.location.country.code
               _RETURN_: attr all in enumList
               enumList:
                 - IND
               _NAME_: VALID_ENUM_context_location_country_code
-            - &a9
+            - &a10
               attr: $.context.domain
               _RETURN_: attr all in enumList
               enumList:
@@ -66,9 +73,12 @@ _TESTS_:
       _RETURN_:
         - _NAME_: fulfillment_Attributes_Tests
           _RETURN_:
-            - attr: $.message.intent.fulfillment.stops[*].location.gps
-              _RETURN_: attr are present
-              _NAME_: REQUIRED_message_intent_fulfillment_stops_location_gps
+            - _NAME_: VALIDATE_GPS_FORMAT
+              _SCOPE_: $.message.intent.fulfillment.stops[*].location
+              subTags: $.gps
+              match1:
+                - ^-?\d{1,3}\.\d{6,},-?\d{1,3}\.\d{6,}$
+              _RETURN_: subTags follow regex match1
         - _NAME_: fulfillment_Enums_Tests
           _RETURN_:
             - attr: $.message.intent.fulfillment.stops[*].type
@@ -212,7 +222,7 @@ _TESTS_:
   select:
     - _NAME_: Context_tests
       _RETURN_:
-        - &a10
+        - &a11
           _NAME_: Context_Attributes_Tests
           _RETURN_:
             - *a1
@@ -222,37 +232,38 @@ _TESTS_:
             - *a5
             - *a6
             - *a7
-            - &a24
+            - *a8
+            - &a25
               attr: $.context.bpp_id
               _RETURN_: attr are present
               _NAME_: REQUIRED_context_bpp_id
-            - &a25
+            - &a26
               attr: $.context.bpp_uri
               _RETURN_: attr are present
               _NAME_: REQUIRED_context_bpp_uri
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
                 - select
               _NAME_: VALID_ENUM_context_action
-    - &a16
+    - &a17
       _NAME_: items_Tests
       _RETURN_:
-        - &a19
+        - &a20
           _NAME_: items_Attributes_Tests
           _RETURN_:
-            - &a32
+            - &a33
               attr: $.message.order.items[*].id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_id
-        - &a20
+        - &a21
           _NAME_: items_Enums_Tests
           _RETURN_:
-            - &a26
+            - &a27
               enumList:
                 - RIDE
                 - RENTAL
@@ -260,12 +271,12 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_items_descriptor_code
-    - &a17
+    - &a18
       _NAME_: provider_Tests
       _RETURN_:
         - _NAME_: provider_Attributes_Tests
           _RETURN_:
-            - &a67
+            - &a68
               attr: $.message.order.provider.id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_provider_id
@@ -273,7 +284,7 @@ _TESTS_:
       _RETURN_:
         - _NAME_: fulfillments_Enums_Tests
           _RETURN_:
-            - &a27
+            - &a28
               enumList:
                 - AUTO_RICKSHAW
                 - CAB
@@ -282,7 +293,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_vehicle_category
-            - &a11
+            - &a12
               enumList:
                 - SEDAN
                 - SUV
@@ -293,7 +304,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_vehicle_variant
-            - &a12
+            - &a13
               enumList:
                 - ELECTRIC
                 - PETROL
@@ -306,7 +317,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_vehicle_energy_type
-            - &a28
+            - &a29
               enumList:
                 - DELIVERY
                 - SELF_PICKUP
@@ -322,7 +333,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_type_2
-            - &a13
+            - &a14
               enumList:
                 - OTP
                 - QR
@@ -330,7 +341,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_stops_authorization_type
-            - &a14
+            - &a15
               enumList:
                 - UNCLAIMED
                 - CLAIMED
@@ -338,7 +349,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_stops_authorization_status
-            - &a15
+            - &a16
               enumList:
                 - RIDE_CANCELLED
                 - RIDE_ENDED
@@ -351,12 +362,12 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_state_descriptor_code
-    - &a36
+    - &a37
       _NAME_: payments_Tests
       _RETURN_:
         - _NAME_: payments_Enums_Tests
           _RETURN_:
-            - &a29
+            - &a30
               enumList:
                 - NOT-PAID
                 - PAID
@@ -364,7 +375,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_payments_status
-            - &a30
+            - &a31
               enumList:
                 - BPP
                 - BAP
@@ -372,7 +383,7 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_payments_collected_by
-            - &a31
+            - &a32
               enumList:
                 - PRE-ORDER
                 - ON-ORDER
@@ -384,11 +395,11 @@ _TESTS_:
   init:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -396,24 +407,24 @@ _TESTS_:
               _NAME_: VALID_ENUM_context_action
     - _NAME_: fulfillments_Tests
       _RETURN_:
-        - &a22
+        - &a23
           _NAME_: fulfillments_Attributes_Tests
           _RETURN_:
-            - &a33
+            - &a34
               attr: $.message.order.fulfillments[*].id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_id
-            - &a37
+            - &a38
               attr: $.message.order.fulfillments[*].customer.person.name
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_customer_person_name
-            - &a38
+            - &a39
               attr: $.message.order.fulfillments[*].customer.contact.phone
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_customer_contact_phone
         - _NAME_: fulfillments_Enums_Tests
           _RETURN_:
-            - &a23
+            - &a24
               attr: $.message.order.fulfillments[*].vehicle.category
               _RETURN_: attr all in enumList
               enumList:
@@ -421,31 +432,31 @@ _TESTS_:
                 - CAB
                 - TWO_WHEELER
               _NAME_: VALID_ENUM_message_order_fulfillments_vehicle_category
-            - *a11
             - *a12
             - *a13
             - *a14
             - *a15
+            - *a16
     - _NAME_: payments_Tests
       _RETURN_:
-        - &a18
+        - &a19
           _NAME_: payments_Enums_Tests
           _RETURN_:
-            - &a61
+            - &a62
               attr: $.message.order.payments[*].collected_by
               _RETURN_: attr all in enumList
               enumList:
                 - BPP
                 - BAP
               _NAME_: VALID_ENUM_message_order_payments_collected_by
-            - &a62
+            - &a63
               attr: $.message.order.payments[*].status
               _RETURN_: attr all in enumList
               enumList:
                 - NOT-PAID
                 - PAID
               _NAME_: VALID_ENUM_message_order_payments_status
-            - &a60
+            - &a61
               attr: $.message.order.payments[*].type
               _RETURN_: attr all in enumList
               enumList:
@@ -453,9 +464,9 @@ _TESTS_:
                 - ON-ORDER
                 - ON-FULFILLMENT
               _NAME_: VALID_ENUM_message_order_payments_type
-    - *a16
     - *a17
-    - &a21
+    - *a18
+    - &a22
       _NAME_: billing_Tests
       _RETURN_:
         - _NAME_: billing_Attributes_Tests
@@ -476,31 +487,31 @@ _TESTS_:
   confirm:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
                 - confirm
               _NAME_: VALID_ENUM_context_action
-    - &a39
+    - &a40
       _NAME_: payments_Tests
       _RETURN_:
-        - &a59
+        - &a60
           _NAME_: payments_Attributes_Tests
           _RETURN_:
-            - &a68
+            - &a69
               attr: $.message.order.payments[*].id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_payments_id
-        - *a18
+        - *a19
     - _NAME_: items_Tests
       _RETURN_:
-        - *a19
         - *a20
+        - *a21
         - _NAME_: items_Tags_Tests
           _RETURN_:
             - validTags:
@@ -521,15 +532,15 @@ _TESTS_:
               _CONTINUE_: "!(tagPath are present)"
               _RETURN_: tagPath all in validTags
               _NAME_: VALIDATE_TAG_message_order_items_tags_descriptor_code
-    - *a17
-    - *a21
+    - *a18
+    - *a22
     - _NAME_: fulfillments_Tests
       _RETURN_:
-        - *a22
-        - &a34
+        - *a23
+        - &a35
           _NAME_: fulfillments_Enums_Tests
           _RETURN_:
-            - &a52
+            - &a53
               attr: $.message.order.fulfillments[*].type
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in enumList
@@ -537,28 +548,28 @@ _TESTS_:
                 - DELIVERY
                 - SELF_PICKUP
               _NAME_: VALID_ENUM_message_order_fulfillments_type
-            - *a23
-            - *a11
+            - *a24
             - *a12
             - *a13
             - *a14
             - *a15
-        - &a35
+            - *a16
+        - &a36
           _NAME_: fulfillments_Tags_Tests
           _RETURN_:
-            - &a78
+            - &a79
               validTags:
                 - ROUTE_INFO
               tagPath: $.message.order.fulfillments[*].tags[*].descriptor.code
               _CONTINUE_: "!(tagPath are present)"
               _RETURN_: tagPath all in validTags
               _NAME_: VALIDATE_TAG_message_order_fulfillments_tags_descriptor_code
-    - &a57
+    - &a58
       _NAME_: tags_Tests
       _RETURN_:
         - _NAME_: tags_Tags_Tests
           _RETURN_:
-            - &a76
+            - &a77
               validTags:
                 - BAP_TERMS
                 - BPP_TERMS
@@ -569,11 +580,11 @@ _TESTS_:
   status:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -591,15 +602,16 @@ _TESTS_:
             - *a5
             - *a6
             - *a7
-            - *a24
+            - *a8
             - *a25
+            - *a26
             - attr: $.message.order_id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_id
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -633,11 +645,11 @@ _TESTS_:
   update:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -646,18 +658,18 @@ _TESTS_:
     - _NAME_: order_Tests
       _RETURN_:
         - _NAME_: order_Attributes_Tests
-          _RETURN_: &a56
-            - &a72
+          _RETURN_: &a57
+            - &a73
               attr: $.message.order.id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_id
         - _NAME_: order_Enums_Tests
           _RETURN_:
-            - *a26
             - *a27
-            - *a11
-            - *a12
             - *a28
+            - *a12
+            - *a13
+            - *a29
             - enumList:
                 - START
                 - END
@@ -666,12 +678,12 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_fulfillments_type_3
-            - *a13
             - *a14
             - *a15
-            - *a29
+            - *a16
             - *a30
             - *a31
+            - *a32
             - enumList:
                 - BASE_FARE
                 - DISTANCE_FARE
@@ -692,11 +704,11 @@ _TESTS_:
   on_search:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -870,11 +882,11 @@ _TESTS_:
   on_select:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -884,38 +896,38 @@ _TESTS_:
       _RETURN_:
         - _NAME_: items_Attributes_Tests
           _RETURN_:
-            - *a32
-            - &a40
+            - *a33
+            - &a41
               attr: $.message.order.items[*].descriptor.name
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_descriptor_name
-            - &a41
+            - &a42
               attr: $.message.order.items[*].price.currency
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_price_currency
-            - &a42
+            - &a43
               attr: $.message.order.items[*].price.value
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_price_value
-            - &a43
+            - &a44
               attr: $.message.order.items[*].fulfillment_ids[*]
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_fulfillment_ids
-        - &a44
+        - &a45
           _NAME_: items_Enums_Tests
           _RETURN_:
-            - &a73
+            - &a74
               attr: $.message.order.items[*].descriptor.code
               _RETURN_: attr all in enumList
               enumList:
                 - RIDE
                 - RENTAL
               _NAME_: VALID_ENUM_message_order_items_descriptor_code
-        - &a45
+        - &a46
           _NAME_: items_Tags_Tests
           _RETURN_:
-            - &a77
+            - &a78
               validTags:
                 - DISABILITY_VIS
                 - DISABILITY_HEA
@@ -935,38 +947,38 @@ _TESTS_:
               _CONTINUE_: "!(tagPath are present)"
               _RETURN_: tagPath all in validTags
               _NAME_: VALIDATE_TAG_message_order_items_tags_descriptor_code
-    - *a17
+    - *a18
     - _NAME_: fulfillments_Tests
       _RETURN_:
         - _NAME_: fulfillments_Attributes_Tests
           _RETURN_:
-            - *a33
-        - *a34
+            - *a34
         - *a35
+        - *a36
     - _NAME_: quote_Tests
       _RETURN_:
         - _NAME_: quote_Attributes_Tests
           _RETURN_:
-            - &a46
+            - &a47
               attr: $.message.order.quote.price.value
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_quote_price_value
-            - &a47
+            - &a48
               attr: $.message.order.quote.price.currency
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_quote_price_currency
-            - &a49
+            - &a50
               attr: $.message.order.quote.breakup[*].price.value
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_quote_breakup_price_value
-            - &a48
+            - &a49
               attr: $.message.order.quote.breakup[*].price.currency
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_quote_breakup_price_currency
-        - &a50
+        - &a51
           _NAME_: quote_Enums_Tests
           _RETURN_:
-            - &a74
+            - &a75
               attr: $.message.order.quote.breakup[*].title
               _RETURN_: attr all in enumList
               enumList:
@@ -983,15 +995,15 @@ _TESTS_:
                 - BUYER_ADDITIONAL_AMOUNT
                 - ADD_ONS
               _NAME_: VALID_ENUM_message_order_quote_breakup_title
-    - *a36
+    - *a37
   on_init:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1001,55 +1013,55 @@ _TESTS_:
       _RETURN_:
         - _NAME_: fulfillments_Attributes_Tests
           _RETURN_:
-            - *a33
-            - &a51
+            - *a34
+            - &a52
               attr: $.message.order.fulfillments[*].type
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_type
-            - *a37
             - *a38
-        - *a34
+            - *a39
         - *a35
-    - *a39
-    - &a53
+        - *a36
+    - *a40
+    - &a54
       _NAME_: items_Tests
       _RETURN_:
         - _NAME_: items_Attributes_Tests
           _RETURN_:
-            - *a32
-            - *a40
+            - *a33
             - *a41
             - *a42
             - *a43
-            - &a63
+            - *a44
+            - &a64
               attr: $.message.order.items[*].payment_ids[*]
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_items_payment_ids
-        - *a44
         - *a45
-    - *a17
-    - &a54
+        - *a46
+    - *a18
+    - &a55
       _NAME_: quote_Tests
       _RETURN_:
         - _NAME_: quote_Attributes_Tests
           _RETURN_:
-            - *a46
             - *a47
             - *a48
             - *a49
-        - *a50
-    - &a55
+            - *a50
+        - *a51
+    - &a56
       _NAME_: cancellation_terms_Tests
       _RETURN_:
         - _NAME_: cancellation_Attributes_Tests
           _RETURN_:
-            - &a64
+            - &a65
               attr: $.message.order.cancellation_terms[*].reason_required
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_cancellation_terms_reason_required
         - _NAME_: cancellation_Enums_Tests
           _RETURN_:
-            - &a82
+            - &a83
               attr: $.message.order.cancellation_terms[*].fulfillment_state.descriptor.code
               _RETURN_: attr all in enumList
               enumList:
@@ -1074,11 +1086,11 @@ _TESTS_:
   on_confirm:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1092,14 +1104,14 @@ _TESTS_:
           _RETURN_:
             - _NAME_: fulfillments_Attributes_Tests
               _RETURN_:
-                - *a33
-                - *a37
+                - *a34
                 - *a38
-                - *a51
+                - *a39
+                - *a52
             - _NAME_: fulfillments_Enums_Tests
               _RETURN_:
-                - *a52
-                - &a58
+                - *a53
+                - &a59
                   attr: $.message.order.fulfillments[*].state.descriptor.code
                   _RETURN_: attr all in enumList
                   enumList:
@@ -1111,23 +1123,23 @@ _TESTS_:
                     - RIDE_ARRIVED_PICKUP
                     - RIDE_CONFIRMED
                   _NAME_: VALID_ENUM_message_order_fulfillments_state_descriptor_code
-                - *a23
-                - *a11
+                - *a24
                 - *a12
                 - *a13
                 - *a14
-            - *a35
-        - *a39
-        - *a53
-        - *a17
+                - *a15
+            - *a36
+        - *a40
         - *a54
+        - *a18
         - *a55
-        - &a66
+        - *a56
+        - &a67
           _NAME_: status_Tests
           _RETURN_:
             - _NAME_: status_Enums_Tests
               _RETURN_:
-                - &a75
+                - &a76
                   attr: $.message.order.status
                   _RETURN_: attr all in enumList
                   enumList:
@@ -1144,7 +1156,7 @@ _TESTS_:
           _RETURN_:
             - _NAME_: created_Attributes_Tests
               _RETURN_:
-                - &a70
+                - &a71
                   attr: $.message.order.created_at
                   _RETURN_: attr are present
                   _NAME_: REQUIRED_message_order_created_at
@@ -1152,24 +1164,24 @@ _TESTS_:
           _RETURN_:
             - _NAME_: updated_Attributes_Tests
               _RETURN_:
-                - &a71
+                - &a72
                   attr: $.message.order.updated_at
                   _RETURN_: attr are present
                   _NAME_: REQUIRED_message_order_updated_at
-        - &a65
+        - &a66
           _NAME_: id_Tests
           _RETURN_:
             - _NAME_: id_Attributes_Tests
-              _RETURN_: *a56
-        - *a57
+              _RETURN_: *a57
+        - *a58
   on_cancel:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1179,53 +1191,53 @@ _TESTS_:
       _RETURN_:
         - _NAME_: fulfillments_Attributes_Tests
           _RETURN_:
-            - *a33
-            - *a37
+            - *a34
             - *a38
-            - *a51
+            - *a39
+            - *a52
         - _NAME_: fulfillments_Enums_Tests
           _RETURN_:
-            - *a52
-            - *a23
-            - *a58
-            - *a11
+            - *a53
+            - *a24
+            - *a59
             - *a12
             - *a13
             - *a14
-        - *a35
+            - *a15
+        - *a36
     - _NAME_: payments_Tests
       _RETURN_:
-        - *a59
+        - *a60
         - _NAME_: payments_Enums_Tests
           _RETURN_:
-            - *a60
             - *a61
             - *a62
+            - *a63
     - _NAME_: items_Tests
       _RETURN_:
         - _NAME_: items_Attributes_Tests
           _RETURN_:
-            - *a32
-            - *a40
-            - *a43
-            - *a63
+            - *a33
             - *a41
+            - *a44
+            - *a64
             - *a42
-        - *a44
+            - *a43
         - *a45
-    - *a17
-    - *a54
+        - *a46
+    - *a18
+    - *a55
     - _NAME_: cancellation_terms_Tests
       _RETURN_:
         - _NAME_: cancellation_Attributes_Tests
           _RETURN_:
-            - &a69
+            - &a70
               attr: $.message.order.cancellation_terms[*].fulfillment_state.descriptor.code
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_cancellation_terms_fulfillment_state_descriptor_code
-            - *a64
-    - *a65
+            - *a65
     - *a66
+    - *a67
     - _NAME_: cancellation_Tests
       _RETURN_:
         - _NAME_: cancellation_Enums_Tests
@@ -1252,15 +1264,15 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_cancellation_reason_descriptor_code
-    - *a57
+    - *a58
   on_update:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1270,68 +1282,68 @@ _TESTS_:
       _RETURN_:
         - _NAME_: order_Attributes_Tests
           _RETURN_:
-            - *a32
-            - *a40
+            - *a33
             - *a41
             - *a42
             - *a43
-            - *a63
-            - *a67
-            - *a33
-            - *a37
+            - *a44
+            - *a64
+            - *a68
+            - *a34
             - *a38
-            - *a51
-            - *a46
+            - *a39
+            - *a52
             - *a47
             - *a48
             - *a49
-            - *a68
+            - *a50
             - *a69
-            - *a64
             - *a70
+            - *a65
             - *a71
             - *a72
-            - &a80
+            - *a73
+            - &a81
               attr: $.message.order.fulfillments[*].agent.person.name
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_agent_person_name
-            - &a81
+            - &a82
               attr: $.message.order.fulfillments[*].agent.contact.phone
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_agent_contact_phone
-            - &a79
+            - &a80
               attr: $.message.order.fulfillments[*].vehicle.registration
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_vehicle_registration
         - _NAME_: order_Enums_Tests
           _RETURN_:
-            - *a73
-            - *a52
-            - *a23
-            - *a58
             - *a74
-            - *a61
-            - *a62
-            - *a60
+            - *a53
+            - *a24
+            - *a59
             - *a75
-            - *a11
+            - *a62
+            - *a63
+            - *a61
+            - *a76
             - *a12
             - *a13
             - *a14
-        - &a83
+            - *a15
+        - &a84
           _NAME_: order_Tags_Tests
           _RETURN_:
-            - *a76
             - *a77
             - *a78
+            - *a79
   on_status:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1341,41 +1353,41 @@ _TESTS_:
       _RETURN_:
         - _NAME_: order_Attributes_Tests
           _RETURN_:
-            - *a32
-            - *a40
+            - *a33
             - *a41
             - *a42
             - *a43
-            - *a63
-            - *a67
-            - *a33
-            - *a79
-            - *a37
-            - *a38
+            - *a44
+            - *a64
+            - *a68
+            - *a34
             - *a80
+            - *a38
+            - *a39
             - *a81
-            - *a51
-            - *a46
+            - *a82
+            - *a52
             - *a47
             - *a48
             - *a49
-            - *a68
-            - *a64
+            - *a50
+            - *a69
+            - *a65
         - _NAME_: order_Enums_Tests
           _RETURN_:
-            - *a73
-            - *a52
-            - *a23
-            - *a58
             - *a74
-            - *a61
+            - *a53
+            - *a24
+            - *a59
+            - *a75
             - *a62
-            - *a60
-            - *a82
-            - *a11
+            - *a63
+            - *a61
+            - *a83
             - *a12
             - *a13
             - *a14
+            - *a15
             - enumList:
                 - SOFT_CANCEL
                 - CONFIRM_CANCEL
@@ -1390,15 +1402,15 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_order_status
-        - *a83
+        - *a84
   track:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
@@ -1407,11 +1419,11 @@ _TESTS_:
   on_track:
     - _NAME_: Context_tests
       _RETURN_:
-        - *a10
+        - *a11
         - _NAME_: Context_Enums_Tests
           _RETURN_:
-            - *a8
             - *a9
+            - *a10
             - attr: $.context.action
               _RETURN_: attr all in enumList
               enumList:
