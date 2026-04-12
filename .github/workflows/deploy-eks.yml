@@ -44,6 +44,9 @@ jobs:
   build-and-deploy-dev:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    permissions:
+      contents: read
+      packages: write
     outputs:
       image_name: ${{ steps.meta.outputs.image_name }}
       image_tag: ${{ steps.meta.outputs.image_tag }}
@@ -135,19 +138,12 @@ jobs:
             --config ./build.yaml
 
       # ── Step 6: Build Docker image ─────────────────────────────
-      - name: Generate GitHub App token
-        id: app-token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ steps.app-token.outputs.token }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push dev image
         run: |
@@ -244,21 +240,17 @@ jobs:
     environment: production   # ← requires approval from designated reviewers
                               #   Settings → Environments → production
                               #   → Required reviewers → add approvers
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Generate GitHub App token
-        id: app-token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ steps.app-token.outputs.token }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Re-tag dev image as prod-v{version}-{sha} and v{version}-latest
       - name: Re-tag image for prod
