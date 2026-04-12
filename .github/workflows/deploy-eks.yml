@@ -172,7 +172,7 @@ jobs:
           VERSION="${{ steps.spec.outputs.version }}"
           NEW_IMAGE="${{ steps.meta.outputs.image_name }}"
           NEW_TAG="${{ steps.meta.outputs.image_tag }}"
-          VALUES_FILE="helm/values.yaml"
+          VALUES_FILE="k8/aws/helm/domain-layer/values.yaml"
 
           python3 - <<EOF
           import yaml, sys
@@ -213,7 +213,7 @@ jobs:
 
           git config user.email "ci-bot@ondc.org"
           git config user.name "CI Bot"
-          git add helm/values.yaml
+          git add k8/aws/helm/domain-layer/values.yaml
           git diff --staged --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore(dev): ${{ steps.spec.outputs.domain }} ${{ steps.spec.outputs.version }} → ${{ steps.meta.outputs.image_tag }}"
           git push
@@ -299,7 +299,7 @@ jobs:
 
           DOMAIN="${{ inputs.domain }}"
           VERSION="${{ inputs.version }}"
-          VALUES_FILE="helm/values-prod.yaml"
+          VALUES_FILE="k8/aws/helm/domain-layer/values-preprod.yaml"
 
           python3 - <<EOF
           import yaml, sys
@@ -329,7 +329,7 @@ jobs:
 
           git config user.email "ci-bot@ondc.org"
           git config user.name "CI Bot"
-          git add helm/values-prod.yaml
+          git add k8/aws/helm/domain-layer/values-preprod.yaml
           git diff --staged --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore(prod): promote ${{ inputs.domain }} ${{ inputs.version }} → ${{ env.PROD_TAG }} (${{ env.LATEST_TAG }})"
           git push
