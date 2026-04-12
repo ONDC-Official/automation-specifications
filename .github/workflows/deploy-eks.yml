@@ -156,7 +156,7 @@ jobs:
 
           echo "✅ Pushed dev image: ${IMAGE_NAME}:${IMAGE_TAG}"
 
-      # ── Update automation-iac values-dev.yaml ──────────────────
+      # ── Update automation-iac values.yaml ──────────────────
       - name: Checkout automation-iac
         uses: actions/checkout@v4
         with:
@@ -164,7 +164,7 @@ jobs:
           token: ${{ secrets.IAC_REPO_PAT }}
           path: automation-iac
 
-      - name: Update values-dev.yaml
+      - name: Update values.yaml
         run: |
           cd automation-iac
 
@@ -172,7 +172,7 @@ jobs:
           VERSION="${{ steps.spec.outputs.version }}"
           NEW_IMAGE="${{ steps.meta.outputs.image_name }}"
           NEW_TAG="${{ steps.meta.outputs.image_tag }}"
-          VALUES_FILE="helm/values-dev.yaml"
+          VALUES_FILE="helm/values.yaml"
 
           python3 - <<EOF
           import yaml, sys
@@ -213,7 +213,7 @@ jobs:
 
           git config user.email "ci-bot@ondc.org"
           git config user.name "CI Bot"
-          git add helm/values-dev.yaml
+          git add helm/values.yaml
           git diff --staged --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore(dev): ${{ steps.spec.outputs.domain }} ${{ steps.spec.outputs.version }} → ${{ steps.meta.outputs.image_tag }}"
           git push
