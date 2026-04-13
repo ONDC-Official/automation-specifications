@@ -7,8 +7,6 @@ on:
   push:
     branches:
       - "draft-*"
-    paths:
-      - "config/**"
 
   workflow_dispatch:
     inputs:
@@ -43,7 +41,7 @@ jobs:
   # ──────────────────────────────────────────────────────────────────
   build-and-deploy-dev:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.action == 'build-dev')
     permissions:
       contents: read
       packages: write
