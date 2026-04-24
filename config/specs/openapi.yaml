@@ -1784,8 +1784,12 @@ components:
             - $ref: "#/components/schemas/Price"
         quantity:
           description: The selling quantity of the item
-          allOf:
-            - $ref: "#/components/schemas/ItemQuantity"
+          # allOf:
+          #   - $ref: "#/components/schemas/ItemQuantity"
+          anyOf:
+            - allOf:
+                - $ref: "#/components/schemas/ItemQuantity"
+            - type: integer
         category_ids:
           description: Categories this item can be listed under
           type: array
@@ -2161,7 +2165,29 @@ components:
           allOf:
             - $ref: "#/components/schemas/City"
         contact:
-          $ref: "#/components/schemas/Contact"
+          # $ref: "#/components/schemas/Contact"
+          anyOf:
+            - $ref: "#/components/schemas/Contact"
+            - type: object
+              additionalProperties: false
+              properties:
+                phone:
+                  type: string
+                email:
+                  type: string
+                  format: email 
+        org:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+        person:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string          
         creds:
           type: array
           items:
