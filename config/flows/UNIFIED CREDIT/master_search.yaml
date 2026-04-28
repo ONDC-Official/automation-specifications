@@ -56,9 +56,9 @@ steps:
           context:
             domain: ONDC:FIS12
             action: search
-            timestamp: 2026-04-23T09:08:24.360Z
+            timestamp: 2026-04-28T11:31:51.192Z
             transaction_id: 4179de3c-7088-4732-9786-e1fdba540b56
-            message_id: cd483e06-2131-4ef8-8540-af494e78473f
+            message_id: 87b99f0e-5dee-4e7a-a419-2c8d3ee8ace7
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -316,6 +316,128 @@ steps:
                       code: ADDITIONAL_UPLOAD
                       name: Additional Upload
                 items:
+                  - id: TERM_LOAN_ID_1
+                    descriptor:
+                      code: LOAN
+                      name: Term Loan with AA
+                    category_ids:
+                      - "101124"
+                      - "101117"
+                      - "101212"
+                    fulfillment_ids:
+                      - F6
+                    matched: true
+                    recommended: true
+                    xinput:
+                      head:
+                        descriptor:
+                          name: Personal Information
+                          code: PERSONAL_INFORMATION_BUSINESS_TERM
+                        headings:
+                          - PERSONAL_INFORMATION_BUSINESS_TERM
+                          - CONSENT_APPROVAL
+                      form:
+                        id: F01
+                        mime_type: none
+                        data:
+                          pan:
+                            type: string
+                          fullName:
+                            type: string
+                          dob:
+                            type: string
+                          addressL1:
+                            type: string
+                          addressL2:
+                            type: string
+                          pincode:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          constitution:
+                            type: enum
+                          businessPan:
+                            type: string
+                          businessPanName:
+                            type: string
+                          doi:
+                            type: string
+                          natureOfBusiness:
+                            type: enum
+                          udyamNumber:
+                            type: string
+                          gst:
+                            type: string
+                          annualTurnover:
+                            type: string
+                          businessEmail:
+                            type: string
+                          businessAddressL1:
+                            type: string
+                          businessAddressL2:
+                            type: string
+                          businessCity:
+                            type: string
+                          businessState:
+                            type: string
+                          businessPincode:
+                            type: string
+                          bureauConsent:
+                            type: boolean
+                            defaultValue: true
+                          aa_id:
+                            type: string
+                        resubmit: false
+                        multiple_sumbissions: false
+                      required: true
+                  - id: TERM_LOAN_ID_3
+                    descriptor:
+                      code: LOAN
+                      name: Term Loan with GST
+                    category_ids:
+                      - "101124"
+                      - "101117"
+                      - "104139"
+                    fulfillment_ids:
+                      - F8
+                    matched: true
+                    recommended: true
+                    xinput:
+                      head:
+                        descriptor:
+                          name: Personal Information
+                          code: PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                        headings:
+                          - PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                      form:
+                        id: F01
+                        mime_type: none
+                        data:
+                          udyamNumber:
+                            type: string
+                          contactNumber:
+                            type: string
+                          email:
+                            type: string
+                          gstinProfile:
+                            type: file
+                          gstr1:
+                            type: file
+                          gstr2A:
+                            type: file
+                          gstr3B:
+                            type: file
+                          bureauConsent:
+                            type: boolean
+                          aa_id:
+                            type: string
+                          tnc:
+                            type: boolean
+                            display: https://icicibank.co.in/loans/tnc.html
+                        multiple_sumbissions: false
+                      required: true
                   - id: BUSINESS_TERM_LOAN_ID_2
                     descriptor:
                       code: LOAN
@@ -649,6 +771,66 @@ steps:
                         multiple_sumbissions: false
                       required: true
                 fulfillments:
+                  - id: F6
+                    type: ONLINE
+                    tags:
+                      - display: false
+                        descriptor:
+                          name: Checklist
+                          code: CHECKLISTS
+                        list:
+                          - descriptor:
+                              code: PERSONAL_INFORMATION_BUSINESS_TERM
+                              name: Personal Information
+                            value: PENDING
+                          - descriptor:
+                              code: CONSENT_APPROVAL
+                              name: Consent Approval
+                            value: PENDING
+                          - descriptor:
+                              code: SET_LOAN_AMOUNT
+                              name: Set Loan Amount
+                            value: PENDING
+                          - descriptor:
+                              code: KYC
+                              name: Know Your Customer
+                            value: PENDING
+                          - descriptor:
+                              code: EMANDATE
+                              name: Emandate
+                            value: PENDING
+                          - descriptor:
+                              code: LOAN_AGREEMENT
+                              name: Loan Agreement
+                            value: PENDING
+                  - id: F8
+                    type: ONLINE
+                    tags:
+                      - display: false
+                        descriptor:
+                          name: Checklist
+                          code: CHECKLISTS
+                        list:
+                          - descriptor:
+                              code: PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                              name: Personal Information
+                            value: PENDING
+                          - descriptor:
+                              code: SET_LOAN_AMOUNT
+                              name: Set Loan Amount
+                            value: PENDING
+                          - descriptor:
+                              code: KYC
+                              name: Know Your Customer
+                            value: PENDING
+                          - descriptor:
+                              code: EMANDATE
+                              name: Emandate
+                            value: PENDING
+                          - descriptor:
+                              code: LOAN_AGREEMENT
+                              name: Loan Agreement
+                            value: PENDING
                   - id: F18
                     type: SEMI_ONLINE
                     tags:
@@ -786,9 +968,9 @@ steps:
           context:
             domain: ONDC:FIS12
             action: on_search
-            timestamp: 2026-04-23T09:08:24.371Z
+            timestamp: 2026-04-28T11:31:51.206Z
             transaction_id: 4179de3c-7088-4732-9786-e1fdba540b56
-            message_id: cd483e06-2131-4ef8-8540-af494e78473f
+            message_id: 87b99f0e-5dee-4e7a-a419-2c8d3ee8ace7
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -999,6 +1181,128 @@ steps:
                         code: ADDITIONAL_UPLOAD
                         name: Additional Upload
                   items:
+                    - id: TERM_LOAN_ID_1
+                      descriptor:
+                        code: LOAN
+                        name: Term Loan with AA
+                      category_ids:
+                        - "101124"
+                        - "101117"
+                        - "101212"
+                      fulfillment_ids:
+                        - F6
+                      matched: true
+                      recommended: true
+                      xinput:
+                        head:
+                          descriptor:
+                            name: Personal Information
+                            code: PERSONAL_INFORMATION_BUSINESS_TERM
+                          headings:
+                            - PERSONAL_INFORMATION_BUSINESS_TERM
+                            - CONSENT_APPROVAL
+                        form:
+                          id: F01
+                          mime_type: none
+                          data:
+                            pan:
+                              type: string
+                            fullName:
+                              type: string
+                            dob:
+                              type: string
+                            addressL1:
+                              type: string
+                            addressL2:
+                              type: string
+                            pincode:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            constitution:
+                              type: enum
+                            businessPan:
+                              type: string
+                            businessPanName:
+                              type: string
+                            doi:
+                              type: string
+                            natureOfBusiness:
+                              type: enum
+                            udyamNumber:
+                              type: string
+                            gst:
+                              type: string
+                            annualTurnover:
+                              type: string
+                            businessEmail:
+                              type: string
+                            businessAddressL1:
+                              type: string
+                            businessAddressL2:
+                              type: string
+                            businessCity:
+                              type: string
+                            businessState:
+                              type: string
+                            businessPincode:
+                              type: string
+                            bureauConsent:
+                              type: boolean
+                              defaultValue: true
+                            aa_id:
+                              type: string
+                          resubmit: false
+                          multiple_sumbissions: false
+                        required: true
+                    - id: TERM_LOAN_ID_3
+                      descriptor:
+                        code: LOAN
+                        name: Term Loan with GST
+                      category_ids:
+                        - "101124"
+                        - "101117"
+                        - "104139"
+                      fulfillment_ids:
+                        - F8
+                      matched: true
+                      recommended: true
+                      xinput:
+                        head:
+                          descriptor:
+                            name: Personal Information
+                            code: PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                          headings:
+                            - PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                        form:
+                          id: F01
+                          mime_type: none
+                          data:
+                            udyamNumber:
+                              type: string
+                            contactNumber:
+                              type: string
+                            email:
+                              type: string
+                            gstinProfile:
+                              type: file
+                            gstr1:
+                              type: file
+                            gstr2A:
+                              type: file
+                            gstr3B:
+                              type: file
+                            bureauConsent:
+                              type: boolean
+                            aa_id:
+                              type: string
+                            tnc:
+                              type: boolean
+                              display: https://icicibank.co.in/loans/tnc.html
+                          multiple_sumbissions: false
+                        required: true
                     - id: BUSINESS_TERM_LOAN_ID_2
                       descriptor:
                         code: LOAN
@@ -1332,6 +1636,66 @@ steps:
                           multiple_sumbissions: false
                         required: true
                   fulfillments:
+                    - id: F6
+                      type: ONLINE
+                      tags:
+                        - display: false
+                          descriptor:
+                            name: Checklist
+                            code: CHECKLISTS
+                          list:
+                            - descriptor:
+                                code: PERSONAL_INFORMATION_BUSINESS_TERM
+                                name: Personal Information
+                              value: PENDING
+                            - descriptor:
+                                code: CONSENT_APPROVAL
+                                name: Consent Approval
+                              value: PENDING
+                            - descriptor:
+                                code: SET_LOAN_AMOUNT
+                                name: Set Loan Amount
+                              value: PENDING
+                            - descriptor:
+                                code: KYC
+                                name: Know Your Customer
+                              value: PENDING
+                            - descriptor:
+                                code: EMANDATE
+                                name: Emandate
+                              value: PENDING
+                            - descriptor:
+                                code: LOAN_AGREEMENT
+                                name: Loan Agreement
+                              value: PENDING
+                    - id: F8
+                      type: ONLINE
+                      tags:
+                        - display: false
+                          descriptor:
+                            name: Checklist
+                            code: CHECKLISTS
+                          list:
+                            - descriptor:
+                                code: PERSONAL_INFORMATION_BUSINESS_TERM_GST
+                                name: Personal Information
+                              value: PENDING
+                            - descriptor:
+                                code: SET_LOAN_AMOUNT
+                                name: Set Loan Amount
+                              value: PENDING
+                            - descriptor:
+                                code: KYC
+                                name: Know Your Customer
+                              value: PENDING
+                            - descriptor:
+                                code: EMANDATE
+                                name: Emandate
+                              value: PENDING
+                            - descriptor:
+                                code: LOAN_AGREEMENT
+                                name: Loan Agreement
+                              value: PENDING
                     - id: F18
                       type: SEMI_ONLINE
                       tags:
