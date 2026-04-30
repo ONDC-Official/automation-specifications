@@ -54,17 +54,28 @@ paths:
                     $ref: "#/components/schemas/Error"
                 required:
                   - message
-              example:
-                message:
-                  ack:
-                    status: "ACK"
-                  tags:
-                    - code: "bpps_notified"
-                      list:
-                        - code: "bpp_id"
-                          value: "bpp.example.com"
-                        - code: "bpp_id"
-                          value: "bpp.example-1.com"
+              examples:
+                withoutBppId:
+                  summary: Response when bpp_id is not sent
+                  description: All notified BPPs are returned in tags
+                  value:
+                    message:
+                      ack:
+                        status: "ACK"
+                      tags:
+                        - code: "bpps_notified"
+                          list:
+                            - code: "bpp_id"
+                              value: "bpp.example.com"
+                            - code: "bpp_id"
+                              value: "bpp.example-1.com"
+                withBppId:
+                  summary: Response when bpp_id is sent
+                  description: Tags are omitted because response is scoped to the provided bpp_id
+                  value:
+                    message:
+                      ack:
+                        status: "ACK"
   /select:
     post:
       tags:
