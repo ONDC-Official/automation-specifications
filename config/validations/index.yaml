@@ -79,18 +79,20 @@ _TESTS_:
               match1:
                 - ^-?\d{1,3}\.\d{6,},\s*-?\d{1,3}\.\d{6,}$
               _RETURN_: subTags follow regex match1
-            - attr: $.message.intent.fulfillment.stops[*].location.city.code
-              reg:
+            - _NAME_: VALIDATE_STOP_CITY_CODE_FORMAT
+              _SCOPE_: $.message.intent.fulfillment.stops[*].location
+              subTags: $.city.code
+              match1:
                 - ^std:0\d+$
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr are present
-              _NAME_: VALIDATE_STOP_CITY_CODE_FORMAT
-            - attr: $.message.intent.fulfillment.stops[*].location.area_code
-              reg:
+              _CONTINUE_: "!(subTags are present)"
+              _RETURN_: subTags follow regex match1
+            - _NAME_: VALIDATE_STOP_AREA_CODE_FORMAT
+              _SCOPE_: $.message.intent.fulfillment.stops[*].location
+              subTags: $.area_code
+              match1:
                 - ^\d{6}$
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr are present
-              _NAME_: VALIDATE_STOP_AREA_CODE_FORMAT
+              _CONTINUE_: "!(subTags are present)"
+              _RETURN_: subTags follow regex match1
         - _NAME_: fulfillment_Enums_Tests
           _RETURN_:
             - attr: $.message.intent.fulfillment.stops[*].type
