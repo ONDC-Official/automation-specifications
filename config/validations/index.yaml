@@ -79,6 +79,18 @@ _TESTS_:
               match1:
                 - ^-?\d{1,3}\.\d{6,},\s*-?\d{1,3}\.\d{6,}$
               _RETURN_: subTags follow regex match1
+            - attr: $.message.intent.fulfillment.stops[*].location.city.code
+              reg:
+                - ^std:0\d+$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr are present
+              _NAME_: VALIDATE_STOP_CITY_CODE_FORMAT
+            - attr: $.message.intent.fulfillment.stops[*].location.area_code
+              reg:
+                - ^\d{6}$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr are present
+              _NAME_: VALIDATE_STOP_AREA_CODE_FORMAT
         - _NAME_: fulfillment_Enums_Tests
           _RETURN_:
             - attr: $.message.intent.fulfillment.stops[*].type
@@ -151,6 +163,12 @@ _TESTS_:
               _CONTINUE_: "!(enumPath are present)"
               _RETURN_: enumPath all in enumList
               _NAME_: VALID_ENUM_message_intent_fulfillment_state_descriptor_code
+            - enumList:
+                - IND
+              enumPath: $.message.intent.fulfillment.stops[*].location.country.code
+              _CONTINUE_: "!(enumPath are present)"
+              _RETURN_: enumPath all in enumList
+              _NAME_: VALID_ENUM_message_intent_fulfillment_stops_location_country_code
     - _NAME_: payment_Tests
       _RETURN_:
         - _NAME_: payment_Enums_Tests
@@ -280,6 +298,27 @@ _TESTS_:
               attr: $.message.order.provider.id
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_provider_id
+            - &a87
+              attr: $.message.order.provider.descriptor.images[*].url
+              reg:
+                - ^https?://.+
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr are present
+              _NAME_: VALIDATE_message_order_provider_descriptor_images_url
+        - _NAME_: provider_Enums_Tests
+          _RETURN_:
+            - &a88
+              enumList:
+                - xs
+                - sm
+                - md
+                - lg
+                - xl
+                - custom
+              enumPath: $.message.order.provider.descriptor.images[*].size_type
+              _CONTINUE_: "!(enumPath are present)"
+              _RETURN_: enumPath all in enumList
+              _NAME_: VALID_ENUM_message_order_provider_descriptor_images_size_type
     - _NAME_: fulfillments_Tests
       _RETURN_:
         - _NAME_: fulfillments_Enums_Tests
@@ -749,6 +788,12 @@ _TESTS_:
             - attr: $.message.catalog.providers[*].items[*].location_ids[*]
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_catalog_providers_items_location_ids
+            - attr: $.message.catalog.providers[*].descriptor.images[*].url
+              reg:
+                - ^https?://.+
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr are present
+              _NAME_: VALIDATE_message_catalog_providers_descriptor_images_url
         - _NAME_: providers_Enums_Tests
           _RETURN_:
             - attr: $.message.catalog.providers[*].fulfillments[*].type
@@ -757,6 +802,17 @@ _TESTS_:
                 - DELIVERY
                 - SELF_PICKUP
               _NAME_: VALID_ENUM_message_catalog_providers_fulfillments_type
+            - enumList:
+                - xs
+                - sm
+                - md
+                - lg
+                - xl
+                - custom
+              enumPath: $.message.catalog.providers[*].descriptor.images[*].size_type
+              _CONTINUE_: "!(enumPath are present)"
+              _RETURN_: enumPath all in enumList
+              _NAME_: VALID_ENUM_message_catalog_providers_descriptor_images_size_type
             - attr: $.message.catalog.providers[*].fulfillments[*].vehicle.category
               _RETURN_: attr all in enumList
               enumList:
@@ -1108,6 +1164,20 @@ _TESTS_:
                 - *a38
                 - *a39
                 - *a52
+                - &a84
+                  attr: $.message.order.fulfillments[*].agent.person.image.url
+                  reg:
+                    - ^https?://.+
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr are present
+                  _NAME_: VALIDATE_message_order_fulfillments_agent_person_image_url
+                - &a86
+                  attr: $.message.order.fulfillments[*].agent.rating
+                  reg:
+                    - ^[0-5](\.\d+)?$
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr are present
+                  _NAME_: VALIDATE_message_order_fulfillments_agent_rating
             - _NAME_: fulfillments_Enums_Tests
               _RETURN_:
                 - *a53
@@ -1123,6 +1193,18 @@ _TESTS_:
                     - RIDE_ARRIVED_PICKUP
                     - RIDE_CONFIRMED
                   _NAME_: VALID_ENUM_message_order_fulfillments_state_descriptor_code
+                - &a85
+                  enumList:
+                    - xs
+                    - sm
+                    - md
+                    - lg
+                    - xl
+                    - custom
+                  enumPath: $.message.order.fulfillments[*].agent.person.image.size_type
+                  _CONTINUE_: "!(enumPath are present)"
+                  _RETURN_: enumPath all in enumList
+                  _NAME_: VALID_ENUM_message_order_fulfillments_agent_person_image_size_type
                 - *a24
                 - *a12
                 - *a13
@@ -1195,11 +1277,14 @@ _TESTS_:
             - *a38
             - *a39
             - *a52
+            - *a84
+            - *a86
         - _NAME_: fulfillments_Enums_Tests
           _RETURN_:
             - *a53
             - *a24
             - *a59
+            - *a85
             - *a12
             - *a13
             - *a14
@@ -1289,6 +1374,7 @@ _TESTS_:
             - *a44
             - *a64
             - *a68
+            - *a87
             - *a34
             - *a38
             - *a39
@@ -1311,6 +1397,8 @@ _TESTS_:
               attr: $.message.order.fulfillments[*].agent.contact.phone
               _RETURN_: attr are present
               _NAME_: REQUIRED_message_order_fulfillments_agent_contact_phone
+            - *a84
+            - *a86
         - _NAME_: order_Enums_Tests
           _RETURN_:
             - *a74
@@ -1322,6 +1410,8 @@ _TESTS_:
             - *a63
             - *a61
             - *a76
+            - *a85
+            - *a88
             - *a12
             - *a13
             - *a14
@@ -1356,11 +1446,14 @@ _TESTS_:
             - *a44
             - *a64
             - *a68
+            - *a87
             - *a34
             - *a38
             - *a39
             - *a80
             - *a81
+            - *a84
+            - *a86
             - *a52
             - *a47
             - *a48
@@ -1368,6 +1461,12 @@ _TESTS_:
             - *a50
             - *a69
             - *a65
+            - attr: $.message.order.documents[*].url
+              reg:
+                - ^https?://.+
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr are present
+              _NAME_: VALIDATE_message_order_documents_url
         - _NAME_: order_Enums_Tests
           _RETURN_:
             - *a74
@@ -1379,10 +1478,21 @@ _TESTS_:
             - *a63
             - *a61
             - *a82
+            - *a85
+            - *a88
             - *a12
             - *a13
             - *a14
             - *a15
+            - enumList:
+                - text/html
+                - application/html
+                - application/xml
+                - application/pdf
+              enumPath: $.message.order.documents[*].mime_type
+              _CONTINUE_: "!(enumPath are present)"
+              _RETURN_: enumPath all in enumList
+              _NAME_: VALID_ENUM_message_order_documents_mime_type
             - enumList:
                 - SOFT_CANCEL
                 - CONFIRM_CANCEL
