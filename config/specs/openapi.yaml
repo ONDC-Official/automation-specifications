@@ -1071,31 +1071,7 @@ paths:
             schema:
               type: object
               properties:
-                context: &context_2
-                  type: object
-                  properties:
-                    domain:
-                      type: string
-                    transaction_id:
-                      type: string
-                    message_id:
-                      type: string
-                    action:
-                      type: string
-                    timestamp:
-                      type: string
-                    bap_uri:
-                      type: string
-                    bap_id:
-                      type: string
-                    bpp_uri:
-                      type: string
-                    bpp_id:
-                      type: string
-                    ttl:
-                      type: string
-                    country:
-                      type: string
+                context: *context
                 message:
                   type: object
                   properties:
@@ -1225,7 +1201,7 @@ paths:
                   error: *a3
                 required:
                   - message
-  on_issue:
+  /on_issue:
     post:
       operationId: on_issue
       requestBody:
@@ -1235,7 +1211,7 @@ paths:
             schema:
               type: object
               properties:
-                context: *context_2
+                context: *context
                 message:
                   type: object
                   properties:
@@ -1285,7 +1261,7 @@ paths:
             schema:
               type: object
               properties:
-                context: *context_2
+                context: *context
                 message:
                   type: object
                   properties:
