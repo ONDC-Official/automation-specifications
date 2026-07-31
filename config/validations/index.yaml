@@ -5241,13 +5241,16 @@ _TESTS_:
               attr: $.message.order.payments[?(@.type=='PART-PAYMENT')].tags[*].descriptor.code
               var_enum:
                 - LINKED-PAYMENTS
+              _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in var_enum
             - _NAME_: PART_PAYMENT_LINKED_IDS_PRESENT
               attr: $.message.order.payments[?(@.type=='PART-PAYMENT')].tags[*].list[*].descriptor.code
+              _CONTINUE_: "!(attr are present)"
               _RETURN_: attr are present
             - _NAME_: PART_PAYMENT_LINKED_IDS_EXIST
               attr1: $.message.order.payments[?(@.type=='PART-PAYMENT')].tags[*].list[*].descriptor.code
               ref:  $.message.order.payments[?(@.type!='PART-PAYMENT')].id
+              _CONTINUE_: "!(attr1 are present)"
               _RETURN_: attr1 all in ref
             - _NAME_: PAYMENT_PARAMS_AMOUNT
               attr: $.message.order.payments[?(@.type!='PART-PAYMENT')].params.amount
