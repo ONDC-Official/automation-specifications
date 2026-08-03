@@ -96,19 +96,7 @@ _TESTS_:
         - MICRO_INSURANCE
         - MICRO_ACCIDENTAL_INSURANCE
         _RETURN_: attr all in enumList
-    - _NAME_: SEARCH_PAYMENT
-      action:
-      - search
-      _RETURN_:
-      - _NAME_: REQUIRED_PAYMENT_COLLECTED_BY
-        attr: $.message.intent.payment.collected_by
-        _RETURN_: attr are present
-      - _NAME_: VALID_PAYMENT_COLLECTED_BY_ENUM
-        attr: $.message.intent.payment.collected_by
-        enumList:
-        - BPP
-        - BAP
-        _RETURN_: attr any in enumList
+    
   - _NAME_: SEARCH_CONTEXT_SACHET
     action:
     - search
@@ -240,9 +228,9 @@ _TESTS_:
     _RETURN_:
     - _NAME_: REQUIRED_PROVIDER_ITEMS
       _RETURN_:
-      - _NAME_: REQUIRED_PROVIDER_ID
-        attr: $.message.intent.provider.id
-        _RETURN_: attr are present
+      # - _NAME_: REQUIRED_PROVIDER_ID
+      #   attr: $.message.intent.provider.id
+      #   _RETURN_: attr are present
       - _NAME_: REQUIRED_MASTER_POLICY_TAG_GROUP
         validTags:
         - MASTER_POLICY
@@ -269,12 +257,12 @@ _TESTS_:
     _RETURN_:
     - _NAME_: REQUIRED_PROVIDER_ITEMS
       _RETURN_:
-      - _NAME_: REQUIRED_PROVIDER_ID
-        attr: $.message.intent.provider.id
-        _RETURN_: attr are present
-      - _NAME_: REQUIRED_PROVIDER_ITEM_ID
-        attr: $.message.intent.provider.items[*].id
-        _RETURN_: attr are present
+      # - _NAME_: REQUIRED_PROVIDER_ID
+      #   attr: $.message.intent.provider.id
+      #   _RETURN_: attr are present
+      # - _NAME_: REQUIRED_PROVIDER_ITEM_ID
+      #   attr: $.message.intent.provider.items[*].id
+      #   _RETURN_: attr are present
       - _NAME_: REQUIRED_TRANSIT_ITEMS_TAG_GROUP
         category_code_path: $.message.intent.category.descriptor.code
         var_category_code:
@@ -381,6 +369,75 @@ _TESTS_:
       - _NAME_: REQUIRED_PAYMENT_COLLECTED_BY
         attr: $.message.intent.payment.collected_by
         _RETURN_: attr are present
+  - _NAME_: PAYMENT_TAGS_VALIDATION
+    action:
+    - search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.intent.category.descriptor.code
+    var_category_code:
+    - HEALTH_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: TAG_BUYER_FINDER_FEES
+      attr: $.message.intent.payment.tags[*].descriptor.code
+      enumList:
+      - BUYER_FINDER_FEES
+      _RETURN_: attr any in enumList
+    - _NAME_: TAG_BUYER_FINDER_FEES_TYPE
+      attr: $.message.intent.payment.tags[*].list[*].descriptor.code
+      enumList:
+      - BUYER_FINDER_FEES_TYPE
+      _RETURN_: attr any in enumList
+    - _NAME_: TAG_BUYER_FINDER_FEES_PERCENTAGE
+      attr: $.message.intent.payment.tags[*].list[*].descriptor.code
+      enumList:
+      - BUYER_FINDER_FEES_PERCENTAGE
+      _RETURN_: attr any in enumList
+    - _NAME_: TAG_SETTLEMENT_TERMS
+      attr: $.message.intent.payment.tags[*].descriptor.code
+      enumList:
+      - SETTLEMENT_TERMS
+      _RETURN_: attr any in enumList
+    - _NAME_: TAG_SETTLEMENT_TERMS_STATIC_TERMS
+      attr: $.message.intent.payment.tags[*].list[*].descriptor.code
+      enumList:
+      - STATIC_TERMS
+      _RETURN_: attr any in enumList
+    - _NAME_: TAG_SETTLEMENT_TERMS_OFFLINE_CONTRACT
+      attr: $.message.intent.payment.tags[*].list[*].descriptor.code
+      enumList:
+      - OFFLINE_CONTRACT
+      _RETURN_: attr any in enumList
+    
+  - _NAME_: SEARCH_MICRO_BAP_TERMS
+    action:
+    - search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.intent.category.descriptor.code
+    var_category_code:
+    - MICRO_HOSPICASH_INSURANCE
+    - MICRO_TRANSIT_INSURANCE
+    - MICRO_ACCIDENTAL_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: REQUIRED_BAP_TERMS_TAG_GROUP
+      tagPath: $.message.intent.tags[*].descriptor.code
+      validTags:
+      - BAP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_BAP_TERMS_SUBTAGS
+      _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
   on_search:
   - _NAME_: ON_SEARCH_CONTEXT
     action:
@@ -447,9 +504,9 @@ _TESTS_:
     - MOTOR_INSURANCE
     _CONTINUE_: '!(category_code_path all in var_category_code)'
     _RETURN_:
-    - _NAME_: REQUIRED_CATALOG_NAME
-      attr: $.message.catalog.descriptor.name
-      _RETURN_: attr are present
+    # - _NAME_: REQUIRED_CATALOG_NAME
+    #   attr: $.message.catalog.descriptor.name
+    #   _RETURN_: attr are present
     - _NAME_: REQUIRED_PROVIDER_ID
       attr: $.message.catalog.providers[*].id
       _RETURN_: attr are present
@@ -479,6 +536,9 @@ _TESTS_:
       _RETURN_: attr are present
     - _NAME_: REQUIRED_ITEM_CATEGORY_IDS
       attr: $.message.catalog.providers[*].items[*].category_ids[*]
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_ITEM_DESCRIPTOR_NAME
+      attr: $.message.catalog.providers[*].items[*].descriptor.name
       _RETURN_: attr are present
     - _NAME_: REQUIRED_ITEM_TIME_DURATION
       attr: $.message.catalog.providers[*].items[*].time.duration
@@ -806,6 +866,117 @@ _TESTS_:
           - TAX
           - OFFER_VALIDITY
           _RETURN_: validValues any in subTags
+  - _NAME_: ON_SEARCH_ITEMS_GENERAL_INFO_TAGS
+    action:
+    - on_search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
+    var_category_code:
+    - HEALTH_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: REQUIRED_ITEM_GENERAL_INFO_TAG_GROUP
+      tagPath: $.message.catalog.providers[*].items[*].tags[*].descriptor.code
+      validTags:
+      - GENERAL_INFO
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_ITEM_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.catalog.providers[*].items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - COVERAGE_AMOUNT
+      - CO_PAYMENT
+      - ROOM_RENT_CAP
+      - RESTORATION_BENEFIT
+      - CLAIM_SETTLEMENT_RATIO
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - MATERNITY_COVERAGE
+      - INITIAL_WAITING_PERIOD
+      - CASHLESS_HOSPITALS
+      - ROOM_CATEGORY
+      _RETURN_: validValues all in subTags
+  - _NAME_: ON_SEARCH_PAYMENT_TAGS
+    action:
+    - on_search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
+    var_category_code:
+    - HEALTH_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+      tagPath: $.message.catalog.providers[*].payments[*].tags[*].descriptor.code
+      validTags:
+      - BUYER_FINDER_FEES
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+      _SCOPE_: $.message.catalog.providers[*].payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - BUYER_FINDER_FEES_TYPE
+      - BUYER_FINDER_FEES_PERCENTAGE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+      tagPath: $.message.catalog.providers[*].payments[*].tags[*].descriptor.code
+      validTags:
+      - SETTLEMENT_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+      _SCOPE_: $.message.catalog.providers[*].payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+  - _NAME_: ON_SEARCH_CATALOG_NAME_MOTOR
+    action:
+    - on_search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
+    var_category_code:
+    - MOTOR_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: REQUIRED_CATALOG_NAME
+      attr: $.message.catalog.descriptor.name
+      _RETURN_: attr are present
+  - _NAME_: ON_SEARCH_MICRO_BPP_TERMS
+    action:
+    - on_search
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
+    var_category_code:
+    - MICRO_HOSPICASH_INSURANCE
+    - MICRO_TRANSIT_INSURANCE
+    - MICRO_INSURANCE
+    - MICRO_ACCIDENTAL_INSURANCE
+    _CONTINUE_: '!(category_code_path all in var_category_code)'
+    _RETURN_:
+    - _NAME_: REQUIRED_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.catalog.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
   select:
   - _NAME_: SELECT_CONTEXT
     action:
@@ -908,6 +1079,18 @@ _TESTS_:
     usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
     _CONTINUE_: '!(usecasepath are present)'
     _RETURN_: attr are present
+  - _NAME_: SELECT_MOTOR_ITEM_GENERAL_INFO
+    action:
+    - select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTags: $.list[*].descriptor.code
+    validValues:
+    - IDV_SELECTED
+    _RETURN_: validValues all in subTags
   on_select:
   - _NAME_: ON_SELECT_CONTEXT
     action:
@@ -1360,6 +1543,220 @@ _TESTS_:
         enumList:
         - INR
         _RETURN_: attr any in enumList
+  - _NAME_: ON_SELECT_HEALTH_ITEM_GENERAL_INFO
+    action:
+    - on_select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: HEALTH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - MATERNITY_COVERAGE
+      - ROOM_RENT_CAP
+      - ROOM_CATEGORY
+      - CO_PAYMENT
+      - CLAIM_SETTLEMENT_RATIO
+      - RESTORATION_BENEFIT
+      - CASHLESS_HOSPITALS
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - INITIAL_WAITING_PERIOD
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - RESTORATION_BENEFIT
+        - CLAIM_SETTLEMENT_RATIO
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - MATERNITY_COVERAGE
+        - INITIAL_WAITING_PERIOD
+        - CASHLESS_HOSPITALS
+        - ROOM_CATEGORY
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+  - _NAME_: ON_SELECT_MOTOR_ITEM_TAGS
+    action:
+    - on_select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: MOTOR_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - IDV_VALUE
+      - PERSONAL_ACCIDENT_COVER
+      - DEPRECIATION_COVER
+      - ROAD_SIDE_ASSISTANCE
+      - CONSUMABLES_COVER
+      - ENGINE_COVER
+      - RETURN_TO_INVOICE
+      - OWN_DAMAGE_PREMIUM
+      - THIRD_PARTY_PREMIUM
+      - PREMIUM
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - IDV_VALUE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - VAHAN_DETAILS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - MODEL
+        - MAKE
+        - FUEL_TYPE
+        - VARIANT
+        - REGISTERED_CITY
+        - REGISTERED_DATE
+        - CHASSIS_NUMBER
+        - ENGINE_NUMBER
+        - PREVIOUS_POLICY_NUMBER
+        - PREVIOUS_INSURER
+        - PREVIOUS_POLICY_END_DATE
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_SELECT_HOSPICASH_GENERAL_INFO
+    action:
+    - on_select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - DAILY_CASH_BENEFIT
+    - MAX_HOSPITALIZATION_DAYS
+    - ICU_BENEFIT_PER_DAY
+    - SURGICAL_BENEFIT
+    - CONVALESCENCE_BENEFIT
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_HOSPICASH_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - COVERAGE_AMOUNT
+      - DAILY_CASH_BENEFIT
+      - DURATION_OF_COVER
+      _RETURN_: validValues all in subTags
+  - _NAME_: ON_SELECT_TRANSIT_ITEM_GENERAL_INFO
+    action:
+    - on_select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: TRANSIT_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - DAILY_CASH_BENEFIT
+      - MAX_HOSPITALIZATION_DAYS
+      - ICU_BENEFIT_PER_DAY
+      - SURGICAL_BENEFIT
+      - CONVALESCENCE_BENEFIT
+      - MINIMUM_DAYS_FOR_CONVALESCENCE_BENEFIT
+      - DURATION_OF_COVER
+      - INITIAL_WAITING_PERIOD
+      - MINIMUM_AGE_LIMIT
+      - MAXIMUM_AGE_LIMIT
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - EMI_DURING_PERMANENT_DISABILITY
+      - EMI_DURING_TEMPORARY_DISABILITY
+      - HOSPITALIZATION_BENEFITS
+      - MEDICAL_EXPENSES_COVERAGE
+      - NUMBER_OF_EMI_PAYABLE
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      - TNC_LINK
+      _CONTINUE_: (validValuesList any in subTagsPath)
+      _RETURN_:
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_SELECT_ACCIDENTAL_ITEM_GENERAL_INFO
+    action:
+    - on_select
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - ACCIDENTAL_DEATH_SUM_INSURED
+    - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+    - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+    - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+    - EMI_DURING_TEMPORARY_DISABILITY
+    - EMI_DURING_PERMANENT_DISABILITY
+    - NUMBER_OF_EMI_PAYABLE
+    - MEDICAL_EXPENSES_COVERAGE
+    - HOSPITALIZATION_BENEFITS
+    - TENURE_TYPE
+    - TNC_LINK
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_ACCIDENTAL_GENERAL_INFO_TAG_GROUP
+      tagPath: $.message.order.items[*].tags[*].descriptor.code
+      validTags:
+      - GENERAL_INFO
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_ACCIDENTAL_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      _RETURN_: validValues all in subTags
   init:
   - _NAME_: INIT_CONTEXT
     action:
@@ -1550,6 +1947,53 @@ _TESTS_:
         - PRE-ORDER
         - ON-FULFILLMENT
         _RETURN_: attr all in enumList
+  - _NAME_: INIT_PAYMENT_TAGS
+    action:
+    - init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    tagpath: $.message.order.payments[*].tags[*].descriptor.code
+    _CONTINUE_: '!(tagpath are present)'
+    _RETURN_:
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+      tagPath: $.message.order.payments[*].tags[*].descriptor.code
+      validTags:
+      - BUYER_FINDER_FEES
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+      _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - BUYER_FINDER_FEES_TYPE
+      - BUYER_FINDER_FEES_PERCENTAGE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+      tagPath: $.message.order.payments[*].tags[*].descriptor.code
+      validTags:
+      - SETTLEMENT_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+  - _NAME_: INIT_MICRO_BAP_TERMS
+    action:
+    - init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
+    subTags: $.list[*].descriptor.code
+    validValues:
+    - STATIC_TERMS
+    - OFFLINE_CONTRACT
+    _RETURN_: validValues all in subTags
   on_init:
   - _NAME_: ON_INIT_CONTEXT
     _RETURN_:
@@ -1688,6 +2132,30 @@ _TESTS_:
         _RETURN_:
         - _NAME_: REQUIRED_CUSTOMER_EMAIL
           attr: $.message.order.fulfillments[*].customer.contact.email
+          subTagsPath: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')].list[*].descriptor.code
+          validValuesList:
+          - CO_PAYMENT
+          - ROOM_RENT_CAP
+          - CLAIM_SETTLEMENT_RATIO
+          - MATERNITY_COVERAGE
+          - RESTORATION_BENEFIT
+          - CASHLESS_HOSPITALS
+          - PRE_HOSPITALIZATION_COVERAGE_DAYS
+          - POST_HOSPITALIZATION_COVERAGE_DAYS
+          - ROOM_CATEGORY
+          - IDV_VALUE
+          - OWN_DAMAGE_PREMIUM
+          - DEPRECIATION_COVER
+          - THIRD_PARTY_PREMIUM
+          - DAILY_CASH_BENEFIT
+          - DURATION_OF_COVER
+          - MAX_HOSPITALIZATION_DAYS
+          - ACCIDENTAL_DEATH_SUM_INSURED
+          - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+          - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+          - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+          - TENURE_TYPE
+          _CONTINUE_: '!(validValuesList any in subTagsPath)'
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CUSTOMER_PHONE
           attr: $.message.order.fulfillments[*].customer.contact.phone
@@ -1830,6 +2298,305 @@ _TESTS_:
           _CONTINUE_: '!(usecasepath equal to attr)'
           _RETURN_: attr are present
       - *id023
+  - _NAME_: ON_INIT_HEALTH_ITEM_GENERAL_INFO
+    action:
+    - on_init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: HEALTH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - MATERNITY_COVERAGE
+      - ROOM_RENT_CAP
+      - ROOM_CATEGORY
+      - CO_PAYMENT
+      - CLAIM_SETTLEMENT_RATIO
+      - RESTORATION_BENEFIT
+      - CASHLESS_HOSPITALS
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - INITIAL_WAITING_PERIOD
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - RESTORATION_BENEFIT
+        - CLAIM_SETTLEMENT_RATIO
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - MATERNITY_COVERAGE
+        - INITIAL_WAITING_PERIOD
+        - CASHLESS_HOSPITALS
+        - ROOM_CATEGORY
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_LONG_DESC
+        attr: $.message.order.provider.descriptor.long_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_NAME
+        attr: $.message.order.provider.descriptor.name
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_SHORT_DESC
+        attr: $.message.order.provider.descriptor.short_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_URL
+        attr: $.message.order.provider.descriptor.images[*].url
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - BUYER_FINDER_FEES
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - BUYER_FINDER_FEES_TYPE
+        - BUYER_FINDER_FEES_PERCENTAGE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - SETTLEMENT_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_INIT_MOTOR_ITEM_TAGS
+    action:
+    - on_init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: MOTOR_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - IDV_VALUE
+      - PERSONAL_ACCIDENT_COVER
+      - DEPRECIATION_COVER
+      - ROAD_SIDE_ASSISTANCE
+      - CONSUMABLES_COVER
+      - ENGINE_COVER
+      - RETURN_TO_INVOICE
+      - OWN_DAMAGE_PREMIUM
+      - THIRD_PARTY_PREMIUM
+      - PREMIUM
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - IDV_VALUE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - VAHAN_DETAILS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - MODEL
+        - MAKE
+        - FUEL_TYPE
+        - VARIANT
+        - REGISTERED_CITY
+        - REGISTERED_DATE
+        - CHASSIS_NUMBER
+        - ENGINE_NUMBER
+        - PREVIOUS_POLICY_NUMBER
+        - PREVIOUS_INSURER
+        - PREVIOUS_POLICY_END_DATE
+        _RETURN_: validValues all in subTags
+      # - _NAME_: REQUIRED_MOTOR_FULFILLMENT_STATE_NAME
+      #   attr: $.message.order.fulfillments[*].state.descriptor.name
+      #   _RETURN_: attr are present // need to update
+      - _NAME_: REQUIRED_MOTOR_FULFILLMENT_STATE_CODE
+        attr: $.message.order.fulfillments[*].state.descriptor.code
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_PAYMENT_AMOUNT
+        attr: $.message.order.payments[*].params.amount
+        _RETURN_: attr are present
+  - _NAME_: ON_INIT_HOSPICASH_DETAILS
+    action:
+    - on_init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - DAILY_CASH_BENEFIT
+    - MAX_HOSPITALIZATION_DAYS
+    - ICU_BENEFIT_PER_DAY
+    - SURGICAL_BENEFIT
+    - CONVALESCENCE_BENEFIT
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_HOSPICASH_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - COVERAGE_AMOUNT
+      - DAILY_CASH_BENEFIT
+      - DURATION_OF_COVER
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_DOB
+      attr: $.message.order.fulfillments[*].customer.person.dob
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_GENDER
+      attr: $.message.order.fulfillments[*].customer.person.gender
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.order.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+  - _NAME_: ON_INIT_TRANSIT_DETAILS
+    action:
+    - on_init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: TRANSIT_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - DAILY_CASH_BENEFIT
+      - MAX_HOSPITALIZATION_DAYS
+      - ICU_BENEFIT_PER_DAY
+      - SURGICAL_BENEFIT
+      - CONVALESCENCE_BENEFIT
+      - MINIMUM_DAYS_FOR_CONVALESCENCE_BENEFIT
+      - DURATION_OF_COVER
+      - INITIAL_WAITING_PERIOD
+      - MINIMUM_AGE_LIMIT
+      - MAXIMUM_AGE_LIMIT
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - EMI_DURING_PERMANENT_DISABILITY
+      - EMI_DURING_TEMPORARY_DISABILITY
+      - HOSPITALIZATION_BENEFITS
+      - MEDICAL_EXPENSES_COVERAGE
+      - NUMBER_OF_EMI_PAYABLE
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      - TNC_LINK
+      _CONTINUE_: (validValuesList any in subTagsPath)
+      _RETURN_:
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_TAG_GROUP
+        tagPath: $.message.order.tags[*].descriptor.code
+        validTags:
+        - BPP_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_INIT_ACCIDENTAL_DETAILS
+    action:
+    - on_init
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - ACCIDENTAL_DEATH_SUM_INSURED
+    - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+    - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+    - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+    - EMI_DURING_TEMPORARY_DISABILITY
+    - EMI_DURING_PERMANENT_DISABILITY
+    - NUMBER_OF_EMI_PAYABLE
+    - MEDICAL_EXPENSES_COVERAGE
+    - HOSPITALIZATION_BENEFITS
+    - TENURE_TYPE
+    - TNC_LINK
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_ACCIDENTAL_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_ACCIDENTAL_CUSTOMER_DOB
+      attr: $.message.order.fulfillments[*].customer.person.dob
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.order.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
   confirm:
   - _NAME_: CONFIRM_CONTEXT
     _RETURN_: *id002
@@ -1870,9 +2637,6 @@ _TESTS_:
       customerpath: $.message.order.fulfillments[*].customer.contact.phone
       _CONTINUE_: '!(customerpath are present)'
       _RETURN_:
-      - _NAME_: REQUIRED_CUSTOMER_EMAIL
-        attr: $.message.order.fulfillments[*].customer.contact.email
-        _RETURN_: attr are present
       - _NAME_: REQUIRED_CUSTOMER_PHONE
         attr: $.message.order.fulfillments[*].customer.contact.phone
         _RETURN_: attr are present
@@ -1928,6 +2692,68 @@ _TESTS_:
       - *id022
       - *id026
     - *id023
+  - _NAME_: CONFIRM_PAYMENT_TAGS
+    action:
+    - confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    tagpath: $.message.order.payments[*].tags[*].descriptor.code
+    _CONTINUE_: '!(tagpath are present)'
+    _RETURN_:
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+      tagPath: $.message.order.payments[*].tags[*].descriptor.code
+      validTags:
+      - BUYER_FINDER_FEES
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+      _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - BUYER_FINDER_FEES_TYPE
+      - BUYER_FINDER_FEES_PERCENTAGE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+      tagPath: $.message.order.payments[*].tags[*].descriptor.code
+      validTags:
+      - SETTLEMENT_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+  - _NAME_: CONFIRM_MICRO_ORDER_TERMS
+    action:
+    - confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
+    _RETURN_:
+    - _NAME_: REQUIRED_CONFIRM_BAP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_CONFIRM_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.order.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_CONFIRM_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
   on_confirm:
   - _NAME_: ON_CONFIRM_CONTEXT
     action:
@@ -1969,6 +2795,30 @@ _TESTS_:
         _RETURN_: attr are present
       - _NAME_: CUSTOMER_EMAIL
         attr: $.message.order.fulfillments[*].customer.contact.email
+        subTagsPath: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')].list[*].descriptor.code
+        validValuesList:
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - CLAIM_SETTLEMENT_RATIO
+        - MATERNITY_COVERAGE
+        - RESTORATION_BENEFIT
+        - CASHLESS_HOSPITALS
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - ROOM_CATEGORY
+        - IDV_VALUE
+        - OWN_DAMAGE_PREMIUM
+        - DEPRECIATION_COVER
+        - THIRD_PARTY_PREMIUM
+        - DAILY_CASH_BENEFIT
+        - DURATION_OF_COVER
+        - MAX_HOSPITALIZATION_DAYS
+        - ACCIDENTAL_DEATH_SUM_INSURED
+        - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+        - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+        - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+        - TENURE_TYPE
+        _CONTINUE_: '!(validValuesList any in subTagsPath)'
         _RETURN_: attr are present
   - _NAME_: ITEM_VALIDATIONS
     usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
@@ -2252,6 +3102,293 @@ _TESTS_:
         - INITIATED
         - GRANTED
         _RETURN_: attr all in enumList
+  - _NAME_: ON_CONFIRM_HEALTH_ITEM_GENERAL_INFO
+    action:
+    - on_confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: HEALTH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - MATERNITY_COVERAGE
+      - ROOM_RENT_CAP
+      - ROOM_CATEGORY
+      - CO_PAYMENT
+      - CLAIM_SETTLEMENT_RATIO
+      - RESTORATION_BENEFIT
+      - CASHLESS_HOSPITALS
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - INITIAL_WAITING_PERIOD
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - RESTORATION_BENEFIT
+        - CLAIM_SETTLEMENT_RATIO
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - MATERNITY_COVERAGE
+        - INITIAL_WAITING_PERIOD
+        - CASHLESS_HOSPITALS
+        - ROOM_CATEGORY
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_URL
+        attr: $.message.order.payments[*].url
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BANK_ACCOUNT
+        attr: $.message.order.payments[*].params.bank_account_number
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BANK_CODE
+        attr: $.message.order.payments[*].params.bank_code
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - BUYER_FINDER_FEES
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - BUYER_FINDER_FEES_TYPE
+        - BUYER_FINDER_FEES_PERCENTAGE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - SETTLEMENT_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_CONFIRM_MOTOR_ITEM_TAGS
+    action:
+    - on_confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: MOTOR_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - IDV_VALUE
+      - PERSONAL_ACCIDENT_COVER
+      - DEPRECIATION_COVER
+      - ROAD_SIDE_ASSISTANCE
+      - CONSUMABLES_COVER
+      - ENGINE_COVER
+      - RETURN_TO_INVOICE
+      - OWN_DAMAGE_PREMIUM
+      - THIRD_PARTY_PREMIUM
+      - PREMIUM
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - IDV_VALUE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - VAHAN_DETAILS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - MODEL
+        - MAKE
+        - FUEL_TYPE
+        - VARIANT
+        - REGISTERED_CITY
+        - REGISTERED_DATE
+        - CHASSIS_NUMBER
+        - ENGINE_NUMBER
+        - PREVIOUS_POLICY_NUMBER
+        - PREVIOUS_INSURER
+        - PREVIOUS_POLICY_END_DATE
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_CONFIRM_HOSPICASH_DETAILS
+    action:
+    - on_confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - DAILY_CASH_BENEFIT
+    - MAX_HOSPITALIZATION_DAYS
+    - ICU_BENEFIT_PER_DAY
+    - SURGICAL_BENEFIT
+    - CONVALESCENCE_BENEFIT
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_HOSPICASH_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - COVERAGE_AMOUNT
+      - DAILY_CASH_BENEFIT
+      - DURATION_OF_COVER
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_DOB
+      attr: $.message.order.fulfillments[*].customer.person.dob
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_GENDER
+      attr: $.message.order.fulfillments[*].customer.person.gender
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.order.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
+  - _NAME_: ON_CONFIRM_TRANSIT_DETAILS
+    action:
+    - on_confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: TRANSIT_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - DAILY_CASH_BENEFIT
+      - MAX_HOSPITALIZATION_DAYS
+      - ICU_BENEFIT_PER_DAY
+      - SURGICAL_BENEFIT
+      - CONVALESCENCE_BENEFIT
+      - MINIMUM_DAYS_FOR_CONVALESCENCE_BENEFIT
+      - DURATION_OF_COVER
+      - INITIAL_WAITING_PERIOD
+      - MINIMUM_AGE_LIMIT
+      - MAXIMUM_AGE_LIMIT
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - EMI_DURING_PERMANENT_DISABILITY
+      - EMI_DURING_TEMPORARY_DISABILITY
+      - HOSPITALIZATION_BENEFITS
+      - MEDICAL_EXPENSES_COVERAGE
+      - NUMBER_OF_EMI_PAYABLE
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      - TNC_LINK
+      _CONTINUE_: (validValuesList any in subTagsPath)
+      _RETURN_:
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_TAG_GROUP
+        tagPath: $.message.order.tags[*].descriptor.code
+        validTags:
+        - BPP_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_CONFIRM_ACCIDENTAL_DETAILS
+    action:
+    - on_confirm
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - ACCIDENTAL_DEATH_SUM_INSURED
+    - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+    - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+    - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+    - EMI_DURING_TEMPORARY_DISABILITY
+    - EMI_DURING_PERMANENT_DISABILITY
+    - NUMBER_OF_EMI_PAYABLE
+    - MEDICAL_EXPENSES_COVERAGE
+    - HOSPITALIZATION_BENEFITS
+    - TENURE_TYPE
+    - TNC_LINK
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_ACCIDENTAL_GENERAL_INFO_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_ACCIDENTAL_CUSTOMER_DOB
+      attr: $.message.order.fulfillments[*].customer.person.dob
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_TAG_GROUP
+      tagPath: $.message.order.tags[*].descriptor.code
+      validTags:
+      - BPP_TERMS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_SUBTAGS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - STATIC_TERMS
+      - OFFLINE_CONTRACT
+      _RETURN_: validValues all in subTags
   update:
   - _NAME_: UPDATE_CONTEXT
     _RETURN_: *id002
@@ -2333,6 +3470,7 @@ _TESTS_:
       attr: $.message.update_target
       enumList:
       - order.fulfillments
+      - order.payments
       _RETURN_: attr any in enumList
   - _NAME_: UPDATE_ORDER_ID
     _RETURN_:
@@ -2478,6 +3616,30 @@ _TESTS_:
         _RETURN_: attr are present
       - _NAME_: CUSTOMER_EMAIL
         attr: $.message.order.fulfillments[*].customer.contact.email
+        subTagsPath: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')].list[*].descriptor.code
+        validValuesList:
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - CLAIM_SETTLEMENT_RATIO
+        - MATERNITY_COVERAGE
+        - RESTORATION_BENEFIT
+        - CASHLESS_HOSPITALS
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - ROOM_CATEGORY
+        - IDV_VALUE
+        - OWN_DAMAGE_PREMIUM
+        - DEPRECIATION_COVER
+        - THIRD_PARTY_PREMIUM
+        - DAILY_CASH_BENEFIT
+        - DURATION_OF_COVER
+        - MAX_HOSPITALIZATION_DAYS
+        - ACCIDENTAL_DEATH_SUM_INSURED
+        - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+        - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+        - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+        - TENURE_TYPE
+        _CONTINUE_: '!(validValuesList any in subTagsPath)'
         _RETURN_: attr are present
   - _NAME_: ON_UPDATE_PAYMENTS
     usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
@@ -2557,6 +3719,338 @@ _TESTS_:
     - _NAME_: REQUIRED_DOCUMENT_URL
       attr: $.message.order.documents[*].url
       _RETURN_: attr are present
+  - _NAME_: ON_UPDATE_HEALTH_ITEM_GENERAL_INFO
+    action:
+    - on_update
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: HEALTH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - MATERNITY_COVERAGE
+      - ROOM_RENT_CAP
+      - ROOM_CATEGORY
+      - CO_PAYMENT
+      - CLAIM_SETTLEMENT_RATIO
+      - RESTORATION_BENEFIT
+      - CASHLESS_HOSPITALS
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - INITIAL_WAITING_PERIOD
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - RESTORATION_BENEFIT
+        - CLAIM_SETTLEMENT_RATIO
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - MATERNITY_COVERAGE
+        - INITIAL_WAITING_PERIOD
+        - CASHLESS_HOSPITALS
+        - ROOM_CATEGORY
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+      # - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_SHORT_DESC
+      #   attr: $.message.order.documents[*].descriptor.short_desc
+      #   _RETURN_: attr are present
+      # - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_LONG_DESC
+      #   attr: $.message.order.documents[*].descriptor.long_desc
+      #   _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - BUYER_FINDER_FEES
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - BUYER_FINDER_FEES_TYPE
+        - BUYER_FINDER_FEES_PERCENTAGE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - SETTLEMENT_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_UPDATE_MOTOR_ITEM_TAGS
+    action:
+    - on_update
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: MOTOR_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - IDV_VALUE
+      - PERSONAL_ACCIDENT_COVER
+      - DEPRECIATION_COVER
+      - ROAD_SIDE_ASSISTANCE
+      - CONSUMABLES_COVER
+      - ENGINE_COVER
+      - RETURN_TO_INVOICE
+      - OWN_DAMAGE_PREMIUM
+      - THIRD_PARTY_PREMIUM
+      - PREMIUM
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - IDV_VALUE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - VAHAN_DETAILS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - MODEL
+        - MAKE
+        - FUEL_TYPE
+        - VARIANT
+        - REGISTERED_CITY
+        - REGISTERED_DATE
+        - CHASSIS_NUMBER
+        - ENGINE_NUMBER
+        - PREVIOUS_POLICY_NUMBER
+        - PREVIOUS_INSURER
+        - PREVIOUS_POLICY_END_DATE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+      # - _NAME_: REQUIRED_MOTOR_DOCUMENT_SHORT_DESC
+      #   attr: $.message.order.documents[*].descriptor.short_desc
+      #   _RETURN_: attr are present
+      # - _NAME_: REQUIRED_MOTOR_DOCUMENT_LONG_DESC
+      #   attr: $.message.order.documents[*].descriptor.long_desc
+      #   _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_PAYMENT_BANK_ACCOUNT
+        attr: $.message.order.payments[*].params.bank_account_number
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_PAYMENT_BANK_CODE
+        attr: $.message.order.payments[*].params.bank_code
+        _RETURN_: attr are present
+  - _NAME_: ON_UPDATE_HOSPICASH_DETAILS
+    action:
+    - on_update
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: HOSPICASH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - DAILY_CASH_BENEFIT
+      - MAX_HOSPITALIZATION_DAYS
+      - ICU_BENEFIT_PER_DAY
+      - SURGICAL_BENEFIT
+      - CONVALESCENCE_BENEFIT
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HOSPICASH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - DAILY_CASH_BENEFIT
+        - DURATION_OF_COVER
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HOSPICASH_POLICY_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='POLICY_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - POLICY_START_DATE
+        - POLICY_END_DATE
+        - POLICY_RENEWAL_DATE
+        - CLAIMS_HELPDESK_CONTACT_NUMBER
+        - CLAIMS_HELPDESK_EMAIL_ID
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_DOB
+        attr: $.message.order.fulfillments[*].customer.person.dob
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HOSPICASH_CUSTOMER_GENDER
+        attr: $.message.order.fulfillments[*].customer.person.gender
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_TAG_GROUP
+        tagPath: $.message.order.tags[*].descriptor.code
+        validTags:
+        - BPP_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HOSPICASH_BPP_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_UPDATE_TRANSIT_DETAILS
+    action:
+    - on_update
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: TRANSIT_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - DAILY_CASH_BENEFIT
+      - MAX_HOSPITALIZATION_DAYS
+      - ICU_BENEFIT_PER_DAY
+      - SURGICAL_BENEFIT
+      - CONVALESCENCE_BENEFIT
+      - MINIMUM_DAYS_FOR_CONVALESCENCE_BENEFIT
+      - DURATION_OF_COVER
+      - INITIAL_WAITING_PERIOD
+      - MINIMUM_AGE_LIMIT
+      - MAXIMUM_AGE_LIMIT
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - EMI_DURING_PERMANENT_DISABILITY
+      - EMI_DURING_TEMPORARY_DISABILITY
+      - HOSPITALIZATION_BENEFITS
+      - MEDICAL_EXPENSES_COVERAGE
+      - NUMBER_OF_EMI_PAYABLE
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - TENURE_TYPE
+      - TNC_LINK
+      _CONTINUE_: (validValuesList any in subTagsPath)
+      _RETURN_:
+      - _NAME_: REQUIRED_TRANSIT_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_TRANSIT_POLICY_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='POLICY_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - POLICY_START_DATE
+        - POLICY_END_DATE
+        - POLICY_RENEWAL_DATE
+        - CLAIMS_HELPDESK_CONTACT_NUMBER
+        - CLAIMS_HELPDESK_EMAIL_ID
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_TAG_GROUP
+        tagPath: $.message.order.tags[*].descriptor.code
+        validTags:
+        - BPP_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_TRANSIT_BPP_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_UPDATE_ACCIDENTAL_DETAILS
+    action:
+    - on_update
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: '!(usecasepath are present)'
+    _RETURN_:
+    - _NAME_: ACCIDENTAL_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - ACCIDENTAL_DEATH_SUM_INSURED
+      - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+      - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+      - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+      - EMI_DURING_TEMPORARY_DISABILITY
+      - EMI_DURING_PERMANENT_DISABILITY
+      - NUMBER_OF_EMI_PAYABLE
+      - MEDICAL_EXPENSES_COVERAGE
+      - HOSPITALIZATION_BENEFITS
+      - TENURE_TYPE
+      - TNC_LINK
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_ACCIDENTAL_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - ACCIDENTAL_DEATH_SUM_INSURED
+        - PERMANENT_TOTAL_DISABILITY_SUM_INSURED
+        - PERMANENT_PARTIAL_DISABILITY_SUM_INSURED
+        - TEMPORARY_TOTAL_DISABILITY_SUM_INSURED
+        - TENURE_TYPE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_ACCIDENTAL_POLICY_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='POLICY_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - POLICY_START_DATE
+        - POLICY_END_DATE
+        - POLICY_RENEWAL_DATE
+        - CLAIMS_HELPDESK_CONTACT_NUMBER
+        - CLAIMS_HELPDESK_EMAIL_ID
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_ACCIDENTAL_CUSTOMER_DOB
+        attr: $.message.order.fulfillments[*].customer.person.dob
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_TAG_GROUP
+        tagPath: $.message.order.tags[*].descriptor.code
+        validTags:
+        - BPP_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_ACCIDENTAL_BPP_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
   status:
   - _NAME_: STATUS_CONTEXT
     _RETURN_: *id002
@@ -2792,6 +4286,7 @@ _TESTS_:
     - INITIAL_WAITING_PERIOD
     - CASHLESS_HOSPITALS
     - ROOM_CATEGORY
+    - ROOM_RENT_CAP
     _RETURN_: validValues all in subTags
 
   - _NAME_: ON_STATUS_GENERAL_INFO_MOTOR
@@ -2836,6 +4331,111 @@ _TESTS_:
     - OD_DISCOUNT_AMOUNT
     _RETURN_: validValues all in subTags
 
+  - _NAME_: ON_STATUS_HEALTH_DESCRIPTORS
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - ROOM_CATEGORY
+    - CO_PAYMENT
+    - MATERNITY_COVERAGE
+    - CLAIM_SETTLEMENT_RATIO
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_HEALTH_ITEM_DESCRIPTOR_NAME
+      attr: $.message.order.items[*].descriptor.name
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HEALTH_ITEM_DESCRIPTOR_SHORT_DESC
+      attr: $.message.order.items[*].descriptor.short_desc
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HEALTH_PROVIDER_LONG_DESC
+      attr: $.message.order.provider.descriptor.long_desc
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HEALTH_PROVIDER_SHORT_DESC
+      attr: $.message.order.provider.descriptor.short_desc
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_URL
+      attr: $.message.order.provider.descriptor.images[*].url
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+      attr: $.message.order.provider.descriptor.images[*].size_type
+      _RETURN_: attr are present
+  - _NAME_: ON_STATUS_MOTOR_DETAILS
+    action:
+    - on_status
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+    subTagsPath: $.list[*].descriptor.code
+    validValuesList:
+    - IDV_VALUE
+    - OWN_DAMAGE_PREMIUM
+    - THIRD_PARTY_PREMIUM
+    - PERSONAL_ACCIDENT_COVER
+    - DEPRECIATION_COVER
+    - ROAD_SIDE_ASSISTANCE
+    - ENGINE_COVER
+    - RETURN_TO_INVOICE
+    _CONTINUE_: '!(validValuesList any in subTagsPath)'
+    _RETURN_:
+    - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - IDV_VALUE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+      tagPath: $.message.order.items[*].tags[*].descriptor.code
+      validTags:
+      - VAHAN_DETAILS
+      _RETURN_: tagPath any in validTags
+    - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+      subTags: $.list[*].descriptor.code
+      validValues:
+      - MODEL
+      - MAKE
+      - FUEL_TYPE
+      - VARIANT
+      - REGISTERED_CITY
+      - REGISTERED_DATE
+      - CHASSIS_NUMBER
+      - ENGINE_NUMBER
+      - PREVIOUS_POLICY_NUMBER
+      - PREVIOUS_INSURER
+      - PREVIOUS_POLICY_END_DATE
+      _RETURN_: validValues all in subTags
+    - _NAME_: REQUIRED_MOTOR_PROVIDER_LONG_DESC
+      attr: $.message.order.provider.descriptor.long_desc
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_PROVIDER_SHORT_DESC
+      attr: $.message.order.provider.descriptor.short_desc
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_PROVIDER_IMAGE_URL
+      attr: $.message.order.provider.descriptor.images[*].url
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_ITEM_DESCRIPTOR_NAME
+      attr: $.message.order.items[*].descriptor.name
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_ITEM_DESCRIPTOR_SHORT_DESC
+      attr: $.message.order.items[*].descriptor.short_desc
+      _RETURN_: attr are present
+    # - _NAME_: REQUIRED_MOTOR_XINPUT_FORM_RESPONSE_SUBMISSION_ID
+    #   attr: $.message.order.items[*].xinput.form_response.submission_id
+    #   _RETURN_: attr are present
+    # - _NAME_: REQUIRED_MOTOR_XINPUT_FORM_RESPONSE_STATUS
+    #   attr: $.message.order.items[*].xinput.form_response.status
+    #   _RETURN_: attr are present
+    # - _NAME_: REQUIRED_MOTOR_XINPUT_FORM_ID
+    #   attr: $.message.order.items[*].xinput.form.id
+    #   _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_ADDON_ID
+      attr: $.message.order.items[*].add_ons[*].id
+      _RETURN_: attr are present
+    - _NAME_: REQUIRED_MOTOR_ADDON_QUANTITY_SELECTED_COUNT
+      attr: $.message.order.items[*].add_ons[*].quantity.selected.count
+      _RETURN_: attr are present
   cancel:
   - _NAME_: CANCEL_CONTEXT
     _RETURN_: *id002
@@ -3075,7 +4675,181 @@ _TESTS_:
     - _NAME_: GENERAL_INFO_TAG
       attr: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')].descriptor.code
       _RETURN_: attr are present
+      
  
+  - _NAME_: ON_CANCEL_HEALTH_ITEM_GENERAL_INFO
+    action:
+    - on_cancel
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: HEALTH_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - MATERNITY_COVERAGE
+      - ROOM_RENT_CAP
+      - ROOM_CATEGORY
+      - CO_PAYMENT
+      - CLAIM_SETTLEMENT_RATIO
+      - RESTORATION_BENEFIT
+      - CASHLESS_HOSPITALS
+      - PRE_HOSPITALIZATION_COVERAGE_DAYS
+      - POST_HOSPITALIZATION_COVERAGE_DAYS
+      - INITIAL_WAITING_PERIOD
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - GENERAL_INFO
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_GENERAL_INFO_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - COVERAGE_AMOUNT
+        - CO_PAYMENT
+        - ROOM_RENT_CAP
+        - RESTORATION_BENEFIT
+        - CLAIM_SETTLEMENT_RATIO
+        - PRE_HOSPITALIZATION_COVERAGE_DAYS
+        - POST_HOSPITALIZATION_COVERAGE_DAYS
+        - MATERNITY_COVERAGE
+        - INITIAL_WAITING_PERIOD
+        - CASHLESS_HOSPITALS
+        - ROOM_CATEGORY
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PROVIDER_IMAGE_SIZE_TYPE
+        attr: $.message.order.provider.descriptor.images[*].size_type
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BANK_ACCOUNT
+        attr: $.message.order.payments[*].params.bank_account_number
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BANK_CODE
+        attr: $.message.order.payments[*].params.bank_code
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_CANCELLATION_TERMS_MIMETYPE
+        attr: $.message.order.cancellation_terms[*].external_ref.mimetype
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_CANCELLATION_TERMS_URL
+        attr: $.message.order.cancellation_terms[*].external_ref.url
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_CODE
+        attr: $.message.order.documents[*].descriptor.code
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_NAME
+        attr: $.message.order.documents[*].descriptor.name
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_SHORT_DESC
+        attr: $.message.order.documents[*].descriptor.short_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_DESCRIPTOR_LONG_DESC
+        attr: $.message.order.documents[*].descriptor.long_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_MIME_TYPE
+        attr: $.message.order.documents[*].mime_type
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_DOCUMENT_URL
+        attr: $.message.order.documents[*].url
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - BUYER_FINDER_FEES
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_BUYER_FINDER_FEES_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - BUYER_FINDER_FEES_TYPE
+        - BUYER_FINDER_FEES_PERCENTAGE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_TAG_GROUP
+        tagPath: $.message.order.payments[*].tags[*].descriptor.code
+        validTags:
+        - SETTLEMENT_TERMS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_HEALTH_PAYMENT_SETTLEMENT_TERMS_SUBTAGS
+        _SCOPE_: $.message.order.payments[*].tags[?(@.descriptor.code=='SETTLEMENT_TERMS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - STATIC_TERMS
+        - OFFLINE_CONTRACT
+        _RETURN_: validValues all in subTags
+  - _NAME_: ON_CANCEL_MOTOR_ITEM_TAGS
+    action:
+    - on_cancel
+    domain:
+    - ONDC:FIS13
+    version:
+    - 2.0.0
+    usecasepath: $.message.order.provider.tags[?(@.descriptor.code=='MASTER_POLICY')].descriptor.code
+    _CONTINUE_: (usecasepath are present)
+    _RETURN_:
+    - _NAME_: MOTOR_GENERAL_INFO
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTagsPath: $.list[*].descriptor.code
+      validValuesList:
+      - IDV_VALUE
+      - OWN_DAMAGE_PREMIUM
+      - THIRD_PARTY_PREMIUM
+      - PERSONAL_ACCIDENT_COVER
+      - DEPRECIATION_COVER
+      - ROAD_SIDE_ASSISTANCE
+      - ENGINE_COVER
+      - RETURN_TO_INVOICE
+      _CONTINUE_: '!(validValuesList any in subTagsPath)'
+      _RETURN_:
+      - _NAME_: REQUIRED_MOTOR_GENERAL_INFO_IDV_VALUE
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - IDV_VALUE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_TAG_GROUP
+        tagPath: $.message.order.items[*].tags[*].descriptor.code
+        validTags:
+        - VAHAN_DETAILS
+        _RETURN_: tagPath any in validTags
+      - _NAME_: REQUIRED_MOTOR_VAHAN_DETAILS_SUBTAGS
+        _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='VAHAN_DETAILS')]
+        subTags: $.list[*].descriptor.code
+        validValues:
+        - MODEL
+        - MAKE
+        - FUEL_TYPE
+        - VARIANT
+        - REGISTERED_CITY
+        - REGISTERED_DATE
+        - CHASSIS_NUMBER
+        - ENGINE_NUMBER
+        - PREVIOUS_POLICY_NUMBER
+        - PREVIOUS_INSURER
+        - PREVIOUS_POLICY_END_DATE
+        _RETURN_: validValues all in subTags
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_DESCRIPTOR_CODE
+        attr: $.message.order.documents[*].descriptor.code
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_DESCRIPTOR_NAME
+        attr: $.message.order.documents[*].descriptor.name
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_DESCRIPTOR_SHORT_DESC
+        attr: $.message.order.documents[*].descriptor.short_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_DESCRIPTOR_LONG_DESC
+        attr: $.message.order.documents[*].descriptor.long_desc
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_MIME_TYPE
+        attr: $.message.order.documents[*].mime_type
+        _RETURN_: attr are present
+      - _NAME_: REQUIRED_MOTOR_DOCUMENT_URL
+        attr: $.message.order.documents[*].url
+        _RETURN_: attr are present
   issue:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:

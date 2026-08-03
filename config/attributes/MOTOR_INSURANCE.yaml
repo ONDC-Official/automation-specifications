@@ -170,14 +170,14 @@ attribute_set:
           type: string
       bpp_id:
         _description:
-          required: false
+          required: true
           usage: fis.test.bpp.io
           info: Describes subscriber ID of the BPP
           owner: BPP
           type: string
       bpp_uri:
         _description:
-          required: false
+          required: true
           usage: https://fis.test.bpp.io/
           info: Describes subscriber URL of the BPP for accepting calls from BAPs.
           owner: BPP
@@ -676,7 +676,7 @@ attribute_set:
           descriptor:
             name:
               _description:
-                required: false
+                required: true
                 usage: Insurance Provider Name
                 info: Insurer name returned by BPP in on_search; anchored in selected_provider session for reuse across transaction steps.
                 owner: BPP
@@ -1929,7 +1929,7 @@ attribute_set:
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: The BPP returns the insurer's legal name. This value anchors the provider identity in the session and is reused in subsequent transaction steps.
                 owner: BPP
@@ -2071,21 +2071,21 @@ attribute_set:
               index:
                 min:
                   _description:
-                    required: false
+                    required: true
                     usage: "0"
                     info: Minimum page index (typically 0); BPP sets in on_select, validates in downstream steps, and persists in order session.
                     owner: BPP
                     type: number
                 max:
                   _description:
-                    required: false
+                    required: true
                     usage: "2"
                     info: Maximum page index from form structure; BPP persists as navigation boundary across order steps.
                     owner: BPP
                     type: number
                 cur:
                   _description:
-                    required: false
+                    required: true
                     usage: "0"
                     info: Current page index reflecting user position in multi-step form; BPP updates based on flow state and preserves for continuation.
                     owner: BPP
@@ -2151,14 +2151,14 @@ attribute_set:
                   type: string
               resubmit:
                 _description:
-                  required: false
+                  required: true
                   usage: "false"
                   info: Boolean the BPP returns to indicate whether the buyer can resubmit the form if the initial submission fails validation.
                   owner: BPP
                   type: boolean
               multiple_sumbissions:
                 _description:
-                  required: false
+                  required: true
                   usage: "false"
                   info: Boolean the BPP returns to indicate whether the form accepts multiple submissions from the buyer or only a single submission.
                   owner: BPP
@@ -2179,7 +2179,7 @@ attribute_set:
                 type: object
             required:
               _description:
-                required: false
+                required: true
                 usage: "true"
                 info: Boolean the BPP returns to indicate whether the buyer must complete and submit this form as a mandatory requirement for order confirmation.
                 owner: BPP
@@ -2371,7 +2371,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12531"
                 info: Per-item rupee amount the BPP returns in on_select; the value persists in session and is used in subsequent order steps.
                 owner: BPP
@@ -2419,7 +2419,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: Descriptor code that classifies the item tag (e.g., GENERAL_INFO); BAP mints it on select, BPP echoes in on_select, and it is persisted in session across order steps.
                   owner: BPP
@@ -2491,7 +2491,7 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
@@ -2555,7 +2555,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: Sum of all selected insurance charges calculated by the BPP. The value is persisted in session and read in confirm to synchronize the order payment amount.
                 owner: BPP
@@ -2989,7 +2989,7 @@ attribute_set:
             type: object
           id:
             _description:
-              required: false
+              required: true
               usage: F1
               info: Unique identifier assigned to each fulfillment in the order; the BAP uses this to specify which specific fulfillment it is initiating action on.
               owner: BAP
@@ -3012,14 +3012,14 @@ attribute_set:
           params:
             amount:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: BAP specifies the payment amount during init, synchronized with the total order price calculated from the session data; this amount is written only when a payment array exists in the request, and persists as part of the saved order through confirm and later steps.
                 owner: BAP
                 type: string
             bank_account_number:
               _description:
-                required: false
+                required: true
                 usage: "1800002341"
                 info: Bank account number for settlement disbursements; persisted in the order session from initial order steps through on_status.
                 owner: BAP
@@ -3365,7 +3365,7 @@ attribute_set:
                 type: object
               url:
                 _description:
-                  required: false
+                  required: true
                   usage: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                   info: BPP echoes the provider's logo URL from search, anchored in session (selected_provider) for reuse in later steps.
                   owner: BPP
@@ -3379,7 +3379,7 @@ attribute_set:
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: Insurance provider name returned by the BPP in on_status; persists as the session's selected provider for reference across all downstream actions.
                 owner: BPP
@@ -3609,21 +3609,21 @@ attribute_set:
               index:
                 min:
                   _description:
-                    required: false
+                    required: true
                     usage: "0"
                     info: Minimum page index (typically 0); BPP sets in on_select, validates in downstream steps, and persists in order session.
                     owner: BPP
                     type: number
                 max:
                   _description:
-                    required: false
+                    required: true
                     usage: "2"
                     info: Maximum page index from form structure; BPP persists as navigation boundary across order steps.
                     owner: BPP
                     type: number
                 cur:
                   _description:
-                    required: false
+                    required: true
                     usage: "0"
                     info: Current page index reflecting user position in multi-step form; BPP updates based on flow state and preserves for continuation.
                     owner: BPP
@@ -3689,14 +3689,14 @@ attribute_set:
                   type: string
               resubmit:
                 _description:
-                  required: false
+                  required: true
                   usage: "false"
                   info: Boolean the BPP returns to indicate whether the buyer can resubmit the form if the initial submission fails validation.
                   owner: BPP
                   type: boolean
               multiple_sumbissions:
                 _description:
-                  required: false
+                  required: true
                   usage: "false"
                   info: Boolean the BPP returns to indicate whether the form accepts multiple submissions from the buyer or only a single submission.
                   owner: BPP
@@ -3717,7 +3717,7 @@ attribute_set:
                 type: object
             required:
               _description:
-                required: false
+                required: true
                 usage: "true"
                 info: Boolean the BPP returns to indicate whether the buyer must complete and submit this form as a mandatory requirement for order confirmation.
                 owner: BPP
@@ -3796,7 +3796,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12531"
                 info: Per-item rupee amount the BPP returns in on_select; the value persists in session and is used in subsequent order steps.
                 owner: BPP
@@ -3851,7 +3851,7 @@ attribute_set:
                   type: string
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: BPP returns tag descriptor codes (e.g., GENERAL_INFO) categorizing each item's metadata; the BAP preserves these labels in session and reuses them when replaying the order in later lifecycle steps.
                   owner: BPP
@@ -3990,7 +3990,7 @@ attribute_set:
             type: object
           type:
             _description:
-              required: false
+              required: true
               usage: POLICY
               info: Fulfillment type assigned by the BPP to each insurance product item in the order; persisted as 'selected_fulfillments' and reused across subsequent steps for transaction continuity.
               owner: BPP
@@ -4020,7 +4020,7 @@ attribute_set:
                 type: string
             bank_account_number:
               _description:
-                required: false
+                required: true
                 usage: "1800002341"
                 info: Bank account number for settlement disbursements; persisted in the order session from initial order steps through on_status.
                 owner: BPP
@@ -4124,7 +4124,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: payment_1
               info: BPP includes the payment identifier in status updates when payment params are present, to denote which payment entry the status applies to. The ID originates from on_search or on_init, persists in session, and is reused across cancel, claim, and renewal flows for consistent tracking.
               owner: BPP
@@ -4141,7 +4141,7 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
@@ -4205,7 +4205,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: Quotation amount in rupees for the selected items, calculated during selection and confirmed by the BPP in the order response.
                 owner: BPP
@@ -4541,7 +4541,7 @@ attribute_set:
             form:
               id:
                 _description:
-                  required: false
+                  required: true
                   usage: xd2344Re
                   info: |
                     Describes the unique form id.
@@ -4633,7 +4633,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: F1
               info: Describes the unique id of the fulfillment
               owner: BPP
@@ -4646,7 +4646,7 @@ attribute_set:
             type: object
           type:
             _description:
-              required: false
+              required: true
               usage: POLICY
               info: Fulfillment type assigned by the BPP to each insurance product item in the order; persisted as 'selected_fulfillments' and reused across subsequent steps for transaction continuity.
               owner: BAP
@@ -4662,14 +4662,14 @@ attribute_set:
           params:
             amount:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: BPP synchronizes the payment amount with the calculated quote price in on_status responses, persisting it in the order session for reuse across subsequent steps.
                 owner: BAP
                 type: string
             bank_account_number:
               _description:
-                required: false
+                required: true
                 usage: "1800002341"
                 info: Bank account number for settlement disbursements; persisted in the order session from initial order steps through on_status.
                 owner: BAP
@@ -4744,7 +4744,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: payment_1
               info: BPP includes the payment identifier in status updates when payment params are present, to denote which payment entry the status applies to. The ID originates from on_search or on_init, persists in session, and is reused across cancel, claim, and renewal flows for consistent tracking.
               owner: BAP
@@ -4976,7 +4976,7 @@ attribute_set:
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: The BPP returns the insurer's legal name. This value anchors the provider identity in the session and is reused in subsequent transaction steps.
                 owner: BPP
@@ -5281,7 +5281,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "11531"
                 info: The item's monetary amount, sourced from session data and persisted with the selected items across transaction steps.
                 owner: BPP
@@ -5336,7 +5336,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: BPP returns tag descriptor codes (e.g., GENERAL_INFO) categorizing each item's metadata; the BAP preserves these labels in session and reuses them when replaying the order in later lifecycle steps.
                   owner: BPP
@@ -5434,7 +5434,7 @@ attribute_set:
                 type: object
               name:
                 _description:
-                  required: false
+                  required: true
                   usage: Joe Adam
                   info: Customer name for the fulfillment customer; updated from session data when available and persisted across subsequent actions.
                   owner: BPP
@@ -5450,7 +5450,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GRANTED
                   info: Describes the current state of the fulfillment
                   owner: BPP
@@ -5516,7 +5516,7 @@ attribute_set:
             type: object
           type:
             _description:
-              required: false
+              required: true
               usage: POLICY
               info: Fulfillment type assigned by the BPP to each insurance product item in the order; persisted as 'selected_fulfillments' and reused across subsequent steps for transaction continuity.
               owner: BPP
@@ -5539,14 +5539,14 @@ attribute_set:
           params:
             amount:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: BPP synchronizes the payment amount with the calculated quote price in on_status responses, persisting it in the order session for reuse across subsequent steps.
                 owner: BPP
                 type: string
             bank_account_number:
               _description:
-                required: false
+                required: true
                 usage: "1800002341"
                 info: Bank account number for settlement disbursements; persisted in the order session from initial order steps through on_status.
                 owner: BPP
@@ -5567,7 +5567,7 @@ attribute_set:
                 type: string
             transaction_id:
               _description:
-                required: false
+                required: true
                 usage: 079c071b-8972-4f0f-b553-12e894617860
                 info: Describes the transaction id of the payment
                 owner: BPP
@@ -5657,7 +5657,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: payment_1
               info: BPP includes the payment identifier in status updates when payment params are present, to denote which payment entry the status applies to. The ID originates from on_search or on_init, persists in session, and is reused across cancel, claim, and renewal flows for consistent tracking.
               owner: BPP
@@ -5674,7 +5674,7 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
@@ -5738,7 +5738,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: Quotation amount in rupees for the selected items, calculated during selection and confirmed by the BPP in the order response.
                 owner: BPP
@@ -6356,7 +6356,7 @@ attribute_set:
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: The BPP returns the insurer's legal name. This value anchors the provider identity in the session and is reused in subsequent transaction steps.
                 owner: BPP
@@ -6653,7 +6653,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "11531"
                 info: The item's monetary amount, sourced from session data and persisted with the selected items across transaction steps.
                 owner: BPP
@@ -6716,7 +6716,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: BPP returns tag descriptor codes (e.g., GENERAL_INFO) categorizing each item's metadata; the BAP preserves these labels in session and reuses them when replaying the order in later lifecycle steps.
                   owner: BPP
@@ -6814,7 +6814,7 @@ attribute_set:
                 type: object
               name:
                 _description:
-                  required: false
+                  required: true
                   usage: Joe Adam
                   info: The customer's full name associated with the fulfillment being updated by the BPP.
                   owner: BPP
@@ -6889,7 +6889,7 @@ attribute_set:
             type: object
           type:
             _description:
-              required: false
+              required: true
               usage: POLICY
               info: In on_update, the BPP returns the fulfillment type to indicate the category of fulfillment being processed. The BAP persists this type in session under selected_fulfillments and references it in subsequent operations to identify and handle the corresponding fulfillment.
               owner: BPP
@@ -6968,7 +6968,7 @@ attribute_set:
           params:
             amount:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: BPP synchronizes the payment amount with the calculated quote price in on_status responses, persisting it in the order session for reuse across subsequent steps.
                 owner: BPP
@@ -7086,7 +7086,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: payment_1
               info: BPP includes the payment identifier in status updates when payment params are present, to denote which payment entry the status applies to. The ID originates from on_search or on_init, persists in session, and is reused across cancel, claim, and renewal flows for consistent tracking.
               owner: BPP
@@ -7103,7 +7103,7 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
@@ -7167,7 +7167,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: Quotation amount in rupees for the selected items, calculated during selection and confirmed by the BPP in the order response.
                 owner: BPP
@@ -7743,7 +7743,7 @@ attribute_set:
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: Insurance provider name returned by the BPP in on_status; persists as the session's selected provider for reference across all downstream actions.
                 owner: BPP
@@ -8039,7 +8039,7 @@ attribute_set:
               type: string
           category_ids:
             _description:
-              required: false
+              required: true
               usage: bpd4ea25
               info: |
                 Unique id of category
@@ -8048,7 +8048,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12531"
                 info: The item's monetary amount, sourced from session data and persisted with the selected items across transaction steps.
                 owner: BPP
@@ -8162,7 +8162,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: BPP returns tag descriptor codes (e.g., GENERAL_INFO) categorizing each item's metadata; the BAP preserves these labels in session and reuses them when replaying the order in later lifecycle steps.
                   owner: BPP
@@ -8563,7 +8563,7 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
@@ -8627,7 +8627,7 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: In on_status, the BPP returns the total quoted amount, sourcing from the session value saved in on_select (with fallback recalculation from breakup items) and persisting across subsequent steps.
                 owner: BPP
@@ -8784,77 +8784,77 @@ attribute_set:
     context:
       domain:
         _description:
-          required: false
+          required: true
           usage: ONDC:FIS13
           info: The BAP sets the domain to indicate the ONDC vertical for this cancellation transaction.
           owner: BAP
           type: string
       action:
         _description:
-          required: false
+          required: true
           usage: cancel
           info: The BAP sets context.action to "cancel" to denote the message type for this cancellation request.
           owner: BAP
           type: string
       timestamp:
         _description:
-          required: false
+          required: true
           usage: 2026-04-10T07:45:44.199Z
           info: Timestamp the BAP mints at the moment of initiating cancellation, establishing the precise point in time when the cancel request was sent.
           owner: BAP
           type: date-time
       transaction_id:
         _description:
-          required: false
+          required: true
           usage: 4ef70074-2f56-4bb3-a504-ec55e559c572
           info: Stable transaction identifier retrieved from session; the BAP includes it in the cancel request to correlate this cancellation with the original transaction.
           owner: BAP
           type: string
       message_id:
         _description:
-          required: false
+          required: true
           usage: c2c9c267-5dc1-405f-a1ce-75e7194f10c9
           info: Unique identifier the BAP generates fresh as a UUID for this cancellation message, enabling discrete message tracing within the transaction.
           owner: BAP
           type: string
       bap_id:
         _description:
-          required: false
+          required: true
           usage: bap.example.com
           info: The unique identifier of the Buyer App Provider initiating the cancellation request, allowing the BPP to identify which BAP is requesting to cancel the transaction.
           owner: BAP
           type: string
       bap_uri:
         _description:
-          required: false
+          required: true
           usage: https://bap.example.com
           info: The BAP's endpoint URI; used by the BPP to route its cancellation response.
           owner: BAP
           type: string
       ttl:
         _description:
-          required: false
+          required: true
           usage: PT30S
           info: Request validity duration (ISO 8601 format) that the BAP sets, defining the window for the BPP to process the cancellation.
           owner: BAP
           type: string
       bpp_id:
         _description:
-          required: false
+          required: true
           usage: bpp.example.com
           info: The BPP's unique identifier that the BAP specifies to route the cancellation to the correct provider.
           owner: BAP
           type: string
       bpp_uri:
         _description:
-          required: false
+          required: true
           usage: https://bpp.example.com
           info: The BPP's endpoint URI that the BAP specifies to route the cancellation request to the correct provider.
           owner: BAP
           type: string
       version:
         _description:
-          required: false
+          required: true
           usage: 2.0.1
           info: The ONDC protocol version that the BAP is using in this cancel request, enabling version compatibility validation between BAP and BPP.
           owner: BAP
@@ -8863,7 +8863,7 @@ attribute_set:
         country:
           code:
             _description:
-              required: false
+              required: true
               usage: IND
               info: Country code (ISO 3166-1 format) the BAP sets during the initial request and includes in the cancel request for jurisdiction validation.
               owner: BAP
@@ -8877,7 +8877,7 @@ attribute_set:
         city:
           code:
             _description:
-              required: false
+              required: true
               usage: "*"
               info: City code that the BAP sets during the initial request; the value is anchored in the session and reused by later steps of the cancel workflow.
               owner: BAP
@@ -8903,7 +8903,7 @@ attribute_set:
     message:
       cancellation_reason_id:
         _description:
-          required: false
+          required: true
           usage: "5"
           info: The BAP specifies the cancellation reason identifier when requesting cancellation of the order or policy.
           owner: BAP
@@ -8911,7 +8911,7 @@ attribute_set:
       descriptor:
         short_desc:
           _description:
-            required: false
+            required: true
             usage: User bought other policy
             info: The BAP provides a brief description of the customer's reason for cancellation, such as purchasing an alternative policy.
             owner: BAP
@@ -8924,7 +8924,7 @@ attribute_set:
           type: object
       order_id:
         _description:
-          required: false
+          required: true
           usage: POLICY_ID
           info: The BAP provides the order identifier to identify which order to cancel; this value is persisted in session and referenced in subsequent cancellation status checks.
           owner: BAP
@@ -8939,77 +8939,77 @@ attribute_set:
     context:
       domain:
         _description:
-          required: false
+          required: true
           usage: ONDC:FIS13
           info: The BAP sets the domain to indicate the ONDC vertical for this cancellation transaction.
           owner: BPP
           type: string
       action:
         _description:
-          required: false
+          required: true
           usage: on_cancel
           info: The BAP sets context.action to "cancel" to denote the message type for this cancellation request.
           owner: BPP
           type: string
       timestamp:
         _description:
-          required: false
+          required: true
           usage: 2026-04-10T07:45:44.199Z
           info: Timestamp the BAP mints at the moment of initiating cancellation, establishing the precise point in time when the cancel request was sent.
           owner: BPP
           type: date-time
       transaction_id:
         _description:
-          required: false
+          required: true
           usage: 4ef70074-2f56-4bb3-a504-ec55e559c572
           info: Stable transaction identifier retrieved from session; the BAP includes it in the cancel request to correlate this cancellation with the original transaction.
           owner: BPP
           type: string
       message_id:
         _description:
-          required: false
+          required: true
           usage: 78bd2fb9-49b0-47f9-bee1-f34266cbeaf4
           info: Unique identifier the BAP generates fresh as a UUID for this cancellation message, enabling discrete message tracing within the transaction.
           owner: BPP
           type: string
       bap_id:
         _description:
-          required: false
+          required: true
           usage: bap.example.com
           info: The unique identifier of the Buyer App Provider initiating the cancellation request, allowing the BPP to identify which BAP is requesting to cancel the transaction.
           owner: BPP
           type: string
       bap_uri:
         _description:
-          required: false
+          required: true
           usage: https://bap.example.com
           info: The BAP's endpoint URI; used by the BPP to route its cancellation response.
           owner: BPP
           type: string
       ttl:
         _description:
-          required: false
+          required: true
           usage: PT30S
           info: Request validity duration (ISO 8601 format) that the BAP sets, defining the window for the BPP to process the cancellation.
           owner: BPP
           type: string
       bpp_id:
         _description:
-          required: false
+          required: true
           usage: bpp.example.com
           info: The BPP's unique identifier that the BAP specifies to route the cancellation to the correct provider.
           owner: BPP
           type: string
       bpp_uri:
         _description:
-          required: false
+          required: true
           usage: https://bpp.example.com
           info: The BPP's endpoint URI that the BAP specifies to route the cancellation request to the correct provider.
           owner: BPP
           type: string
       version:
         _description:
-          required: false
+          required: true
           usage: 2.0.1
           info: The ONDC protocol version that the BAP is using in this cancel request, enabling version compatibility validation between BAP and BPP.
           owner: BPP
@@ -9018,7 +9018,7 @@ attribute_set:
         country:
           code:
             _description:
-              required: false
+              required: true
               usage: IND
               info: Country code (ISO 3166-1 format) the BAP sets during the initial request and includes in the cancel request for jurisdiction validation.
               owner: BPP
@@ -9032,7 +9032,7 @@ attribute_set:
         city:
           code:
             _description:
-              required: false
+              required: true
               usage: "*"
               info: City code that the BAP sets during the initial request; the value is anchored in the session and reused by later steps of the cancel workflow.
               owner: BPP
@@ -9062,7 +9062,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GRANTED
                   info: Fulfillment state descriptor code. BAP mints this on init; BPP echoes it in on_cancel as part of the persisted selected_fulfillments.
                   owner: BPP
@@ -9083,14 +9083,14 @@ attribute_set:
             contact:
               email:
                 _description:
-                  required: false
+                  required: true
                   usage: joe.adam@abc.org
                   info: Customer contact email for each fulfillment, carried forward in the persisted selected_fulfillments and returned by BPP in on_cancel.
                   owner: BPP
                   type: string
               phone:
                 _description:
-                  required: false
+                  required: true
                   usage: +91-9999999999
                   info: Customer phone number for operational communication. The BPP includes this in on_status and retains it across transaction steps for ongoing reference.
                   owner: BPP
@@ -9123,7 +9123,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: F1
               info: Fulfillment identifier. For the second fulfillment (index [1]), the ID is session-anchored (second_fulfillment_id) and reused across cancel and related steps to maintain consistency.
               owner: BPP
@@ -9264,14 +9264,14 @@ attribute_set:
           descriptor:
             name:
               _description:
-                required: false
+                required: true
                 usage: 2-Wheeler 3rd Party Motor Insurance
                 info: Human-readable name of the insured product (e.g., motor insurance variant) being cancelled, echoed from the original selection to confirm the item scope.
                 owner: BPP
                 type: string
             short_desc:
               _description:
-                required: false
+                required: true
                 usage: 2-Wheeler 3rd Party Motor Insurance by ABC Insurance Provider
                 info: Brief marketing description of the product including the BPP provider name, persisted from the original item selection and returned to confirm the product identity.
                 owner: BPP
@@ -9305,21 +9305,21 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: CHILD_ITEM_CI1
               info: Unique identifier of the item (child product) being cancelled, carried from the original selection to route the cancellation request to the correct item.
               owner: BPP
               type: string
           parent_item_id:
             _description:
-              required: false
+              required: true
               usage: I1
               info: Identifier linking each order item to its parent plan or product tier, persisted from select through on_update to maintain item hierarchy within the transaction.
               owner: BPP
               type: string
           category_ids:
             _description:
-              required: false
+              required: true
               usage: C1
               info: Category identifiers that the BAP associates with each order item during initialization to denote which insurance plan categories or product types are involved in the transaction.
               owner: BPP
@@ -9327,14 +9327,14 @@ attribute_set:
           price:
             value:
               _description:
-                required: false
+                required: true
                 usage: "11531"
                 info: Per-item rupee amount the BPP returns in on_select; the value persists in session and is used in subsequent order steps.
                 owner: BPP
                 type: string
             currency:
               _description:
-                required: false
+                required: true
                 usage: INR
                 info: Currency code for the insurance premium (e.g., 'INR'), anchored in the item selection during purchase and echoed by the BPP in the cancellation response.
                 owner: BPP
@@ -9349,7 +9349,7 @@ attribute_set:
             descriptor:
               code:
                 _description:
-                  required: false
+                  required: true
                   usage: GENERAL_INFO
                   info: BPP returns tag descriptor codes (e.g., GENERAL_INFO) categorizing each item's metadata; the BAP preserves these labels in session and reuses them when replaying the order in later lifecycle steps.
                   owner: BPP
@@ -9418,14 +9418,14 @@ attribute_set:
           time:
             duration:
               _description:
-                required: false
+                required: true
                 usage: P1Y
                 info: Insurance coverage period in ISO 8601 format (e.g., 'P1Y'), anchored in the confirmed product specification and echoed by the BPP in the cancellation response.
                 owner: BPP
                 type: string
             label:
               _description:
-                required: false
+                required: true
                 usage: TENURE
                 info: Semantic label for the coverage duration (e.g., 'TENURE'), anchored in the confirmed product specification and echoed by the BPP in the cancellation response.
                 owner: BPP
@@ -9438,7 +9438,7 @@ attribute_set:
               type: object
           fulfillment_ids:
             _description:
-              required: false
+              required: true
               usage: F1
               info: BAP specifies fulfillment identifiers for each item in the init request; these identifiers persist in the session and are referenced by subsequent steps to maintain item-fulfillment associations.
               owner: BPP
@@ -9451,7 +9451,7 @@ attribute_set:
             type: object
         id:
           _description:
-            required: false
+            required: true
             usage: O1
             info: Unique order identifier established at order creation and carried through the transaction session; echoed by the BPP in the cancellation response.
             owner: BPP
@@ -9466,7 +9466,7 @@ attribute_set:
               type: string
           collected_by:
             _description:
-              required: false
+              required: true
               usage: BPP
               info: Entity that collected the payment (e.g., 'BPP'); the BPP returns this identifier from the persisted order context.
               owner: BPP
@@ -9474,7 +9474,7 @@ attribute_set:
           params:
             amount:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: BPP synchronizes the payment amount with the calculated quote price in on_status responses, persisting it in the order session for reuse across subsequent steps.
                 owner: BPP
@@ -9495,14 +9495,14 @@ attribute_set:
                 type: string
             currency:
               _description:
-                required: false
+                required: true
                 usage: INR
                 info: Currency code for the payment amount; the BPP echoes this from the order context to confirm the denomination.
                 owner: BPP
                 type: string
             transaction_id:
               _description:
-                required: false
+                required: true
                 usage: 85742a36-6636-4dcf-ae56-c47d3387d1d0
                 info: Transaction ID that the BPP returns in on_cancel to allow the BAP to reconcile the cancelled payment with its original authorization.
                 owner: BPP
@@ -9515,14 +9515,14 @@ attribute_set:
               type: object
           status:
             _description:
-              required: false
+              required: true
               usage: PAID
               info: Payment status that the BPP returns in on_cancel, allowing the BAP to understand the state of the payment being cancelled (e.g., PAID, PENDING, or FAILED).
               owner: BPP
               type: string
           type:
             _description:
-              required: false
+              required: true
               usage: PRE-FULFILLMENT
               info: Payment type that the BPP returns in on_cancel, indicating the fulfillment timing of the cancelled payment (e.g., PRE-FULFILLMENT or POST-FULFILLMENT).
               owner: BPP
@@ -9537,21 +9537,21 @@ attribute_set:
           descriptor:
             long_desc:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd. Deals in multiple Insurance Services like Health, Motor, Marine etc
                 info: Insurance provider's extended business description that the BPP returns in on_cancel, allowing the BAP to confirm which entity is processing the cancellation request.
                 owner: BPP
                 type: string
             name:
               _description:
-                required: false
+                required: true
                 usage: ABC Insurance Ltd.
                 info: The BPP returns the insurer's legal name. This value anchors the provider identity in the session and is reused in subsequent transaction steps.
                 owner: BPP
                 type: string
             short_desc:
               _description:
-                required: false
+                required: true
                 usage: "ABC Insurance Ltd. India "
                 info: Provider's short display name, carried forward from the confirmed order and returned in the BPP's cancellation response.
                 owner: BPP
@@ -9559,7 +9559,7 @@ attribute_set:
             images:
               url:
                 _description:
-                  required: false
+                  required: true
                   usage: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                   info: BPP echoes the provider's logo URL from search, anchored in session (selected_provider) for reuse in later steps.
                   owner: BPP
@@ -9585,7 +9585,7 @@ attribute_set:
               type: object
           id:
             _description:
-              required: false
+              required: true
               usage: P1
               info: Provider identifier, carried forward from the confirmed order and returned in the BPP's cancellation response.
               owner: BPP
@@ -9599,7 +9599,7 @@ attribute_set:
         quote:
           id:
             _description:
-              required: false
+              required: true
               usage: Q1
               info: Quote identifier, carried forward from the confirmed order and returned in the BPP's cancellation response.
               owner: BPP
@@ -9607,14 +9607,14 @@ attribute_set:
           price:
             currency:
               _description:
-                required: false
+                required: true
                 usage: INR
                 info: The BPP includes the quote's currency code in on_cancel, persisted from the stored order to ensure refund calculations use the original pricing currency.
                 owner: BPP
                 type: string
             value:
               _description:
-                required: false
+                required: true
                 usage: "12505"
                 info: Quotation amount in rupees for the selected items, calculated during selection and confirmed by the BPP in the order response.
                 owner: BPP
@@ -9629,14 +9629,14 @@ attribute_set:
             price:
               value:
                 _description:
-                  required: false
+                  required: true
                   usage: "12531"
                   info: Numeric string of the price amount in the quote's base currency unit, which the BAP carries forward from select through confirm to payment for order processing.
                   owner: BPP
                   type: string
               currency:
                 _description:
-                  required: false
+                  required: true
                   usage: INR
                   info: The BPP includes currency codes for each breakup line in on_cancel, inherited from the stored quote to maintain consistency across all fee components.
                   owner: BPP
@@ -9649,7 +9649,7 @@ attribute_set:
                 type: object
             title:
               _description:
-                required: false
+                required: true
                 usage: BASE_PRICE
                 info: The BPP regenerates the breakup list in on_cancel, filtering out items where title equals add-on to exclude optional charges from the refund calculation.
                 owner: BPP
@@ -9689,21 +9689,21 @@ attribute_set:
             type: object
         status:
           _description:
-            required: false
+            required: true
             usage: CANCELLATION_INITIATED
             info: BPP returns the order cancellation status in the on_cancel response; this value persists with the order and is referenced by subsequent transaction steps.
             owner: BPP
             type: string
         created_at:
           _description:
-            required: false
+            required: true
             usage: 2023-07-24T05:41:32.487Z
             info: Order creation timestamp established at on_confirm; BPP includes this persisted value in the on_cancel response only when the order's update timestamp (order.updated_at) is present.
             owner: BPP
             type: date-time
         updated_at:
           _description:
-            required: false
+            required: true
             usage: 2023-07-24T05:41:32.487Z
             info: BPP updates the order's last-modified timestamp to the current time, but only if this field already exists in the order; the updated value persists across subsequent steps.
             owner: BPP

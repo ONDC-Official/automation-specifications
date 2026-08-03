@@ -1,16 +1,17 @@
 meta:
   domain: ONDC:FIS13
   version: 2.0.0
-  flowId: Cancel_Motor_Insurance
+  flowId: Payment_Failure_Motor_Insurance
   config_version: 0.0.0001
-  description: A customer initiates cancellation of an active motor insurance
-    policy by searching for their policy, selecting it, confirming cancellation
-    terms and details, and submitting the cancellation request for network
-    processing.
+  description: A motor insurance journey that follows the standard application
+    flow up to on_confirm, then exercises a payment-failure path—the payment
+    dynamic form offers a Not-Pay option, the BPP notifies a FAILED payment via
+    an unsolicited on_update, the BAP retries with an update, and the BPP
+    responds with a fresh NOT-PAID payment link on on_update.
   use_case_id: MOTOR INSURANCE
-  flowName: Cancel Motor Insurance
+  flowName: Payment Failure - Motor Insurance
 transaction_data:
-  transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
+  transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
   latest_timestamp: 1970-01-01T00:00:00.000Z
   bap_id: bap.example.com
   bap_uri: https://bap.example.com
@@ -58,27 +59,6 @@ steps:
                   id: 0120TRVK
             payment:
               collected_by: BPP
-              tags:
-                - descriptor:
-                    code: BUYER_FINDER_FEES
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent-annualized
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                - descriptor:
-                    code: SETTLEMENT_TERMS
-                  display: false
-                  list:
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                    - descriptor:
-                        code: OFFLINE_CONTRACT
-                      value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -115,9 +95,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: search
-            timestamp: 2026-07-31T12:59:09.495Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: f38e5dab-7e23-4f4b-b413-5ae0cd028090
+            timestamp: 2026-07-31T13:40:15.116Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: bad878c6-923c-493f-9c25-415c8dc7fe59
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -134,27 +114,6 @@ steps:
                   code: MOTOR_INSURANCE
               payment:
                 collected_by: BPP
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
         type: request
         description: The BAP initiates a search for available motor insurance offerings
           in a specified geographic location, establishing the transaction
@@ -478,27 +437,6 @@ steps:
                           code: DAILY_ALLOWANCE
                 payments:
                   - collected_by: BPP
-                    tags:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES
-                        display: false
-                        list:
-                          - descriptor:
-                              code: BUYER_FINDER_FEES_TYPE
-                            value: percent-annualized
-                          - descriptor:
-                              code: BUYER_FINDER_FEES_PERCENTAGE
-                            value: "1"
-                      - descriptor:
-                          code: SETTLEMENT_TERMS
-                        display: false
-                        list:
-                          - descriptor:
-                              code: STATIC_TERMS
-                            value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                          - descriptor:
-                              code: OFFLINE_CONTRACT
-                            value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -525,9 +463,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_search
-            timestamp: 2026-07-31T12:59:09.509Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: f38e5dab-7e23-4f4b-b413-5ae0cd028090
+            timestamp: 2026-07-31T13:40:15.130Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: bad878c6-923c-493f-9c25-415c8dc7fe59
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -544,7 +482,7 @@ steps:
               descriptor:
                 name: ABC Insurance Ltd
               providers:
-                - id: ac4a0cf2-820d-4906-88fd-85f892b60653
+                - id: 9b71192d-5c65-4e94-818e-5392ff50e8dc
                   categories:
                     - descriptor:
                         name: Two Wheeler Comprehensive
@@ -598,7 +536,7 @@ steps:
                       - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                         size_type: xs
                   items:
-                    - id: 8675f56c-abd8-485b-8bb7-6c2e09a5a797
+                    - id: e68531a2-3a90-49da-82d9-6af5e680acf6
                       category_ids:
                         - C1
                         - C2
@@ -623,9 +561,9 @@ steps:
                           headings:
                             - VEHICLE_DETAILS
                         form:
-                          id: 9fc0c810-e3d3-467f-990c-9516906907fc
+                          id: 11bc61f6-9f32-4bfc-9af6-1df0de3de786
                           mime_type: text/html
-                          url: undefined/forms/ONDC:FIS13/vehicle_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined
+                          url: undefined/forms/ONDC:FIS13/vehicle_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined
                           multiple_sumbissions: false
                           resubmit: false
                         required: true
@@ -711,7 +649,7 @@ steps:
                           descriptor:
                             name: Daily Allowance
                             code: DAILY_ALLOWANCE
-                    - id: 15cfba92-42f6-4b7e-952c-cbda1be942dc
+                    - id: 15e724ea-6c99-44f6-be56-bd6e8bc5ca3e
                       category_ids:
                         - C4
                         - C5
@@ -736,9 +674,9 @@ steps:
                           headings:
                             - Vehicle Details
                         form:
-                          id: 9d744369-55db-40df-a175-364b44e28c44
+                          id: 2230722c-43ae-40d6-bf22-383b9343e7fb
                           mime_type: text/html
-                          url: undefined/forms/ONDC:FIS13/vehicle_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined
+                          url: undefined/forms/ONDC:FIS13/vehicle_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined
                           multiple_sumbissions: false
                           resubmit: false
                         required: true
@@ -826,27 +764,6 @@ steps:
                             code: DAILY_ALLOWANCE
                   payments:
                     - collected_by: BPP
-                      tags:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES
-                          display: false
-                          list:
-                            - descriptor:
-                                code: BUYER_FINDER_FEES_TYPE
-                              value: percent-annualized
-                            - descriptor:
-                                code: BUYER_FINDER_FEES_PERCENTAGE
-                              value: "1"
-                        - descriptor:
-                            code: SETTLEMENT_TERMS
-                          display: false
-                          list:
-                            - descriptor:
-                                code: STATIC_TERMS
-                              value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                            - descriptor:
-                                code: OFFLINE_CONTRACT
-                              value: "true"
         type: request
         description: The BPP provides its motor insurance catalog containing available
           products, providers, and vehicle detail forms in response to the BAP's
@@ -877,7 +794,7 @@ steps:
           gender: female
           vehicleUniqueCode: ""
           rtoCode: GJ98
-          registrationDate: 2026-07-13
+          registrationDate: 2026-07-16
           idv: ""
           coverType: ""
           PersonalAccidentCover: ""
@@ -941,27 +858,6 @@ steps:
                       submission_id: e9a3b4a5-10f8-42c7-b888-dbf0e2edd684
             payment:
               collected_by: BPP
-              tags:
-                - descriptor:
-                    code: BUYER_FINDER_FEES
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent-annualized
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                - descriptor:
-                    code: SETTLEMENT_TERMS
-                  display: false
-                  list:
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                    - descriptor:
-                        code: OFFLINE_CONTRACT
-                      value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -1017,9 +913,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: search
-            timestamp: 2026-07-31T12:59:29.056Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a746802b-a8f0-487b-9312-300abf5fc58a
+            timestamp: 2026-07-31T13:40:29.707Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 56d9ccb4-0d4d-42e1-b2c9-521ef7b61d3c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1042,33 +938,12 @@ steps:
                   - id: item5678
                     xinput:
                       form:
-                        id: 9fc0c810-e3d3-467f-990c-9516906907fc
+                        id: 11bc61f6-9f32-4bfc-9af6-1df0de3de786
                       form_response:
                         status: SUCCESS
-                        submission_id: 5ecfb092-6f2b-4390-972d-dde5e63553d4
+                        submission_id: aba5e143-c2e8-458e-8d51-b08f4b6a374a
               payment:
                 collected_by: BPP
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
         type: request
         description: The BAP searches for available motor insurance providers and their
           offerings based on the customer's location to discover suitable
@@ -1254,6 +1129,31 @@ steps:
                         descriptor:
                           name: Consumables Cover
                           code: CONSUMABLES_COVER
+                        tags:
+                          - descriptor:
+                              name: BAP Inputs
+                              code: BAP_INPUTS
+                            list:
+                              - descriptor:
+                                  code: SUM_INSURED
+                                value: ""
+                              - descriptor:
+                                  code: NOMINEE_DETAILS
+                                  short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                    Last Name | Relationship | Contact Number'
+                                    represents a full name structure, where the
+                                    values are separated by a pipe (|) symbol
+                                value: ""
+                          - descriptor:
+                              name: Info
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: REQUIRED
+                                value: "TRUE"
+                              - descriptor:
+                                  code: CUSTOMER_SELECTION
+                                value: YES
                       - id: A2
                         price:
                           currency: INR
@@ -1266,6 +1166,90 @@ steps:
                         descriptor:
                           name: Depreciation Cover
                           code: DEPRECIATION_COVER
+                      - id: A3
+                        price:
+                          currency: INR
+                          value: "400"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Electrical Accessories Cover
+                          code: ELECTRICAL_ACCESSORIES_COVER
+                      - id: A4
+                        price:
+                          currency: INR
+                          value: "410"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: KEY COVER
+                          code: KEY_COVER
+                      - id: A5
+                        price:
+                          currency: INR
+                          value: "850"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Non Electrical Accessories Cover
+                          code: NON_ELECTRICAL_ACCESSORIES_COVER
+                      - id: A6
+                        price:
+                          currency: INR
+                          value: "1000"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Tyre Cover
+                          code: TYRE_COVER
+                      - id: A7
+                        price:
+                          currency: INR
+                          value: "1200"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Personal Baggage Cover
+                          code: PERSONAL_BAGGAGE_COVER
+                      - id: A8
+                        price:
+                          currency: INR
+                          value: "1000"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Return To Invoice
+                          code: RETURN_TO_INVOICE
+                      - id: A9
+                        price:
+                          currency: INR
+                          value: "900"
+                        quantity:
+                          available:
+                            count: 1
+                          maximum:
+                            count: 1
+                        descriptor:
+                          name: Daily Allowance
+                          code: DAILY_ALLOWANCE
                   - id: CHILD_ITEM_CI1
                     parent_item_id: I1
                     price:
@@ -1348,27 +1332,6 @@ steps:
                       duration: P1Y
                 payments:
                   - collected_by: BPP
-                    tags:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES
-                        display: false
-                        list:
-                          - descriptor:
-                              code: BUYER_FINDER_FEES_TYPE
-                            value: percent-annualized
-                          - descriptor:
-                              code: BUYER_FINDER_FEES_PERCENTAGE
-                            value: "1"
-                      - descriptor:
-                          code: SETTLEMENT_TERMS
-                        display: false
-                        list:
-                          - descriptor:
-                              code: STATIC_TERMS
-                            value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                          - descriptor:
-                              code: OFFLINE_CONTRACT
-                            value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -1386,9 +1349,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_search
-            timestamp: 2026-07-31T12:59:29.078Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a746802b-a8f0-487b-9312-300abf5fc58a
+            timestamp: 2026-07-31T13:40:29.732Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 56d9ccb4-0d4d-42e1-b2c9-521ef7b61d3c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1551,6 +1514,32 @@ steps:
                           descriptor:
                             name: Consumables Cover
                             code: CONSUMABLES_COVER
+                          tags:
+                            - descriptor:
+                                name: BAP Inputs
+                                code: BAP_INPUTS
+                              list:
+                                - descriptor:
+                                    code: SUM_INSURED
+                                  value: ""
+                                - descriptor:
+                                    code: NOMINEE_DETAILS
+                                    short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                      Last Name | Relationship | Contact Number'
+                                      represents a full name structure, where
+                                      the values are separated by a pipe (|)
+                                      symbol
+                                  value: ""
+                            - descriptor:
+                                name: Info
+                                code: INFO
+                              list:
+                                - descriptor:
+                                    code: REQUIRED
+                                  value: "TRUE"
+                                - descriptor:
+                                    code: CUSTOMER_SELECTION
+                                  value: YES
                         - id: A2
                           price:
                             currency: INR
@@ -1563,6 +1552,90 @@ steps:
                           descriptor:
                             name: Depreciation Cover
                             code: DEPRECIATION_COVER
+                        - id: A3
+                          price:
+                            currency: INR
+                            value: "400"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Electrical Accessories Cover
+                            code: ELECTRICAL_ACCESSORIES_COVER
+                        - id: A4
+                          price:
+                            currency: INR
+                            value: "410"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: KEY COVER
+                            code: KEY_COVER
+                        - id: A5
+                          price:
+                            currency: INR
+                            value: "850"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Non Electrical Accessories Cover
+                            code: NON_ELECTRICAL_ACCESSORIES_COVER
+                        - id: A6
+                          price:
+                            currency: INR
+                            value: "1000"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Tyre Cover
+                            code: TYRE_COVER
+                        - id: A7
+                          price:
+                            currency: INR
+                            value: "1200"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Personal Baggage Cover
+                            code: PERSONAL_BAGGAGE_COVER
+                        - id: A8
+                          price:
+                            currency: INR
+                            value: "1000"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Return To Invoice
+                            code: RETURN_TO_INVOICE
+                        - id: A9
+                          price:
+                            currency: INR
+                            value: "900"
+                          quantity:
+                            available:
+                              count: 1
+                            maximum:
+                              count: 1
+                          descriptor:
+                            name: Daily Allowance
+                            code: DAILY_ALLOWANCE
                     - id: CHILD_ITEM_CI1
                       parent_item_id: I1
                       price:
@@ -1645,27 +1718,6 @@ steps:
                         duration: P1Y
                   payments:
                     - collected_by: BPP
-                      tags:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES
-                          display: false
-                          list:
-                            - descriptor:
-                                code: BUYER_FINDER_FEES_TYPE
-                              value: percent-annualized
-                            - descriptor:
-                                code: BUYER_FINDER_FEES_PERCENTAGE
-                              value: "1"
-                        - descriptor:
-                            code: SETTLEMENT_TERMS
-                          display: false
-                          list:
-                            - descriptor:
-                                code: STATIC_TERMS
-                              value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                            - descriptor:
-                                code: OFFLINE_CONTRACT
-                              value: "true"
         type: request
         description: The BPP responds to the BAP's motor insurance search request with
           available insurance products, quotes, and coverage options for the
@@ -1679,7 +1731,7 @@ steps:
       chosen add-ons and fulfillment terms, formally committing the buyer to the
       selected insurance offering.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3QgdXNlcklucHV0cyA9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIHx8IHt9OwoKICBpZiAoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIuaWQgPSBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXTsKICB9CgoKICBjb25zdCBpdGVtSWRzID0KICAgIHVzZXJJbnB1dHMuc2VsZWN0ZWRfaXRlbV9pZHMKICAgICAgPy5zcGxpdCgiLCIpCiAgICAgIC5tYXAoeCA9PiB4LnRyaW0oKSkKICAgICAgLmZpbHRlcihCb29sZWFuKSB8fCBbXTsKICBjb25zdCBwYXJlbnRJZHMgPQogICAgdXNlcklucHV0cy5zZWxlY3RlZF9wYXJlbnRfaXRlbV9pZHMKICAgICAgPy5zcGxpdCgiLCIpCiAgICAgIC5tYXAoeCA9PiB4LnRyaW0oKSkKICAgICAgLmZpbHRlcihCb29sZWFuKSB8fCBbXTsKICBjb25zdCBzZWxlY3RlZEl0ZW0gPSBpdGVtSWRzWzBdOwoKICBpZiAoc2VsZWN0ZWRJdGVtKSB7CiAgICBjb25zdCBwYXlsb2FkSXRlbSA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF07CiAgICBwYXlsb2FkSXRlbS5pZCA9IHNlbGVjdGVkSXRlbTsKICAgIHBheWxvYWRJdGVtLnBhcmVudF9pdGVtX2lkID0gcGFyZW50SWRzWzBdOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXSA9IHBheWxvYWRJdGVtOwogIH0KCiAKCiAgCiAgCiAgLy8gQURELU9OUwogIGNvbnN0IGFkZG9uSWRzID0KICAgIHVzZXJJbnB1dHMuYWRkb25faWRzCiAgICAgID8uc3BsaXQoIiwiKQogICAgICAubWFwKHggPT4geC50cmltKCkpCiAgICAgIC5maWx0ZXIoQm9vbGVhbikgfHwgW107CgoKICBjb25zdCBhZGRvblF0eXMgPQogICAgdXNlcklucHV0cy5hZGRvbl9xdWFudGl0aWVzCiAgICAgID8uc3BsaXQoIiwiKQogICAgICAubWFwKE51bWJlcikgfHwgW107CgogIGNvbnN0IGFkZG9uRGV0YWlscyA9CiAgICBKU09OLnBhcnNlKHVzZXJJbnB1dHMuc2VsZWN0ZWRfYWRkX29uX2RldGFpbHMgfHwgIltdIik7CiAgaWYgKGFkZG9uSWRzLmxlbmd0aCA+IDApIHsKCiAgICBjb25zdCBzZWxlY3RlZEFkZE9ucyA9IGFkZG9uSWRzLm1hcCgoYWRkb25JZCwgaW5kZXgpID0+IHsKICAgICAgY29uc3QgYWRkb24gPSBhZGRvbkRldGFpbHMuZmluZCgKICAgICAgICAoYSkgPT4gU3RyaW5nKGEuaWQpID09PSBTdHJpbmcoYWRkb25JZCkKICAgICAgKTsKICAgICAgY29uc29sZS5sb2coSlNPTi5zdHJpbmdpZnkoYWRkb24pKQoKICAgICAgY29uc3QgcXR5ID0gYWRkb25RdHlzW2luZGV4XSB8fCAxOwpsZXQgdXBkYXRlZEFkZG9uVGFncyA9IG51bGw7CiAgICAgIGlmICghYWRkb24pIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgaWQ6IGFkZG9uSWQsCiAgICAgICAgICBxdWFudGl0eTogewogICAgICAgICAgICBzZWxlY3RlZDogewogICAgICAgICAgICAgIGNvdW50OiBxdHksCiAgICAgICAgICAgIH0sCiAgICAgICAgICB9CiAgICAgICAgfTsKICAgICAgfQogICAgIGlmIChhZGRvbj8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkNPTlNVTUFCTEVTX0NPVkVSIikgewogICAgICAgICAgICAgIHVwZGF0ZWRBZGRvblRhZ3MgPSBbCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIG5hbWU6ICJCQVAgSW5wdXRzIiwKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiQkFQX0lOUFVUUyIKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgbGlzdDogWwogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICAgICAgY29kZTogIlNVTV9JTlNVUkVEIgogICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgIHZhbHVlOiAiIgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgICAgICBjb2RlOiAiTk9NSU5FRV9ERVRBSUxTIiwKICAgICAgICAgICAgICAgICAgICAgICAgc2hvcnRfZGVzYzoKICAgICAgICAgICAgICAgICAgICAgICAgICAiRGVzY3JpYmVzIHRoZSBmb3JtYXQgYXMgJ1NhbHV0YXRpb24gfCBGaXJzdCBOYW1lIHwgTWlkZGxlIE5hbWUgfCBMYXN0IE5hbWUgfCBSZWxhdGlvbnNoaXAgfCBDb250YWN0IE51bWJlcicgcmVwcmVzZW50cyBhIGZ1bGwgbmFtZSBzdHJ1Y3R1cmUsIHdoZXJlIHRoZSB2YWx1ZXMgYXJlIHNlcGFyYXRlZCBieSBhIHBpcGUgKHwpIHN5bWJvbCIKICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICB2YWx1ZTogIiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBuYW1lOiAiSW5mbyIsCiAgICAgICAgICAgICAgICAgICAgY29kZTogIklORk8iCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIGxpc3Q6IFsKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNvZGU6ICJSRVFVSVJFRCIKICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICB2YWx1ZTogIlRSVUUiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNvZGU6ICJDVVNUT01FUl9TRUxFQ1RJT04iCiAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgdmFsdWU6ICJZRVMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgXTsKICAgICAgICAgICAgfQoKCiAgICAgIHJldHVybiB7CiAgICAgICAgaWQ6IGFkZG9uLmlkLAogICAgICAgIGRlc2NyaXB0b3I6IGFkZG9uLmRlc2NyaXB0b3IsCiAgICAgICAgcXVhbnRpdHk6IHsKICAgICAgICAgIHNlbGVjdGVkOiB7CiAgICAgICAgICAgIGNvdW50OiBxdHksCiAgICAgICAgICB9LAogICAgICAgIH0sCiAgICAgICAgIC4uLih1cGRhdGVkQWRkb25UYWdzID8geyB0YWdzOiB1cGRhdGVkQWRkb25UYWdzIH0gOiB7fSksCiAgICAgICAKICAgICAgICAKCiAgICAgIH07CiAgICB9KTsKCiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmFkZF9vbnMgPSBzZWxlY3RlZEFkZE9uczsKICB9CiAgZWxzZSB7CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5hZGRfb25zOwogIH0KCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3QgdXNlcklucHV0cyA9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIHx8IHt9OwoKICBpZiAoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIuaWQgPSBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXTsKICB9CgoKICBjb25zdCBpdGVtSWRzID0KICAgIHVzZXJJbnB1dHMuc2VsZWN0ZWRfaXRlbV9pZHMKICAgICAgPy5zcGxpdCgiLCIpCiAgICAgIC5tYXAoeCA9PiB4LnRyaW0oKSkKICAgICAgLmZpbHRlcihCb29sZWFuKSB8fCBbXTsKICBjb25zdCBwYXJlbnRJZHMgPQogICAgdXNlcklucHV0cy5zZWxlY3RlZF9wYXJlbnRfaXRlbV9pZHMKICAgICAgPy5zcGxpdCgiLCIpCiAgICAgIC5tYXAoeCA9PiB4LnRyaW0oKSkKICAgICAgLmZpbHRlcihCb29sZWFuKSB8fCBbXTsKICBjb25zdCBzZWxlY3RlZEl0ZW0gPSBpdGVtSWRzWzBdOwoKICBpZiAoc2VsZWN0ZWRJdGVtKSB7CiAgICBjb25zdCBwYXlsb2FkSXRlbSA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF07CiAgICBwYXlsb2FkSXRlbS5pZCA9IHNlbGVjdGVkSXRlbTsKICAgIHBheWxvYWRJdGVtLnBhcmVudF9pdGVtX2lkID0gcGFyZW50SWRzWzBdOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXSA9IHBheWxvYWRJdGVtOwogIH0KCiAKCiAgCiAgCiAgLy8gQURELU9OUwogIGNvbnN0IGFkZG9uSWRzID0KICAgIHVzZXJJbnB1dHMuYWRkb25faWRzCiAgICAgID8uc3BsaXQoIiwiKQogICAgICAubWFwKHggPT4geC50cmltKCkpCiAgICAgIC5maWx0ZXIoQm9vbGVhbikgfHwgW107CgoKICBjb25zdCBhZGRvblF0eXMgPQogICAgdXNlcklucHV0cy5hZGRvbl9xdWFudGl0aWVzCiAgICAgID8uc3BsaXQoIiwiKQogICAgICAubWFwKE51bWJlcikgfHwgW107CgogIGNvbnN0IGFkZG9uRGV0YWlscyA9CiAgICBKU09OLnBhcnNlKHVzZXJJbnB1dHMuc2VsZWN0ZWRfYWRkX29uX2RldGFpbHMgfHwgIltdIik7CiAgaWYgKGFkZG9uSWRzLmxlbmd0aCA+IDApIHsKCiAgICBjb25zdCBzZWxlY3RlZEFkZE9ucyA9IGFkZG9uSWRzLm1hcCgoYWRkb25JZCwgaW5kZXgpID0+IHsKICAgICAgY29uc3QgYWRkb24gPSBhZGRvbkRldGFpbHMuZmluZCgKICAgICAgICAoYSkgPT4gU3RyaW5nKGEuaWQpID09PSBTdHJpbmcoYWRkb25JZCkKICAgICAgKTsKICAgICAgY29uc29sZS5sb2coSlNPTi5zdHJpbmdpZnkoYWRkb24pKQpsZXQgdXBkYXRlZEFkZG9uVGFncyA9IG51bGw7CiAgICAgIGNvbnN0IHF0eSA9IGFkZG9uUXR5c1tpbmRleF0gfHwgMTsKCiAgICAgIGlmICghYWRkb24pIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgaWQ6IGFkZG9uSWQsCiAgICAgICAgICBxdWFudGl0eTogewogICAgICAgICAgICBzZWxlY3RlZDogewogICAgICAgICAgICAgIGNvdW50OiBxdHksCiAgICAgICAgICAgIH0sCiAgICAgICAgICB9CiAgICAgICAgfTsKICAgICAgfQogICAgIGlmIChhZGRvbj8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkNPTlNVTUFCTEVTX0NPVkVSIikgewogICAgICAgICAgICAgIHVwZGF0ZWRBZGRvblRhZ3MgPSBbCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIG5hbWU6ICJCQVAgSW5wdXRzIiwKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiQkFQX0lOUFVUUyIKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgbGlzdDogWwogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICAgICAgY29kZTogIlNVTV9JTlNVUkVEIgogICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgIHZhbHVlOiAiIgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgICAgICBjb2RlOiAiTk9NSU5FRV9ERVRBSUxTIiwKICAgICAgICAgICAgICAgICAgICAgICAgc2hvcnRfZGVzYzoKICAgICAgICAgICAgICAgICAgICAgICAgICAiRGVzY3JpYmVzIHRoZSBmb3JtYXQgYXMgJ1NhbHV0YXRpb24gfCBGaXJzdCBOYW1lIHwgTWlkZGxlIE5hbWUgfCBMYXN0IE5hbWUgfCBSZWxhdGlvbnNoaXAgfCBDb250YWN0IE51bWJlcicgcmVwcmVzZW50cyBhIGZ1bGwgbmFtZSBzdHJ1Y3R1cmUsIHdoZXJlIHRoZSB2YWx1ZXMgYXJlIHNlcGFyYXRlZCBieSBhIHBpcGUgKHwpIHN5bWJvbCIKICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICB2YWx1ZTogIiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBuYW1lOiAiSW5mbyIsCiAgICAgICAgICAgICAgICAgICAgY29kZTogIklORk8iCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIGxpc3Q6IFsKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNvZGU6ICJSRVFVSVJFRCIKICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICB2YWx1ZTogIlRSVUUiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNvZGU6ICJDVVNUT01FUl9TRUxFQ1RJT04iCiAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgdmFsdWU6ICJZRVMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgXTsKICAgICAgICAgICAgfQoKCiAgICAgIHJldHVybiB7CiAgICAgICAgaWQ6IGFkZG9uLmlkLAogICAgICAgIGRlc2NyaXB0b3I6IGFkZG9uLmRlc2NyaXB0b3IsCiAgICAgICAgcXVhbnRpdHk6IHsKICAgICAgICAgIHNlbGVjdGVkOiB7CiAgICAgICAgICAgIGNvdW50OiBxdHksCiAgICAgICAgICB9LAogICAgICAgIH0sCiAgICAgICAgIC4uLih1cGRhdGVkQWRkb25UYWdzID8geyB0YWdzOiB1cGRhdGVkQWRkb25UYWdzIH0gOiB7fSksCiAgICAgICAKICAgICAgICAKCiAgICAgIH07CiAgICB9KTsKCiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmFkZF9vbnMgPSBzZWxlY3RlZEFkZE9uczsKICB9CiAgZWxzZSB7CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5hZGRfb25zOwogIH0KCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBjb25zdCBvcmRlciA9IHRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyOwoKICBpZiAoIW9yZGVyKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDMwMDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgaXMgbWlzc2luZyBpbiB0aGUgcGF5bG9hZCIKICAgIH07CiAgfQoKICBpZiAoIW9yZGVyLnByb3ZpZGVyPy5pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAzMDAxLAogICAgICBkZXNjcmlwdGlvbjogIlByb3ZpZGVyIElEIGlzIG1pc3NpbmciCiAgICB9OwogIH0KCiAgaWYgKCFvcmRlci5pdGVtcz8ubGVuZ3RoKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDMwMDIsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgaXRlbXMgYXJlIG1pc3NpbmciCiAgICB9OwogIH0KCiAgaWYgKCFvcmRlci5pdGVtc1swXT8uaWQpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogMzAwMywKICAgICAgZGVzY3JpcHRpb246ICJTZWxlY3RlZCBpdGVtIElEIGlzIG1pc3NpbmciCiAgICB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgICAgaWYgKCFzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDIwMywKICAgICAgZGVzY3JpcHRpb246ICJObyB0cmFuc2FjdGlvbl9pZCBhdmFpbGFibGUgaW4gc2Vzc2lvbiBkYXRhIgogICAgfTsKICB9CgogIGlmICghc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogMjAzLAogICAgICBkZXNjcmlwdGlvbjogIk5vIHByb3ZpZGVyX2lkIGF2YWlsYWJsZSBpbiBzZXNzaW9uIGRhdGEiCiAgICB9OwogIH0KCiAgY29uc3QgdXNlcklucHV0cyA9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIHx8IHt9OwoKIAogIGlmICghdXNlcklucHV0cykgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAyMDMsCiAgICAgIGRlc2NyaXB0aW9uOiAiTm8gdXNlcklucHV0cyBwcm92aWRlZCIKICAgIH07CiAgfQoKICBpZiAoCiAgICB1c2VySW5wdXRzLmFkZG9uX2lkcyAmJgogICAgIXVzZXJJbnB1dHMuc2VsZWN0ZWRfYWRkX29uX2RldGFpbHMKICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogMjAzLAogICAgICBkZXNjcmlwdGlvbjogIk5vIHNlbGVjdGVkX2FkZF9vbl9kZXRhaWxzIHByb3ZpZGVkIGZvciBzZWxlY3RlZCBhZGQtb25zIgogICAgfTsKICB9CiAgICAgICAgCiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
@@ -1779,9 +1831,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: select
-            timestamp: 2026-07-31T12:59:42.855Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a34050e1-35c8-48d2-a726-3e8fddac908f
+            timestamp: 2026-07-31T13:40:31.551Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 5c5cc3c6-13c5-4319-b581-dd99055ecae4
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2140,9 +2192,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_select
-            timestamp: 2026-07-31T12:59:42.875Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a34050e1-35c8-48d2-a726-3e8fddac908f
+            timestamp: 2026-07-31T13:40:31.567Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 5c5cc3c6-13c5-4319-b581-dd99055ecae4
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2306,9 +2358,9 @@ steps:
                         - PAN_DOB
                         - KYC
                     form:
-                      id: cd69e7fa-5767-49e7-b2b6-2c4e8b37a531
+                      id: 29ce6337-3bbb-4244-bf18-5dadbcaf44b5
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/manual_review_form_motor/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/manual_review_form_motor/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -2355,7 +2407,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -2472,9 +2524,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-31T12:59:51.302Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: ed40f390-cc0d-4da2-ad69-8544f58e869c
+            timestamp: 2026-07-31T13:40:34.096Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 57a39258-4522-481d-9546-ad2961797842
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2627,10 +2679,10 @@ steps:
                     label: TENURE
                   xinput:
                     form:
-                      id: cd69e7fa-5767-49e7-b2b6-2c4e8b37a531
+                      id: 29ce6337-3bbb-4244-bf18-5dadbcaf44b5
                     form_response:
                       status: SUCCESS
-                      submission_id: 7ed8fb97-a428-4602-b285-200f1cea74ac
+                      submission_id: 4b84f3aa-7962-483a-99ab-149a54b2ede6
                   add_ons:
                     - id: A1
                       price:
@@ -2674,7 +2726,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -2763,9 +2815,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: select
-            timestamp: 2026-07-31T12:59:51.322Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 0cc66211-0ecd-401f-88d2-195e2f605591
+            timestamp: 2026-07-31T13:40:34.126Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 51838efa-8afd-4d08-ad8f-6467906309c6
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2784,10 +2836,10 @@ steps:
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: cd69e7fa-5767-49e7-b2b6-2c4e8b37a531
+                      id: 29ce6337-3bbb-4244-bf18-5dadbcaf44b5
                     form_response:
                       status: SUCCESS
-                      submission_id: 7fb0ceed-1f57-4a9f-b767-a62d349a2fc4
+                      submission_id: e1dca455-cf04-4f02-b542-17bcd7bdee76
                   add_ons:
                     - id: A1
                       price:
@@ -2885,9 +2937,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_select
-            timestamp: 2026-07-31T12:59:51.371Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 0cc66211-0ecd-401f-88d2-195e2f605591
+            timestamp: 2026-07-31T13:40:34.199Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 51838efa-8afd-4d08-ad8f-6467906309c6
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3051,9 +3103,9 @@ steps:
                         - PAN_DOB
                         - KYC
                     form:
-                      id: ad99111b-78b9-4b6c-b885-c689a13b3ae6
+                      id: 4820c844-b50b-49d3-9d73-3b233ff9d158
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/pan_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/pan_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -3100,7 +3152,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -3217,9 +3269,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: select
-            timestamp: 2026-07-31T12:59:54.145Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 52f78a0d-b042-4276-b0a1-cf9dd9142217
+            timestamp: 2026-07-31T13:40:35.479Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: a5df902e-a0a2-4403-a2bf-0bed5a1252f9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3238,10 +3290,10 @@ steps:
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: ad99111b-78b9-4b6c-b885-c689a13b3ae6
+                      id: 4820c844-b50b-49d3-9d73-3b233ff9d158
                     form_response:
                       status: SUCCESS
-                      submission_id: 1dfd5d74-87f7-4d6d-ab51-29eb04141e9b
+                      submission_id: c7ae0eba-9c49-4873-90d9-d6fc6ec93ce7
                   add_ons:
                     - id: A1
                       price:
@@ -3554,9 +3606,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_select
-            timestamp: 2026-07-31T12:59:54.161Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 52f78a0d-b042-4276-b0a1-cf9dd9142217
+            timestamp: 2026-07-31T13:40:35.504Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: a5df902e-a0a2-4403-a2bf-0bed5a1252f9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3720,9 +3772,9 @@ steps:
                         - PAN_DOB
                         - KYC
                     form:
-                      id: aa64058b-c024-437c-bf7c-e812f91f86c9
+                      id: 81a46524-f7aa-4496-8c1a-08f923d0807c
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/kyc_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/kyc_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -3769,7 +3821,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -3884,9 +3936,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-31T12:59:57.735Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: b390b21e-7ce8-413d-98df-d51badf70707
+            timestamp: 2026-07-31T13:40:37.883Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: ff3aca1e-f345-4d0d-af25-f7e27794374f
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4039,10 +4091,10 @@ steps:
                     label: TENURE
                   xinput:
                     form:
-                      id: aa64058b-c024-437c-bf7c-e812f91f86c9
+                      id: 81a46524-f7aa-4496-8c1a-08f923d0807c
                     form_response:
                       status: SUCCESS
-                      submission_id: 6746a123-5d08-41d1-824e-2832188c9065
+                      submission_id: 8386d495-e1ff-4c75-80f6-3ea944c0125c
                   add_ons:
                     - id: A1
                       price:
@@ -4086,7 +4138,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -4172,27 +4224,6 @@ steps:
                   bank_account_number: "1800002341"
                   bank_code: SBIN0001234
                   currency: INR
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -4215,9 +4246,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-31T12:59:57.754Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 314611eb-cf44-4a37-8897-ffae57d6410a
+            timestamp: 2026-07-31T13:40:37.921Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 4748b795-856f-4aee-bef7-71e1a9e27e10
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4247,36 +4278,15 @@ steps:
                     bank_account_number: "1800002341"
                     bank_code: SBIN0001234
                     currency: INR
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: aa64058b-c024-437c-bf7c-e812f91f86c9
+                      id: 81a46524-f7aa-4496-8c1a-08f923d0807c
                     form_response:
                       status: SUCCESS
-                      submission_id: bad1c5ad-1ab8-4d66-8a02-5d59d5cedf5d
+                      submission_id: d12a26be-a38b-4c70-9a77-89130fe5068a
                   add_ons:
                     - id: A1
                       price:
@@ -4371,27 +4381,6 @@ steps:
                   currency: INR
                 status: NOT-PAID
                 type: PRE-FULFILLMENT
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -4418,9 +4407,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-31T12:59:57.814Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 314611eb-cf44-4a37-8897-ffae57d6410a
+            timestamp: 2026-07-31T13:40:38.080Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 4748b795-856f-4aee-bef7-71e1a9e27e10
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4441,14 +4430,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -4457,27 +4446,6 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -4628,9 +4596,9 @@ steps:
                         - PERSONAL_INFO
                         - CIS
                     form:
-                      id: 5ce60fda-2a92-4dc7-9a61-3248833577f6
+                      id: a955e352-83a3-4d17-ad66-1dcd08df8dfb
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/vehicle_nominee_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/vehicle_nominee_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -4667,7 +4635,7 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -4679,7 +4647,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -4747,8 +4715,8 @@ steps:
           previousTPPolicyIssuer: ""
           previousTPPolicyNumber: ""
           nomineeName: erfwerf
-          nomineeDOB: 2026-07-21
-          relationshipNominee: wife
+          nomineeDOB: 2026-07-14
+          relationshipNominee: son
           apointeeName: ""
           apointeeRelationship: ""
           formId: FO6
@@ -4814,9 +4782,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-31T13:00:09.556Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 0ddcc5f4-9076-42b1-90c8-a6e661ebd501
+            timestamp: 2026-07-31T13:40:48.785Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: d80af9eb-d6ac-444b-83f9-302b0cc78a43
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4837,14 +4805,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -4853,36 +4821,15 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 5ce60fda-2a92-4dc7-9a61-3248833577f6
+                      id: a955e352-83a3-4d17-ad66-1dcd08df8dfb
                     form_response:
                       status: SUCCESS
-                      submission_id: 1b2a3763-0878-4726-b66d-5249d40ea40b
+                      submission_id: 2e352568-7f17-4e00-8e97-feb5a6bd6b83
                   add_ons:
                     - id: A1
                       price:
@@ -4982,9 +4929,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-31T13:00:09.573Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 0ddcc5f4-9076-42b1-90c8-a6e661ebd501
+            timestamp: 2026-07-31T13:40:48.837Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: d80af9eb-d6ac-444b-83f9-302b0cc78a43
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5005,14 +4952,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -5021,27 +4968,6 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -5192,9 +5118,9 @@ steps:
                         - PERSONAL_INFO
                         - CIS
                     form:
-                      id: dd9392f9-5562-4d7b-8487-8ce880888788
+                      id: f13f8779-49aa-4cfb-9d38-5d2e4018007a
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/personal_details_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/personal_details_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -5231,7 +5157,7 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -5243,7 +5169,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -5306,8 +5232,8 @@ steps:
           address: jhguguy
           pincode: "134242"
           state: PB
-          dob: 2026-07-24
-          gender: female
+          dob: 2026-07-15
+          gender: transgender
           email: nikita.sharma@ondc.org
           phone: "9877667788"
           formId: FO7
@@ -5372,9 +5298,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-31T13:00:23.288Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: ea0c874c-0ecd-400f-b80f-f25fbb928ad2
+            timestamp: 2026-07-31T13:40:55.334Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: b2d33bfa-b9e3-47f3-b7fb-2bef27bc5b38
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5395,14 +5321,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -5411,36 +5337,15 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: dd9392f9-5562-4d7b-8487-8ce880888788
+                      id: f13f8779-49aa-4cfb-9d38-5d2e4018007a
                     form_response:
                       status: SUCCESS
-                      submission_id: 1088f3a2-4369-4f79-bd64-9ac444851f0a
+                      submission_id: 3c7e0df3-7c4a-419b-9aef-df4f6c740ec6
                   add_ons:
                     - id: A1
                       price:
@@ -5718,27 +5623,6 @@ steps:
                   currency: INR
                 status: NOT-PAID
                 type: PRE-FULFILLMENT
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
             provider:
               id: P1
               descriptor:
@@ -5803,9 +5687,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-31T13:00:23.305Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: ea0c874c-0ecd-400f-b80f-f25fbb928ad2
+            timestamp: 2026-07-31T13:40:55.368Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: b2d33bfa-b9e3-47f3-b7fb-2bef27bc5b38
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5826,14 +5710,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -5842,27 +5726,6 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -6013,9 +5876,9 @@ steps:
                         - PERSONAL_INFO
                         - CIS
                     form:
-                      id: 9b596507-18bc-47e3-824b-7d8d1217585e
+                      id: b680aa9a-a8c3-4365-96dc-ca40cf42bcd4
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -6052,7 +5915,7 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -6064,7 +5927,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -6179,9 +6042,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-31T13:00:31.136Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: eefaf7ff-243a-42e3-b8d9-99baa21c8260
+            timestamp: 2026-07-31T13:40:57.646Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 18e8417f-0210-4bf7-a37c-24c910583a02
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -6202,14 +6065,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -6218,27 +6081,6 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -6378,10 +6220,10 @@ steps:
                     label: TENURE
                   xinput:
                     form:
-                      id: 9b596507-18bc-47e3-824b-7d8d1217585e
+                      id: b680aa9a-a8c3-4365-96dc-ca40cf42bcd4
                     form_response:
                       status: SUCCESS
-                      submission_id: fa1059b1-c6ff-4cec-8dc3-c5e54b60dda5
+                      submission_id: c193bc1a-e9b7-438e-87bb-8e49f90cbfa5
                   add_ons:
                     - id: A1
                       price:
@@ -6415,7 +6257,7 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -6427,7 +6269,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -6523,9 +6365,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: confirm
-            timestamp: 2026-07-31T13:00:31.160Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 3c0d4829-9919-4419-b2f5-e12145381d40
+            timestamp: 2026-07-31T13:40:57.669Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: d49372d4-b70f-4f55-8e27-9ee8e2ad21a9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -6546,14 +6388,14 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
                       name: Insurance Initiated
                       code: INITIATED
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -6562,36 +6404,15 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 9b596507-18bc-47e3-824b-7d8d1217585e
+                      id: b680aa9a-a8c3-4365-96dc-ca40cf42bcd4
                     form_response:
                       status: SUCCESS
-                      submission_id: 18b77a72-76ff-4a12-a331-604e9f5bf1b4
+                      submission_id: 3ce431c0-cb18-4d1e-a365-69275b070fe3
                   add_ons:
                     - id: A1
                       price:
@@ -6695,9 +6516,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_confirm
-            timestamp: 2026-07-31T13:00:31.234Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 3c0d4829-9919-4419-b2f5-e12145381d40
+            timestamp: 2026-07-31T13:40:57.819Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: d49372d4-b70f-4f55-8e27-9ee8e2ad21a9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -6711,9 +6532,9 @@ steps:
                 code: "*"
           message:
             order:
-              id: eff5e31b-b2f2-4cd6-82cc-b0b548ea9cc2
+              id: cc239317-a277-4fd1-8f07-d83f7087c5e0
               status: ACTIVE
-              updated_at: 2026-07-31T13:00:31.236Z
+              updated_at: 2026-07-31T13:40:57.820Z
               fulfillments:
                 - customer:
                     contact:
@@ -6721,7 +6542,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
@@ -6877,9 +6698,9 @@ steps:
                         - PERSONAL_INFO
                         - CIS
                     form:
-                      id: 9b596507-18bc-47e3-824b-7d8d1217585e
+                      id: b680aa9a-a8c3-4365-96dc-ca40cf42bcd4
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: false
                       multiple_sumbissions: false
                     required: true
@@ -6916,9 +6737,9 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
@@ -6927,28 +6748,7 @@ steps:
                     currency: INR
                   status: NOT-PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  url: undefined/forms/ONDC:FIS13/payment_form_motor/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                  url: undefined/forms/ONDC:FIS13/payment_form_motor/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -6960,7 +6760,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -6994,7 +6794,7 @@ steps:
                       value: "0"
                       currency: INR
                 ttl: P15D
-              created_at: 2026-07-31T13:00:31.236Z
+              created_at: 2026-07-31T13:40:57.820Z
         type: request
         description: The BPP confirms the motor insurance order by transmitting the
           finalized order record, quote details, and payment gateway link in
@@ -7016,66 +6816,49 @@ steps:
       defaultPayload: {}
       saveData: {}
       inputs: {}
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPlBheW1lbnQgU3RhdHVzPC90aXRsZT4KCiAgPHN0eWxlPgogICAgKiB7CiAgICAgIG1hcmdpbjogMDsKICAgICAgcGFkZGluZzogMDsKICAgICAgYm94LXNpemluZzogYm9yZGVyLWJveDsKICAgIH0KCiAgICBib2R5IHsKICAgICAgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1NlZ29lIFVJJywgUm9ib3RvLCAnSGVsdmV0aWNhIE5ldWUnLCBBcmlhbCwgc2Fucy1zZXJpZjsKICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzY2N2VlYSAwJSwgIzc2NGJhMiAxMDAlKTsKICAgICAgbWluLWhlaWdodDogMTAwdmg7CiAgICAgIGRpc3BsYXk6IGZsZXg7CiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwogICAgICBwYWRkaW5nOiAyMHB4OwogICAgfQoKICAgIC5mb3JtLWNvbnRhaW5lciB7CiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7CiAgICAgIHBhZGRpbmc6IDQwcHg7CiAgICAgIGJvcmRlci1yYWRpdXM6IDE2cHg7CiAgICAgIGJveC1zaGFkb3c6IDAgMTBweCA0MHB4IHJnYmEoMCwgMCwgMCwgMC4xNSk7CiAgICAgIHdpZHRoOiAxMDAlOwogICAgICBtYXgtd2lkdGg6IDUwMHB4OwogICAgfQoKICAgIGgxIHsKICAgICAgY29sb3I6ICMyZDM3NDg7CiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgbWFyZ2luLWJvdHRvbTogOHB4OwogICAgICBmb250LXNpemU6IDI4cHg7CiAgICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICB9CgogICAgLnN1YnRpdGxlIHsKICAgICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgICBjb2xvcjogIzcxODA5NjsKICAgICAgbWFyZ2luLWJvdHRvbTogMzJweDsKICAgICAgZm9udC1zaXplOiAxNHB4OwogICAgfQoKICAgIC5mb3JtLWdyb3VwIHsKICAgICAgbWFyZ2luLWJvdHRvbTogMjRweDsKICAgIH0KCiAgICAucmFkaW8tZ3JvdXAgewogICAgICBkaXNwbGF5OiBmbGV4OwogICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAgICBnYXA6IDEycHg7CiAgICB9CgogICAgbGFiZWwgewogICAgICBmb250LXdlaWdodDogNjAwOwogICAgICBjb2xvcjogIzJkMzc0ODsKICAgICAgZm9udC1zaXplOiAxNXB4OwogICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICB9CgogICAgaW5wdXRbdHlwZT0icmFkaW8iXSB7CiAgICAgIG1hcmdpbi1yaWdodDogOHB4OwogICAgfQoKICAgIC5zdWJtaXQtYnRuIHsKICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzI4YTc0NSAwJSwgIzIxODgzOCAxMDAlKTsKICAgICAgY29sb3I6IHdoaXRlOwogICAgICBwYWRkaW5nOiAxNnB4IDMycHg7CiAgICAgIGJvcmRlcjogbm9uZTsKICAgICAgYm9yZGVyLXJhZGl1czogOHB4OwogICAgICBmb250LXNpemU6IDE2cHg7CiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgd2lkdGg6IDEwMCU7CiAgICAgIHRyYW5zaXRpb246IDAuM3MgZWFzZTsKICAgICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTsKICAgIH0KCiAgICAuc3VibWl0LWJ0bjpob3ZlciB7CiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsKICAgIH0KCiAgICAucmVxdWlyZWQtaW5kaWNhdG9yIHsKICAgICAgY29sb3I6ICNlNTNlM2U7CiAgICAgIG1hcmdpbi1sZWZ0OiA0cHg7CiAgICB9CiAgPC9zdHlsZT4KPC9oZWFkPgoKPGJvZHk+CiAgPGRpdiBjbGFzcz0iZm9ybS1jb250YWluZXIiPgogICAgPGgxPlBheW1lbnQgU3RhdHVzPC9oMT4KICAgIDxwIGNsYXNzPSJzdWJ0aXRsZSI+UGxlYXNlIHNlbGVjdCB5b3VyIHBheW1lbnQgZGVjaXNpb248L3A+CgogICAgPGZvcm0gaWQ9InBheW1lbnRfZm9ybV9tb3RvciIgbWV0aG9kPSJQT1NUIiBhY3Rpb249IjwlPSBhY3Rpb25VcmwgJT4iPgoKICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCI+CiAgICAgICAgPGxhYmVsPgogICAgICAgICAgQ2hvb3NlIE9wdGlvbgogICAgICAgICAgPHNwYW4gY2xhc3M9InJlcXVpcmVkLWluZGljYXRvciI+Kjwvc3Bhbj4KICAgICAgICA8L2xhYmVsPgoKICAgICAgICA8ZGl2IGNsYXNzPSJyYWRpby1ncm91cCI+CiAgICAgICAgICA8bGFiZWw+CiAgICAgICAgICAgIDxpbnB1dCB0eXBlPSJyYWRpbyIgbmFtZT0iaWRUeXBlIiB2YWx1ZT0iUEFZIiByZXF1aXJlZD4KICAgICAgICAgICAgUGF5CiAgICAgICAgICA8L2xhYmVsPgoKICAgICAgCiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgoKICAgICAgPGJ1dHRvbiB0eXBlPSJzdWJtaXQiIGNsYXNzPSJzdWJtaXQtYnRuIj5TdWJtaXQ8L2J1dHRvbj4KCiAgICAgICAgICAgICAgICAgIDxzY3JpcHQ+CihmdW5jdGlvbiAoKSB7CgogIHZhciBiYXBVcmkgPQogICAgbmV3IFVSTFNlYXJjaFBhcmFtcyh3aW5kb3cubG9jYXRpb24uc2VhcmNoKQogICAgICAuZ2V0KCdiYXBfdXJpJykgfHwgJyc7CiAgdmFyIHRyYW5zYWN0aW9uSWQgPSBuZXcgVVJMU2VhcmNoUGFyYW1zKHdpbmRvdy5sb2NhdGlvbi5zZWFyY2gpLmdldCgndHJhbnNhY3Rpb25faWQnKSB8fCAnJzsgICAgCgogIGZ1bmN0aW9uIHN1Ym1pdEZvcm0oZm9ybSkgewogICAgcmV0dXJuIGZldGNoKGZvcm0uYWN0aW9uLCB7CiAgICAgIG1ldGhvZDogJ1BPU1QnLAogICAgICBoZWFkZXJzOiB7CiAgICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi94LXd3dy1mb3JtLXVybGVuY29kZWQnCiAgICAgIH0sCiAgICAgIGJvZHk6IG5ldyBVUkxTZWFyY2hQYXJhbXMoCiAgICAgICAgbmV3IEZvcm1EYXRhKGZvcm0pCiAgICAgICkudG9TdHJpbmcoKQogICAgfSkKICAgIC50aGVuKGZ1bmN0aW9uIChyZXMpIHsKICAgICAgaWYgKCFyZXMub2spIHsKICAgICAgICB0aHJvdyBuZXcgRXJyb3IoCiAgICAgICAgICAnRm9ybSBzdWJtaXNzaW9uIGZhaWxlZCB3aXRoIEhUVFAgJyArCiAgICAgICAgICByZXMuc3RhdHVzCiAgICAgICAgKTsKICAgICAgfQoKICAgICAgcmV0dXJuIHJlcy50ZXh0KCk7CiAgICB9KTsKICB9CgogIGZ1bmN0aW9uIHNlbmRDYWxsYmFjaygpIHsKCiAgICBpZiAoIWJhcFVyaSkgewogICAgICBjb25zb2xlLndhcm4oCiAgICAgICAgJ2JhcF91cmkgbWlzc2luZy4gU2tpcHBpbmcgY2FsbGJhY2suJwogICAgICApOwogICAgICByZXR1cm4gUHJvbWlzZS5yZXNvbHZlKCk7CiAgICB9CgogICAgIHJldHVybiBmZXRjaChiYXBVcmkucmVwbGFjZSgvXC8rJC8sICcnKSArICcvY2FsbGJhY2s/dHJhbnNhY3Rpb25faWQ9JyArIHRyYW5zYWN0aW9uSWQgKyAnJywgewogICAgbWV0aG9kOiAnR0VUJwogIH0pLnRoZW4oZnVuY3Rpb24gKHJlcykgewogICAgaWYgKCFyZXMub2spIHsKICAgICAgdGhyb3cgbmV3IEVycm9yKCdjYWxsYmFjayBmYWlsZWQgd2l0aCBIVFRQICcgKyByZXMuc3RhdHVzKTsKICAgIH0KICB9KTsKfQoKICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKAogICAgJ0RPTUNvbnRlbnRMb2FkZWQnLAogICAgZnVuY3Rpb24gKCkgewoKICAgICAgdmFyIGZvcm0gPQogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKAogICAgICAgICAgJ3BheW1lbnRfZm9ybV9tb3RvcicKICAgICAgICApOwoKICAgICAgdmFyIHN1Ym1pdEJ0biA9CiAgICAgICAgZm9ybS5xdWVyeVNlbGVjdG9yKAogICAgICAgICAgJ2J1dHRvblt0eXBlPSJzdWJtaXQiXScKICAgICAgICApOwoKICAgICAgZm9ybS5hZGRFdmVudExpc3RlbmVyKAogICAgICAgICdzdWJtaXQnLAogICAgICAgIGZ1bmN0aW9uIChlKSB7CgogICAgICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwoKICAgICAgICAgIHN1Ym1pdEJ0bi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgICBzdWJtaXRCdG4udGV4dENvbnRlbnQgPQogICAgICAgICAgICAnUHJvY2Vzc2luZy4uLic7CgogICAgICAgICAgdmFyIHN1Ym1pdHRlZEh0bWwgPSBudWxsOwoKICAgICAgICAgIHN1Ym1pdEZvcm0oZm9ybSkKICAgICAgICAgICAgLnRoZW4oZnVuY3Rpb24gKGh0bWwpIHsKCiAgICAgICAgICAgICAgc3VibWl0dGVkSHRtbCA9IGh0bWw7CgogICAgICAgICAgICAgIHJldHVybiBzZW5kQ2FsbGJhY2soKTsKICAgICAgICAgICAgfSkKICAgICAgICAgICAgLnRoZW4oZnVuY3Rpb24gKCkgewoKICAgICAgICAgICAgICBkb2N1bWVudC5vcGVuKCk7CiAgICAgICAgICAgICAgZG9jdW1lbnQud3JpdGUoc3VibWl0dGVkSHRtbCk7CiAgICAgICAgICAgICAgZG9jdW1lbnQuY2xvc2UoKTsKICAgICAgICAgICAgfSkKICAgICAgICAgICAgLmNhdGNoKGZ1bmN0aW9uIChlcnIpIHsKCiAgICAgICAgICAgICAgY29uc29sZS5lcnJvcihlcnIpOwoKICAgICAgICAgICAgICBzdWJtaXRCdG4uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgICAgICAgICBzdWJtaXRCdG4udGV4dENvbnRlbnQgPQogICAgICAgICAgICAgICAgJ1N1Ym1pdCc7CgogICAgICAgICAgICAgIGFsZXJ0KGVyci5tZXNzYWdlKTsKICAgICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICApOwogICAgfQogICk7Cgp9KSgpOwo8L3NjcmlwdD4KICAgIDwvZm9ybT4KICA8L2Rpdj4KPC9ib2R5PgoKPC9odG1sPg==
+      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPlBheW1lbnQgU3RhdHVzPC90aXRsZT4KCiAgPHN0eWxlPgogICAgKiB7CiAgICAgIG1hcmdpbjogMDsKICAgICAgcGFkZGluZzogMDsKICAgICAgYm94LXNpemluZzogYm9yZGVyLWJveDsKICAgIH0KCiAgICBib2R5IHsKICAgICAgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1NlZ29lIFVJJywgUm9ib3RvLCAnSGVsdmV0aWNhIE5ldWUnLCBBcmlhbCwgc2Fucy1zZXJpZjsKICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzY2N2VlYSAwJSwgIzc2NGJhMiAxMDAlKTsKICAgICAgbWluLWhlaWdodDogMTAwdmg7CiAgICAgIGRpc3BsYXk6IGZsZXg7CiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwogICAgICBwYWRkaW5nOiAyMHB4OwogICAgfQoKICAgIC5mb3JtLWNvbnRhaW5lciB7CiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7CiAgICAgIHBhZGRpbmc6IDQwcHg7CiAgICAgIGJvcmRlci1yYWRpdXM6IDE2cHg7CiAgICAgIGJveC1zaGFkb3c6IDAgMTBweCA0MHB4IHJnYmEoMCwgMCwgMCwgMC4xNSk7CiAgICAgIHdpZHRoOiAxMDAlOwogICAgICBtYXgtd2lkdGg6IDUwMHB4OwogICAgfQoKICAgIGgxIHsKICAgICAgY29sb3I6ICMyZDM3NDg7CiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgbWFyZ2luLWJvdHRvbTogOHB4OwogICAgICBmb250LXNpemU6IDI4cHg7CiAgICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICB9CgogICAgLnN1YnRpdGxlIHsKICAgICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgICBjb2xvcjogIzcxODA5NjsKICAgICAgbWFyZ2luLWJvdHRvbTogMzJweDsKICAgICAgZm9udC1zaXplOiAxNHB4OwogICAgfQoKICAgIC5mb3JtLWdyb3VwIHsKICAgICAgbWFyZ2luLWJvdHRvbTogMjRweDsKICAgIH0KCiAgICAucmFkaW8tZ3JvdXAgewogICAgICBkaXNwbGF5OiBmbGV4OwogICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAgICBnYXA6IDEycHg7CiAgICB9CgogICAgbGFiZWwgewogICAgICBmb250LXdlaWdodDogNjAwOwogICAgICBjb2xvcjogIzJkMzc0ODsKICAgICAgZm9udC1zaXplOiAxNXB4OwogICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICB9CgogICAgaW5wdXRbdHlwZT0icmFkaW8iXSB7CiAgICAgIG1hcmdpbi1yaWdodDogOHB4OwogICAgfQoKICAgIC5zdWJtaXQtYnRuIHsKICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzI4YTc0NSAwJSwgIzIxODgzOCAxMDAlKTsKICAgICAgY29sb3I6IHdoaXRlOwogICAgICBwYWRkaW5nOiAxNnB4IDMycHg7CiAgICAgIGJvcmRlcjogbm9uZTsKICAgICAgYm9yZGVyLXJhZGl1czogOHB4OwogICAgICBmb250LXNpemU6IDE2cHg7CiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgd2lkdGg6IDEwMCU7CiAgICAgIHRyYW5zaXRpb246IDAuM3MgZWFzZTsKICAgICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTsKICAgIH0KCiAgICAuc3VibWl0LWJ0bjpob3ZlciB7CiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsKICAgIH0KCiAgICAucmVxdWlyZWQtaW5kaWNhdG9yIHsKICAgICAgY29sb3I6ICNlNTNlM2U7CiAgICAgIG1hcmdpbi1sZWZ0OiA0cHg7CiAgICB9CiAgPC9zdHlsZT4KPC9oZWFkPgoKPGJvZHk+CiAgPGgxPlBheW1lbnQgU3RhdHVzPC9oMT4KICA8cCBjbGFzcz0ic3VidGl0bGUiPlBsZWFzZSBzZWxlY3QgeW91ciBwYXltZW50IGRlY2lzaW9uPC9wPgoKICA8Zm9ybSBpZD0icGF5bWVudF9mb3JtX21vdG9yIiBtZXRob2Q9IlBPU1QiIGFjdGlvbj0iPCU9IGFjdGlvblVybCAlPiI+CgoKCgoKICAgIDxsYWJlbCBmb3I9ImlkVHlwZSI+CiAgUGF5bWVudCBTdGF0dXMKICA8c3BhbiBjbGFzcz0icmVxdWlyZWQtaW5kaWNhdG9yIj4qPC9zcGFuPgo8L2xhYmVsPgoKICAgIDxzZWxlY3QgaWQ9ImlkVHlwZSIgbmFtZT0iaWRUeXBlIiByZXF1aXJlZD4KICA8b3B0aW9uIHZhbHVlPSIiPi0tIFNlbGVjdCAgLS08L29wdGlvbj4KICA8b3B0aW9uIHZhbHVlPSJGQUlMRUQiPiBOb3QgUGF5PC9vcHRpb24+Cjwvc2VsZWN0PgoKCiAKCiAgICA8YnV0dG9uIHR5cGU9InN1Ym1pdCIgY2xhc3M9InN1Ym1pdC1idG4iPlN1Ym1pdDwvYnV0dG9uPgoKICAgIDxzY3JpcHQ+CiAgICAgIChmdW5jdGlvbiAoKSB7CgogIHZhciBiYXBVcmkgPQogICAgbmV3IFVSTFNlYXJjaFBhcmFtcyh3aW5kb3cubG9jYXRpb24uc2VhcmNoKQogICAgICAuZ2V0KCdiYXBfdXJpJykgfHwgJyc7CiAgdmFyIHRyYW5zYWN0aW9uSWQgPSBuZXcgVVJMU2VhcmNoUGFyYW1zKHdpbmRvdy5sb2NhdGlvbi5zZWFyY2gpLmdldCgndHJhbnNhY3Rpb25faWQnKSB8fCAnJzsgICAgCgogIGZ1bmN0aW9uIHN1Ym1pdEZvcm0oZm9ybSkgewogICAgcmV0dXJuIGZldGNoKGZvcm0uYWN0aW9uLCB7CiAgICAgIG1ldGhvZDogJ1BPU1QnLAogICAgICBoZWFkZXJzOiB7CiAgICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi94LXd3dy1mb3JtLXVybGVuY29kZWQnCiAgICAgIH0sCiAgICAgIGJvZHk6IG5ldyBVUkxTZWFyY2hQYXJhbXMoCiAgICAgICAgbmV3IEZvcm1EYXRhKGZvcm0pCiAgICAgICkudG9TdHJpbmcoKQogICAgfSkKICAgIC50aGVuKGZ1bmN0aW9uIChyZXMpIHsKICAgICAgaWYgKCFyZXMub2spIHsKICAgICAgICB0aHJvdyBuZXcgRXJyb3IoCiAgICAgICAgICAnRm9ybSBzdWJtaXNzaW9uIGZhaWxlZCB3aXRoIEhUVFAgJyArCiAgICAgICAgICByZXMuc3RhdHVzCiAgICAgICAgKTsKICAgICAgfQoKICAgICAgcmV0dXJuIHJlcy50ZXh0KCk7CiAgICB9KTsKICB9CgogIGZ1bmN0aW9uIHNlbmRDYWxsYmFjaygpIHsKCiAgICBpZiAoIWJhcFVyaSkgewogICAgICBjb25zb2xlLndhcm4oCiAgICAgICAgJ2JhcF91cmkgbWlzc2luZy4gU2tpcHBpbmcgY2FsbGJhY2suJwogICAgICApOwogICAgICByZXR1cm4gUHJvbWlzZS5yZXNvbHZlKCk7CiAgICB9CgogICAgIHJldHVybiBmZXRjaChiYXBVcmkucmVwbGFjZSgvXC8rJC8sICcnKSArICcvY2FsbGJhY2s/dHJhbnNhY3Rpb25faWQ9JyArIHRyYW5zYWN0aW9uSWQgKyAnJywgewogICAgbWV0aG9kOiAnR0VUJwogIH0pLnRoZW4oZnVuY3Rpb24gKHJlcykgewogICAgaWYgKCFyZXMub2spIHsKICAgICAgdGhyb3cgbmV3IEVycm9yKCdjYWxsYmFjayBmYWlsZWQgd2l0aCBIVFRQICcgKyByZXMuc3RhdHVzKTsKICAgIH0KICB9KTsKfQoKICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKAogICAgJ0RPTUNvbnRlbnRMb2FkZWQnLAogICAgZnVuY3Rpb24gKCkgewoKICAgICAgdmFyIGZvcm0gPQogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKAogICAgICAgICAgJ3BheW1lbnRfZm9ybV9tb3RvcicKICAgICAgICApOwoKICAgICAgdmFyIHN1Ym1pdEJ0biA9CiAgICAgICAgZm9ybS5xdWVyeVNlbGVjdG9yKAogICAgICAgICAgJ2J1dHRvblt0eXBlPSJzdWJtaXQiXScKICAgICAgICApOwoKICAgICAgZm9ybS5hZGRFdmVudExpc3RlbmVyKAogICAgICAgICdzdWJtaXQnLAogICAgICAgIGZ1bmN0aW9uIChlKSB7CgogICAgICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwoKICAgICAgICAgIHN1Ym1pdEJ0bi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgICBzdWJtaXRCdG4udGV4dENvbnRlbnQgPQogICAgICAgICAgICAnUHJvY2Vzc2luZy4uLic7CgogICAgICAgICAgdmFyIHN1Ym1pdHRlZEh0bWwgPSBudWxsOwoKICAgICAgICAgIHN1Ym1pdEZvcm0oZm9ybSkKICAgICAgICAgICAgLnRoZW4oZnVuY3Rpb24gKGh0bWwpIHsKCiAgICAgICAgICAgICAgc3VibWl0dGVkSHRtbCA9IGh0bWw7CgogICAgICAgICAgICAgIHJldHVybiBzZW5kQ2FsbGJhY2soKTsKICAgICAgICAgICAgfSkKICAgICAgICAgICAgLnRoZW4oZnVuY3Rpb24gKCkgewoKICAgICAgICAgICAgICBkb2N1bWVudC5vcGVuKCk7CiAgICAgICAgICAgICAgZG9jdW1lbnQud3JpdGUoc3VibWl0dGVkSHRtbCk7CiAgICAgICAgICAgICAgZG9jdW1lbnQuY2xvc2UoKTsKICAgICAgICAgICAgfSkKICAgICAgICAgICAgLmNhdGNoKGZ1bmN0aW9uIChlcnIpIHsKCiAgICAgICAgICAgICAgY29uc29sZS5lcnJvcihlcnIpOwoKICAgICAgICAgICAgICBzdWJtaXRCdG4uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgICAgICAgICBzdWJtaXRCdG4udGV4dENvbnRlbnQgPQogICAgICAgICAgICAgICAgJ1N1Ym1pdCc7CgogICAgICAgICAgICAgIGFsZXJ0KGVyci5tZXNzYWdlKTsKICAgICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICApOwogICAgfQogICk7Cgp9KSgpOwogICAgPC9zY3JpcHQ+CiAgPC9mb3JtPgogIDwvZGl2Pgo8L2JvZHk+Cgo8L2h0bWw+
     examples:
       - name: example for dynamic_form
         payload:
-          idType: PAY
+          idType: FAILED
         type: request
         description: The BPP requests the BAP to present a dynamic form for collecting
           applicant identity credentials and personal details required for motor
           insurance underwriting and policy issuance.
   - api: on_update
-    action_id: on_update_unsolicited_motor
+    action_id: on_update_payment_failed_motor
     owner: BPP
     responseFor: null
     unsolicited: true
-    description: The BPP proactively notifies the BAP of a state change in the motor
-      insurance order, conveying updates to fulfillments, claim documentation,
-      and payment details without awaiting a request from the BAP.
+    description: The BPP sends an unsolicited on_update notifying the BAP that the
+      payment has FAILED (insufficient balance), updating the payment status to
+      FAILED and attaching ERROR_INFORMATION tags describing the reason.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCgoKCiAgaWYgKHNlc3Npb25EYXRhLm9yZGVyKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IHNlc3Npb25EYXRhLm9yZGVyWzBdLmZ1bGZpbGxtZW50czsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnN0YXRlID0gewogICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAiY29kZSI6ICJHUkFOVEVEIgogICAgICB9CiAgICB9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0uaXRlbXM7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0uaWQ7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0ucGF5bWVudHM7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0ucHJvdmlkZXI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0ucXVvdGU7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnN0YXR1cyA9ICJBQ1RJVkUiOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5zdGF0dXMgPSAiUEFJRCI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnBhcmFtcy50cmFuc2FjdGlvbl9pZCA9IHV1aWR2NCgpOwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ueGlucHV0OwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0udXJsOwogIH0KCgoKICAKCiAgLy8gU2V0dXBkYXRlZF9hdCB0byBjdXJyZW50IGRhdGUKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXIpIHsKICAgIGNvbnN0IG5vdyA9IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQpIHsKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbm93OwogICAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNyZWF0ZWRfYXQgPSBzZXNzaW9uRGF0YS5jcmVhdGVkX2F0WzBdOwogICAgfQogIH0KCiAKIAogCgogIC8vIFVwZGF0ZSBkb2N1bWVudCBVUkxzIHRvIHVzZSBkeW5hbWljIGZvcm0gc2VydmljZSBVUkxzCiAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2U/Lm9yZGVyPy5kb2N1bWVudHMpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZG9jdW1lbnRzID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5kb2N1bWVudHMubWFwKChkb2MpID0+IHsKICAgICAgaWYgKGRvYy5kZXNjcmlwdG9yPy5jb2RlID09PSAnQ0xBSU1fRE9DJyAmJiBkb2MubWltZV90eXBlID09PSAnYXBwbGljYXRpb24vaHRtbCcpIHsKICAgICAgICBkb2MudXJsID0gY3JlYXRlRm9ybVVSTCgiT05EQzpGSVMxMyIsICJjbGFpbV9mb3JtX21vdG9yIiwgc2Vzc2lvbkRhdGEpKyAnJmJhcF91cmk9JyArIGVuY29kZVVSSUNvbXBvbmVudChkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJhcF91cmkpOwogICAgICB9CgogICAgICByZXR1cm4gZG9jOwogICAgfSk7CiAgfQogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIGlmICghdGFyZ2V0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXIpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIlRhcmdldCBwYXlsb2FkIGlzIG1pc3NpbmcgbWVzc2FnZS5vcmRlci4iCiAgICB9OwogIH0KCiAgaWYgKCF0YXJnZXRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzPy5sZW5ndGgpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIlRhcmdldCBwYXlsb2FkIG11c3QgY29udGFpbiBhdCBsZWFzdCBvbmUgZnVsZmlsbG1lbnQuIgogICAgfTsKICB9CgogIGlmICghdGFyZ2V0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzPy5sZW5ndGgpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIlRhcmdldCBwYXlsb2FkIG11c3QgY29udGFpbiBhdCBsZWFzdCBvbmUgcGF5bWVudC4iCiAgICB9OwogIH0KCiAgaWYgKCF0YXJnZXRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXM/Lmxlbmd0aCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiVGFyZ2V0IHBheWxvYWQgbXVzdCBjb250YWluIGF0IGxlYXN0IG9uZSBpdGVtLiIKICAgIH07CiAgfQoKICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgIGlmICghc2Vzc2lvbkRhdGE/Lm9yZGVyPy5bMF0pIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIk1pc3Npbmcgb3JkZXIgaW4gc2Vzc2lvbiBkYXRhLiIKICAgIH07CiAgfQoKICBpZiAoIXNlc3Npb25EYXRhPy5jcmVhdGVkX2F0Py5bMF0pIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIk1pc3NpbmcgY3JlYXRlZF9hdCBpbiBzZXNzaW9uIGRhdGEuIgogICAgfTsKICB9CgogIGNvbnN0IG9yZGVyID0gc2Vzc2lvbkRhdGEub3JkZXJbMF07CgogIGlmICghb3JkZXIuZnVsZmlsbG1lbnRzPy5sZW5ndGgpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIk9yZGVyIG11c3QgY29udGFpbiBmdWxmaWxsbWVudHMuIgogICAgfTsKICB9CgogIGlmICghb3JkZXIucGF5bWVudHM/Lmxlbmd0aCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgbXVzdCBjb250YWluIHBheW1lbnRzLiIKICAgIH07CiAgfQoKICBpZiAoIW9yZGVyLml0ZW1zPy5sZW5ndGgpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIk9yZGVyIG11c3QgY29udGFpbiBpdGVtcy4iCiAgICB9OwogIH0KCiAgaWYgKCFvcmRlci5wcm92aWRlcikgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgcHJvdmlkZXIgaXMgbWlzc2luZy4iCiAgICB9OwogIH0KCiAgaWYgKCFvcmRlci5xdW90ZSkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgcXVvdGUgaXMgbWlzc2luZy4iCiAgICB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgLy8gQnVpbGQgdGhlIG9uX3VwZGF0ZSAocGF5bWVudCBGQUlMRUQpIHBheWxvYWQgZnJvbSB0aGUgb25fY29uZmlybSBvcmRlciBpbiBzZXNzaW9uLgogIGlmIChzZXNzaW9uRGF0YS5vcmRlcikgewogICAgY29uc3Qgb3JkZXIgPSBzZXNzaW9uRGF0YS5vcmRlclswXTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIgPSBvcmRlcjsKICAgIC8vIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBvLnByb3ZpZGVyOwogICAgLy8gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IG8uaXRlbXM7CiAgICAvLyBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IG8uZnVsZmlsbG1lbnRzOwogICAgLy8gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5xdW90ZSA9IG8ucXVvdGU7CiAgICAvLyBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzID0gby5wYXltZW50czsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuc3RhdHVzID0gIkFDVElWRSI7CgogICAgLy8gTWFyayB0aGUgcGF5bWVudCBhcyBGQUlMRUQgYW5kIGF0dGFjaCB0aGUgZXJyb3IgaW5mb3JtYXRpb24gdGFncy4KICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0uc3RhdHVzID0gIkZBSUxFRCI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnRhZ3MgPSBbCiAgICAgIHsKICAgICAgICBkZXNjcmlwdG9yOiB7IGNvZGU6ICJFUlJPUl9JTkZPUk1BVElPTiIgfSwKICAgICAgICBkaXNwbGF5OiBmYWxzZSwKICAgICAgICBsaXN0OiBbCiAgICAgICAgICB7IGRlc2NyaXB0b3I6IHsgY29kZTogIlJFQVNPTl9NRVNTQUdFIiB9LCB2YWx1ZTogIlRoZSBiYW5rIGFjY291bnQgaGFzIGluc3VmZmljaWVudCBiYWxhbmNlLiIgfQogICAgICAgIF0KICAgICAgfQogICAgXTsKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnVybDsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zICYmIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0pIHsKICAgICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ueGlucHV0OwogICAgfQogIH0KCiAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UgJiYgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlcikgewogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogICAgaWYgKHNlc3Npb25EYXRhLmNyZWF0ZWRfYXQpIHsKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gc2Vzc2lvbkRhdGEuY3JlYXRlZF9hdFswXTsKICAgIH0KICB9CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBwYXltZW50cyA9IHRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5wYXltZW50cyB8fCBbXTsKICBjb25zdCBmYWlsZWQgPSBwYXltZW50cy5maW5kKChwKSA9PiBwLnN0YXR1cyA9PT0gIkZBSUxFRCIpOwogIGlmICghZmFpbGVkKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMDAwLCBkZXNjcmlwdGlvbjogIm9uX3VwZGF0ZSBtdXN0IGNhcnJ5IGEgcGF5bWVudCB3aXRoIHN0YXR1cyBGQUlMRUQiIH07CiAgfQogIGNvbnN0IGhhc0VyciA9IChmYWlsZWQudGFncyB8fCBbXSkuc29tZSgodCkgPT4gdD8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkVSUk9SX0lORk9STUFUSU9OIik7CiAgaWYgKCFoYXNFcnIpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwMDAsIGRlc2NyaXB0aW9uOiAiRkFJTEVEIHBheW1lbnQgbXVzdCBpbmNsdWRlIEVSUk9SX0lORk9STUFUSU9OIHRhZ3MiIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBpZiAoIXNlc3Npb25EYXRhLm9yZGVyIHx8ICFzZXNzaW9uRGF0YS5vcmRlclswXSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAwMCwgZGVzY3JpcHRpb246ICJvbl9jb25maXJtIG9yZGVyIG5vdCBmb3VuZCBpbiBzZXNzaW9uIiB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
       defaultPayload:
         context:
-          domain: ONDC:FIS13
           action: on_update
-          timestamp: 2026-04-10T07:45:45.148Z
-          transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
-          message_id: 74f32020-9995-4c05-927a-f0805052653c
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
-          ttl: PT30S
           bpp_id: bpp.example.com
           bpp_uri: https://bpp.example.com
-          version: 2.0.0
+          domain: ONDC:FIS13
           location:
-            country:
-              code: IND
             city:
               code: "*"
+            country:
+              code: IND
+          message_id: 74f32020-9995-4c05-927a-f0805052653c
+          timestamp: 2026-04-10T07:45:45.148Z
+          transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+          ttl: PT30S
+          version: 2.0.0
         message:
           order:
-            id: O1
+            id: ""
             status: ACTIVE
-            documents:
-              - descriptor:
-                  code: POLICY_DOC
-                  name: Motor Policy Document
-                  short_desc: Download your digitally signed policy document here
-                  long_desc: "Document is password protected. Password: DDMMMYYYYXXXX"
-                mime_type: application/pdf
-                url: https://abcinsurance.com/policies/O1.pdf
-              - descriptor:
-                  code: CLAIM_DOC
-                  name: Claim Insurance Policy
-                  short_desc: Buyer can claim their insurance using this link
-                  long_desc: Buyer can claim their insurance by visiting the below url
-                mime_type: application/html
-                url: https://abcinsurance.com/claim-policy/
-            created_at: 2023-07-24T05:41:32.487Z
-            updated_at: 2023-07-24T05:41:32.487Z
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -7086,19 +6869,19 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
         order: $.message.order
-        second_fulfillment_id: $.message.order.fulfillments[1].id
-        claim_form_motor: $.message.order.documents[?(@.descriptor.code=='CLAIM_DOC')].url
+        order_id: $.message.order.id
         payment_id: $.message.order.payments[0].id
       inputs: {}
+      examples: []
     examples:
       - name: example for on_update
         payload:
           context:
             domain: ONDC:FIS13
             action: on_update
-            timestamp: 2026-07-31T13:00:33.355Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 24d95e9d-6964-4c5e-b416-1085bfa3e5cc
+            timestamp: 2026-07-31T13:41:00.345Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: dd80f8a4-4580-4502-bd16-95ccd0c8ddfb
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -7112,25 +6895,9 @@ steps:
                 code: "*"
           message:
             order:
-              id: eff5e31b-b2f2-4cd6-82cc-b0b548ea9cc2
+              id: cc239317-a277-4fd1-8f07-d83f7087c5e0
               status: ACTIVE
-              documents:
-                - descriptor:
-                    code: POLICY_DOC
-                    name: Motor Policy Document
-                    short_desc: Download your digitally signed policy document here
-                    long_desc: "Document is password protected. Password: DDMMMYYYYXXXX"
-                  mime_type: application/pdf
-                  url: https://abcinsurance.com/policies/O1.pdf
-                - descriptor:
-                    code: CLAIM_DOC
-                    name: Claim Insurance Policy
-                    short_desc: Buyer can claim their insurance using this link
-                    long_desc: Buyer can claim their insurance by visiting the below url
-                  mime_type: application/html
-                  url: undefined/forms/ONDC:FIS13/claim_form_motor/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
-              created_at: 2026-07-31T13:00:31.236Z
-              updated_at: 2026-07-31T13:00:33.357Z
+              updated_at: 2026-07-31T13:41:00.346Z
               fulfillments:
                 - customer:
                     contact:
@@ -7138,11 +6905,12 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
-                      code: GRANTED
+                      name: Insurance Initiated
+                      code: INITIATED
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -7313,39 +7081,25 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
                     bank_account_number: "1800002341"
                     bank_code: SBIN0001234
                     currency: INR
-                    transaction_id: 19be050b-6585-4dbc-b787-9497fdb1fbf5
-                  status: PAID
+                  status: FAILED
                   type: PRE-FULFILLMENT
                   tags:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
+                        code: ERROR_INFORMATION
                       display: false
                       list:
                         - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
+                            code: REASON_MESSAGE
+                          value: The bank account has insufficient balance.
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -7357,7 +7111,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -7391,46 +7145,52 @@ steps:
                       value: "0"
                       currency: INR
                 ttl: P15D
+              created_at: 2026-07-31T13:40:57.820Z
         type: request
-        description: The BPP proactively notifies the BAP of a state change in the motor
-          insurance order, conveying updates to fulfillments, claim
-          documentation, and payment details without awaiting a request from the
-          BAP.
-  - api: cancel
-    action_id: cancel_motor
+        description: The BPP sends an unsolicited on_update notifying the BAP that the
+          payment has FAILED (insufficient balance), updating the payment status
+          to FAILED and attaching ERROR_INFORMATION tags describing the reason.
+  - api: update
+    action_id: update_payment_motor
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP initiates motor insurance order cancellation by submitting
-      a cancel request to the BPP, which processes the cancellation and returns
-      the canceled order details.
+    description: The BAP retries payment by sending an update with update_target
+      order.payments, reusing the order id and payment params from the session.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3QgdXNlcklucHV0cyA9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIHx8IHt9OwogIGNvbnN0IGNhbmNlbGxhdGlvbklkID0gdXNlcklucHV0cy5jYW5jZWxsYXRpb25fcmVhc29uX2lkOwogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UuY2FuY2VsbGF0aW9uX3JlYXNvbl9pZCA9IGNhbmNlbGxhdGlvbklkOwogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXJfaWQgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5pZDsKCgoKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICAgaWYgKCF0YXJnZXRQYXlsb2FkPy5tZXNzYWdlKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJUYXJnZXQgcGF5bG9hZCBpcyBtaXNzaW5nIG1lc3NhZ2UuIgogICAgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgCgogIGlmICghc2Vzc2lvbkRhdGEudXNlcl9pbnB1dHMuY2FuY2VsbGF0aW9uX3JlYXNvbl9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBjYW5jZWxsYXRpb25fcmVhc29uX2lkIGluIHVzZXIgaW5wdXRzLiIKICAgIH07CiAgfQoKICBpZiAoIXNlc3Npb25EYXRhPy5vcmRlcj8uWzBdPy5pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlciBJRCBpbiBzZXNzaW9uIGRhdGEuIgogICAgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgLy8gQkFQIHJldHJpZXMgcGF5bWVudDogdXBkYXRlX3RhcmdldCA9IG9yZGVyLnBheW1lbnRzLCB1c2luZyB0aGUgb3JkZXIgaWQgYW5kCiAgLy8gcGF5bWVudCBwYXJhbXMgc2F2ZWQgaW4gdGhlIHNlc3Npb24gKG5vdCBoYXJkY29kZWQpLgogIGlmIChzZXNzaW9uRGF0YS5vcmRlcikgewogICAgY29uc3QgbyA9IHNlc3Npb25EYXRhLm9yZGVyWzBdOwogICAgY29uc3Qgc3JjID0gKG8ucGF5bWVudHMgJiYgby5wYXltZW50c1swXSkgfHwge307CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gby5pZDsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMgPSBbCiAgICAgIHsKICAgICAgICBjb2xsZWN0ZWRfYnk6IHNyYy5jb2xsZWN0ZWRfYnksCiAgICAgICAgcGFyYW1zOiBzcmMucGFyYW1zLAogICAgICAgIHR5cGU6IHNyYy50eXBlCiAgICAgIH0KICAgIF07CiAgfQogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBtc2cgPSB0YXJnZXRQYXlsb2FkPy5tZXNzYWdlIHx8IHt9OwogIGlmIChtc2cudXBkYXRlX3RhcmdldCAhPT0gIm9yZGVyLnBheW1lbnRzIikgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAwMCwgZGVzY3JpcHRpb246ICJ1cGRhdGVfdGFyZ2V0IG11c3QgYmUgb3JkZXIucGF5bWVudHMiIH07CiAgfQogIGlmICghbXNnLm9yZGVyPy5wYXltZW50cz8ubGVuZ3RoKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMDAwLCBkZXNjcmlwdGlvbjogInVwZGF0ZSBtdXN0IGluY2x1ZGUgb3JkZXIucGF5bWVudHMiIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBpZiAoIXNlc3Npb25EYXRhLm9yZGVyIHx8ICFzZXNzaW9uRGF0YS5vcmRlclswXSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAwMCwgZGVzY3JpcHRpb246ICJvbl9jb25maXJtIG9yZGVyIG5vdCBmb3VuZCBpbiBzZXNzaW9uIiB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
       defaultPayload:
         context:
-          domain: ONDC:FIS13
-          action: cancel
-          timestamp: 2026-04-10T07:45:44.199Z
-          transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-          message_id: c2c9c267-5dc1-405f-a1ce-75e7194f10c9
+          action: update
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
-          ttl: PT30S
           bpp_id: bpp.example.com
           bpp_uri: https://bpp.example.com
-          version: 2.0.0
+          domain: ONDC:FIS13
           location:
-            country:
-              code: IND
             city:
               code: "*"
+            country:
+              code: IND
+          message_id: 74f32020-9995-4c05-927a-f0805052653c
+          timestamp: 2026-04-10T07:45:45.148Z
+          transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+          ttl: PT30S
+          version: 2.0.0
         message:
-          cancellation_reason_id: "5"
-          descriptor:
-            short_desc: User bought other policy
-          order_id: POLICY_ID
+          update_target: order.payments
+          order:
+            id: ""
+            payments:
+              - collected_by: BPP
+                params:
+                  amount: ""
+                  bank_account_number: ""
+                  bank_code: ""
+                  currency: INR
+                type: PRE-FULFILLMENT
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -7440,112 +7200,17 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
-        order_id: $.message.order_id
-        provider_id: $.message.order.provider.id
-      inputs:
-        id: cancellation_reason_input
-        jsonSchema:
-          $schema: http://json-schema.org/draft-07/schema#
-          type: object
-          properties:
-            cancellation_reason_id:
-              type: string
-              title: Select a reason_id
-              enum:
-                - "01"
-                - "02"
-                - "03"
-                - "04"
-                - "05"
-              default: "05"
-          required:
-            - cancellation_reason_id
-          additionalProperties: false
-          default: {}
-    examples:
-      - name: example for cancel
-        payload:
-          context:
-            domain: ONDC:FIS13
-            action: cancel
-            timestamp: 2026-07-31T13:00:35.701Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a028624d-3339-46cb-a806-3e70b5efd987
-            bap_id: bap.example.com
-            bap_uri: https://bap.example.com
-            ttl: PT30S
-            bpp_id: bpp.example.com
-            bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: "*"
-          message:
-            cancellation_reason_id: "05"
-            descriptor:
-              short_desc: User bought other policy
-            order_id: eff5e31b-b2f2-4cd6-82cc-b0b548ea9cc2
-        type: request
-        description: The BAP initiates motor insurance order cancellation by submitting
-          a cancel request to the BPP, which processes the cancellation and
-          returns the canceled order details.
-  - api: on_cancel
-    action_id: on_cancel_motor
-    owner: BPP
-    responseFor: cancel_motor
-    unsolicited: false
-    description: The BPP sends an on_cancel response message that acknowledges the
-      motor insurance policy cancellation and provides the updated order state
-      with fulfillment and payment details.
-    mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCgogIGlmIChzZXNzaW9uRGF0YS5vcmRlcikgewogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlciA9IHNlc3Npb25EYXRhLm9yZGVyWzBdOwogICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuc3RhdHVzID0gIkNBTkNFTExBVElPTl9JTklUSUFURUQiOwogIH0KCgogCiAKICAvLyBTZXQgdXBkYXRlZF9hdCB0byBjdXJyZW50IGRhdGUKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXIpIHsKICAgIGNvbnN0IG5vdyA9IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQpIHsKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbm93OwogICAgfQogIH0KCiAKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJUYXJnZXQgcGF5bG9hZCBpcyBtaXNzaW5nIG1lc3NhZ2Uub3JkZXIuIgogICAgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgIGlmICghc2Vzc2lvbkRhdGE/Lm9yZGVyPy5bMF0pIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIk1pc3Npbmcgb3JkZXIgaW4gc2Vzc2lvbiBkYXRhLiIKICAgIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
-      defaultPayload:
-        context:
-          domain: ONDC:FIS13
-          action: on_cancel
-          timestamp: 2026-04-10T07:45:44.199Z
-          transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-          message_id: 78bd2fb9-49b0-47f9-bee1-f34266cbeaf4
-          bap_id: bap.example.com
-          bap_uri: https://bap.example.com
-          ttl: PT30S
-          bpp_id: bpp.example.com
-          bpp_uri: https://bpp.example.com
-          version: 2.0.0
-          location:
-            country:
-              code: IND
-            city:
-              code: "*"
-        message:
-          order: {}
-      saveData:
-        transactionId: $.context.transaction_id
-        latestMessage_id: $.context.message_id
-        latestTimestamp: $.context.timestamp
-        bapId: $.context.bap_id
-        bapUri: $.context.bap_uri
-        bppId: $.context.bpp_id
-        bppUri: $.context.bpp_uri
-        city_code: $.context.location.city.code
-        order: $.message.order
-        second_fulfillment_id: $.message.order.fulfillments[1].id
-        provider_id: $.message.order.provider.id
-        payment_id: $.message.order.payments[0].id
       inputs: {}
+      examples: []
     examples:
-      - name: example for on_cancel
+      - name: example for update
         payload:
           context:
             domain: ONDC:FIS13
-            action: on_cancel
-            timestamp: 2026-07-31T13:00:35.719Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: a028624d-3339-46cb-a806-3e70b5efd987
+            action: update
+            timestamp: 2026-07-31T13:41:00.368Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 2b111ced-3bad-48ed-9335-cf8ea1a08c3c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -7558,321 +7223,55 @@ steps:
               city:
                 code: "*"
           message:
+            update_target: order.payments
             order:
-              id: eff5e31b-b2f2-4cd6-82cc-b0b548ea9cc2
-              status: CANCELLATION_INITIATED
-              documents:
-                - descriptor:
-                    code: POLICY_DOC
-                    name: Motor Policy Document
-                    short_desc: Download your digitally signed policy document here
-                    long_desc: "Document is password protected. Password: DDMMMYYYYXXXX"
-                  mime_type: application/pdf
-                  url: https://abcinsurance.com/policies/O1.pdf
-                - descriptor:
-                    code: CLAIM_DOC
-                    name: Claim Insurance Policy
-                    short_desc: Buyer can claim their insurance using this link
-                    long_desc: Buyer can claim their insurance by visiting the below url
-                  mime_type: application/html
-                  url: undefined/forms/ONDC:FIS13/claim_form_motor/?transaction_id=4ef70074-2f56-4bb3-a504-ec55e559c572&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
-              created_at: 2026-07-31T13:00:31.236Z
-              updated_at: 2026-07-31T13:00:35.720Z
-              fulfillments:
-                - customer:
-                    contact:
-                      email: joe.adam@abc.org
-                      phone: +91-9999999999
-                    person:
-                      name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
-                  type: POLICY
-                  state:
-                    descriptor:
-                      code: GRANTED
-              items:
-                - id: CHILD_ITEM_CI1
-                  parent_item_id: I1
-                  category_ids:
-                    - C1
-                    - C2
-                    - C3
-                  descriptor:
-                    name: 2-Wheeler 3rd Party Motor Insurance
-                    short_desc: 2-Wheeler 3rd Party Motor Insurance by ABC Insurance Provider
-                    images:
-                      - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
-                        size_type: xs
-                  price:
-                    value: "12531"
-                    currency: INR
-                  tags:
-                    - descriptor:
-                        code: GENERAL_INFO
-                      list:
-                        - descriptor:
-                            code: PERSONAL_ACCIDENT_COVER
-                          value: "10000000"
-                        - descriptor:
-                            code: DEPRECIATION_COVER
-                          value: Yes
-                        - descriptor:
-                            code: ROAD_SIDE_ASSISTANCE
-                          value: "25000"
-                        - descriptor:
-                            code: CONSUMABLES_COVER
-                          value: No
-                        - descriptor:
-                            code: ELECTRICAL_ACCESSORIES_COVER
-                          value: "0.8"
-                        - descriptor:
-                            code: NON_ELECTRICAL_ACCESSORIES_COVER
-                          value: "2"
-                        - descriptor:
-                            code: ENGINE_COVER
-                          value: "5"
-                        - descriptor:
-                            code: EXTERNAL_CNG_OR_LPG_COVER
-                          value: Yes
-                        - descriptor:
-                            code: KEY_COVER
-                          value: No
-                        - descriptor:
-                            code: PERSONAL_BAGGAGE_COVER
-                          value: "50"
-                        - descriptor:
-                            code: TYRE_COVER
-                          value: "50"
-                        - descriptor:
-                            code: RETURN_TO_INVOICE
-                          value: "50"
-                        - descriptor:
-                            code: PER_DAY_CASH
-                          value: "50"
-                        - descriptor:
-                            code: MANUAL_REVIEW
-                            name: Manual Review
-                            short_desc: Describes manual review value
-                          value: "true"
-                        - descriptor:
-                            code: IDV_VALUE
-                            name: IDV value
-                            short_desc: Describes the IDV value
-                          value: "300000"
-                        - descriptor:
-                            code: PREMIUM
-                            name: Premium
-                          value: "12531"
-                        - descriptor:
-                            code: OWN_DAMAGE_PREMIUM
-                            name: Own Damage Premium
-                          value: "9000"
-                        - descriptor:
-                            code: THIRD_PARTY_PREMIUM
-                            name: Third Party Premium
-                          value: "3531"
-                        - descriptor:
-                            code: NCB_DISCOUNT_PERCENTAGE
-                            name: NCB Discount Percentage
-                          value: 10 %
-                        - descriptor:
-                            code: NCB_DISCOUNT_AMOUNT
-                            name: NCB Discount Amount
-                          value: "1000"
-                        - descriptor:
-                            code: OD_DISCOUNT_PERCENTAGE
-                            name: OD Discount Percentage
-                          value: 10 %
-                        - descriptor:
-                            code: OD_DISCOUNT_AMOUNT
-                            name: OD Discount Amount
-                          value: "1000"
-                    - descriptor:
-                        code: VAHAN_DETAILS
-                        name: Vahan Details
-                      list:
-                        - descriptor:
-                            code: MODEL
-                          value: X100
-                        - descriptor:
-                            code: MAKE
-                          value: BMX
-                        - descriptor:
-                            code: FUEL_TYPE
-                          value: Petrol
-                        - descriptor:
-                            code: VARIANT
-                          value: ZX
-                        - descriptor:
-                            code: REGISTERED_CITY
-                          value: Bangalore
-                        - descriptor:
-                            code: REGISTERED_DATE
-                          value: 2022-01-13T00:00:00.000Z
-                        - descriptor:
-                            code: CHASSIS_NUMBER
-                          value: nvuwi3n23io90
-                        - descriptor:
-                            code: ENGINE_NUMBER
-                          value: 98vd98e32
-                        - descriptor:
-                            code: PREVIOUS_POLICY_NUMBER
-                          value: f5f90d6e8f924
-                        - descriptor:
-                            code: PREVIOUS_INSURER
-                          value: XYZ
-                        - descriptor:
-                            code: PREVIOUS_POLICY_END_DATE
-                          value: 2022-01-02T00:00:00.000Z
-                  time:
-                    duration: P1Y
-                    label: TENURE
-                  add_ons:
-                    - id: A1
-                      price:
-                        currency: INR
-                        value: "900"
-                      quantity:
-                        selected:
-                          count: 1
-                      descriptor:
-                        name: Consumables Cover
-                        code: CONSUMABLES_COVER
-                      tags:
-                        - descriptor:
-                            name: Info
-                            code: INFO
-                          list:
-                            - descriptor:
-                                code: REQUIRED
-                              value: "TRUE"
-                            - descriptor:
-                                code: CUSTOMER_SELECTION
-                              value: YES
-                            - descriptor:
-                                code: SUM_INSURED
-                              value: "50000"
-                            - descriptor:
-                                code: NOMINEE_DETAILS
-                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
-                                  Last Name | Relationship | Contact Number'
-                                  represents a full name structure, where the
-                                  values are separated by a pipe (|) symbol
-                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
-                  fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+              id: cc239317-a277-4fd1-8f07-d83f7087c5e0
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
-                  collected_by: BPP
+                - collected_by: BPP
                   params:
                     amount: "12631"
                     bank_account_number: "1800002341"
                     bank_code: SBIN0001234
                     currency: INR
-                    transaction_id: 19be050b-6585-4dbc-b787-9497fdb1fbf5
-                  status: PAID
                   type: PRE-FULFILLMENT
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-              provider:
-                descriptor:
-                  long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
-                    Motor, Marine etc
-                  name: ABC Insurance Ltd.
-                  short_desc: "ABC Insurance Ltd. India "
-                  images:
-                    - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
-                      size_type: xs
-                id: pro909988888
-              quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
-                price:
-                  currency: INR
-                  value: "12631"
-                breakup:
-                  - price:
-                      value: "12531"
-                      currency: INR
-                    title: BASE_PRICE
-                  - price:
-                      value: "50"
-                      currency: INR
-                    title: CONVIENCE_FEE
-                  - price:
-                      value: "30"
-                      currency: INR
-                    title: TAX
-                  - price:
-                      value: "20"
-                      currency: INR
-                    title: PROCESSING_FEE
-                  - title: ADD_ONS
-                    item:
-                      id: A1
-                    price:
-                      value: "0"
-                      currency: INR
-                  - title: ADD_ONS
-                    item:
-                      id: A2
-                    price:
-                      value: "0"
-                      currency: INR
-                ttl: P15D
         type: request
-        description: The BPP sends an on_cancel response message that acknowledges the
-          motor insurance policy cancellation and provides the updated order
-          state with fulfillment and payment details.
+        description: The BAP retries payment by sending an update with update_target
+          order.payments, reusing the order id and payment params from the
+          session.
   - api: on_update
-    action_id: on_update_unsolicited5_motor
+    action_id: on_update_payment_retry_motor
     owner: BPP
-    responseFor: null
-    unsolicited: true
-    description: The BPP sends an unsolicited update to the BAP with motor insurance
-      cancellation order details, including fulfillment and payment information.
+    responseFor: update_payment_motor
+    unsolicited: false
+    description: The BPP responds to the retry by keeping the FAILED payment as the
+      first payment object and adding a second NOT-PAID payment object with a
+      freshly generated dynamic payment-form URL.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKHNlc3Npb25EYXRhLm9yZGVyKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyID0gc2Vzc2lvbkRhdGEub3JkZXJbMF07CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnN0YXR1cyA9ICJDQU5DRUxMRUQiOwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZG9jdW1lbnRzCiAgfQoKCgoKICAvLyBTZXQgdXBkYXRlZF9hdCB0byBjdXJyZW50IGRhdGUKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXIpIHsKICAgIGNvbnN0IG5vdyA9IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQpIHsKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbm93OwogICAgfQogIH0KCgoKCgoKCiAKCgogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
-      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJUYXJnZXQgcGF5bG9hZCBpcyBtaXNzaW5nIG1lc3NhZ2Uub3JkZXIuIgogICAgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
-      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgICAgaWYgKCFzZXNzaW9uRGF0YT8ub3JkZXI/LlswXSkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlciBpbiBzZXNzaW9uIGRhdGEuIgogICAgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgLy8gQlBQIHJlc3BvbmRzIHRvIHRoZSByZXRyeToga2VlcCB0aGUgRkFJTEVEIHBheW1lbnQgYXMgdGhlIGZpcnN0IG9iamVjdCBhbmQgYWRkIGEKICAvLyBzZWNvbmQgTk9ULVBBSUQgcGF5bWVudCBvYmplY3Qgd2l0aCBhIGZyZXNobHkgZ2VuZXJhdGVkIGR5bmFtaWMgcGF5bWVudC1mb3JtIFVSTC4KICBpZiAoc2Vzc2lvbkRhdGEub3JkZXIpIHsKICAgIGNvbnN0IG9yZGVyID0gc2Vzc2lvbkRhdGEub3JkZXJbMF07IC8vIHByZXZpb3VzIG9uX3VwZGF0ZSAoRkFJTEVEKSBvcmRlcgogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlciA9IG9yZGVyOwogICAKCiAgICAvLyBGaXJzdCBvYmplY3Q6IHRoZSBGQUlMRUQgcGF5bWVudCAoaWRlbXBvdGVudCwgaW4gY2FzZSB0aGUgc291cmNlIHdhcyB0aGUgb25fY29uZmlybSBvcmRlcikuCiAgICBjb25zdCBmYWlsZWQgPSBPYmplY3QuYXNzaWduKHt9LCBvcmRlci5wYXltZW50c1swXSk7CiAgICBmYWlsZWQuc3RhdHVzID0gIkZBSUxFRCI7CiAgICBmYWlsZWQudGFncyA9IFsKICAgICAgewogICAgICAgIGRlc2NyaXB0b3I6IHsgY29kZTogIkVSUk9SX0lORk9STUFUSU9OIiB9LAogICAgICAgIGRpc3BsYXk6IGZhbHNlLAogICAgICAgIGxpc3Q6IFsKICAgICAgICAgIHsgZGVzY3JpcHRvcjogeyBjb2RlOiAiUkVBU09OX01FU1NBR0UiIH0sIHZhbHVlOiAiVGhlIGJhbmsgYWNjb3VudCBoYXMgaW5zdWZmaWNpZW50IGJhbGFuY2UuIiB9CiAgICAgICAgXQogICAgICB9CiAgICBdOwogICAgZGVsZXRlIGZhaWxlZC51cmw7CgogICAgLy8gU2Vjb25kIG9iamVjdDogYSBuZXcgTk9ULVBBSUQgcGF5bWVudCB3aXRoIGEgZnJlc2ggZHluYW1pYyBwYXltZW50IFVSTC4KICAgIGNvbnN0IHJldHJ5VXJsID0gY3JlYXRlRm9ybVVSTCgiT05EQzpGSVMxMyIsICJwYXltZW50X2Zvcm1fbW90b3IiLCBzZXNzaW9uRGF0YSkgKwogICAgICAnJmJhcF91cmk9JyArIGVuY29kZVVSSUNvbXBvbmVudChkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJhcF91cmkpOwogICAgY29uc3QgcmV0cnkgPSB7CiAgICAgIGlkOiB1dWlkdjQoKSwKICAgICAgY29sbGVjdGVkX2J5OiBmYWlsZWQuY29sbGVjdGVkX2J5LAogICAgICB1cmw6IHJldHJ5VXJsLAogICAgICBwYXJhbXM6IGZhaWxlZC5wYXJhbXMsCiAgICAgIHN0YXR1czogIk5PVC1QQUlEIiwKICAgICAgdHlwZTogZmFpbGVkLnR5cGUKICAgIH07CgogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50cyA9IFtmYWlsZWQsIHJldHJ5XTsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zICYmIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0pIHsKICAgICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ueGlucHV0OwogICAgfQogIH0KCiAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UgJiYgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlcikgewogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogICAgaWYgKHNlc3Npb25EYXRhLmNyZWF0ZWRfYXQpIHsKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gc2Vzc2lvbkRhdGEuY3JlYXRlZF9hdFswXTsKICAgIH0KICB9CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBwYXltZW50cyA9IHRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5wYXltZW50cyB8fCBbXTsKICBpZiAocGF5bWVudHMubGVuZ3RoIDwgMikgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAwMCwgZGVzY3JpcHRpb246ICJvbl91cGRhdGUgbXVzdCBjYXJyeSBib3RoIHRoZSBGQUlMRUQgYW5kIHRoZSBuZXcgTk9ULVBBSUQgcGF5bWVudCIgfTsKICB9CiAgY29uc3Qgbm90UGFpZCA9IHBheW1lbnRzLmZpbmQoKHApID0+IHAuc3RhdHVzID09PSAiTk9ULVBBSUQiICYmIHAudXJsKTsKICBpZiAoIW5vdFBhaWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwMDAsIGRlc2NyaXB0aW9uOiAiQSBOT1QtUEFJRCBwYXltZW50IHdpdGggYSBwYXltZW50IHVybCBpcyByZXF1aXJlZCIgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBpZiAoIXNlc3Npb25EYXRhLm9yZGVyIHx8ICFzZXNzaW9uRGF0YS5vcmRlclswXSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAwMCwgZGVzY3JpcHRpb246ICJvbl9jb25maXJtIG9yZGVyIG5vdCBmb3VuZCBpbiBzZXNzaW9uIiB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
       defaultPayload:
         context:
-          domain: ONDC:FIS13
           action: on_update
-          timestamp: 2026-04-10T07:45:44.199Z
-          transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-          message_id: 58eee5dc-1556-474d-90e5-b9001b8b7747
           bap_id: bap.example.com
           bap_uri: https://bap.example.com
-          ttl: PT30S
           bpp_id: bpp.example.com
           bpp_uri: https://bpp.example.com
-          version: 2.0.0
+          domain: ONDC:FIS13
           location:
-            country:
-              code: IND
             city:
               code: "*"
+            country:
+              code: IND
+          message_id: 74f32020-9995-4c05-927a-f0805052653c
+          timestamp: 2026-04-10T07:45:45.148Z
+          transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+          ttl: PT30S
+          version: 2.0.0
         message:
-          order: {}
+          order:
+            id: ""
+            status: ACTIVE
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -7883,18 +7282,18 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
         order: $.message.order
-        second_fulfillment_id: $.message.order.fulfillments[1].id
         payment_id: $.message.order.payments[0].id
       inputs: {}
+      examples: []
     examples:
       - name: example for on_update
         payload:
           context:
             domain: ONDC:FIS13
             action: on_update
-            timestamp: 2026-07-31T13:00:35.758Z
-            transaction_id: 4ef70074-2f56-4bb3-a504-ec55e559c572
-            message_id: 9f797f6d-569d-4ab6-912e-075da49dcfdc
+            timestamp: 2026-07-31T13:41:00.508Z
+            transaction_id: d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3
+            message_id: 2b111ced-3bad-48ed-9335-cf8ea1a08c3c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -7908,10 +7307,9 @@ steps:
                 code: "*"
           message:
             order:
-              id: eff5e31b-b2f2-4cd6-82cc-b0b548ea9cc2
-              status: CANCELLED
-              created_at: 2026-07-31T13:00:31.236Z
-              updated_at: 2026-07-31T13:00:35.760Z
+              id: cc239317-a277-4fd1-8f07-d83f7087c5e0
+              status: ACTIVE
+              updated_at: 2026-07-31T13:41:00.510Z
               fulfillments:
                 - customer:
                     contact:
@@ -7919,11 +7317,12 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 98492582-3637-43d2-bd94-3f25d9d65087
+                  id: 88f59654-f857-410a-bb22-250fbad2ccd2
                   type: POLICY
                   state:
                     descriptor:
-                      code: GRANTED
+                      name: Insurance Initiated
+                      code: INITIATED
               items:
                 - id: CHILD_ITEM_CI1
                   parent_item_id: I1
@@ -8094,39 +7493,35 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 98492582-3637-43d2-bd94-3f25d9d65087
+                    - 88f59654-f857-410a-bb22-250fbad2ccd2
               payments:
-                - id: 3aa8f590-700b-42a7-85b8-ba55468dfca7
+                - id: d92d044a-fc18-4c2c-acf8-f8a6ee730ee0
                   collected_by: BPP
                   params:
                     amount: "12631"
                     bank_account_number: "1800002341"
                     bank_code: SBIN0001234
                     currency: INR
-                    transaction_id: 19be050b-6585-4dbc-b787-9497fdb1fbf5
-                  status: PAID
+                  status: FAILED
                   type: PRE-FULFILLMENT
                   tags:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
+                        code: ERROR_INFORMATION
                       display: false
                       list:
                         - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
+                            code: REASON_MESSAGE
+                          value: The bank account has insufficient balance.
+                - id: 59775434-6161-4595-8cb1-9b60e5a20dc9
+                  collected_by: BPP
+                  url: undefined/forms/ONDC:FIS13/payment_form_motor/?transaction_id=d4cbadb6-a42d-42a1-b5c1-af9ad411fcc3&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                  params:
+                    amount: "12631"
+                    bank_account_number: "1800002341"
+                    bank_code: SBIN0001234
+                    currency: INR
+                  status: NOT-PAID
+                  type: PRE-FULFILLMENT
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -8138,7 +7533,7 @@ steps:
                       size_type: xs
                 id: pro909988888
               quote:
-                id: ebc53b68-529f-4953-acc6-5fcae9485133
+                id: 57b9a308-8116-4d80-8ea9-2c42fffe2d41
                 price:
                   currency: INR
                   value: "12631"
@@ -8172,10 +7567,11 @@ steps:
                       value: "0"
                       currency: INR
                 ttl: P15D
+              created_at: 2026-07-31T13:40:57.820Z
         type: request
-        description: The BPP sends an unsolicited update to the BAP with motor insurance
-          cancellation order details, including fulfillment and payment
-          information.
+        description: The BPP responds to the retry by keeping the FAILED payment as the
+          first payment object and adding a second NOT-PAID payment object with
+          a freshly generated dynamic payment-form URL.
 transaction_history: []
 validationLib: ""
 helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCmNvbnN0IGNyZWF0ZUZvcm1VUkwgPSAoZG9tYWluLCBmb3JtSWQsIHNlc3Npb25EYXRhKSA9PiB7Cgljb25zdCBiYXNlVVJMID0gc2Vzc2lvbkRhdGEubW9ja0Jhc2VVcmw7Cgljb25zdCB0cmFuc2FjdGlvbklkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXTsKCWNvbnN0IHNlc3Npb25JZCA9IHNlc3Npb25EYXRhLnNlc3Npb25JZDsKCXJldHVybiBgJHtiYXNlVVJMfS9mb3Jtcy8ke2RvbWFpbn0vJHtmb3JtSWR9Lz90cmFuc2FjdGlvbl9pZD0ke3RyYW5zYWN0aW9uSWR9JnNlc3Npb25faWQ9JHtzZXNzaW9uSWR9YDsKfQovLyBHZW5lcmF0ZXMgYSBVVUlEIHY0CmZ1bmN0aW9uIHV1aWR2NCgpIHsKCXJldHVybiAneHh4eHh4eHgteHh4eC00eHh4LXl4eHgteHh4eHh4eHh4eHh4Jy5yZXBsYWNlKC9beHldL2csIGZ1bmN0aW9uIChjKSB7CgkJY29uc3QgciA9IE1hdGgucmFuZG9tKCkgKiAxNiB8IDA7CgkJY29uc3QgdiA9IGMgPT09ICd4JyA/IHIgOiAociAmIDB4MyB8IDB4OCk7CgkJcmV0dXJuIHYudG9TdHJpbmcoMTYpOwoJfSk7Cn0KCi8vIEdlbmVyYXRlIGEgNiBkaWdpdCBzdHJpbmcgSUQKZnVuY3Rpb24gZ2VuZXJhdGU2RGlnaXRJZCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApLnRvU3RyaW5nKCk7Cn0KCi8vIFJldHVybnMgdGhlIGN1cnJlbnQgSVNPIHRpbWVzdGFtcApmdW5jdGlvbiBjdXJyZW50VGltZXN0YW1wKCkgewoJcmV0dXJuIG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKfQoKLy8gQ29udmVydHMgSVNPIDg2MDEgZHVyYXRpb24gc3RyaW5nIHRvIHRvdGFsIHNlY29uZHMKY29uc3QgaXNvRHVyVG9TZWMgPSAoZHVyYXRpb24pID0+IHsKCWNvbnN0IGR1clJFID0gL1AoKGQrKVkpPygoZCspTSk/KChkKylXKT8oKGQrKUQpP1Q/KChkKylIKT8oKGQrKU0pPygoZCspUyk/LzsKCWNvbnN0IHMgPSBkdXJSRS5leGVjKGR1cmF0aW9uKTsKCWlmICghcykgcmV0dXJuIDA7CgoJcmV0dXJuIChOdW1iZXIocz8uWzJdKSB8fCAwKSAqIDMxNTM2MDAwICsKCQkoTnVtYmVyKHM/Lls0XSkgfHwgMCkgKiAyNjI4Mjg4ICsKCQkoTnVtYmVyKHM/Lls2XSkgfHwgMCkgKiA2MDQ4MDAgKwoJCShOdW1iZXIocz8uWzhdKSB8fCAwKSAqIDg2NDAwICsKCQkoTnVtYmVyKHM/LlsxMF0pIHx8IDApICogMzYwMCArCgkJKE51bWJlcihzPy5bMTJdKSB8fCAwKSAqIDYwICsKCQkoTnVtYmVyKHM/LlsxNF0pIHx8IDApOwp9OwoKY29uc3Qgc2V0Q2l0eUZyb21JbnB1dHMgPSAocGF5bG9hZCwgaW5wdXRzKSA9PiB7CglpZiAoIWlucHV0cykgcmV0dXJuICIqIjsKCWxldCB2ZXJzaW9uID0gcGF5bG9hZC5jb250ZXh0LnZlcnNpb24gfHwgcGF5bG9hZC5jb250ZXh0LmNvcmVfdmVyc2lvbiB8fCAiMi4wLjAiOwoJaWYgKHZlcnNpb24uc3RhcnRzV2l0aCgiMSIpKSB7CgkJcGF5bG9hZC5jb250ZXh0LmNpdHkgPSBpbnB1dHMuY2l0eV9jb2RlID8/ICIqIjsKCX0gZWxzZSB7CgkJcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IGlucHV0cy5jaXR5X2NvZGUgPz8gIioiOwoJfQp9CgoKCgo=
