@@ -1424,6 +1424,9 @@ _TESTS_:
               _RETURN_:
                 - _NAME_: FULFILLMENTS_END_PERSON_NAME
                   _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                  attr_condition: $.message.order.fulfillments[*].type
+                  condition:
+                    - Delivery
                   attr: $.message.order.fulfillments[*].end.person.name
                   _RETURN_: attr are present
                 - _NAME_: FULFILLMENTS_END_CONTACT_PHONE
@@ -1450,6 +1453,9 @@ _TESTS_:
                       _RETURN_:
                         - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_NAME
                           _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                          attr_condition: $.message.order.fulfillments[*].type
+                          condition:
+                            - Delivery
                           attr: $.message.order.fulfillments[*].end.location.address.name
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_LOCALITY
@@ -1462,10 +1468,16 @@ _TESTS_:
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_STATE
                           _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                          attr_condition: $.message.order.fulfillments[*].type
+                          condition:
+                            - Delivery
                           attr: $.message.order.fulfillments[*].end.location.address.state
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_COUNTRY
                           _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                          attr_condition: $.message.order.fulfillments[*].type
+                          condition:
+                            - Delivery
                           attr: $.message.order.fulfillments[*].end.location.address.country
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_AREA_CODE
@@ -1624,6 +1636,9 @@ _TESTS_:
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_START_LOCATION_DESCRIPTOR_NAME
                       _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       attr: $.message.order.fulfillments[*].start.location.descriptor.name
                       _RETURN_: attr are present
                     - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS
@@ -1634,10 +1649,16 @@ _TESTS_:
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS_CITY
                           _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                          attr_condition: $.message.order.fulfillments[*].type
+                          condition:
+                            - Delivery
                           attr: $.message.order.fulfillments[*].start.location.address.city
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS_STATE
                           _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                          attr_condition: $.message.order.fulfillments[*].type
+                          condition:
+                            - Delivery
                           attr: $.message.order.fulfillments[*].start.location.address.state
                           _RETURN_: attr are present
                         - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS_AREA_CODE
@@ -1676,6 +1697,9 @@ _TESTS_:
             - _NAME_: TAGS_BPP_TERMS_TAX_NUMBER
               attr: $.message.order.payment.tags[?(@.code=='bpp_terms')].list[?(@.code=='tax_number')].value
               _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+              attr_condition: $.message.order.fulfillments[*].type
+              condition:
+                - Delivery
               _RETURN_: attr are present
             - _NAME_: TAGS_BPP_TERMS_NP_TYPE
               attr: $.message.order.payment.tags[?(@.code=='bpp_terms')].list[?(@.code=='np_type')].value
@@ -2163,6 +2187,9 @@ _TESTS_:
               _RETURN_: attr all in var_enum
             - _NAME_: FULFILLMENTS_ONDC_ORG_TAT
               _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+              attr_condition: $.message.order.fulfillments[*].type
+              condition:
+                - Delivery
               attr: $.message.order.fulfillments[*]['@ondc/org/TAT']
               reg:
                 - ^P(?=\\d|T)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+S)?)?$
@@ -2308,6 +2335,9 @@ _TESTS_:
                   _RETURN_:
                     - _NAME_: QUOTE_TRAIL_TYPE
                       _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       attr: $.message.order.tags[?(@.code=='quote_trail')].list[?(@.code=='type')].value
                       var_enum:
                         - delivery
