@@ -4435,16 +4435,25 @@ _TESTS_:
         attr: "$.message.tracking.status"
         var_enum: ["active", "inactive"]
         _RETURN_: attr are present && attr all in var_enum
-      - _NAME_: TRACKING_LOCATION 
+      - _NAME_: TRACKING_LOCATION
         _RETURN_:
           - _NAME_: TRACKING_LOCATION_GPS
+            config_type: "$.message.tracking.tags[?(@.code=='config')].list[?(@.code=='type')].value"
+            var_live_poll: ["live_poll"]
+            _CONTINUE_: "!(config_type any in var_live_poll)"
             attr: "$.message.tracking.location.gps"
             _RETURN_: attr are present
           - _NAME_: TRACKING_LOCATION_TIME_TIMESTAMP
+            config_type: "$.message.tracking.tags[?(@.code=='config')].list[?(@.code=='type')].value"
+            var_live_poll: ["live_poll"]
+            _CONTINUE_: "!(config_type any in var_live_poll)"
             attr: "$.message.tracking.location.time.timestamp"
             reg: ['^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$']
             _RETURN_: attr follow regex reg
           - _NAME_: TRACKING_LOCATION_UPDATED_AT
+            config_type: "$.message.tracking.tags[?(@.code=='config')].list[?(@.code=='type')].value"
+            var_live_poll: ["live_poll"]
+            _CONTINUE_: "!(config_type any in var_live_poll)"
             attr: "$.message.tracking.location.updated_at"
             reg: ['^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$']
             _RETURN_: attr follow regex reg
@@ -4470,10 +4479,16 @@ _TESTS_:
         - _NAME_: TRACKING_PATH_TAG
           _RETURN_:
             - _NAME_: PATH_LAT_LNG
+              config_type: "$.message.tracking.tags[?(@.code=='config')].list[?(@.code=='type')].value"
+              var_live_poll: ["live_poll"]
+              _CONTINUE_: "!(config_type any in var_live_poll)"
               attr: "$.message.tracking.tags[?(@.code=='path')].list[?(@.code=='lat_lng')].value"
               _RETURN_: attr are present
 
             - _NAME_: PATH_SEQUENCE
+              config_type: "$.message.tracking.tags[?(@.code=='config')].list[?(@.code=='type')].value"
+              var_live_poll: ["live_poll"]
+              _CONTINUE_: "!(config_type any in var_live_poll)"
               attr: "$.message.tracking.tags[?(@.code=='path')].list[?(@.code=='sequence')].value"
               var_enum: ["1", "2", "3"]
               _RETURN_: attr are present && attr all in var_enum
