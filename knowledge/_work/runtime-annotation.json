@@ -1,0 +1,757 @@
+{
+  "FIS10": {
+    "total_nodes": 1531,
+    "roles": {
+      "runtime-behavioral": 271,
+      "documentation-only": 1260
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (15)",
+        "error (35)",
+        "flow-step (61)",
+        "schema (57)",
+        "path (18)",
+        "validation (85)"
+      ],
+      "documentation-only": [
+        "attribute (1260)"
+      ]
+    },
+    "entry_points": [
+      "search"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "schema": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "L0 JSON-schema validation at runtime (schemavalidator plugin)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "FIS12": {
+    "total_nodes": 2271,
+    "roles": {
+      "runtime-behavioral": 858,
+      "documentation-only": 1413
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (20)",
+        "error (19)",
+        "flow-step (717)",
+        "path (17)",
+        "validation (85)"
+      ],
+      "documentation-only": [
+        "attribute (1413)"
+      ]
+    },
+    "entry_points": [
+      "search"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "FIS13": {
+    "total_nodes": 2164,
+    "roles": {
+      "runtime-behavioral": 158,
+      "documentation-only": 2006
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (17)",
+        "error (19)",
+        "flow-step (57)",
+        "path (9)",
+        "validation (56)"
+      ],
+      "documentation-only": [
+        "attribute (2006)"
+      ]
+    },
+    "entry_points": [
+      "search"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "FIS14": {
+    "total_nodes": 1266,
+    "roles": {
+      "runtime-behavioral": 389,
+      "documentation-only": 877
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (16)",
+        "error (19)",
+        "flow-step (217)",
+        "schema (57)",
+        "path (20)",
+        "validation (60)"
+      ],
+      "documentation-only": [
+        "attribute (877)"
+      ]
+    },
+    "entry_points": [
+      "search",
+      "select"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "schema": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "L0 JSON-schema validation at runtime (schemavalidator plugin)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "TRV10": {
+    "total_nodes": 3405,
+    "roles": {
+      "runtime-behavioral": 577,
+      "documentation-only": 2828
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (20)",
+        "error (3)",
+        "flow-step (461)",
+        "path (19)",
+        "validation (74)"
+      ],
+      "documentation-only": [
+        "attribute (2828)"
+      ]
+    },
+    "entry_points": [
+      "search"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "TRV11": {
+    "total_nodes": 2340,
+    "roles": {
+      "runtime-behavioral": 1114,
+      "documentation-only": 1226
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (18)",
+        "error (18)",
+        "flow-step (239)",
+        "schema (81)",
+        "path (24)",
+        "validation (734)"
+      ],
+      "documentation-only": [
+        "attribute (1226)"
+      ]
+    },
+    "entry_points": [
+      "search",
+      "select",
+      "init",
+      "confirm",
+      "update"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "schema": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "L0 JSON-schema validation at runtime (schemavalidator plugin)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "TRV12": {
+    "total_nodes": 3402,
+    "roles": {
+      "runtime-behavioral": 417,
+      "documentation-only": 2985
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (22)",
+        "flow-step (232)",
+        "schema (81)",
+        "path (24)",
+        "validation (58)"
+      ],
+      "documentation-only": [
+        "attribute (2985)"
+      ]
+    },
+    "entry_points": [
+      "search",
+      "on_select",
+      "select"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "schema": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "L0 JSON-schema validation at runtime (schemavalidator plugin)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "TRV13": {
+    "total_nodes": 1366,
+    "roles": {
+      "runtime-behavioral": 195,
+      "documentation-only": 1171
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (20)",
+        "error (2)",
+        "flow-step (70)",
+        "path (17)",
+        "validation (86)"
+      ],
+      "documentation-only": [
+        "attribute (1171)"
+      ]
+    },
+    "entry_points": [
+      "search"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  },
+  "TRV14": {
+    "total_nodes": 2646,
+    "roles": {
+      "runtime-behavioral": 481,
+      "documentation-only": 2165
+    },
+    "role_kinds": {
+      "runtime-behavioral": [
+        "action (19)",
+        "error (3)",
+        "flow-step (233)",
+        "schema (81)",
+        "path (24)",
+        "validation (121)"
+      ],
+      "documentation-only": [
+        "attribute (2165)"
+      ]
+    },
+    "entry_points": [
+      "search",
+      "select"
+    ],
+    "unknown_kinds": [],
+    "facts": {
+      "action": {
+        "role": "runtime-behavioral",
+        "basis": "authority",
+        "facts": [
+          "state-machine gating; supportedActions[null] = valid transaction ENTRY point",
+          "async_predecessor enforces ordering via resolver chain"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/flow-state-machine.md"
+      },
+      "validation": {
+        "role": "runtime-behavioral",
+        "basis": "sandbox-tested",
+        "facts": [
+          "compiled JVAL->Go (ondc-code-generator); executed as L1 on /seller,/buyer paths",
+          "failure -> ACK:NACK + error code (HTTP 200); gated by protocol_validation header",
+          "_CONTINUE_ = runtime skip guard"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "flow-step": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "executed by mock-runner-lib; JS timeouts generate 45s / validate 5s / requirements 3s",
+          "saveData (JSONPath) accumulates into session MOCK_DATA; responseFor pairs callback->request",
+          "phase statuses: RESPONDING / INPUT-REQUIRED / WAITING-SUBMISSION drive sequencing"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/mock-runner-lib.md"
+      },
+      "error": {
+        "role": "runtime-behavioral",
+        "basis": "observed-live",
+        "facts": [
+          "emitted on NACK with this code + From(BAP/BPP)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "schema": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "L0 JSON-schema validation at runtime (schemavalidator plugin)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/frames/validation-layers.md"
+      },
+      "path": {
+        "role": "runtime-behavioral",
+        "basis": "declared",
+        "facts": [
+          "API endpoint served by ONIX api-service (nginx :3032 -> :7039)"
+        ],
+        "grounded_in": "references/automation-framework/knowledge/protocol-workbench/scripts/onix-request-lifecycle.md"
+      },
+      "attribute": {
+        "role": "documentation-only",
+        "basis": "declared",
+        "facts": [
+          "field dictionary: info/usage = documentation (no runtime execution)",
+          "type/required/enums are structural inputs consumed by validation/generation, not executed here"
+        ],
+        "grounded_in": null
+      }
+    }
+  }
+}

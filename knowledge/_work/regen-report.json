@@ -1,0 +1,104 @@
+{
+  "total_atoms": 751,
+  "indexed_config_nodes": 514,
+  "views": {
+    "action_sequence": [
+      "anchor.search \u2192 anchor.on-search",
+      "anchor.on-search \u2192 anchor.on-search",
+      "anchor.on-search \u2192 anchor.on-search",
+      "anchor.on-search \u2192 anchor.select",
+      "anchor.select \u2192 anchor.on-select",
+      "anchor.on-select \u2192 anchor.init",
+      "anchor.init \u2192 anchor.on-init",
+      "anchor.on-init \u2192 anchor.confirm",
+      "anchor.confirm \u2192 anchor.on-confirm",
+      "anchor.on-confirm \u2192 anchor.cancel",
+      "anchor.cancel \u2192 anchor.on-cancel",
+      "anchor.on-confirm \u2192 anchor.status",
+      "anchor.on-confirm \u2192 anchor.update",
+      "anchor.on-confirm \u2192 anchor.on-status",
+      "anchor.status \u2192 anchor.on-status",
+      "anchor.on-status \u2192 anchor.track",
+      "anchor.on-status \u2192 anchor.issue",
+      "anchor.on-status \u2192 anchor.update",
+      "anchor.on-cancel \u2192 anchor.status",
+      "anchor.on-cancel \u2192 anchor.cancel",
+      "anchor.on-update \u2192 anchor.status",
+      "anchor.on-update \u2192 anchor.track",
+      "anchor.track \u2192 anchor.on-track",
+      "anchor.on-track \u2192 anchor.on-status",
+      "anchor.update \u2192 anchor.on-update",
+      "anchor.issue \u2192 anchor.on-issue",
+      "anchor.on-issue \u2192 anchor.issue",
+      "anchor.on-issue \u2192 anchor.on-status",
+      "anchor.confirm \u2192 anchor.status",
+      "anchor.cancel \u2192 anchor.status",
+      "anchor.form-submission \u2192 anchor.init",
+      "anchor.html-form \u2192 anchor.form-submission",
+      "anchor.select \u2192 anchor.html-form",
+      "anchor.soft-cancel \u2192 anchor.confirm-cancel"
+    ],
+    "beckn_object_taxonomy": [
+      "anchor.authorization",
+      "anchor.cancellation",
+      "anchor.cancellation-term",
+      "anchor.catalog",
+      "anchor.credential",
+      "anchor.form",
+      "anchor.fulfillment",
+      "anchor.issue-object",
+      "anchor.item",
+      "anchor.item-price",
+      "anchor.item-quantity",
+      "anchor.order",
+      "anchor.payment",
+      "anchor.provider",
+      "anchor.quotation",
+      "anchor.replacement-term",
+      "anchor.stop",
+      "anchor.tag",
+      "anchor.tag1-schema",
+      "anchor.vehicle",
+      "anchor.xinput"
+    ]
+  },
+  "regen_demos": {
+    "change: validations/index.yaml#_TESTS_.cancel[CANCEL_CONTEXT].action": {
+      "changed": [
+        "validations/index.yaml#_TESTS_.cancel[CANCEL_CONTEXT].action"
+      ],
+      "direct": [
+        "anchor.context-validation-block | scoped-to | anchor.cancel | basis:de"
+      ],
+      "indirect_provo": [],
+      "affected_count": 1,
+      "untouched_count": 750
+    },
+    "change: flows/index.yaml#flows": {
+      "changed": [
+        "flows/index.yaml#flows"
+      ],
+      "direct": [
+        "anchor.trv14-flow-set | isa | anchor.runtime-concept | basis:declared "
+      ],
+      "indirect_provo": [
+        "anchor.rating | not-part-of | anchor.trv14-flow-set | basis:derived | ",
+        "anchor.track | not-part-of | anchor.trv14-flow-set | basis:derived | a",
+        "anchor.trv14-flow-set | not-used | anchor.select | basis:derived | aso"
+      ],
+      "affected_count": 4,
+      "untouched_count": 747
+    },
+    "change: actions/index.yaml#apiProperties.cancel.transaction_partner": {
+      "changed": [
+        "actions/index.yaml#apiProperties.cancel.transaction_partner"
+      ],
+      "direct": [
+        "anchor.cancel | requires | anchor.on-confirm | basis:declared | asof:t"
+      ],
+      "indirect_provo": [],
+      "affected_count": 1,
+      "untouched_count": 750
+    }
+  }
+}
