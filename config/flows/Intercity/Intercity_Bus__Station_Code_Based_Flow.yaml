@@ -90,6 +90,7 @@ steps:
         payment: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBwYXlsb2FkLm1lc3NhZ2UuaW50ZW50LnBheW1lbnQ7IH0=
         start_location: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBqc29ucGF0aC5xdWVyeShwYXlsb2FkLCAiJC5tZXNzYWdlLmludGVudC5mdWxmaWxsbWVudC5zdG9wc1sqXS5sb2NhdGlvbi5kZXNjcmlwdG9yLmNvZGUiKVswXTsgfQ==
         end_code: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBqc29ucGF0aC5xdWVyeShwYXlsb2FkLCAiJC5tZXNzYWdlLmludGVudC5mdWxmaWxsbWVudC5zdG9wc1s/KEAudHlwZT09J0VORCcpXS5sb2NhdGlvbi5kZXNjcmlwdG9yLmNvZGUiKVswXTsgfQ==
+        search_1_stops: $.message.intent.fulfillment.stops[*]
       inputs:
         id: trv12_intercity_search_bus_201
         jsonSchema:
@@ -113,9 +114,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: search
-            timestamp: 2026-08-07T05:40:25.354Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: 8e96a08e-a41b-4092-b5d6-de5fd7e73fee
+            timestamp: 2026-08-17T06:20:03.412Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: 6e706c0a-4c21-4e1a-946b-9c9e69a567c7
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -124,7 +125,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             intent:
               fulfillment:
@@ -132,7 +133,7 @@ steps:
                   - type: START
                     location:
                       descriptor:
-                        code: std:080
+                        code: std:071
                       gps: 12.979759, 77.590427
                 vehicle:
                   category: BUS
@@ -172,7 +173,7 @@ steps:
       This response establishes the transaction context and enables the BAP to
       evaluate and select from available service offerings.
     mock:
-      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwYXlsb2FkID0geyAuLi5kZWZhdWx0UGF5bG9hZCB9OwogICAgaWYgKHNlc3Npb25EYXRhPy5jaXR5X2NvZGUpIHsKICAgICAgICBwYXlsb2FkLmNvbnRleHQubG9jYXRpb24uY2l0eS5jb2RlID0gc2Vzc2lvbkRhdGEuY2l0eV9jb2RlOwogICAgfQogICAgcmV0dXJuIHBheWxvYWQ7Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBzdG9wc0Rlc2NyaXB0b3JDb2RlID0gc2Vzc2lvbkRhdGE/LnNlYXJjaF8xX3N0b3BzWzBdPy5sb2NhdGlvbi5kZXNjcmlwdG9yLmNvZGUKICAgIGNvbnN0IHBheWxvYWQgPSB7IC4uLmRlZmF1bHRQYXlsb2FkIH07CiAgICBpZiAoc2Vzc2lvbkRhdGE/LmNpdHlfY29kZSkgewogICAgICAgIHBheWxvYWQuY29udGV4dC5sb2NhdGlvbi5jaXR5LmNvZGUgPSBzZXNzaW9uRGF0YS5jaXR5X2NvZGU7CiAgICB9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmNhdGFsb2cucHJvdmlkZXJzWzBdLmZ1bGZpbGxtZW50cyA9IFsKICAgICAgICB7CiAgICAgICAgICAgICJpZCI6ICJGMSIsCiAgICAgICAgICAgICJ0eXBlIjogIlRSSVAiLAogICAgICAgICAgICAic3RvcHMiOiBbCiAgICAgICAgICAgICAgICAuLi5zZXNzaW9uRGF0YT8uc2VhcmNoXzFfc3RvcHMsCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiUElDS1VQIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiTW9ja19waWNrdXBfMSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6IGAke3N0b3BzRGVzY3JpcHRvckNvZGV9LXBpbmNvZGU6NTYwMDM0YAogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjEyLjkyNDQ3OSwgNzcuNjQ4OTk5IgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiUElDS1VQIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiTW9ja19waWNrdXBfMiIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6IGAke3N0b3BzRGVzY3JpcHRvckNvZGV9LXBpbmNvZGU6NTYwMTAzYAogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjEyLjkzMDgzOSwgNzcuNjc3OTQxIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRU5EIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiSHlkZXJhYmFkIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuMzk5ODMyLCA3OC41MDU1MzIiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJEUk9QIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiQW1lZXJwZXQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MC1waW5jb2RlOjUwMDAxNiIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy40NDE1ODYsIDc4LjQ0MTU4MSIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJDZW50cmFsIEJ1cyBTdGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuMzc5MDI0LCA3OC40ODI0NDMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICBdLAogICAgICAgICAgICAidmVoaWNsZSI6IHsKICAgICAgICAgICAgICAgICJjYXRlZ29yeSI6ICJCVVMiLAogICAgICAgICAgICAgICAgInZhcmlhbnQiOiAiQUMiLAogICAgICAgICAgICAgICAgImNhcGFjaXR5IjogNDcsCiAgICAgICAgICAgICAgICAid2hlZWxzX2NvdW50IjogIjYiLAogICAgICAgICAgICAgICAgImVuZXJneV90eXBlIjogIkRJRVNFTCIKICAgICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAiaWQiOiAiRjIiLAogICAgICAgICAgICAidHlwZSI6ICJUUklQIiwKICAgICAgICAgICAgInN0b3BzIjogWwogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGE/LnNlYXJjaF8xX3N0b3BzLAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIlBJQ0tVUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIk1vY2tfcGlja3VwXzEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiBgJHtzdG9wc0Rlc2NyaXB0b3JDb2RlfS1waW5jb2RlOjU2MDAzNGAKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MjQ0NzksIDc3LjY0ODk5OSIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIlBJQ0tVUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIk1vY2tfcGlja3VwXzIiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiBgJHtzdG9wc0Rlc2NyaXB0b3JDb2RlfS1waW5jb2RlOjU2MDEwM2AKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MzA4MzksIDc3LjY3Nzk0MSIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkVORCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIkNIRU5OQUkiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy4zOTk4MzIsIDc4LjUwNTUzMiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJBbWVlcnBldCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJzdGQ6MDQwLXBpbmNvZGU6NTAwMDE2IgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjE3LjQ0MTU4NiwgNzguNDQxNTgxIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRFJPUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIkNlbnRyYWwgQnVzIFN0YXRpb24iLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MC1waW5jb2RlOjUwMDAxMiIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy4zNzkwMjQsIDc4LjQ4MjQ0MyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIF0sCiAgICAgICAgICAgICJ2ZWhpY2xlIjogewogICAgICAgICAgICAgICAgImNhdGVnb3J5IjogIkJVUyIsCiAgICAgICAgICAgICAgICAidmFyaWFudCI6ICJOT04tQUMiLAogICAgICAgICAgICAgICAgImNhcGFjaXR5IjogNDcsCiAgICAgICAgICAgICAgICAid2hlZWxzX2NvdW50IjogIjYiLAogICAgICAgICAgICAgICAgImVuZXJneV90eXBlIjogIkVMRUNUUklDIgogICAgICAgICAgICB9CiAgICAgICAgfQogICAgXQogICAgcmV0dXJuIHBheWxvYWQ7Cn0=
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKAogICAgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LnRyYW5zYWN0aW9uX2lkICE9PQogICAgc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25faWQKICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIkludmFsaWQgdHJhbnNhY3Rpb25faWQiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogMjAwLAogICAgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IgogIH07Cn0=
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKCFzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJ0cmFuc2FjdGlvbl9pZCBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5iYXBfaWQpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAiYmFwX2lkIG5vdCBmb3VuZCIKICAgIH07CiAgfQoKICBpZiAoIXNlc3Npb25EYXRhLmJhcF91cmkpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAiYmFwX3VyaSBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5jaXR5X2NvZGUpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAiY2l0eV9jb2RlIG5vdCBmb3VuZCIKICAgIH07CiAgfQoKICByZXR1cm4gewogICAgdmFsaWQ6IHRydWUsCiAgICBjb2RlOiAiMjAwIiwKICAgIGRlc2NyaXB0aW9uOiAiQWxsIENoZWNrcyBwYXNzZWQgc3VjY2Vzc2Z1bGx5IgogIH07Cn0=
       defaultPayload:
@@ -205,97 +206,6 @@ steps:
                   name: ABC Operator 1 Bus Services
                   images:
                     - url: https://operator1.com/logos/logo.ico
-                fulfillments:
-                  - id: F1
-                    type: TRIP
-                    stops:
-                      - type: START
-                        location:
-                          descriptor:
-                            name: Bangalore
-                            code: std:080
-                          gps: 12.979759, 77.590427
-                      - type: PICKUP
-                        location:
-                          descriptor:
-                            name: Agara
-                            code: std:080-pincode:560034
-                          gps: 12.924479, 77.648999
-                      - type: PICKUP
-                        location:
-                          descriptor:
-                            name: Bellandur
-                            code: std:080-pincode:560103
-                          gps: 12.930839, 77.677941
-                      - type: END
-                        location:
-                          descriptor:
-                            name: Hyderabad
-                            code: std:040
-                          gps: 17.399832, 78.505532
-                      - type: DROP
-                        location:
-                          descriptor:
-                            name: Ameerpet
-                            code: std:040-pincode:500016
-                          gps: 17.441586, 78.441581
-                      - type: DROP
-                        location:
-                          descriptor:
-                            name: Central Bus Station
-                            code: std:040-pincode:500012
-                          gps: 17.379024, 78.482443
-                    vehicle:
-                      category: BUS
-                      variant: AC
-                      capacity: 47
-                      wheels_count: "6"
-                      energy_type: DIESEL
-                  - id: F2
-                    type: TRIP
-                    stops:
-                      - type: START
-                        location:
-                          descriptor:
-                            name: Bangalore
-                            code: std:080
-                          gps: 12.979759, 77.590427
-                      - type: PICKUP
-                        location:
-                          descriptor:
-                            name: Agara
-                            code: std:080-pincode:560034
-                          gps: 12.924479, 77.648999
-                      - type: PICKUP
-                        location:
-                          descriptor:
-                            name: Bellandur
-                            code: std:080-pincode:560103
-                          gps: 12.930839, 77.677941
-                      - type: END
-                        location:
-                          descriptor:
-                            name: CHENNAI
-                            code: std:040
-                          gps: 17.399832, 78.505532
-                      - type: DROP
-                        location:
-                          descriptor:
-                            name: Ameerpet
-                            code: std:040-pincode:500016
-                          gps: 17.441586, 78.441581
-                      - type: DROP
-                        location:
-                          descriptor:
-                            name: Central Bus Station
-                            code: std:040-pincode:500012
-                          gps: 17.379024, 78.482443
-                    vehicle:
-                      category: BUS
-                      variant: NON-AC
-                      capacity: 47
-                      wheels_count: "6"
-                      energy_type: ELECTRIC
                 payments:
                   - collected_by: BPP
                     tags:
@@ -354,9 +264,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: on_search
-            timestamp: 2026-08-07T05:40:25.419Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: 8e96a08e-a41b-4092-b5d6-de5fd7e73fee
+            timestamp: 2026-08-17T06:20:03.558Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: 6e706c0a-4c21-4e1a-946b-9c9e69a567c7
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -367,7 +277,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             catalog:
               descriptor:
@@ -380,97 +290,6 @@ steps:
                     name: ABC Operator 1 Bus Services
                     images:
                       - url: https://operator1.com/logos/logo.ico
-                  fulfillments:
-                    - id: F1
-                      type: TRIP
-                      stops:
-                        - type: START
-                          location:
-                            descriptor:
-                              name: Bangalore
-                              code: std:080
-                            gps: 12.979759, 77.590427
-                        - type: PICKUP
-                          location:
-                            descriptor:
-                              name: Agara
-                              code: std:080-pincode:560034
-                            gps: 12.924479, 77.648999
-                        - type: PICKUP
-                          location:
-                            descriptor:
-                              name: Bellandur
-                              code: std:080-pincode:560103
-                            gps: 12.930839, 77.677941
-                        - type: END
-                          location:
-                            descriptor:
-                              name: Hyderabad
-                              code: std:040
-                            gps: 17.399832, 78.505532
-                        - type: DROP
-                          location:
-                            descriptor:
-                              name: Ameerpet
-                              code: std:040-pincode:500016
-                            gps: 17.441586, 78.441581
-                        - type: DROP
-                          location:
-                            descriptor:
-                              name: Central Bus Station
-                              code: std:040-pincode:500012
-                            gps: 17.379024, 78.482443
-                      vehicle:
-                        category: BUS
-                        variant: AC
-                        capacity: 47
-                        wheels_count: "6"
-                        energy_type: DIESEL
-                    - id: F2
-                      type: TRIP
-                      stops:
-                        - type: START
-                          location:
-                            descriptor:
-                              name: Bangalore
-                              code: std:080
-                            gps: 12.979759, 77.590427
-                        - type: PICKUP
-                          location:
-                            descriptor:
-                              name: Agara
-                              code: std:080-pincode:560034
-                            gps: 12.924479, 77.648999
-                        - type: PICKUP
-                          location:
-                            descriptor:
-                              name: Bellandur
-                              code: std:080-pincode:560103
-                            gps: 12.930839, 77.677941
-                        - type: END
-                          location:
-                            descriptor:
-                              name: CHENNAI
-                              code: std:040
-                            gps: 17.399832, 78.505532
-                        - type: DROP
-                          location:
-                            descriptor:
-                              name: Ameerpet
-                              code: std:040-pincode:500016
-                            gps: 17.441586, 78.441581
-                        - type: DROP
-                          location:
-                            descriptor:
-                              name: Central Bus Station
-                              code: std:040-pincode:500012
-                            gps: 17.379024, 78.482443
-                      vehicle:
-                        category: BUS
-                        variant: NON-AC
-                        capacity: 47
-                        wheels_count: "6"
-                        energy_type: ELECTRIC
                   payments:
                     - collected_by: BPP
                       tags:
@@ -503,6 +322,95 @@ steps:
                             - descriptor:
                                 code: STATIC_TERMS
                               value: https://api.transit-solutions.com/booking/terms
+                  fulfillments:
+                    - id: F1
+                      type: TRIP
+                      stops:
+                        - type: START
+                          location:
+                            descriptor:
+                              code: std:071
+                            gps: 12.979759, 77.590427
+                        - type: PICKUP
+                          location:
+                            descriptor:
+                              name: Mock_pickup_1
+                              code: std:071-pincode:560034
+                            gps: 12.924479, 77.648999
+                        - type: PICKUP
+                          location:
+                            descriptor:
+                              name: Mock_pickup_2
+                              code: std:071-pincode:560103
+                            gps: 12.930839, 77.677941
+                        - type: END
+                          location:
+                            descriptor:
+                              name: Hyderabad
+                              code: std:040
+                            gps: 17.399832, 78.505532
+                        - type: DROP
+                          location:
+                            descriptor:
+                              name: Ameerpet
+                              code: std:040-pincode:500016
+                            gps: 17.441586, 78.441581
+                        - type: DROP
+                          location:
+                            descriptor:
+                              name: Central Bus Station
+                              code: std:040-pincode:500012
+                            gps: 17.379024, 78.482443
+                      vehicle:
+                        category: BUS
+                        variant: AC
+                        capacity: 47
+                        wheels_count: "6"
+                        energy_type: DIESEL
+                    - id: F2
+                      type: TRIP
+                      stops:
+                        - type: START
+                          location:
+                            descriptor:
+                              code: std:071
+                            gps: 12.979759, 77.590427
+                        - type: PICKUP
+                          location:
+                            descriptor:
+                              name: Mock_pickup_1
+                              code: std:071-pincode:560034
+                            gps: 12.924479, 77.648999
+                        - type: PICKUP
+                          location:
+                            descriptor:
+                              name: Mock_pickup_2
+                              code: std:071-pincode:560103
+                            gps: 12.930839, 77.677941
+                        - type: END
+                          location:
+                            descriptor:
+                              name: CHENNAI
+                              code: std:040
+                            gps: 17.399832, 78.505532
+                        - type: DROP
+                          location:
+                            descriptor:
+                              name: Ameerpet
+                              code: std:040-pincode:500016
+                            gps: 17.441586, 78.441581
+                        - type: DROP
+                          location:
+                            descriptor:
+                              name: Central Bus Station
+                              code: std:040-pincode:500012
+                            gps: 17.379024, 78.482443
+                      vehicle:
+                        category: BUS
+                        variant: NON-AC
+                        capacity: 47
+                        wheels_count: "6"
+                        energy_type: ELECTRIC
         type: request
         description: The BPP returns a catalog of available intercity bus services in
           response to the BAP's search request, including provider information,
@@ -519,7 +427,7 @@ steps:
       establishing the transaction context and location parameters.
     mock:
       generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IHNlc3Npb25EYXRhLmNpdHlfY29kZTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UuaW50ZW50LmZ1bGZpbGxtZW50LnN0b3BzID0gWwogICAgICAgIHsKICAgICAgICAgICAgdHlwZTogIlNUQVJUIiwKICAgICAgICAgICAgbG9jYXRpb246IHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiBzZXNzaW9uRGF0YS51c2VyX2lucHV0cy5zdGFydF9jb2RlLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgdGltZTogewogICAgICAgICAgICAgICAgbGFiZWw6ICJEQVRFX09GX0pPVVJORVkiLAogICAgICAgICAgICAgICAgdGltZXN0YW1wOiBzZXNzaW9uRGF0YS51c2VyX2lucHV0cy5qb3VybmV5X2RhdGUsCiAgICAgICAgICAgIH0sCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAgIHR5cGU6ICJQSUNLVVAiLAogICAgICAgICAgICBsb2NhdGlvbjogewogICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzLnBpY2t1cF9jb2RlLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgfSwKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICAgdHlwZTogIkVORCIsCiAgICAgICAgICAgIGxvY2F0aW9uOiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogc2Vzc2lvbkRhdGEudXNlcl9pbnB1dHMuZW5kX2NvZGUsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICB9LAogICAgICAgIH0sCiAgICBdOwogICAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
-      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3Qgc3RhcnRDb2RlID0KICAgIHRhcmdldFBheWxvYWQubWVzc2FnZS5pbnRlbnQuZnVsZmlsbG1lbnQuc3RvcHMuZmluZCgKICAgICAgc3RvcCA9PiBzdG9wLnR5cGUgPT09ICJTVEFSVCIKICAgICk/LmxvY2F0aW9uPy5kZXNjcmlwdG9yPy5jb2RlOwoKICBjb25zdCBoYXNNYXRjaGluZ1JvdXRlID0KICAgIHNlc3Npb25EYXRhLnByb3ZpZGVycz8uc29tZShwcm92aWRlciA9PgogICAgICBwcm92aWRlci5mdWxmaWxsbWVudHM/LnNvbWUoZnVsZmlsbG1lbnQgPT4KICAgICAgICBmdWxmaWxsbWVudC5zdG9wcz8uc29tZSgKICAgICAgICAgIHN0b3AgPT4KICAgICAgICAgICAgc3RvcC50eXBlID09PSAiU1RBUlQiICYmCiAgICAgICAgICAgIHN0b3AubG9jYXRpb24/LmRlc2NyaXB0b3I/LmNvZGUgPT09IHN0YXJ0Q29kZQogICAgICAgICkKICAgICAgKQogICAgKTsKCiAgaWYgKCFoYXNNYXRjaGluZ1JvdXRlKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJTVEFSVCBjb2RlIG5vdCBmb3VuZCBpbiBwcmV2aW91cyBvbl9zZWFyY2ggcmVzcG9uc2UiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogMjAwLAogICAgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IgogIH07Cn0=
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3Qgc3RhcnRDb2RlID0KICAgIHRhcmdldFBheWxvYWQubWVzc2FnZS5pbnRlbnQuZnVsZmlsbG1lbnQuc3RvcHMuZmluZCgKICAgICAgc3RvcCA9PiBzdG9wLnR5cGUgPT09ICJTVEFSVCIKICAgICk/LmxvY2F0aW9uPy5kZXNjcmlwdG9yPy5jb2RlOwoKICBjb25zdCBlbmRDb2RlID0gdGFyZ2V0UGF5bG9hZC5tZXNzYWdlLmludGVudC5mdWxmaWxsbWVudC5zdG9wcy5maW5kKAogICAgKHN0b3ApID0+IHN0b3AudHlwZSA9PT0gIkVORCIKICApPy5sb2NhdGlvbj8uZGVzY3JpcHRvcj8uY29kZTsKCiAgaWYgKGVuZENvZGUgIT09ICJzdGQ6MDQwIikgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiRU5EIHN0YXRpb24gY29kZSBtdXN0IGJlIHN0ZDowNDAiCiAgICB9OwogIH0KCiAgY29uc3QgaGFzTWF0Y2hpbmdSb3V0ZSA9CiAgICBzZXNzaW9uRGF0YS5wcm92aWRlcnM/LnNvbWUocHJvdmlkZXIgPT4KICAgICAgcHJvdmlkZXIuZnVsZmlsbG1lbnRzPy5zb21lKGZ1bGZpbGxtZW50ID0+CiAgICAgICAgZnVsZmlsbG1lbnQuc3RvcHM/LnNvbWUoCiAgICAgICAgICBzdG9wID0+CiAgICAgICAgICAgIHN0b3AudHlwZSA9PT0gIlNUQVJUIiAmJgogICAgICAgICAgICBzdG9wLmxvY2F0aW9uPy5kZXNjcmlwdG9yPy5jb2RlID09PSBzdGFydENvZGUKICAgICAgICApCiAgICAgICkKICAgICk7CgogIGlmICghaGFzTWF0Y2hpbmdSb3V0ZSkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiU1RBUlQgY29kZSBub3QgZm91bmQgaW4gcHJldmlvdXMgb25fc2VhcmNoIHJlc3BvbnNlIgogICAgfTsKICB9CgogIHJldHVybiB7CiAgICB2YWxpZDogdHJ1ZSwKICAgIGNvZGU6IDIwMCwKICAgIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIKICB9Owp9
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKCFzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJ0cmFuc2FjdGlvbl9pZCBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5icHBfaWQpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAiYnBwX2lkIG5vdCBmb3VuZCIKICAgIH07CiAgfQoKICBpZiAoIXNlc3Npb25EYXRhLmJwcF91cmkpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAiYnBwX3VyaSBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogIjIwMCIsCiAgICBkZXNjcmlwdGlvbjogIkFsbCBDaGVja3MgcGFzc2VkIHN1Y2Nlc3NmdWxseSIKICB9Owp9
       defaultPayload:
         context:
@@ -598,6 +506,7 @@ steps:
         payment: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBwYXlsb2FkLm1lc3NhZ2UuaW50ZW50LnBheW1lbnQ7IH0=
         start_location: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBqc29ucGF0aC5xdWVyeShwYXlsb2FkLCAiJC5tZXNzYWdlLmludGVudC5mdWxmaWxsbWVudC5zdG9wc1sqXS5sb2NhdGlvbi5kZXNjcmlwdG9yLmNvZGUiKVswXTsgfQ==
         end_code: EVAL#ZnVuY3Rpb24gZ2V0U2F2ZShwYXlsb2FkKSB7IHJldHVybiBqc29ucGF0aC5xdWVyeShwYXlsb2FkLCAiJC5tZXNzYWdlLmludGVudC5mdWxmaWxsbWVudC5zdG9wc1s/KEAudHlwZT09J0VORCcpXS5sb2NhdGlvbi5kZXNjcmlwdG9yLmNvZGUiKVswXTsgfQ==
+        search_2_stops: $.message.intent.fulfillment.stops[*]
       inputs:
         id: trv12_intercity_search_bus_202
         jsonSchema:
@@ -629,9 +538,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: search
-            timestamp: 2026-08-07T05:40:26.537Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: f3c30df4-7db3-40a2-b697-5ca4507ebb92
+            timestamp: 2026-08-17T06:20:33.240Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: 0f2c3dc6-3cd4-4593-a06b-d0c9b7dce7c1
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -640,7 +549,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             intent:
               fulfillment:
@@ -648,7 +557,7 @@ steps:
                   - type: START
                     location:
                       descriptor:
-                        code: std:080
+                        code: std:071
                     time:
                       label: DATE_OF_JOURNEY
                       timestamp: 2026-10-10T00:00:00.000Z
@@ -699,7 +608,7 @@ steps:
       options. This enables the BAP to present the search results to the
       customer for service selection.
     mock:
-      generate: CmFzeW5jIGZ1bmN0aW9uIGdlbmVyYXRlKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICAgY29uc3QgZGF0ZSA9IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKQogICAgY29uc3QgcGF5bG9hZCA9IHsgLi4uZGVmYXVsdFBheWxvYWQgfTsKICAgIGlmIChzZXNzaW9uRGF0YT8uY2l0eV9jb2RlKSB7CiAgICAgICAgcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IHNlc3Npb25EYXRhLmNpdHlfY29kZTsKICAgIH0KICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UuY2F0YWxvZy5wcm92aWRlcnNbMF0uZnVsZmlsbG1lbnRzID0gWwogICAgICAgIHsKICAgICAgICAgICAgImlkIjogIkYxIiwKICAgICAgICAgICAgInR5cGUiOiAiVFJJUCIsCiAgICAgICAgICAgICJyYXRlYWJsZSI6IHRydWUsCiAgICAgICAgICAgICJyYXRpbmciOiAiNC41IiwKICAgICAgICAgICAgInN0b3BzIjogWwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTMSIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiU1RBUlQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJCYW5nYWxvcmUiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA4MCIKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImlkIjogIlMyIiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJQSUNLVVAiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJBZ2FyYSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJzdGQ6MDgwLXBpbmNvZGU6NTYwMDM0IgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjEyLjkyNDQ3OSwgNzcuNjQ4OTk5IgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgInRpbWUiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJsYWJlbCI6ICJEQVRFX1RJTUUiLAogICAgICAgICAgICAgICAgICAgICAgICAidGltZXN0YW1wIjogZGF0ZQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImlkIjogIlMzIiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJQSUNLVVAiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJCZWxsYW5kdXIiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA4MC1waW5jb2RlOjU2MDEwMyIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MzA4MzksIDc3LjY3Nzk0MSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNCIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRU5EIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiSHlkZXJhYmFkIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNSIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRFJPUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIkFtZWVycGV0IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTYiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuNDQxNTg2LCA3OC40NDE1ODEiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBkYXRlCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzYiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJDZW50cmFsIEJ1cyBTdGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuMzc5MDI0LCA3OC40ODI0NDMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBkYXRlCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICBdLAogICAgICAgICAgICAidmVoaWNsZSI6IHsKICAgICAgICAgICAgICAgICJjYXRlZ29yeSI6ICJCVVMiLAogICAgICAgICAgICAgICAgInZhcmlhbnQiOiAiQUMiLAogICAgICAgICAgICAgICAgImNhcGFjaXR5IjogNDcsCiAgICAgICAgICAgICAgICAid2hlZWxzX2NvdW50IjogIjYiLAogICAgICAgICAgICAgICAgImVuZXJneV90eXBlIjogIkRJRVNFTCIKICAgICAgICAgICAgfSwKICAgICAgICAgICAgInRhZ3MiOiBbCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlZFSElDTEVfR1JJRCIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJkaXNwbGF5IjogZmFsc2UsCiAgICAgICAgICAgICAgICAgICAgImxpc3QiOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlhfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxNCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiWV9NQVgiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjMiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlpfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIwIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEyIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlNFQVRfU0VMRUNUSU9OIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJtYW5kYXRvcnkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJWRUhJQ0xFX0FWQUlCQUxJVFkiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAiZGlzcGxheSI6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICJsaXN0IjogWwogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJBVkFMSUFCTEVfU0VBVFMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjIwIgogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgXQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiVkVISUNMRV9BTUVOSVRJRVMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAibGlzdCI6IFsKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIldBVEVSX0JPVFRMRSIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIldJRkkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJCTEFOS0VUIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiQ0NUViIKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgXQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAiaWQiOiAiRjIiLAogICAgICAgICAgICAidHlwZSI6ICJUUklQIiwKICAgICAgICAgICAgInJhdGVhYmxlIjogdHJ1ZSwKICAgICAgICAgICAgInJhdGluZyI6ICI1IiwKICAgICAgICAgICAgInN0b3BzIjogWwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiU1RBUlQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJCYW5nYWxvcmUiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA4MCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45Nzk3NTksIDc3LjU5MDQyNyIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTOCIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiUElDS1VQIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiQWdhcmEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA4MC1waW5jb2RlOjU2MDAzNCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MjQ0NzksIDc3LjY0ODk5OSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTOSIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiUElDS1VQIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiQmVsbGFuZHVyIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowODAtcGluY29kZTo1NjAxMDMiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTIuOTMwODM5LCA3Ny42Nzc5NDEiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBkYXRlCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzEwIiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJFTkQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJIeWRlcmFiYWQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy4zOTk4MzIsIDc4LjUwNTUzMiIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTMTEiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJBbWVlcnBldCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJzdGQ6MDQwLXBpbmNvZGU6NTAwMDE2IgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjE3LjQ0MTU4NiwgNzguNDQxNTgxIgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgInRpbWUiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJsYWJlbCI6ICJEQVRFX1RJTUUiLAogICAgICAgICAgICAgICAgICAgICAgICAidGltZXN0YW1wIjogZGF0ZQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImlkIjogIlMxMiIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRFJPUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIkNlbnRyYWwgQnVzIFN0YXRpb24iLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MC1waW5jb2RlOjUwMDAxMiIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy4zNzkwMjQsIDc4LjQ4MjQ0MyIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIF0sCiAgICAgICAgICAgICJ2ZWhpY2xlIjogewogICAgICAgICAgICAgICAgImNhdGVnb3J5IjogIkJVUyIsCiAgICAgICAgICAgICAgICAidmFyaWFudCI6ICJOT04tQUMiLAogICAgICAgICAgICAgICAgImNhcGFjaXR5IjogNDcsCiAgICAgICAgICAgICAgICAid2hlZWxzX2NvdW50IjogIjYiLAogICAgICAgICAgICAgICAgImVuZXJneV90eXBlIjogIkVMRUNUUklDIgogICAgICAgICAgICB9LAogICAgICAgICAgICAidGFncyI6IFsKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiVkVISUNMRV9HUklEIgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgImRpc3BsYXkiOiBmYWxzZSwKICAgICAgICAgICAgICAgICAgICAibGlzdCI6IFsKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiWF9NQVgiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjE0IgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX01BWCIKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiMyIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiWl9NQVgiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlhfTE9CQllfU1RBUlQiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjAiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlhfTE9CQllfU0laRSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiMTIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIllfTE9CQllfU1RBUlQiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIllfTE9CQllfU0laRSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiMSIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiU0VBVF9TRUxFQ1RJT04iCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIm1hbmRhdG9yeSIKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlZFSElDTEVfQVZBSUJBTElUWSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJkaXNwbGF5IjogZmFsc2UsCiAgICAgICAgICAgICAgICAgICAgImxpc3QiOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIkFWQUxJQUJMRV9TRUFUUyIKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiMjIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJWRUhJQ0xFX0FNRU5JVElFUyIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJsaXN0IjogWwogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiV0lGSSIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIkJMQU5LRVQiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJDQ1RWIgogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgXQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICBdCiAgICAgICAgfQogICAgXQogICAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: CmFzeW5jIGZ1bmN0aW9uIGdlbmVyYXRlKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICAgY29uc3Qgc3RvcHNEZXNjcmlwdG9yQ29kZSA9IHNlc3Npb25EYXRhPy5zZWFyY2hfMV9zdG9wc1swXT8ubG9jYXRpb24uZGVzY3JpcHRvci5jb2RlCiAgICBjb25zdCBnZXRzdGFydFN0b3BzID0gc2Vzc2lvbkRhdGE/LnNlYXJjaF8yX3N0b3BzPy5maW5kKChpKSA9PiBpLnR5cGUgPT09ICJTVEFSVCIpCiAgICBjb25zdCBqb3VybmV5RGF0ZSA9IG5ldyBEYXRlKGdldHN0YXJ0U3RvcHM/LnRpbWU/LnRpbWVzdGFtcCk7CgogICAgY29uc3Qgb25lSG91ckxhdGVyID0gbmV3IERhdGUoCiAgICAgICAgam91cm5leURhdGUuZ2V0VGltZSgpICsgMSAqIDYwICogNjAgKiAxMDAwCiAgICApLnRvSVNPU3RyaW5nKCk7CgogICAgY29uc3QgdHdvSG91cnNMYXRlciA9IG5ldyBEYXRlKAogICAgICAgIGpvdXJuZXlEYXRlLmdldFRpbWUoKSArIDIgKiA2MCAqIDYwICogMTAwMAogICAgKS50b0lTT1N0cmluZygpOwoKICAgIGNvbnN0IHRlbkhvdXJzTGF0ZXIgPSBuZXcgRGF0ZSgKICAgICAgICBqb3VybmV5RGF0ZS5nZXRUaW1lKCkgKyAxMCAqIDYwICogNjAgKiAxMDAwCiAgICApLnRvSVNPU3RyaW5nKCk7CgogICAgY29uc3QgZWxldmVuSG91cnNMYXRlciA9IG5ldyBEYXRlKAogICAgICAgIG5ldyBEYXRlKGpvdXJuZXlEYXRlKS5nZXRUaW1lKCkgKyAxMSAqIDYwICogNjAgKiAxMDAwCiAgICApLnRvSVNPU3RyaW5nKCk7CgogICAgY29uc3QgcGF5bG9hZCA9IHsgLi4uZGVmYXVsdFBheWxvYWQgfTsKICAgIGlmIChzZXNzaW9uRGF0YT8uY2l0eV9jb2RlKSB7CiAgICAgICAgcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IHNlc3Npb25EYXRhLmNpdHlfY29kZTsKICAgIH0KICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UuY2F0YWxvZy5wcm92aWRlcnNbMF0uZnVsZmlsbG1lbnRzID0gWwogICAgICAgIHsKICAgICAgICAgICAgImlkIjogIkYxIiwKICAgICAgICAgICAgInR5cGUiOiAiVFJJUCIsCiAgICAgICAgICAgICJyYXRlYWJsZSI6IHRydWUsCiAgICAgICAgICAgICJyYXRpbmciOiAiNC41IiwKICAgICAgICAgICAgInN0b3BzIjogWwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTMSIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiU1RBUlQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IGdldHN0YXJ0U3RvcHM/LmxvY2F0aW9uCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTMiIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiUElDS1VQIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiTW9ja19waWNrdXBfMSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6IGAke3N0b3BzRGVzY3JpcHRvckNvZGV9LXBpbmNvZGU6NTYwMDM0YAogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjEyLjkyNDQ3OSwgNzcuNjQ4OTk5IgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgInRpbWUiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJsYWJlbCI6ICJEQVRFX1RJTUUiLAogICAgICAgICAgICAgICAgICAgICAgICAidGltZXN0YW1wIjogb25lSG91ckxhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzMiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIlBJQ0tVUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIk1vY2tfcGlja3VwXzIiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiBgJHtzdG9wc0Rlc2NyaXB0b3JDb2RlfS1waW5jb2RlOjU2MDEwM2AKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MzA4MzksIDc3LjY3Nzk0MSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IHR3b0hvdXJzTGF0ZXIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNCIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRU5EIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiSHlkZXJhYmFkIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNSIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiRFJPUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIkFtZWVycGV0IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTYiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuNDQxNTg2LCA3OC40NDE1ODEiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiB0ZW5Ib3Vyc0xhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzYiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJDZW50cmFsIEJ1cyBTdGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuMzc5MDI0LCA3OC40ODI0NDMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBlbGV2ZW5Ib3Vyc0xhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICBdLAogICAgICAgICAgICAidmVoaWNsZSI6IHsKICAgICAgICAgICAgICAgICJjYXRlZ29yeSI6ICJCVVMiLAogICAgICAgICAgICAgICAgInZhcmlhbnQiOiAiQUMiLAogICAgICAgICAgICAgICAgImNhcGFjaXR5IjogNDcsCiAgICAgICAgICAgICAgICAid2hlZWxzX2NvdW50IjogIjYiLAogICAgICAgICAgICAgICAgImVuZXJneV90eXBlIjogIkRJRVNFTCIKICAgICAgICAgICAgfSwKICAgICAgICAgICAgInRhZ3MiOiBbCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlZFSElDTEVfR1JJRCIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJkaXNwbGF5IjogZmFsc2UsCiAgICAgICAgICAgICAgICAgICAgImxpc3QiOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlhfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxNCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiWV9NQVgiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjMiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlpfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIwIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEyIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlNFQVRfU0VMRUNUSU9OIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJtYW5kYXRvcnkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJWRUhJQ0xFX0FWQUlCQUxJVFkiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAiZGlzcGxheSI6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICJsaXN0IjogWwogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJBVkFMSUFCTEVfU0VBVFMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjIwIgogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgXQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiVkVISUNMRV9BTUVOSVRJRVMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAibGlzdCI6IFsKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIldBVEVSX0JPVFRMRSIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIldJRkkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJCTEFOS0VUIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiQ0NUViIKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgXQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAiaWQiOiAiRjIiLAogICAgICAgICAgICAidHlwZSI6ICJUUklQIiwKICAgICAgICAgICAgInJhdGVhYmxlIjogdHJ1ZSwKICAgICAgICAgICAgInJhdGluZyI6ICI1IiwKICAgICAgICAgICAgInN0b3BzIjogWwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiU1RBUlQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiBnZXRzdGFydFN0b3BzPy5sb2NhdGlvbi5kZXNjcmlwdG9yLAogICAgICAgICAgICAgICAgICAgICAgICAiZ3BzIjogIjEyLjk3OTc1OSwgNzcuNTkwNDI3IgogICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgInRpbWUiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJsYWJlbCI6ICJEQVRFX1RJTUUiLAogICAgICAgICAgICAgICAgICAgICAgICAidGltZXN0YW1wIjogb25lSG91ckxhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzgiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIlBJQ0tVUCIsCiAgICAgICAgICAgICAgICAgICAgImxvY2F0aW9uIjogewogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJuYW1lIjogIk1vY2tfcGlja3VwXzEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiBgJHtzdG9wc0Rlc2NyaXB0b3JDb2RlfS1waW5jb2RlOjU2MDAzNGAKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxMi45MjQ0NzksIDc3LjY0ODk5OSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IG9uZUhvdXJMYXRlcgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImlkIjogIlM5IiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJQSUNLVVAiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJNb2NrX3BpY2t1cF8yIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogYCR7c3RvcHNEZXNjcmlwdG9yQ29kZX0tcGluY29kZTo1NjAxMDNgCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTIuOTMwODM5LCA3Ny42Nzc5NDEiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiB0d29Ib3Vyc0xhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzEwIiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJFTkQiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJIeWRlcmFiYWQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy4zOTk4MzIsIDc4LjUwNTUzMiIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiaWQiOiAiUzExIiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJEUk9QIiwKICAgICAgICAgICAgICAgICAgICAibG9jYXRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiQW1lZXJwZXQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic3RkOjA0MC1waW5jb2RlOjUwMDAxNiIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgImdwcyI6ICIxNy40NDE1ODYsIDc4LjQ0MTU4MSIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJ0aW1lIjogewogICAgICAgICAgICAgICAgICAgICAgICAibGFiZWwiOiAiREFURV9USU1FIiwKICAgICAgICAgICAgICAgICAgICAgICAgInRpbWVzdGFtcCI6IHRlbkhvdXJzTGF0ZXIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJpZCI6ICJTMTIiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIkRST1AiLAogICAgICAgICAgICAgICAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSI6ICJDZW50cmFsIEJ1cyBTdGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogInN0ZDowNDAtcGluY29kZTo1MDAwMTIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgICJncHMiOiAiMTcuMzc5MDI0LCA3OC40ODI0NDMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAidGltZSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImxhYmVsIjogIkRBVEVfVElNRSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBlbGV2ZW5Ib3Vyc0xhdGVyCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICBdLAogICAgICAgICAgICAidmVoaWNsZSI6IHsKICAgICAgICAgICAgICAgICJjYXRlZ29yeSI6ICJCVVMiLAogICAgICAgICAgICAgICAgInZhcmlhbnQiOiAiTk9OLUFDIiwKICAgICAgICAgICAgICAgICJjYXBhY2l0eSI6IDQ3LAogICAgICAgICAgICAgICAgIndoZWVsc19jb3VudCI6ICI2IiwKICAgICAgICAgICAgICAgICJlbmVyZ3lfdHlwZSI6ICJFTEVDVFJJQyIKICAgICAgICAgICAgfSwKICAgICAgICAgICAgInRhZ3MiOiBbCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlZFSElDTEVfR1JJRCIKICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICJkaXNwbGF5IjogZmFsc2UsCiAgICAgICAgICAgICAgICAgICAgImxpc3QiOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlhfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxNCIKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRlc2NyaXB0b3IiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiWV9NQVgiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjMiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlpfTUFYIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIwIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJYX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEyIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NUQVJUIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICIxIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJZX0xPQkJZX1NJWkUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjEiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlNFQVRfU0VMRUNUSU9OIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJtYW5kYXRvcnkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJWRUhJQ0xFX0FWQUlCQUxJVFkiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAiZGlzcGxheSI6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICJsaXN0IjogWwogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJBVkFMSUFCTEVfU0VBVFMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIjIyIgogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgXQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiVkVISUNMRV9BTUVOSVRJRVMiCiAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAibGlzdCI6IFsKICAgICAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlIjogIldJRkkiCiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ2YWx1ZSI6ICJCTEFOS0VUIgogICAgICAgICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidmFsdWUiOiAiQ0NUViIKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgXQogICAgICAgIH0KICAgIF0KICAgIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKAogICAgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LnRyYW5zYWN0aW9uX2lkICE9PQogICAgc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25faWQKICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIkludmFsaWQgdHJhbnNhY3Rpb25faWQiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogMjAwLAogICAgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IgogIH07Cn0=
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKCFzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJ0cmFuc2FjdGlvbl9pZCBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogIjIwMCIsCiAgICBkZXNjcmlwdGlvbjogIkFsbCBDaGVja3MgcGFzc2VkIHN1Y2Nlc3NmdWxseSIKICB9Owp9
       defaultPayload:
@@ -816,9 +725,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: on_search
-            timestamp: 2026-08-07T05:40:26.602Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: f3c30df4-7db3-40a2-b697-5ca4507ebb92
+            timestamp: 2026-08-17T06:20:33.399Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: 0f2c3dc6-3cd4-4593-a06b-d0c9b7dce7c1
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -829,7 +738,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             catalog:
               descriptor:
@@ -909,28 +818,27 @@ steps:
                           type: START
                           location:
                             descriptor:
-                              name: Bangalore
-                              code: std:080
+                              code: std:071
                         - id: S2
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Agara
-                              code: std:080-pincode:560034
+                              name: Mock_pickup_1
+                              code: std:071-pincode:560034
                             gps: 12.924479, 77.648999
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T01:00:00.000Z
                         - id: S3
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Bellandur
-                              code: std:080-pincode:560103
+                              name: Mock_pickup_2
+                              code: std:071-pincode:560103
                             gps: 12.930839, 77.677941
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T02:00:00.000Z
                         - id: S4
                           type: END
                           location:
@@ -946,7 +854,7 @@ steps:
                             gps: 17.441586, 78.441581
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T10:00:00.000Z
                         - id: S6
                           type: DROP
                           location:
@@ -956,7 +864,7 @@ steps:
                             gps: 17.379024, 78.482443
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T11:00:00.000Z
                       vehicle:
                         category: BUS
                         variant: AC
@@ -1015,32 +923,31 @@ steps:
                           type: START
                           location:
                             descriptor:
-                              name: Bangalore
-                              code: std:080
+                              code: std:071
                             gps: 12.979759, 77.590427
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T01:00:00.000Z
                         - id: S8
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Agara
-                              code: std:080-pincode:560034
+                              name: Mock_pickup_1
+                              code: std:071-pincode:560034
                             gps: 12.924479, 77.648999
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T01:00:00.000Z
                         - id: S9
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Bellandur
-                              code: std:080-pincode:560103
+                              name: Mock_pickup_2
+                              code: std:071-pincode:560103
                             gps: 12.930839, 77.677941
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T02:00:00.000Z
                         - id: S10
                           type: END
                           location:
@@ -1048,9 +955,6 @@ steps:
                               name: Hyderabad
                               code: std:040
                             gps: 17.399832, 78.505532
-                          time:
-                            label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
                         - id: S11
                           type: DROP
                           location:
@@ -1060,7 +964,7 @@ steps:
                             gps: 17.441586, 78.441581
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T10:00:00.000Z
                         - id: S12
                           type: DROP
                           location:
@@ -1070,7 +974,7 @@ steps:
                             gps: 17.379024, 78.482443
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T11:00:00.000Z
                       vehicle:
                         category: BUS
                         variant: NON-AC
@@ -1235,9 +1139,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: search
-            timestamp: 2026-08-07T05:40:27.259Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: 64cbb280-6d11-4cfb-b28f-4135245d604a
+            timestamp: 2026-08-17T06:20:34.570Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: f5ae192c-3540-4d94-b748-ad56807328e9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1246,7 +1150,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             intent:
               fulfillment:
@@ -1506,9 +1410,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: on_search
-            timestamp: 2026-08-07T05:40:27.388Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: 64cbb280-6d11-4cfb-b28f-4135245d604a
+            timestamp: 2026-08-17T06:20:34.674Z
+            transaction_id: 9d88630e-a9e2-415b-9800-1d7c2225b6d4
+            message_id: f5ae192c-3540-4d94-b748-ad56807328e9
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1519,7 +1423,7 @@ steps:
               country:
                 code: IND
               city:
-                code: std:011
+                code: std:067
           message:
             catalog:
               descriptor:
@@ -1555,28 +1459,27 @@ steps:
                           type: START
                           location:
                             descriptor:
-                              name: Bangalore
-                              code: std:080
+                              code: std:071
                         - id: S2
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Agara
-                              code: std:080-pincode:560034
+                              name: Mock_pickup_1
+                              code: std:071-pincode:560034
                             gps: 12.924479, 77.648999
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T01:00:00.000Z
                         - id: S3
                           type: PICKUP
                           location:
                             descriptor:
-                              name: Bellandur
-                              code: std:080-pincode:560103
+                              name: Mock_pickup_2
+                              code: std:071-pincode:560103
                             gps: 12.930839, 77.677941
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T02:00:00.000Z
                         - id: S4
                           type: END
                           location:
@@ -1592,7 +1495,7 @@ steps:
                             gps: 17.441586, 78.441581
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T10:00:00.000Z
                         - id: S6
                           type: DROP
                           location:
@@ -1602,7 +1505,7 @@ steps:
                             gps: 17.379024, 78.482443
                           time:
                             label: DATE_TIME
-                            timestamp: 2026-08-07T05:40:26.604Z
+                            timestamp: 2026-10-10T11:00:00.000Z
                       vehicle:
                         category: BUS
                         variant: AC
@@ -2544,7 +2447,7 @@ steps:
       establishes the basis for payment and order confirmation by locking in the
       selected service, pricing, and travel details.
     mock:
-      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgaWYgKHNlc3Npb25EYXRhPy5jaXR5X2NvZGUpIHsKICAgIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQubG9jYXRpb24uY2l0eS5jb2RlID0KICAgICAgc2Vzc2lvbkRhdGEuY2l0eV9jb2RlOwogIH0KCiAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlciA9CiAgICBzZXNzaW9uRGF0YS5zZWxlY3QxX29yZGVyWzBdOwoKICBjb25zdCBzZWF0TnVtYmVycyA9CiAgICBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzCiAgICAgID8uZmxhdCgpCiAgICAgID8uZmlsdGVyKChpdGVtKSA9PiBpdGVtLnRhZ3M/Lmxlbmd0aCkKICAgICAgPy5tYXAoKGl0ZW0pID0+CiAgICAgICAgaXRlbS50YWdzCiAgICAgICAgICA/LmZpbmQoCiAgICAgICAgICAgICh0YWcpID0+IHRhZy5kZXNjcmlwdG9yPy5jb2RlID09PSAiU0VBVF9HUklEIgogICAgICAgICAgKQogICAgICAgICAgPy5saXN0Py5maW5kKAogICAgICAgICAgICAoZW50cnkpID0+IGVudHJ5LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJOVU1CRVIiCiAgICAgICAgICApPy52YWx1ZQogICAgICApIHx8IFtdOwoKICBjb25zb2xlLmxvZyhzZWF0TnVtYmVycyk7CgogIGxldCBzZWF0SW5kZXggPSAwOwoKICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cz8ubWFwKChmdWwpID0+IHsKICAgICAgaWYgKGZ1bC50eXBlID09PSAiVFJJUCIpIHsKICAgICAgICBjb25zdCB7IHRhZ3MsIC4uLnJlc3QgfSA9IGZ1bDsKICAgICAgICByZXR1cm4gcmVzdDsKICAgICAgfQoKICAgICAgaWYgKGZ1bC50eXBlID09PSAiVElDS0VUIikgewogICAgICAgIGNvbnN0IHNlYXROdW1iZXIgPSBzZWF0TnVtYmVyc1tzZWF0SW5kZXgrK107CgogICAgICAgIHJldHVybiB7CiAgICAgICAgICAuLi5mdWwsCiAgICAgICAgICB0YWdzOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBjb2RlOiAiU0VBVF9HUklEIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIGxpc3Q6IFsKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJYIiwKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgdmFsdWU6ICIwIiwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiWSIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAiMCIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIloiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJYX1NJWkUiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjEiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJZX1NJWkUiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjEiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJOVU1CRVIiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogc2VhdE51bWJlciwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiUkVTVFJJQ1RFRF9HRU5ERVIiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIkZFTUFMRSIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIlNJTkdMRV9TRUFUIiwKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgdmFsdWU6ICJUUlVFIiwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiU0VBVF9QUklDRSIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAiNTAiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJTRUxFQ1RFRCIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAidHJ1ZSIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIlNFTEVDVEVEX1NFQVQiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogc2VhdE51bWJlciwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiSVRFTV9JRCIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmlkLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICBdLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9OwogICAgICB9CgogICAgICByZXR1cm4gZnVsOwogICAgfSk7CgogIGNvbnN0IG9yZGVyID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlcjsKICBjb25zdCBpdGVtcyA9IG9yZGVyLml0ZW1zIHx8IFtdOwogIGNvbnN0IGJyZWFrdXAgPSBbXTsKCiAgbGV0IGJhc2VGYXJlID0gMDsKCiAgLy8gQkFTRV9GQVJFCiAgaXRlbXMuZm9yRWFjaCgoaXRlbSkgPT4gewogICAgY29uc3QgcXVhbnRpdHkgPSBOdW1iZXIoCiAgICAgIGl0ZW0ucXVhbnRpdHk/LnNlbGVjdGVkPy5jb3VudCB8fCAxCiAgICApOwogICAgY29uc3QgcHJpY2UgPSBOdW1iZXIoaXRlbS5wcmljZT8udmFsdWUgfHwgMCk7CgogICAgY29uc3QgdG90YWwgPSBxdWFudGl0eSAqIHByaWNlOwogICAgYmFzZUZhcmUgKz0gdG90YWw7CgogICAgYnJlYWt1cC5wdXNoKHsKICAgICAgdGl0bGU6ICJCQVNFX0ZBUkUiLAogICAgICBwcmljZTogewogICAgICAgIGN1cnJlbmN5OiBpdGVtLnByaWNlLmN1cnJlbmN5LAogICAgICAgIHZhbHVlOiB0b3RhbC50b1N0cmluZygpLAogICAgICB9LAogICAgICBpdGVtOiB7CiAgICAgICAgaWQ6IGl0ZW0uaWQsCiAgICAgICAgcHJpY2U6IHsKICAgICAgICAgIGN1cnJlbmN5OiBpdGVtLnByaWNlLmN1cnJlbmN5LAogICAgICAgICAgdmFsdWU6IGl0ZW0ucHJpY2UudmFsdWUsCiAgICAgICAgfSwKICAgICAgICBxdWFudGl0eTogewogICAgICAgICAgc2VsZWN0ZWQ6IHsKICAgICAgICAgICAgY291bnQ6IHF1YW50aXR5LAogICAgICAgICAgfSwKICAgICAgICB9LAogICAgICB9LAogICAgfSk7CiAgfSk7CgogIC8vIFRBWCAoNCUpCiAgY29uc3QgdGF4ID0gTWF0aC5yb3VuZChiYXNlRmFyZSAqIDAuMDQpOwoKICBicmVha3VwLnB1c2goewogICAgdGl0bGU6ICJUQVgiLAogICAgcHJpY2U6IHsKICAgICAgY3VycmVuY3k6ICJJTlIiLAogICAgICB2YWx1ZTogdGF4LnRvU3RyaW5nKCksCiAgICB9LAogICAgaXRlbTogewogICAgICB0YWdzOiBbCiAgICAgICAgewogICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICBjb2RlOiAiVEFYIiwKICAgICAgICAgIH0sCiAgICAgICAgICBsaXN0OiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBjb2RlOiAiQ0dTVCIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjIlIiwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgIGNvZGU6ICJTR1NUIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMiUiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgY29kZTogIlNFUlZJQ0VfVEFYIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMiUiLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9LAogICAgICBdLAogICAgfSwKICB9KTsKCiAgLy8gQ09OVkVOSUVOQ0VfRkVFCiAgY29uc3QgY29udmVuaWVuY2VGZWUgPSAxOTsKCiAgYnJlYWt1cC5wdXNoKHsKICAgIHRpdGxlOiAiQ09OVkVOSUVOQ0VfRkVFIiwKICAgIHByaWNlOiB7CiAgICAgIGN1cnJlbmN5OiAiSU5SIiwKICAgICAgdmFsdWU6IGNvbnZlbmllbmNlRmVlLnRvU3RyaW5nKCksCiAgICB9LAogIH0pOwoKICAvLyBPbmx5IHRpY2tldCBmdWxmaWxsbWVudHMgKHNraXAgVFJJUCBmdWxmaWxsbWVudCkKICBjb25zdCB0aWNrZXRGdWxmaWxsbWVudHMgPSAob3JkZXIuZnVsZmlsbG1lbnRzIHx8IFtdKS5zbGljZSgxKTsKCiAgLy8gU0VBVF9GQVJFCiAgY29uc3Qgc2VhdEZhcmUgPSA1MDsKICBsZXQgdG90YWxTZWF0RmFyZSA9IDA7CgogIHRpY2tldEZ1bGZpbGxtZW50cy5mb3JFYWNoKChmdWxmaWxsbWVudCkgPT4gewogICAgdG90YWxTZWF0RmFyZSArPSBzZWF0RmFyZTsKCiAgICBicmVha3VwLnB1c2goewogICAgICB0aXRsZTogIlNFQVRfRkFSRSIsCiAgICAgIHByaWNlOiB7CiAgICAgICAgY3VycmVuY3k6ICJJTlIiLAogICAgICAgIHZhbHVlOiBzZWF0RmFyZS50b1N0cmluZygpLAogICAgICB9LAogICAgICBpdGVtOiB7CiAgICAgICAgaWQ6IGl0ZW1zWzBdLmlkLAogICAgICAgIGZ1bGZpbGxtZW50X2lkczogW2Z1bGZpbGxtZW50LmlkXSwKICAgICAgfSwKICAgIH0pOwogIH0pOwoKICAvLyBTRUxMRVJfRkVFUwogIGJyZWFrdXAucHVzaCh7CiAgICB0aXRsZTogIlNFTExFUl9GRUVTIiwKICAgIHByaWNlOiB7CiAgICAgIGN1cnJlbmN5OiAiSU5SIiwKICAgICAgdmFsdWU6ICIwIiwKICAgIH0sCiAgICBpdGVtOiB7CiAgICAgIHRhZ3M6IFsKICAgICAgICB7CiAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgIGNvZGU6ICJTRUxMRVJfRkVFUyIsCiAgICAgICAgICB9LAogICAgICAgICAgbGlzdDogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFJlc2VydmF0aW9uRmFyZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFNSVEZlZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFRvbGxGZWUiLAogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgdmFsdWU6ICIwIiwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgIG5hbWU6ICJjb25jZXNzaW9uQW1vdW50IiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMCIsCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBuYW1lOiAicm91bmRPZkZlZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9LAogICAgICBdLAogICAgfSwKICB9KTsKCiAgb3JkZXIucXVvdGUgPSB7CiAgICBwcmljZTogewogICAgICBjdXJyZW5jeTogIklOUiIsCiAgICAgIHZhbHVlOiAoCiAgICAgICAgYmFzZUZhcmUgKwogICAgICAgIHRheCArCiAgICAgICAgY29udmVuaWVuY2VGZWUgKwogICAgICAgIHRvdGFsU2VhdEZhcmUKICAgICAgKS50b1N0cmluZygpLAogICAgfSwKICAgIGJyZWFrdXAsCiAgICB0dGw6ICJQVDEwTSIsCiAgfTsKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgaWYgKHNlc3Npb25EYXRhPy5jaXR5X2NvZGUpIHsKICAgIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQubG9jYXRpb24uY2l0eS5jb2RlID0KICAgICAgc2Vzc2lvbkRhdGEuY2l0eV9jb2RlOwogIH0KCiAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlciA9CiAgICBzZXNzaW9uRGF0YS5zZWxlY3QxX29yZGVyWzBdOwoKICBjb25zdCBzZWF0TnVtYmVycyA9CiAgICBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzCiAgICAgID8uZmxhdCgpCiAgICAgID8uZmlsdGVyKChpdGVtKSA9PiBpdGVtLnRhZ3M/Lmxlbmd0aCkKICAgICAgPy5tYXAoKGl0ZW0pID0+CiAgICAgICAgaXRlbS50YWdzCiAgICAgICAgICA/LmZpbmQoCiAgICAgICAgICAgICh0YWcpID0+IHRhZy5kZXNjcmlwdG9yPy5jb2RlID09PSAiU0VBVF9HUklEIgogICAgICAgICAgKQogICAgICAgICAgPy5saXN0Py5maW5kKAogICAgICAgICAgICAoZW50cnkpID0+IGVudHJ5LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJOVU1CRVIiCiAgICAgICAgICApPy52YWx1ZQogICAgICApIHx8IFtdOwoKICBjb25zb2xlLmxvZyhzZWF0TnVtYmVycyk7CgogIGxldCBzZWF0SW5kZXggPSAwOwoKICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cz8ubWFwKChmdWwpID0+IHsKICAgICAgaWYgKGZ1bC50eXBlID09PSAiVFJJUCIpIHsKICAgICAgICBjb25zdCB7IHRhZ3MsIC4uLnJlc3QgfSA9IGZ1bDsKICAgICAgICByZXR1cm4gcmVzdDsKICAgICAgfQoKICAgICAgaWYgKGZ1bC50eXBlID09PSAiVElDS0VUIikgewogICAgICAgIGNvbnN0IHNlYXROdW1iZXIgPSBzZWF0TnVtYmVyc1tzZWF0SW5kZXgrK107CgogICAgICAgIHJldHVybiB7CiAgICAgICAgICAuLi5mdWwsCiAgICAgICAgICB0YWdzOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBjb2RlOiAiU0VBVF9HUklEIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIGxpc3Q6IFsKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJYIiwKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgdmFsdWU6ICIwIiwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiWSIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAiMCIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIloiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJYX1NJWkUiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjEiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJZX1NJWkUiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIjEiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJOVU1CRVIiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogc2VhdE51bWJlciwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiUkVTVFJJQ1RFRF9HRU5ERVIiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogIkZFTUFMRSIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIlNJTkdMRV9TRUFUIiwKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgdmFsdWU6ICJUUlVFIiwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiU0VBVF9QUklDRSIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAiNTAiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgICAgIGNvZGU6ICJTRUxFQ1RFRCIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiAidHJ1ZSIsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICAgICAgY29kZTogIlNFTEVDVEVEX1NFQVQiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICB2YWx1ZTogc2VhdE51bWJlciwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgICAgICBjb2RlOiAiSVRFTV9JRCIsCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgIHZhbHVlOiBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmlkLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICBdLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9OwogICAgICB9CgogICAgICByZXR1cm4gZnVsOwogICAgfSk7CgogIGNvbnN0IG9yZGVyID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlcjsKICBjb25zdCBpdGVtcyA9IG9yZGVyLml0ZW1zIHx8IFtdOwogIGNvbnN0IGJyZWFrdXAgPSBbXTsKCiAgbGV0IGJhc2VGYXJlID0gMDsKCiAgLy8gQkFTRV9GQVJFCiAgaXRlbXMuZm9yRWFjaCgoaXRlbSkgPT4gewogICAgY29uc3QgcXVhbnRpdHkgPSBOdW1iZXIoCiAgICAgIGl0ZW0ucXVhbnRpdHk/LnNlbGVjdGVkPy5jb3VudCB8fCAxCiAgICApOwogICAgY29uc3QgcHJpY2UgPSBOdW1iZXIoaXRlbS5wcmljZT8udmFsdWUgfHwgMCk7CgogICAgY29uc3QgdG90YWwgPSBxdWFudGl0eSAqIHByaWNlOwogICAgYmFzZUZhcmUgKz0gdG90YWw7CgogICAgYnJlYWt1cC5wdXNoKHsKICAgICAgdGl0bGU6ICJCQVNFX0ZBUkUiLAogICAgICBwcmljZTogewogICAgICAgIGN1cnJlbmN5OiBpdGVtLnByaWNlLmN1cnJlbmN5LAogICAgICAgIHZhbHVlOiB0b3RhbC50b1N0cmluZygpLAogICAgICB9LAogICAgICBpdGVtOiB7CiAgICAgICAgaWQ6IGl0ZW0uaWQsCiAgICAgICAgcHJpY2U6IHsKICAgICAgICAgIGN1cnJlbmN5OiBpdGVtLnByaWNlLmN1cnJlbmN5LAogICAgICAgICAgdmFsdWU6IGl0ZW0ucHJpY2UudmFsdWUsCiAgICAgICAgfSwKICAgICAgICBxdWFudGl0eTogewogICAgICAgICAgc2VsZWN0ZWQ6IHsKICAgICAgICAgICAgY291bnQ6IHF1YW50aXR5LAogICAgICAgICAgfSwKICAgICAgICB9LAogICAgICB9LAogICAgfSk7CiAgfSk7CgogIC8vIFRBWCAoNCUpCiAgY29uc3QgdGF4ID0gTWF0aC5yb3VuZChiYXNlRmFyZSAqIDAuMDQpOwoKICBicmVha3VwLnB1c2goewogICAgdGl0bGU6ICJUQVgiLAogICAgcHJpY2U6IHsKICAgICAgY3VycmVuY3k6ICJJTlIiLAogICAgICB2YWx1ZTogdGF4LnRvU3RyaW5nKCksCiAgICB9LAogICAgaXRlbTogewogICAgICB0YWdzOiBbCiAgICAgICAgewogICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICBjb2RlOiAiVEFYIiwKICAgICAgICAgIH0sCiAgICAgICAgICBsaXN0OiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBjb2RlOiAiQ0dTVCIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjIlIiwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgIGNvZGU6ICJTR1NUIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMiUiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgY29kZTogIlNFUlZJQ0VfVEFYIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMiUiLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9LAogICAgICBdLAogICAgfSwKICB9KTsKCiAgLy8gQ09OVkVOSUVOQ0VfRkVFCiAgY29uc3QgY29udmVuaWVuY2VGZWUgPSAxOTsKCiAgYnJlYWt1cC5wdXNoKHsKICAgIHRpdGxlOiAiQ09OVkVOSUVOQ0VfRkVFIiwKICAgIHByaWNlOiB7CiAgICAgIGN1cnJlbmN5OiAiSU5SIiwKICAgICAgdmFsdWU6IGNvbnZlbmllbmNlRmVlLnRvU3RyaW5nKCksCiAgICB9LAogIH0pOwoKICAvLyBPbmx5IHRpY2tldCBmdWxmaWxsbWVudHMgKHNraXAgVFJJUCBmdWxmaWxsbWVudCkKICBjb25zdCB0aWNrZXRGdWxmaWxsbWVudHMgPSAob3JkZXIuZnVsZmlsbG1lbnRzIHx8IFtdKS5zbGljZSgxKTsKCiAgLy8gU0VBVF9GQVJFCiAgY29uc3Qgc2VhdEZhcmUgPSA1MDsKICBsZXQgdG90YWxTZWF0RmFyZSA9IDA7CgogIHRpY2tldEZ1bGZpbGxtZW50cy5mb3JFYWNoKChmdWxmaWxsbWVudCkgPT4gewogICAgdG90YWxTZWF0RmFyZSArPSBzZWF0RmFyZTsKCiAgICBicmVha3VwLnB1c2goewogICAgICB0aXRsZTogIlNFQVRfRkFSRSIsCiAgICAgIHByaWNlOiB7CiAgICAgICAgY3VycmVuY3k6ICJJTlIiLAogICAgICAgIHZhbHVlOiBzZWF0RmFyZS50b1N0cmluZygpLAogICAgICB9LAogICAgICBpdGVtOiB7CiAgICAgICAgaWQ6IGl0ZW1zWzBdLmlkLAogICAgICAgIGZ1bGZpbGxtZW50X2lkczogW2Z1bGZpbGxtZW50LmlkXSwKICAgICAgfSwKICAgIH0pOwogIH0pOwoKICAvLyBTRUxMRVJfRkVFUwogIGJyZWFrdXAucHVzaCh7CiAgICB0aXRsZTogIlNFTExFUl9GRUVTIiwKICAgIHByaWNlOiB7CiAgICAgIGN1cnJlbmN5OiAiSU5SIiwKICAgICAgdmFsdWU6ICIwIiwKICAgIH0sCiAgICBpdGVtOiB7CiAgICAgIHRhZ3M6IFsKICAgICAgICB7CiAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgIGNvZGU6ICJTRUxMRVJfRkVFUyIsCiAgICAgICAgICB9LAogICAgICAgICAgbGlzdDogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFJlc2VydmF0aW9uRmFyZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFNSVEZlZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgZGVzY3JpcHRvcjogewogICAgICAgICAgICAgICAgbmFtZTogIlRvdFRvbGxGZWUiLAogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgdmFsdWU6ICIwIiwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGRlc2NyaXB0b3I6IHsKICAgICAgICAgICAgICAgIG5hbWU6ICJjb25jZXNzaW9uQW1vdW50IiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHZhbHVlOiAiMCIsCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBuYW1lOiAicm91bmRPZkZlZSIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogIjAiLAogICAgICAgICAgICB9LAogICAgICAgICAgXSwKICAgICAgICB9LAogICAgICBdLAogICAgfSwKICB9KTsKCiAgb3JkZXIucXVvdGUgPSB7CiAgICBwcmljZTogewogICAgICBjdXJyZW5jeTogIklOUiIsCiAgICAgIHZhbHVlOiAoCiAgICAgICAgYmFzZUZhcmUgKwogICAgICAgIHRheCArCiAgICAgICAgY29udmVuaWVuY2VGZWUgKwogICAgICAgIHRvdGFsU2VhdEZhcmUKICAgICAgKS50b1N0cmluZygpLAogICAgfSwKICAgIGJyZWFrdXAsCiAgICB0dGw6ICJQVDMwUyIsCiAgfTsKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgY29uc3Qgb3JkZXIgPQogICAgdGFyZ2V0UGF5bG9hZC5tZXNzYWdlLm9yZGVyOwoKICBjb25zdCB0aWNrZXRGdWxmaWxsbWVudHMgPQogICAgb3JkZXIuZnVsZmlsbG1lbnRzLmZpbHRlcigKICAgICAgZnVsZmlsbG1lbnQgPT4KICAgICAgICBmdWxmaWxsbWVudC50eXBlID09PSAiVElDS0VUIgogICAgKTsKCiAgaWYgKAogICAgdGlja2V0RnVsZmlsbG1lbnRzLmxlbmd0aCAhPT0KICAgIHNlc3Npb25EYXRhLnNlbGVjdGVkX2l0ZW1fcXVhbnRpdHlbMF0KICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIlRpY2tldCBmdWxmaWxsbWVudCBjb3VudCBtaXNtYXRjaCIKICAgIH07CiAgfQoKICBjb25zdCBzZWF0RmFyZUJyZWFrdXBzID0KICAgIG9yZGVyLnF1b3RlLmJyZWFrdXAuZmlsdGVyKAogICAgICBicmVha3VwID0+CiAgICAgICAgYnJlYWt1cC50aXRsZSA9PT0gIlNFQVRfRkFSRSIKICAgICk7CgogIGNvbnNvbGUubG9nKHNlYXRGYXJlQnJlYWt1cHMubGVuZ3RoKQoKICBpZiAoCiAgICBzZWF0RmFyZUJyZWFrdXBzLmxlbmd0aCAhPT0KICAgIHNlc3Npb25EYXRhLnNlbGVjdGVkX2l0ZW1fcXVhbnRpdHlbMF0KICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIlNlYXQgZmFyZSBicmVha3VwIGNvdW50IG1pc21hdGNoIgogICAgfTsKICB9CgogIHJldHVybiB7CiAgICB2YWxpZDogdHJ1ZSwKICAgIGNvZGU6IDIwMCwKICAgIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIKICB9Owp9
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKCFzZXNzaW9uRGF0YS5zZWxlY3RlZF9pdGVtX2lkKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6ICI0MDAiLAogICAgICBkZXNjcmlwdGlvbjogIml0ZW1faWQgbm90IGZvdW5kIgogICAgfTsKICB9CgogIGlmICghc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfaXRlbV9xdWFudGl0eSkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJzZWxlY3RlZF9xdWFudGl0eSBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5wcm92aWRlcl9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJwcm92aWRlcl9pZCBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5zZWxlY3RlZF9mdWxmaWxsbWVudF9pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAiNDAwIiwKICAgICAgZGVzY3JpcHRpb246ICJmdWxmaWxsbWVudF9pZCBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS50aWNrZXRfZnVsZmlsbG1lbnRfaWRzPy5sZW5ndGgpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogIjQwMCIsCiAgICAgIGRlc2NyaXB0aW9uOiAidGlja2V0X2Z1bGZpbGxtZW50X2lkcyBub3QgZm91bmQiCiAgICB9OwogIH0KCiAgcmV0dXJuIHsKICAgIHZhbGlkOiB0cnVlLAogICAgY29kZTogIjIwMCIsCiAgICBkZXNjcmlwdGlvbjogIkFsbCBDaGVja3MgcGFzc2VkIHN1Y2Nlc3NmdWxseSIKICB9Owp9
       defaultPayload:
@@ -2789,9 +2692,9 @@ steps:
           context:
             domain: ONDC:TRV12
             action: on_select
-            timestamp: 2026-08-07T05:40:30.365Z
-            transaction_id: c6996271-85ac-4459-84cc-957ce48317d1
-            message_id: c7af4852-d2c4-4cf0-9e05-125ff575c45e
+            timestamp: 2026-08-17T08:54:50.194Z
+            transaction_id: 8eaf4b2b-bd4a-46a7-bbf0-7a4693089dac
+            message_id: 7ede7aaf-59b5-4483-9612-8f82784eff34
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2836,12 +2739,12 @@ steps:
                       type: PICKUP
                       location:
                         descriptor:
-                          name: Agara
+                          name: Mock_pickup_1
                           code: std:080-pincode:560034
                         gps: 12.924479, 77.648999
                       time:
                         label: DATE_TIME
-                        timestamp: 2026-08-07T05:40:26.604Z
+                        timestamp: 2026-10-10T01:00:00.000Z
                     - id: S5
                       type: DROP
                       location:
@@ -2851,7 +2754,7 @@ steps:
                         gps: 17.441586, 78.441581
                       time:
                         label: DATE_TIME
-                        timestamp: 2026-08-07T05:40:26.604Z
+                        timestamp: 2026-10-10T10:00:00.000Z
                   vehicle:
                     category: BUS
                     variant: AC
@@ -3021,7 +2924,7 @@ steps:
                             - descriptor:
                                 name: roundOfFee
                               value: "0"
-                ttl: PT10M
+                ttl: PT30S
         type: request
         description: The BPP acknowledges the BAP's selected intercity bus service and
           provides the confirmed order details including the quote, fulfillment
