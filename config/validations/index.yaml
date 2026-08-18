@@ -136,6 +136,13 @@ _TESTS_:
                     - BUYER_FINDER_FEES_VALUE
                   _CONTINUE_: "!(subTags are present)"
                   _RETURN_: subTags all in validValues
+                - _NAME_: REQUIRED_BUYER_FINDER_FEES_PERCENTAGE_OR_VALUE
+                  _SCOPE_: $.message.intent.payment.tags[?(@.descriptor.code=='BUYER_FINDER_FEES')]
+                  subTags: $.list[*].descriptor.code
+                  validValues:
+                    - BUYER_FINDER_FEES_PERCENTAGE
+                    - BUYER_FINDER_FEES_VALUE
+                  _RETURN_: subTags any in validValues
                 - _NAME_: VALID_BUYER_FINDER_FEES_VALUE_VALUE
                   _SCOPE_: $.message.intent.payment.tags[?(@.descriptor.code=='BUYER_FINDER_FEES')].list[?(@.descriptor.code=='BUYER_FINDER_FEES_VALUE')]
                   attr: $.value
@@ -190,6 +197,12 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_ITEM_CATEGORY_ID
           attr: $.message.catalog.providers[*].items[*].category_ids[*]
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY_MAXIMUM_COUNT
+          attr: $.message.catalog.providers[*].items[*].quantity.maximum.count
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_ITEM_QUANTITY_MINIMUM_COUNT
+          attr: $.message.catalog.providers[*].items[*].quantity.minimum.count
           _RETURN_: attr are present
     - _NAME_: ON_SEARCH_ITEM_BRAND_DETAILS
       _RETURN_:
