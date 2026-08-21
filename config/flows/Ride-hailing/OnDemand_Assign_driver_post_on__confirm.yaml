@@ -4398,6 +4398,82 @@ steps:
                       value: '2.06'
               updated_at: '2026-03-23T08:44:50.371Z'
         type: request
+  - api: on_support
+    action_id: on_support
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: The BPP sends a status callback to the BAP confirming driver
+      assignment and providing real-time fulfillment updates including driver
+      location and ride progress.
+    mock:
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgZGVmYXVsdFBheWxvYWQuY29udGV4dC5sb2NhdGlvbi5jaXR5LmNvZGUgPSBzZXNzaW9uRGF0YT8uY2l0eV9jb2RlPy5bMF07CgogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uuc3VwcG9ydCA9IHsKICAgIGRlc2NyaXB0b3I6IHsKICAgICAgY29kZTogIlNPUyIsCiAgICAgIG5hbWU6ICJzb3MgZW1lcmdlbmN5IiwKICAgICAgc2hvcnRfZGVzYzogIkRyaXZlciBoYXMgZGV2aWF0ZWQgZnJvbSB0aGUgcGxhbm5lZCByb3V0ZS4iCiAgICB9LAogICAgcmVmX3R5cGU6ICJPUkRFUiIsCiAgICByZWZfaWQ6IHNlc3Npb25EYXRhPy5vcmRlcl9pZFswXSA/PyAiTzEiLAogICAgZW1haWw6ICJzdXBwb3J0QGV4YW1wbGUtYnBwLmNvbSIsCiAgICBwaG9uZTogIis5MTgwNjg4NzA1MjUiLAogICAgdXJsOiAiaHR0cHM6Ly9leGFtcGxlLWJwcC5jb20vcHJvZC9zZWxsZXIvZ2V0aGVscCIKICB9CgogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQo=
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBhY3RpdmVPcmRlcklkID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5vcmRlcl9pZCkgPyBzZXNzaW9uRGF0YS5vcmRlcl9pZFswXSA6IHNlc3Npb25EYXRhLm9yZGVyX2lkOwogIGlmICh0YXJnZXRQYXlsb2FkPy5tZXNzYWdlLnN1cHBvcnQ/LnJlZl9pZCAhPT0gYWN0aXZlT3JkZXJJZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiT3JkZXIgSUQgIiArIHJlcU9yZGVySWQgKyAiIGRvZXMgbm90IG1hdGNoIGFjdGl2ZSBvcmRlciBJRCAiICsgYWN0aXZlT3JkZXJJZCB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
+      defaultPayload:
+        context:
+          action: on_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          domain: ONDC:TRV10
+          location:
+            city:
+              code: std:011
+            country:
+              code: IND
+          message_id: d7a26402-236d-4b5e-8265-69bb9e93e1c4
+          timestamp: 2026-03-23T08:44:50.371Z
+          transaction_id: 76a25692-e192-4287-a038-e9554f614acf
+          ttl: PT30S
+          version: 2.1.0
+        message: {}
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+      inputs: {}
+    examples:
+      - name: example for on_support
+        payload:
+          context:
+            domain: ONDC:TRV10
+            action: on_support
+            timestamp: 2026-08-21T05:34:52.747Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: 1f9c67a5-e42d-4e9f-8c03-bfc1cc5e8d35
+            bap_id: bap.example.com
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: bpp.example.com
+            bpp_uri: https://bpp.example.com
+            version: 2.1.0
+            location:
+              country:
+                code: IND
+              city:
+                code: std:080
+          message:
+            support:
+              descriptor:
+                code: SOS
+                name: sos emergency
+                short_desc: Driver has deviated from the planned route.
+              ref_type: ORDER
+              ref_id: pref4cskk0m
+              email: support@example-bpp.com
+              phone: "+918068870525"
+              url: https://example-bpp.com/prod/seller/gethelp
+        type: request
+        description: The BPP sends a status callback to the BAP confirming driver
+          assignment and providing real-time fulfillment updates including
+          driver location and ride progress.       
   - api: on_status
     action_id: on_status_ride_ended
     owner: BPP

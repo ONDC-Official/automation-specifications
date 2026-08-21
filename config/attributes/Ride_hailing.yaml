@@ -13872,3 +13872,340 @@ attribute_set:
         info: The message of the transaction that the BAP generates for the search request.
         owner: BPP
         type: object
+  support:
+    context:
+      action:
+        _description:
+          required: true
+          usage: support
+          info: The Beckn protocol method name being invoked. For the issue action, the BAP sets context.action to 'issue', and both the BAP and BPP validate it matches the expected step API.
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: dev-automation.ondc.org
+          info: The BAP's subscriber identifier, echoed in the track response by the BPP to enable the BAP to correlate fulfillment status updates with its session.
+          owner: BAP
+          type: string
+      bap_uri:
+        _description:
+          required: true
+          usage: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          info: Subscriber URL where the BAP accepts track callbacks from the BPP. The BPP includes this in on_track to confirm the callback endpoint for delivering tracking updates.
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: dev-automation.ondc.org
+          info: The BPP's subscriber identifier registered on the ONDC network; the BPP includes this in on_track responses so the BAP can identify which provider is sending the fulfillment update.
+          owner: BAP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          info: The BPP confirms its subscriber URL in the on_track response so the BAP can route subsequent track calls and other requests to this endpoint.
+          owner: BAP
+          type: string
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV10
+          info: The BPP includes the domain code in on_track to identify which service category this transaction belongs to, so the BAP can interpret tracking updates according to the correct domain specification.
+          owner: BAP
+          type: string
+      location:
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: City code the BAP provides when creating the issue to establish geographic scope; it persists across the issue lifecycle for consistent validation and routing.
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: ""
+            info: The BAP specifies the city object within the location context to define the geographic scope of the search request.
+            owner: BAP
+            type: object
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Country code in ISO 3166-1/2 format identifying the geographic jurisdiction. The BPP includes this in the on_track response to specify the location context for tracking.
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: ""
+            info: The country specified by the BAP to establish the geographic jurisdiction for the search.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: ""
+          info: The location the BAP specifies where the transaction is intended to be fulfilled.
+          owner: BAP
+          type: object
+      message_id:
+        _description:
+          required: true
+          usage: d8a7e10b-e7c0-4da1-93b6-050c01314769
+          info: Unique identifier for this on_track callback that the BPP generates fresh for each status message. The BAP uses message_id to correlate this response with the original track request and to ignore duplicate messages from the BPP.
+          owner: BAP
+          type: string
+      timestamp:
+        _description:
+          required: true
+          usage: 2026-03-10T13:39:13.226Z
+          info: Timestamp when the BAP generated this track request in RFC3339 format. The BPP validates and stores it as the latest request timestamp for state management across the order lifecycle.
+          owner: BAP
+          type: date-time
+      transaction_id:
+        _description:
+          required: true
+          usage: 7a29c759-d0b6-48bc-b02f-9430c2cd75d0
+          info: The transaction identifier minted by the BAP on search and persisted through all steps. The BPP echoes it unchanged in on_track, validating against the session record and rejecting mismatched requests to maintain transaction continuity.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: BPP includes this in on_track to specify the ISO8601 duration from the message timestamp for which the tracking status remains valid.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.1.0
+          info: ONDC protocol version the BPP includes in the on_track response to indicate which specification version governs the transaction.
+          owner: BAP
+          type: string
+      _description:
+        required: true
+        usage: ""
+        info: Context provides the demographic, addressing, protocol version, and transaction metadata the BAP includes in every search request to enable the BPP to route and track the request.
+        owner: BAP
+        type: object
+    message:
+      support:
+        descriptor:
+          code:
+            _description:
+              required: true
+              usage: SOS
+              info: Code for the support descriptor
+              owner: BAP
+              type: string
+          name:
+            _description:
+              required: true
+              usage: sos emergency
+              info: Name for the support descriptor
+              owner: BAP
+              type: string
+          short_desc:
+            _description:
+              required: true
+              usage: Driver has deviated from the planned route.
+              info: Short description for the support descriptor
+              owner: BAP
+              type: string
+        ref_type:
+          _description:
+            required: true
+            usage: ORDER
+            info: Type of reference for the support request
+            owner: BAP
+            type: string
+        ref_id:
+          _description:
+            required: true
+            usage: O1
+            info: Reference ID for the support request
+            owner: BAP
+            type: string
+  on_support:
+    context:
+      action:
+        _description:
+          required: true
+          usage: on_support
+          info: The Beckn protocol method name being invoked. For the issue action, the BAP sets context.action to 'issue', and both the BAP and BPP validate it matches the expected step API.
+          owner: BAP
+          type: string
+      bap_id:
+        _description:
+          required: true
+          usage: dev-automation.ondc.org
+          info: The BAP's subscriber identifier, echoed in the track response by the BPP to enable the BAP to correlate fulfillment status updates with its session.
+          owner: BAP
+          type: string
+      bap_uri:
+        _description:
+          required: true
+          usage: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          info: Subscriber URL where the BAP accepts track callbacks from the BPP. The BPP includes this in on_track to confirm the callback endpoint for delivering tracking updates.
+          owner: BAP
+          type: string
+      bpp_id:
+        _description:
+          required: true
+          usage: dev-automation.ondc.org
+          info: The BPP's subscriber identifier registered on the ONDC network; the BPP includes this in on_track responses so the BAP can identify which provider is sending the fulfillment update.
+          owner: BAP
+          type: string
+      bpp_uri:
+        _description:
+          required: true
+          usage: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          info: The BPP confirms its subscriber URL in the on_track response so the BAP can route subsequent track calls and other requests to this endpoint.
+          owner: BAP
+          type: string
+      domain:
+        _description:
+          required: true
+          usage: ONDC:TRV10
+          info: The BPP includes the domain code in on_track to identify which service category this transaction belongs to, so the BAP can interpret tracking updates according to the correct domain specification.
+          owner: BAP
+          type: string
+      location:
+        city:
+          code:
+            _description:
+              required: true
+              usage: std:080
+              info: City code the BAP provides when creating the issue to establish geographic scope; it persists across the issue lifecycle for consistent validation and routing.
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: ""
+            info: The BAP specifies the city object within the location context to define the geographic scope of the search request.
+            owner: BAP
+            type: object
+        country:
+          code:
+            _description:
+              required: true
+              usage: IND
+              info: Country code in ISO 3166-1/2 format identifying the geographic jurisdiction. The BPP includes this in the on_track response to specify the location context for tracking.
+              owner: BAP
+              type: string
+          _description:
+            required: true
+            usage: ""
+            info: The country specified by the BAP to establish the geographic jurisdiction for the search.
+            owner: BAP
+            type: object
+        _description:
+          required: true
+          usage: ""
+          info: The location the BAP specifies where the transaction is intended to be fulfilled.
+          owner: BAP
+          type: object
+      message_id:
+        _description:
+          required: true
+          usage: d8a7e10b-e7c0-4da1-93b6-050c01314769
+          info: Unique identifier for this on_track callback that the BPP generates fresh for each status message. The BAP uses message_id to correlate this response with the original track request and to ignore duplicate messages from the BPP.
+          owner: BAP
+          type: string
+      timestamp:
+        _description:
+          required: true
+          usage: 2026-03-10T13:39:13.226Z
+          info: Timestamp when the BAP generated this track request in RFC3339 format. The BPP validates and stores it as the latest request timestamp for state management across the order lifecycle.
+          owner: BAP
+          type: date-time
+      transaction_id:
+        _description:
+          required: true
+          usage: 7a29c759-d0b6-48bc-b02f-9430c2cd75d0
+          info: The transaction identifier minted by the BAP on search and persisted through all steps. The BPP echoes it unchanged in on_track, validating against the session record and rejecting mismatched requests to maintain transaction continuity.
+          owner: BAP
+          type: string
+      ttl:
+        _description:
+          required: true
+          usage: PT30S
+          info: BPP includes this in on_track to specify the ISO8601 duration from the message timestamp for which the tracking status remains valid.
+          owner: BAP
+          type: string
+      version:
+        _description:
+          required: true
+          usage: 2.1.0
+          info: ONDC protocol version the BPP includes in the on_track response to indicate which specification version governs the transaction.
+          owner: BAP
+          type: string
+      _description:
+        required: true
+        usage: ""
+        info: Context provides the demographic, addressing, protocol version, and transaction metadata the BAP includes in every search request to enable the BPP to route and track the request.
+        owner: BAP
+        type: object
+    message:
+      support:
+        descriptor:
+          code:
+            _description:
+              required: true
+              usage: SOS
+              info: Code for the support descriptor
+              owner: BPP
+              type: string
+          name:
+            _description:
+              required: true
+              usage: sos emergency
+              info: Name for the support descriptor
+              owner: BPP
+              type: string
+          short_desc:
+            _description:
+              required: true
+              usage: Driver has deviated from the planned route.
+              info: Short description for the support descriptor
+              owner: BPP
+              type: string
+        ref_type:
+          _description:
+            required: true
+            usage: ORDER
+            info: Type of reference for the support response
+            owner: BPP
+            type: string
+        ref_id:
+          _description:
+            required: true
+            usage: O1
+            info: Reference ID for the support response
+            owner: BPP
+            type: string
+        email:
+          _description:
+            required: true
+            usage: support@example-bpp.com
+            info: Contact email for support
+            owner: BPP
+            type: string
+        phone:
+          _description:
+            required: true
+            usage: "+918068870525"
+            info: Contact phone number for support
+            owner: BPP
+            type: string
+        url:
+          _description:
+            required: true
+            usage: https://example-bpp.com/prod/seller/gethelp
+            info: URL for support
+            owner: BPP
+            type: string

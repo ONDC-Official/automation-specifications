@@ -1,7 +1,7 @@
 meta:
   domain: ONDC:TRV10
   version: 2.1.0
-  flowId: Schedule_Trip
+  flowId: Schedule_Trip_With_IGM(v-1.0.0)
   config_version: 0.0.0001
   description: End-to-end ride-hailing flow enabling customers to search for
     available rides, select and confirm a booking for a scheduled trip, and
@@ -133,7 +133,7 @@ steps:
             time:
               type: string
               description: Enter Time (24-hour format)
-              default: 14:30
+              default: 870
             start_address:
               type: string
               description: Enter pickup address
@@ -196,7 +196,7 @@ steps:
           city_code: std:080
           start_gps: 30.748844, 76.642899
           end_gps: 30.690880, 76.711488
-          time: 14:30
+          time: 870
           start_address: MG Road, Bengaluru
           start_city_code: std:080
           start_district: Bangalore
@@ -213,9 +213,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: search
-            timestamp: 2026-08-19T10:52:40.689Z
+            timestamp: 2026-08-21T09:07:35.923Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 41490a37-5691-4c9d-bb4f-116c4c3fa425
+            message_id: 6fa09a54-bf34-4f68-be99-dd07c9c1af24
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -523,9 +523,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_search
-            timestamp: 2026-08-19T10:52:40.731Z
+            timestamp: 2026-08-21T09:07:35.962Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 41490a37-5691-4c9d-bb4f-116c4c3fa425
+            message_id: 6fa09a54-bf34-4f68-be99-dd07c9c1af24
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -711,13 +711,13 @@ steps:
                               code: RIDE_STARTED
                           reason_required: true
                   locations:
-                    - gps: 30.749588,76.645177
+                    - gps: 30.753835,76.645535
                       id: L1
-                    - gps: 30.749136,76.643683
+                    - gps: 30.749932,76.646738
                       id: L2
-                    - gps: 30.752365,76.646951
+                    - gps: 30.751069,76.647267
                       id: L3
-                    - gps: 30.751240,76.643601
+                    - gps: 30.753327,76.643270
                       id: L4
                   payments:
                     - collected_by: BPP
@@ -824,9 +824,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: select
-            timestamp: 2026-08-19T10:52:43.455Z
+            timestamp: 2026-08-21T09:07:40.392Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: e0a3947b-5093-48da-a440-e8be9b36b4e4
+            message_id: 0e83c369-0063-4ed3-83aa-318de2ae8392
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -914,9 +914,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_select
-            timestamp: 2026-08-19T10:52:43.477Z
+            timestamp: 2026-08-21T09:07:40.420Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: e0a3947b-5093-48da-a440-e8be9b36b4e4
+            message_id: 0e83c369-0063-4ed3-83aa-318de2ae8392
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1219,9 +1219,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: init
-            timestamp: 2026-08-19T08:14:14.042Z
-            transaction_id: 3f1acbbf-d4cf-4e5b-9a98-a292fe6f6c31
-            message_id: bb24bf0f-f1e5-4482-aab8-cbccdef127c4
+            timestamp: 2026-08-21T09:07:40.649Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: fe9d6379-f3ee-4284-a214-0331219bf42a
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1255,6 +1255,8 @@ steps:
                           code: IND
                         area_code: "560001"
                       type: START
+                      time:
+                        timestamp: 2024-11-07T00:32:19.000Z
                       instructions:
                         short_desc: short description of the location
                         long_desc: long description of the location
@@ -1406,9 +1408,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_init
-            timestamp: 2026-08-19T08:14:14.121Z
-            transaction_id: 3f1acbbf-d4cf-4e5b-9a98-a292fe6f6c31
-            message_id: bb24bf0f-f1e5-4482-aab8-cbccdef127c4
+            timestamp: 2026-08-21T09:07:40.738Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: fe9d6379-f3ee-4284-a214-0331219bf42a
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1440,6 +1442,8 @@ steps:
                           code: IND
                         area_code: "560001"
                       type: START
+                      time:
+                        timestamp: 2024-11-07T00:32:19.000Z
                       instructions:
                         short_desc: short description of the location
                         long_desc: long description of the location
@@ -1485,7 +1489,7 @@ steps:
                   type: DELIVERY
               payments:
                 - collected_by: BPP
-                  id: 54wfwbswaev
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -1502,7 +1506,7 @@ steps:
                     code: RIDE
                     name: Auto Ride
                   category_ids:
-                    - "198392"
+                    - C2
                   fulfillment_ids:
                     - F1
                   id: I1
@@ -1563,7 +1567,7 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - 54wfwbswaev
+                    - z56lag96fz
               quote:
                 breakup:
                   - price:
@@ -1588,7 +1592,7 @@ steps:
                 - cancellation_fee:
                     amount:
                       currency: INR
-                      value: "30"
+                      value: "10"
                   fulfillment_state:
                     descriptor:
                       code: RIDE_ENROUTE_PICKUP
@@ -1596,7 +1600,7 @@ steps:
                 - cancellation_fee:
                     amount:
                       currency: INR
-                      value: "50"
+                      value: "10"
                   fulfillment_state:
                     descriptor:
                       code: RIDE_ARRIVED_PICKUP
@@ -1706,9 +1710,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: confirm
-            timestamp: 2026-08-19T08:14:14.195Z
-            transaction_id: 3f1acbbf-d4cf-4e5b-9a98-a292fe6f6c31
-            message_id: 6c6edbce-353b-4a83-a68a-e89cc3a66c64
+            timestamp: 2026-08-21T09:07:40.785Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: 758265b5-bfca-42a9-ade2-c781cf1a703b
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1742,6 +1746,8 @@ steps:
                           code: IND
                         area_code: "560001"
                       type: START
+                      time:
+                        timestamp: 2024-11-07T00:32:19.000Z
                       instructions:
                         short_desc: short description of the location
                         long_desc: long description of the location
@@ -1766,7 +1772,7 @@ steps:
                 - id: I1
               payments:
                 - collected_by: BPP
-                  id: 54wfwbswaev
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -1996,7 +2002,7 @@ steps:
                         value: "1.5"
                       - descriptor:
                           code: NIGHT_SHIFT_START_TIME
-                        value: 22:00:00
+                        value: 79200
                       - descriptor:
                           code: NIGHT_SHIFT_END_TIME
                         value: 05:00:00
@@ -2137,9 +2143,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_confirm
-            timestamp: 2026-08-19T10:52:44.458Z
+            timestamp: 2026-08-21T09:07:40.835Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: bdc17ffe-cd0f-45e1-a273-35ef7981c632
+            message_id: 758265b5-bfca-42a9-ade2-c781cf1a703b
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2248,7 +2254,7 @@ steps:
                   state:
                     descriptor:
                       code: RIDE_CONFIRMED
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -2315,10 +2321,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -2345,8 +2351,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:44.458Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:40.835Z
               tags:
                 - descriptor:
                     name: BAP Terms of Engagement
@@ -2661,7 +2667,7 @@ steps:
                         value: "1.5"
                       - descriptor:
                           code: NIGHT_SHIFT_START_TIME
-                        value: 22:00:00
+                        value: 79200
                       - descriptor:
                           code: NIGHT_SHIFT_END_TIME
                         value: 05:00:00
@@ -2719,8 +2725,8 @@ steps:
                 value: "146"
               ttl: PT30S
             status: ACTIVE
-            created_at: 2023-03-23T04:48:34.53Z
-            updated_at: 2023-03-23T04:49:34.53Z
+            created_at: 2023-03-23T04:48:34.530Z
+            updated_at: 2023-03-23T04:49:34.530Z
       saveData:
         confirm_order: $.message.order
         transactionId: $.context.transaction_id
@@ -2741,9 +2747,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_update
-            timestamp: 2026-08-19T10:52:44.579Z
+            timestamp: 2026-08-21T09:07:40.930Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 1396a280-1c07-4614-98ea-0cf76f0909e9
+            message_id: 238a570d-c9d9-4964-9323-4f14b64acefc
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2883,7 +2889,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: UNCLAIMED
@@ -2902,7 +2908,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -2947,7 +2953,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -3014,10 +3020,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -3044,8 +3050,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:44.579Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:40.930Z
         type: request
         description: The BPP sends an unsolicited update to the BAP confirming the
           scheduled trip order with its fulfillment details and current status.
@@ -3113,9 +3119,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_track
-            timestamp: 2026-08-19T10:52:47.215Z
+            timestamp: 2026-08-21T09:07:43.328Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 052bdef4-5d0a-4f48-b579-cdf2cba26f10
+            message_id: bc3ffab8-f9e3-4c94-a47b-01cb01671a2f
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3132,7 +3138,7 @@ steps:
               status: active
               location:
                 gps: 12.453522,77.928328
-                updated_at: 2026-08-19T10:52:47.218Z
+                updated_at: 2026-08-21T09:07:43.332Z
         type: request
         description: The BPP sends real-time tracking updates to the BAP via on_track,
           conveying the driver's location and fulfillment status for live ride
@@ -3185,9 +3191,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: track
-            timestamp: 2026-08-19T10:52:47.246Z
+            timestamp: 2026-08-21T09:07:43.349Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: e1767c76-0368-4898-96cc-ce6ead780526
+            message_id: 4c63fa0e-7e75-45e9-b067-9d382b02696b
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3200,7 +3206,7 @@ steps:
               city:
                 code: std:080
           message:
-            order_id: 6c2ysyjmipq
+            order_id: w4zgpi4jc7m
         type: request
         description: The BAP sends a track request to the BPP to monitor the real-time
           fulfillment status and location of the scheduled ride.
@@ -3253,9 +3259,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_track
-            timestamp: 2026-08-19T10:52:47.287Z
+            timestamp: 2026-08-21T09:07:43.390Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: e1767c76-0368-4898-96cc-ce6ead780526
+            message_id: 4c63fa0e-7e75-45e9-b067-9d382b02696b
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3272,7 +3278,7 @@ steps:
               status: active
               location:
                 gps: 12.453522,77.928328
-                updated_at: 2026-08-19T10:52:47.287Z
+                updated_at: 2026-08-21T09:07:43.390Z
         type: request
         description: The BPP delivers real-time tracking updates to the BAP in response
           to a track request, providing current fulfillment status for the
@@ -3333,9 +3339,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_status
-            timestamp: 2026-08-19T10:52:47.385Z
+            timestamp: 2026-08-21T09:07:43.477Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: b7cf74c6-1b31-4a90-b6ef-4792dbdc1612
+            message_id: 872b13e9-3fcc-4dd3-b598-a1e60ca9a517
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3475,7 +3481,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: UNCLAIMED
@@ -3494,7 +3500,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -3539,7 +3545,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -3606,10 +3612,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -3636,8 +3642,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:47.385Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:43.477Z
         type: request
         description: The BPP proactively sends an unsolicited status update to the BAP
           detailing the current state of the trip order, including driver pickup
@@ -3696,9 +3702,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_status
-            timestamp: 2026-08-19T10:52:47.432Z
+            timestamp: 2026-08-21T09:07:43.530Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 468af1df-089a-4090-8fb1-416128b1c22b
+            message_id: 216862de-de6b-49c6-ac9c-27b9044be247
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3838,7 +3844,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: UNCLAIMED
@@ -3857,7 +3863,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -3902,7 +3908,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -3969,10 +3975,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -3999,8 +4005,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:47.432Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:43.530Z
         type: request
         description: The BPP proactively sends an unsolicited status update to the BAP
           communicating trip order progress, including driver assignment,
@@ -4058,9 +4064,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_status
-            timestamp: 2026-08-19T10:52:47.521Z
+            timestamp: 2026-08-21T09:07:43.618Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 918f394b-8cbd-4ee6-b2c9-74fe833d74d6
+            message_id: dd3b9b89-3829-40d8-a3d6-7511d21a405b
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4200,7 +4206,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: CLAIMED
@@ -4219,7 +4225,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -4264,7 +4270,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -4331,10 +4337,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -4361,8 +4367,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:47.521Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:43.618Z
         type: request
         description: The BPP proactively sends updated order status to the BAP as the
           trip progresses, including driver information and fulfillment details.
@@ -4413,9 +4419,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_support
-            timestamp: 2026-08-21T05:34:52.747Z
+            timestamp: 2026-08-21T09:07:43.674Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 1f9c67a5-e42d-4e9f-8c03-bfc1cc5e8d35
+            message_id: 75538ccc-e4a5-49cd-aa16-846c45827d66
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4434,14 +4440,14 @@ steps:
                 name: sos emergency
                 short_desc: Driver has deviated from the planned route.
               ref_type: ORDER
-              ref_id: pref4cskk0m
+              ref_id: w4zgpi4jc7m
               email: support@example-bpp.com
               phone: "+918068870525"
               url: https://example-bpp.com/prod/seller/gethelp
         type: request
         description: The BPP sends a status callback to the BAP confirming driver
           assignment and providing real-time fulfillment updates including
-          driver location and ride progress.         
+          driver location and ride progress.
   - api: on_status
     action_id: on_status_ride_ended
     owner: BPP
@@ -4490,9 +4496,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_status
-            timestamp: 2026-08-19T10:52:47.571Z
+            timestamp: 2026-08-21T09:07:43.737Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 401d2694-96f2-4b50-956f-bd195a74024b
+            message_id: 71efa71f-8339-4179-b3da-7fbb5e748000
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4632,7 +4638,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: CLAIMED
@@ -4651,7 +4657,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -4696,7 +4702,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -4763,10 +4769,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: NOT-PAID
                   type: ON-FULFILLMENT
               provider:
@@ -4793,8 +4799,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: ACTIVE
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:47.571Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:43.737Z
         type: request
         description: The BPP notifies the BAP that the ride has ended.
   - api: status
@@ -4846,9 +4852,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: status
-            timestamp: 2026-08-19T10:52:47.621Z
+            timestamp: 2026-08-21T09:07:43.826Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 21562412-8778-4297-9561-7cf48e2fc69d
+            message_id: eb15e774-f915-4564-acc3-e60da3e1b801
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4861,7 +4867,7 @@ steps:
               city:
                 code: std:080
           message:
-            order_id: 6c2ysyjmipq
+            order_id: w4zgpi4jc7m
         type: request
         description: The BAP requests the current status of the scheduled trip order
           from the BPP. This status inquiry allows the buyer to track their ride
@@ -4920,9 +4926,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: on_status
-            timestamp: 2026-08-19T10:52:47.720Z
+            timestamp: 2026-08-21T09:07:43.890Z
             transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
-            message_id: 21562412-8778-4297-9561-7cf48e2fc69d
+            message_id: eb15e774-f915-4564-acc3-e60da3e1b801
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5062,7 +5068,7 @@ steps:
                         short_desc: short description of the location
                         long_desc: long description of the location
                       authorization:
-                        token: "449839"
+                        token: "806181"
                         type: OTP
                         valid_to: 2024-11-07T00:34:19.000Z
                         status: CLAIMED
@@ -5081,7 +5087,7 @@ steps:
                         long_desc: long description of the location
                       authorization:
                         type: OTP
-                        token: "144600"
+                        token: "184801"
                         valid_to: 2024-11-07T00:47:19.000Z
                         status: UNCLAIMED
                   vehicle:
@@ -5126,7 +5132,7 @@ steps:
                         url: https://example-bpp.com/seller/images/agent/profile-image.png
                         size_type: sm
                     rating: "4.8"
-              id: 6c2ysyjmipq
+              id: w4zgpi4jc7m
               items:
                 - descriptor:
                     code: RIDE
@@ -5193,10 +5199,10 @@ steps:
                         - value: LOW_PRICE
                         - value: DOORSTEP_PICK_UP
                   payment_ids:
-                    - g9qyq0ic1x9
+                    - z56lag96fz
               payments:
                 - collected_by: BPP
-                  id: g9qyq0ic1x9
+                  id: z56lag96fz
                   status: PAID
                   type: ON-FULFILLMENT
                   params:
@@ -5226,8 +5232,8 @@ steps:
                   value: "146"
                 ttl: PT200S
               status: COMPLETED
-              created_at: 2026-08-19T10:52:44.458Z
-              updated_at: 2026-08-19T10:52:47.720Z
+              created_at: 2026-08-21T09:07:40.835Z
+              updated_at: 2026-08-21T09:07:43.890Z
               documents:
                 - descriptor:
                     code: INVOICE
@@ -5240,9 +5246,630 @@ steps:
         description: The BPP provides the current trip status and fulfillment updates to
           the BAP, conveying information about trip progression such as driver
           assignment and order state throughout the fulfillment lifecycle.
+  - api: issue
+    action_id: issue_open_100
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: The BAP submits an issue to the BPP to report a complaint or
+      problem with the order, establishing the issue for tracking and
+      resolution.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gaXNzdWVTdGF0dXNHZW5lcmF0b3JfMTAwKAogICAgICBkZWZhdWx0UGF5bG9hZCwKICAgICAgewogICAgICAgIC4uLnNlc3Npb25EYXRhLAogICAgICAgIGlnbV9hY3Rpb246ICJpc3N1ZV9vcGVuIiwKICAgICAgfSwKICAgICAgc2Vzc2lvbkRhdGEudXNlcl9pbnB1dHMKICAgICk7Cn0=
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlX29wZW5fMTAwIjsKCiAgaWYgKCF0YXJnZXRQYXlsb2FkIHx8ICF0YXJnZXRQYXlsb2FkLmNvbnRleHQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgcGF5bG9hZCBjb250ZXh0IiB9OwogIH0KCiAgaWYgKHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gIT09IENVUlJFTlRfU1RFUF9BUEkpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIkNvbnRleHQgYWN0aW9uIGRvZXMgbm90IG1hdGNoIHN0ZXAgQVBJOiAiICsgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LmFjdGlvbiArICIgZXhwZWN0ZWQ6ICIgKyBDVVJSRU5UX1NURVBfQVBJIH07CiAgfQoKICBjb25zdCBtZXNzYWdlID0gdGFyZ2V0UGF5bG9hZC5tZXNzYWdlOwogIGlmICghbWVzc2FnZSB8fCAhbWVzc2FnZS5pc3N1ZSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBtZXNzYWdlIG9yIGlzc3VlIG9iamVjdCBpbiBwYXlsb2FkIiB9OwogIH0KCiAgY29uc3QgaXNzdWUgPSBtZXNzYWdlLmlzc3VlOwogIGlmICghaXNzdWUuaWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgSUQiIH07CiAgfQogIGlmICghaXNzdWUuY3JlYXRlZF9hdCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBjcmVhdGVkX2F0IHRpbWVzdGFtcCIgfTsKICB9CiAgaWYgKCFpc3N1ZS51cGRhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIHVwZGF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KCiAgLy8gQ3Jvc3Mtc3RlcCB2ZXJpZmljYXRpb24KICBsZXQgc2tpcENyb3NzU3RlcCA9IGZhbHNlOwogIGlmIChzZXNzaW9uRGF0YSkgewogICAgY29uc3QgcHJldlR4SWQgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQpID8gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXSA6IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQ7CiAgICBjb25zdCBhY3RpdmVUeElkID0gcHJldlR4SWQgfHwgc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25faWQ7CiAgICBpZiAoYWN0aXZlVHhJZCAmJiB0YXJnZXRQYXlsb2FkLmNvbnRleHQudHJhbnNhY3Rpb25faWQgIT09IGFjdGl2ZVR4SWQpIHsKICAgICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgICB9CiAgfSBlbHNlIHsKICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogIH0KCiAgaWYgKCFza2lwQ3Jvc3NTdGVwICYmIHNlc3Npb25EYXRhKSB7CiAgICBpZiAoaXNzdWUucmVmcyAmJiBBcnJheS5pc0FycmF5KGlzc3VlLnJlZnMpKSB7CiAgICAgIGNvbnN0IG9yZGVyUmVmID0gaXNzdWUucmVmcy5maW5kKHIgPT4gci5yZWZfdHlwZSA9PT0gJ09SREVSJyk7CiAgICAgIGlmIChvcmRlclJlZiAmJiBzZXNzaW9uRGF0YS5vcmRlcl9pZCkgewogICAgICAgIGNvbnN0IGV4cGVjdGVkT3JkZXIgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLm9yZGVyX2lkKSA/IHNlc3Npb25EYXRhLm9yZGVyX2lkWzBdIDogc2Vzc2lvbkRhdGEub3JkZXJfaWQ7CiAgICAgICAgaWYgKG9yZGVyUmVmLnJlZl9pZCAhPT0gZXhwZWN0ZWRPcmRlcikgewogICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgT1JERVIgcmVmX2lkIGRvZXMgbm90IG1hdGNoIHNlc3Npb24gb3JkZXJfaWQiIH07CiAgICAgICAgfQogICAgICB9CiAgICB9CgogICAgaWYgKCFpc3N1ZS5pc3N1ZV9hY3Rpb25zICYmICFpc3N1ZS5hY3Rpb25zKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMiIH07CiAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBzdGF0dXMgb25seSBpZiBpdCBpcyBwcmVzZW50IChWMikKICBpZiAoaXNzdWUuc3RhdHVzICE9PSB1bmRlZmluZWQpIHsKICAgIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJPUEVOIikgewogICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIE9QRU4gZm9yIGlzc3VlX29wZW4gYWN0aW9uLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICAgIH0KICAgIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIkNMT1NFRCIpIHsKICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgICB9CiAgICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoInJlc29sdmVkIikpIHsKICAgICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJSRVNPTFZFRCIgJiYgaXNzdWUuc3RhdHVzICE9PSAiUFJPQ0VTU0lORyIpIHsKICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBSRVNPTFZFRCBvciBQUk9DRVNTSU5HLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICAgIH0KICAgIH0KICB9IGVsc2UgewogICAgLy8gVjEgc3BlY2lmaWMgY2hlY2tzCiAgICBjb25zdCBpc3N1ZUFjdGlvbnMgPSBpc3N1ZS5pc3N1ZV9hY3Rpb25zOwogICAgaWYgKGlzc3VlQWN0aW9ucykgewogICAgICAgY29uc3QgcmVzcEFjdGlvbnMgPSBpc3N1ZUFjdGlvbnMucmVzcG9uZGVudF9hY3Rpb25zOwogICAgICAgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoInJlc29sdmVkIikpIHsKICAgICAgICAgIGlmICghcmVzcEFjdGlvbnMgfHwgcmVzcEFjdGlvbnMubGVuZ3RoID09PSAwIHx8IHJlc3BBY3Rpb25zW3Jlc3BBY3Rpb25zLmxlbmd0aCAtIDFdLnJlc3BvbmRlbnRfYWN0aW9uICE9PSAiUkVTT0xWRUQiKSB7CiAgICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgUkVTT0xWRUQgYWN0aW9uIGluIHJlc3BvbmRlbnRfYWN0aW9ucyBmb3IgVjEiIH07CiAgICAgICAgICB9CiAgICAgICB9CiAgICAgICBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygicHJvY2Vzc2luZyIpKSB7CiAgICAgICAgICBpZiAoIXJlc3BBY3Rpb25zIHx8IHJlc3BBY3Rpb25zLmxlbmd0aCA9PT0gMCB8fCByZXNwQWN0aW9uc1tyZXNwQWN0aW9ucy5sZW5ndGggLSAxXS5yZXNwb25kZW50X2FjdGlvbiAhPT0gIlBST0NFU1NJTkciKSB7CiAgICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgUFJPQ0VTU0lORyBhY3Rpb24gaW4gcmVzcG9uZGVudF9hY3Rpb25zIGZvciBWMSIgfTsKICAgICAgICAgIH0KICAgICAgIH0KICAgIH0KICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAxNjsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
+      defaultPayload:
+        context:
+          action: issue
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          domain: ONDC:TRV10
+          location:
+            city:
+              code: std:080
+            country:
+              code: IND
+          message_id: 187450fc-7065-427a-bd7c-3915d1c7ea05
+          timestamp: 2026-03-23T11:45:09.388Z
+          transaction_id: 36e55fc3-47a2-4560-b8a3-b73007aef870
+          ttl: PT30S
+          version: 2.1.0
+        message:
+          issue:
+            id: I1
+            category: ITEM
+            sub_category: ITM04
+            complainant_info:
+              person:
+                name: Sam Manuel
+              contact:
+                phone: "9879879870"
+                email: sam@yahoo.com
+            order_details:
+              id: 4597f703-e84f-431e-a96a-d147cfa142f9
+              state: Completed
+              items:
+                - id: 18275-ONDC-1-9
+                  quantity: 1
+              fulfillments:
+                - id: Fulfillment1
+                  state: Order-delivered
+              provider_id: P1
+            description:
+              short_desc: Issue with product quality
+              long_desc: product quality is not correct. facing issues while using the product
+              additional_desc:
+                url: https://buyerapp.com/additonal-details/desc.txt
+                content_type: text/plain
+              images:
+                - http://buyerapp.com/addtional-details/img1.png
+                - http://buyerapp.com/addtional-details/img2.png
+            source:
+              network_participant_id: buyerapp.com/ondc
+              type: CONSUMER
+            expected_response_time:
+              duration: PT2H
+            expected_resolution_time:
+              duration: P1D
+            status: OPEN
+            issue_type: ISSUE
+            issue_actions:
+              complainant_actions:
+                - complainant_action: OPEN
+                  short_desc: Complaint created
+                  updated_at: 2023-01-15T10:00:00.469Z
+                  updated_by:
+                    org:
+                      name: buyerapp.com::ONDC:RET10
+                    contact:
+                      phone: "9450394039"
+                      email: buyerapp@interface.com
+                    person:
+                      name: John Doe
+            created_at: 2023-01-15T10:00:00.469Z
+            updated_at: 2023-01-15T10:00:00.469Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+        latest_issue_payload: $.message.issue
+        message_id: $.context.message_id
+        last_action: $.context.action
+        issue_action: $.message.issue.actions[*]
+        issue_resolution: $.message.issue.resolutions[*]
+        issue_level: $.message.issue.level
+        issue_id: $.message.issue.id
+        issue_status: $.message.issue.status
+        issue_created_at: $.message.issue.created_at
+        issue_category: $.message.issue.category
+        issue_sub_category: $.message.issue.sub_category
+        issue_complaint_info: $.message.issue.complainant_info
+        issue_order_details: $.message.issue.order_details
+        issue_description: $.message.issue.description
+        issue_source: $.message.issue.source
+        issue_expected_response_time: $.message.issue.expected_response_time
+        issue_expected_resolution_time: $.message.issue.expected_resolution_time
+        issue_actions: $.message.issue.issue_actions
+        issue_issue_type: $.message.issue.issue_type
+      inputs: {}
+    examples:
+      - name: example for issue
+        payload:
+          context:
+            domain: ONDC:TRV10
+            action: issue
+            timestamp: 2026-08-21T09:07:43.953Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: 8195b4e2-4f33-4bad-9673-c6efb1549d9c
+            bap_id: bap.example.com
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: bpp.example.com
+            bpp_uri: https://bpp.example.com
+            version: 2.1.0
+            location:
+              country:
+                code: IND
+              city:
+                code: std:080
+          message:
+            issue:
+              id: 29d77528-4108-4961-b81a-7daedf98a8c2
+              category: FULFILLMENT
+              sub_category: FLM112
+              complainant_info:
+                person:
+                  name: Joe Adams
+                contact:
+                  phone: "9879879870"
+                  email: sam@yahoo.com
+              order_details:
+                id: w4zgpi4jc7m
+                state: COMPLETED
+                items:
+                  - id: I1
+                    quantity: 1
+                fulfillments:
+                  - id: F1
+                    state: CLAIMED
+                provider_id: P1
+              description:
+                short_desc: Driver took a circuitious route/longer route  /  Driver took a
+                  different route
+                long_desc: Driver took a circuitious route/longer route  /  Driver took a
+                  different route
+                additional_desc:
+                  url: https://buyerapp.com/additonal-details/desc.txt
+                  content_type: text/plain
+                images:
+                  - http://buyerapp.com/addtional-details/img1.png
+                  - http://buyerapp.com/addtional-details/img2.png
+              source:
+                network_participant_id: bap.example.com
+                type: CONSUMER
+              expected_response_time:
+                duration: PT2H
+              expected_resolution_time:
+                duration: P1D
+              status: OPEN
+              issue_type: ISSUE
+              issue_actions:
+                complainant_actions:
+                  - complainant_action: OPEN
+                    short_desc: Complaint created
+                    updated_at: 2026-08-21T09:07:43.953Z
+                    updated_by:
+                      org:
+                        name: bap.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9879879870"
+                        email: sam@yahoo.com
+                      person:
+                        name: Joe Adams
+              created_at: 2026-08-21T09:07:43.953Z
+              updated_at: 2026-08-21T09:07:43.953Z
+        type: request
+        description: The BAP submits an issue to the BPP to report a complaint or
+          problem with the order, establishing the issue for tracking and
+          resolution.
+  - api: on_issue
+    action_id: on_issue_processing_100
+    owner: BPP
+    responseFor: issue_open_100
+    unsolicited: false
+    description: The BPP responds to a grievance opened by the BAP with the issue
+      details, available actions, and resolution options.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCiAgICAgIGRlZmF1bHRQYXlsb2FkLAogICAgICB7CiAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgaWdtX2FjdGlvbjogIm9uX2lzc3VlX3Byb2Nlc3NpbmciLAogICAgICB9LAogICAgICBzZXNzaW9uRGF0YT8udXNlcl9pbnB1dHMKICAgICk7Cn0=
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Byb2Nlc3NpbmdfMTAwIjsKCiAgaWYgKCF0YXJnZXRQYXlsb2FkIHx8ICF0YXJnZXRQYXlsb2FkLmNvbnRleHQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgcGF5bG9hZCBjb250ZXh0IiB9OwogIH0KCiAgaWYgKHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gIT09IENVUlJFTlRfU1RFUF9BUEkpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIkNvbnRleHQgYWN0aW9uIGRvZXMgbm90IG1hdGNoIHN0ZXAgQVBJOiAiICsgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LmFjdGlvbiArICIgZXhwZWN0ZWQ6ICIgKyBDVVJSRU5UX1NURVBfQVBJIH07CiAgfQoKICBjb25zdCBtZXNzYWdlID0gdGFyZ2V0UGF5bG9hZC5tZXNzYWdlOwogIGlmICghbWVzc2FnZSB8fCAhbWVzc2FnZS5pc3N1ZSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBtZXNzYWdlIG9yIGlzc3VlIG9iamVjdCBpbiBwYXlsb2FkIiB9OwogIH0KCiAgY29uc3QgaXNzdWUgPSBtZXNzYWdlLmlzc3VlOwogIGlmICghaXNzdWUuaWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgSUQiIH07CiAgfQogIGlmICghaXNzdWUuY3JlYXRlZF9hdCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBjcmVhdGVkX2F0IHRpbWVzdGFtcCIgfTsKICB9CiAgaWYgKCFpc3N1ZS51cGRhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIHVwZGF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KCiAgLy8gQ3Jvc3Mtc3RlcCB2ZXJpZmljYXRpb24KICBsZXQgc2tpcENyb3NzU3RlcCA9IGZhbHNlOwogIGlmIChzZXNzaW9uRGF0YSkgewogICAgY29uc3QgcHJldlR4SWQgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQpID8gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXSA6IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQ7CiAgICBjb25zdCBhY3RpdmVUeElkID0gcHJldlR4SWQgfHwgc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25faWQ7CiAgICBpZiAoYWN0aXZlVHhJZCAmJiB0YXJnZXRQYXlsb2FkLmNvbnRleHQudHJhbnNhY3Rpb25faWQgIT09IGFjdGl2ZVR4SWQpIHsKICAgICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgICB9CiAgfSBlbHNlIHsKICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogIH0KCiAgaWYgKCFza2lwQ3Jvc3NTdGVwICYmIHNlc3Npb25EYXRhKSB7CiAgICBpZiAoaXNzdWUucmVmcyAmJiBBcnJheS5pc0FycmF5KGlzc3VlLnJlZnMpKSB7CiAgICAgIGNvbnN0IG9yZGVyUmVmID0gaXNzdWUucmVmcy5maW5kKHIgPT4gci5yZWZfdHlwZSA9PT0gJ09SREVSJyk7CiAgICAgIGlmIChvcmRlclJlZiAmJiBzZXNzaW9uRGF0YS5vcmRlcl9pZCkgewogICAgICAgIGNvbnN0IGV4cGVjdGVkT3JkZXIgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLm9yZGVyX2lkKSA/IHNlc3Npb25EYXRhLm9yZGVyX2lkWzBdIDogc2Vzc2lvbkRhdGEub3JkZXJfaWQ7CiAgICAgICAgaWYgKG9yZGVyUmVmLnJlZl9pZCAhPT0gZXhwZWN0ZWRPcmRlcikgewogICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgT1JERVIgcmVmX2lkIGRvZXMgbm90IG1hdGNoIHNlc3Npb24gb3JkZXJfaWQiIH07CiAgICAgICAgfQogICAgICB9CiAgICB9CgogICAgaWYgKCFpc3N1ZS5pc3N1ZV9hY3Rpb25zICYmICFpc3N1ZS5hY3Rpb25zKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMiIH07CiAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBzdGF0dXMgb25seSBpZiBpdCBpcyBwcmVzZW50IChWMikKICBpZiAoaXNzdWUuc3RhdHVzICE9PSB1bmRlZmluZWQpIHsKICAgIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJPUEVOIikgewogICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIE9QRU4gZm9yIGlzc3VlX29wZW4gYWN0aW9uLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICAgIH0KICAgIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIkNMT1NFRCIpIHsKICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgICB9CiAgICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoInJlc29sdmVkIikpIHsKICAgICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJSRVNPTFZFRCIgJiYgaXNzdWUuc3RhdHVzICE9PSAiUFJPQ0VTU0lORyIpIHsKICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBSRVNPTFZFRCBvciBQUk9DRVNTSU5HLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICAgIH0KICAgIH0KICB9IGVsc2UgewogICAgLy8gVjEgc3BlY2lmaWMgY2hlY2tzCiAgICBjb25zdCBpc3N1ZUFjdGlvbnMgPSBpc3N1ZS5pc3N1ZV9hY3Rpb25zOwogICAgaWYgKGlzc3VlQWN0aW9ucykgewogICAgICAgY29uc3QgcmVzcEFjdGlvbnMgPSBpc3N1ZUFjdGlvbnMucmVzcG9uZGVudF9hY3Rpb25zOwogICAgICAgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoInJlc29sdmVkIikpIHsKICAgICAgICAgIGlmICghcmVzcEFjdGlvbnMgfHwgcmVzcEFjdGlvbnMubGVuZ3RoID09PSAwIHx8IHJlc3BBY3Rpb25zW3Jlc3BBY3Rpb25zLmxlbmd0aCAtIDFdLnJlc3BvbmRlbnRfYWN0aW9uICE9PSAiUkVTT0xWRUQiKSB7CiAgICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgUkVTT0xWRUQgYWN0aW9uIGluIHJlc3BvbmRlbnRfYWN0aW9ucyBmb3IgVjEiIH07CiAgICAgICAgICB9CiAgICAgICB9CiAgICAgICBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygicHJvY2Vzc2luZyIpKSB7CiAgICAgICAgICBpZiAoIXJlc3BBY3Rpb25zIHx8IHJlc3BBY3Rpb25zLmxlbmd0aCA9PT0gMCB8fCByZXNwQWN0aW9uc1tyZXNwQWN0aW9ucy5sZW5ndGggLSAxXS5yZXNwb25kZW50X2FjdGlvbiAhPT0gIlBST0NFU1NJTkciKSB7CiAgICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgUFJPQ0VTU0lORyBhY3Rpb24gaW4gcmVzcG9uZGVudF9hY3Rpb25zIGZvciBWMSIgfTsKICAgICAgICAgIH0KICAgICAgIH0KICAgIH0KICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAxNzsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
+      defaultPayload:
+        context:
+          action: on_issue
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          domain: ONDC:TRV10
+          location:
+            city:
+              code: std:080
+            country:
+              code: IND
+          message_id: 187450fc-7065-427a-bd7c-3915d1c7ea05
+          timestamp: 2026-03-23T11:45:09.469Z
+          transaction_id: 36e55fc3-47a2-4560-b8a3-b73007aef870
+          ttl: PT30S
+          version: 2.1.0
+        message:
+          issue:
+            id: I1
+            issue_actions:
+              respondent_actions:
+                - respondent_action: PROCESSING
+                  short_desc: Complaint is being processed
+                  updated_at: 2023-01-15T10:10:00.142Z
+                  updated_by:
+                    org:
+                      name: sellerapp.com/ondc::ONDC:RET10
+                    contact:
+                      phone: "9450394140"
+                      email: respondentapp@respond.com
+                    person:
+                      name: Jane Doe
+                  cascaded_level: 1
+            created_at: 2023-01-15T10:00:00.469Z
+            updated_at: 2023-01-15T10:10:00.142Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+        latest_issue_payload: $.message.issue
+        last_action: $.context.action
+        issue_action: $.message.issue.actions[*]
+        issue_resolution: $.message.issue.resolutions[*]
+        last_actions_id: $.message.issue.actions[*]
+        on_issue_actions: $.message.issue.issue_actions
+      inputs: {}
+    examples:
+      - name: example for on_issue
+        payload:
+          context:
+            domain: ONDC:TRV10
+            action: on_issue
+            timestamp: 2026-08-21T09:07:44.057Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: 8195b4e2-4f33-4bad-9673-c6efb1549d9c
+            bap_id: bap.example.com
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: bpp.example.com
+            bpp_uri: https://bpp.example.com
+            version: 2.1.0
+            location:
+              country:
+                code: IND
+              city:
+                code: std:080
+          message:
+            issue:
+              id: 29d77528-4108-4961-b81a-7daedf98a8c2
+              issue_actions:
+                respondent_actions:
+                  - respondent_action: PROCESSING
+                    short_desc: Complaint is being processed
+                    updated_at: 2026-08-21T09:07:44.057Z
+                    updated_by:
+                      org:
+                        name: bpp.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9450394140"
+                        email: respondentapp@respond.com
+                      person:
+                        name: Jane Doe
+                    cascaded_level: 1
+              created_at: 2026-08-21T09:07:43.953Z
+              updated_at: 2026-08-21T09:07:44.057Z
+        type: request
+        description: The BPP responds to a grievance opened by the BAP with the issue
+          details, available actions, and resolution options.
+  - api: on_issue_status
+    action_id: on_issue_resolved_100
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: The BPP sends an unsolicited issue status callback to the BAP with
+      grievance resolution actions and status updates for the ride transaction.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCiAgICAgIGRlZmF1bHRQYXlsb2FkLAogICAgICB7CiAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgaWdtX2FjdGlvbjogIm9uX2lzc3VlX3Jlc29sdmVkIiwKICAgICAgfSwKICAgICAgc2Vzc2lvbkRhdGE/LnVzZXJfaW5wdXRzCiAgICApOwp9
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlX3N0YXR1cyI7CiAgY29uc3QgQ1VSUkVOVF9TVEVQX0FDVElPTl9JRCA9ICJvbl9pc3N1ZV9yZXNvbHZlZF8xMDAiOwoKICBpZiAoIXRhcmdldFBheWxvYWQgfHwgIXRhcmdldFBheWxvYWQuY29udGV4dCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBwYXlsb2FkIGNvbnRleHQiIH07CiAgfQoKICBpZiAodGFyZ2V0UGF5bG9hZC5jb250ZXh0LmFjdGlvbiAhPT0gQ1VSUkVOVF9TVEVQX0FQSSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiQ29udGV4dCBhY3Rpb24gZG9lcyBub3QgbWF0Y2ggc3RlcCBBUEk6ICIgKyB0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICsgIiBleHBlY3RlZDogIiArIENVUlJFTlRfU1RFUF9BUEkgfTsKICB9CgogIGNvbnN0IG1lc3NhZ2UgPSB0YXJnZXRQYXlsb2FkLm1lc3NhZ2U7CiAgaWYgKCFtZXNzYWdlIHx8ICFtZXNzYWdlLmlzc3VlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG1lc3NhZ2Ugb3IgaXNzdWUgb2JqZWN0IGluIHBheWxvYWQiIH07CiAgfQoKICBjb25zdCBpc3N1ZSA9IG1lc3NhZ2UuaXNzdWU7CiAgaWYgKCFpc3N1ZS5pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBJRCIgfTsKICB9CiAgaWYgKCFpc3N1ZS5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNyZWF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KICBpZiAoIWlzc3VlLnVwZGF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgdXBkYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQoKICAvLyBDcm9zcy1zdGVwIHZlcmlmaWNhdGlvbgogIGxldCBza2lwQ3Jvc3NTdGVwID0gZmFsc2U7CiAgaWYgKHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwcmV2VHhJZCA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgPyBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdIDogc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZDsKICAgIGNvbnN0IGFjdGl2ZVR4SWQgPSBwcmV2VHhJZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICAgIGlmIChhY3RpdmVUeElkICYmIHRhcmdldFBheWxvYWQuY29udGV4dC50cmFuc2FjdGlvbl9pZCAhPT0gYWN0aXZlVHhJZCkgewogICAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICAgIH0KICB9IGVsc2UgewogICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXAgJiYgc2Vzc2lvbkRhdGEpIHsKICAgIGlmIChpc3N1ZS5yZWZzICYmIEFycmF5LmlzQXJyYXkoaXNzdWUucmVmcykpIHsKICAgICAgY29uc3Qgb3JkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnT1JERVInKTsKICAgICAgaWYgKG9yZGVyUmVmICYmIHNlc3Npb25EYXRhLm9yZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRPcmRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub3JkZXJfaWQpID8gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5vcmRlcl9pZDsKICAgICAgICBpZiAob3JkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZE9yZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBPUkRFUiByZWZfaWQgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBvcmRlcl9pZCIgfTsKICAgICAgICB9CiAgICAgIH0KICAgIH0KCiAgICBpZiAoIWlzc3VlLmlzc3VlX2FjdGlvbnMgJiYgIWlzc3VlLmFjdGlvbnMpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgYWN0aW9ucyIgfTsKICAgIH0KICB9CgogIC8vIFZhbGlkYXRlIHN0YXR1cyBvbmx5IGlmIGl0IGlzIHByZXNlbnQgKFYyKQogIGlmIChpc3N1ZS5zdGF0dXMgIT09IHVuZGVmaW5lZCkgewogICAgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX29wZW4iKSkgewogICAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgT1BFTiBmb3IgaXNzdWVfb3BlbiBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgICAgfQogICAgfSBlbHNlIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9jbG9zZSIpKSB7CiAgICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiQ0xPU0VEIikgewogICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIENMT1NFRCBmb3IgaXNzdWVfY2xvc2UgYWN0aW9uLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICAgIH0KICAgIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygicmVzb2x2ZWQiKSkgewogICAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIlJFU09MVkVEIiAmJiBpc3N1ZS5zdGF0dXMgIT09ICJQUk9DRVNTSU5HIikgewogICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIFJFU09MVkVEIG9yIFBST0NFU1NJTkcsIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgICAgfQogICAgfQogIH0gZWxzZSB7CiAgICAvLyBWMSBzcGVjaWZpYyBjaGVja3MKICAgIGNvbnN0IGlzc3VlQWN0aW9ucyA9IGlzc3VlLmlzc3VlX2FjdGlvbnM7CiAgICBpZiAoaXNzdWVBY3Rpb25zKSB7CiAgICAgICBjb25zdCByZXNwQWN0aW9ucyA9IGlzc3VlQWN0aW9ucy5yZXNwb25kZW50X2FjdGlvbnM7CiAgICAgICBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygicmVzb2x2ZWQiKSkgewogICAgICAgICAgaWYgKCFyZXNwQWN0aW9ucyB8fCByZXNwQWN0aW9ucy5sZW5ndGggPT09IDAgfHwgcmVzcEFjdGlvbnNbcmVzcEFjdGlvbnMubGVuZ3RoIC0gMV0ucmVzcG9uZGVudF9hY3Rpb24gIT09ICJSRVNPTFZFRCIpIHsKICAgICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBSRVNPTFZFRCBhY3Rpb24gaW4gcmVzcG9uZGVudF9hY3Rpb25zIGZvciBWMSIgfTsKICAgICAgICAgIH0KICAgICAgIH0KICAgICAgIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJwcm9jZXNzaW5nIikpIHsKICAgICAgICAgIGlmICghcmVzcEFjdGlvbnMgfHwgcmVzcEFjdGlvbnMubGVuZ3RoID09PSAwIHx8IHJlc3BBY3Rpb25zW3Jlc3BBY3Rpb25zLmxlbmd0aCAtIDFdLnJlc3BvbmRlbnRfYWN0aW9uICE9PSAiUFJPQ0VTU0lORyIpIHsKICAgICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBQUk9DRVNTSU5HIGFjdGlvbiBpbiByZXNwb25kZW50X2FjdGlvbnMgZm9yIFYxIiB9OwogICAgICAgICAgfQogICAgICAgfQogICAgfQogIH0KCiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlX3N0YXR1cyI7CiAgY29uc3QgQ1VSUkVOVF9TVEVQX0FDVElPTl9JRCA9ICJvbl9pc3N1ZV9zdGF0dXMiOwogIGNvbnN0IENVUlJFTlRfU1RFUF9JTkRFWCA9IDE4OwoKICBpZiAoIXNlc3Npb25EYXRhKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHNlc3Npb24gZGF0YSIgfTsKICB9CgogIGNvbnN0IHR4SWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkIHx8IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uX2lkOwogIGlmICghdHhJZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyB0cmFuc2FjdGlvbiBJRCBpbiBzZXNzaW9uIiB9OwogIH0KCiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+      defaultPayload:
+        context:
+          action: on_issue_status
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          domain: ONDC:TRV10
+          location:
+            city:
+              code: std:080
+            country:
+              code: IND
+          message_id: 33de2c0d-5fe1-4e36-b4d8-eeb6075d09f8
+          timestamp: 2026-03-23T11:45:10.319Z
+          transaction_id: 36e55fc3-47a2-4560-b8a3-b73007aef870
+          ttl: PT30S
+          version: 2.1.0
+        message:
+          issue:
+            id: I1
+            issue_actions:
+              respondent_actions:
+                - respondent_action: PROCESSING
+                  short_desc: Complaint is being processed
+                  updated_at: 2023-01-15T10:10:00.142Z
+                  updated_by:
+                    org:
+                      name: sellerapp.com::ONDC:RET10
+                    contact:
+                      phone: "9450394140"
+                      email: respondentapp@respond.com
+                    person:
+                      name: Jane Doe
+                  cascaded_level: 1
+                - respondent_action: RESOLVED
+                  short_desc: Complaint resolved
+                  updated_at: 2023-01-15T10:31:00.523Z
+                  updated_by:
+                    org:
+                      name: sellerapp.com::ONDC:RET10
+                    contact:
+                      phone: "9450394140"
+                      email: respondentapp@respond.com
+                    person:
+                      name: Jane Doe
+                  cascaded_level: 1
+            created_at: 2023-01-15T10:00:00.469Z
+            updated_at: 2023-01-15T10:31:00.523Z
+            resolution_provider:
+              respondent_info:
+                type: TRANSACTION-COUNTERPARTY-NP
+                organization:
+                  org:
+                    name: sellerapp.com::ONDC:RET10
+                  contact:
+                    phone: "9059304940"
+                    email: email@resolutionproviderorg.com
+                  person:
+                    name: resolution provider org contact person name
+                resolution_support:
+                  chat_link: http://chat-link/respondent
+                  contact:
+                    phone: "9949595059"
+                    email: respondantemail@resolutionprovider.com
+                  gros:
+                    - person:
+                        name: Sam D
+                      contact:
+                        phone: "9605960796"
+                        email: email@gro.com
+                      gro_type: TRANSACTION-COUNTERPARTY-NP-GRO
+            resolution:
+              short_desc: Refund to be initiated
+              long_desc: For this complaint, refund is to be initiated
+              action_triggered: REFUND
+              refund_amount: "100"
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+        latest_issue_payload: $.message.issue
+        last_action: $.context.action
+        issue_action: $.message.issue.actions[*]
+        issue_resolution: $.message.issue.resolutions[*]
+        last_actions_id: $.message.issue.actions[*]
+        on_issue_actions: $.message.issue.issue_actions
+      inputs: {}
+    examples:
+      - name: example for on_issue_status
+        payload:
+          context:
+            domain: ONDC:TRV10
+            action: on_issue_status
+            timestamp: 2026-08-21T09:07:44.137Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: c5ff10c0-d763-4e34-95ee-db204f638f3d
+            bap_id: bap.example.com
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: bpp.example.com
+            bpp_uri: https://bpp.example.com
+            version: 2.1.0
+            location:
+              country:
+                code: IND
+              city:
+                code: std:080
+          message:
+            issue:
+              id: 29d77528-4108-4961-b81a-7daedf98a8c2
+              issue_actions:
+                respondent_actions:
+                  - respondent_action: PROCESSING
+                    short_desc: Complaint is being processed
+                    updated_at: 2026-08-21T09:07:44.057Z
+                    updated_by:
+                      org:
+                        name: bpp.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9450394140"
+                        email: respondentapp@respond.com
+                      person:
+                        name: Jane Doe
+                    cascaded_level: 1
+                  - respondent_action: RESOLVED
+                    short_desc: Complaint resolved
+                    updated_at: 2026-08-21T09:07:44.137Z
+                    updated_by:
+                      org:
+                        name: bpp.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9450394140"
+                        email: respondentapp@respond.com
+                      person:
+                        name: Jane Doe
+                    cascaded_level: 1
+              created_at: 2026-08-21T09:07:43.953Z
+              updated_at: 2026-08-21T09:07:44.137Z
+              resolution_provider:
+                respondent_info:
+                  type: TRANSACTION-COUNTERPARTY-NP
+                  organization:
+                    org:
+                      name: bpp.example.com::ONDC:TRV10
+                    contact:
+                      phone: "9059304940"
+                      email: email@resolutionproviderorg.com
+                    person:
+                      name: resolution provider org contact person name
+                  resolution_support:
+                    chat_link: http://chat-link/respondent
+                    contact:
+                      phone: "9949595059"
+                      email: respondantemail@resolutionprovider.com
+                    gros:
+                      - person:
+                          name: Sam D
+                        contact:
+                          phone: "9605960796"
+                          email: email@gro.com
+                        gro_type: TRANSACTION-COUNTERPARTY-NP-GRO
+              resolution:
+                short_desc: Refund to be initiated
+                long_desc: For this complaint, refund is to be initiated
+                action_triggered: REFUND
+                refund_amount: "146"
+        type: request
+        description: The BPP sends an unsolicited issue status callback to the BAP with
+          grievance resolution actions and status updates for the ride
+          transaction.
+  - api: issue
+    action_id: issue_close_100
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: The BAP reports an issue to the BPP regarding the confirmed ride
+      order, creating a formal grievance record with problem details, expected
+      response timelines, and resolution expectations.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gaXNzdWVTdGF0dXNHZW5lcmF0b3JfMTAwKAogICAgICBkZWZhdWx0UGF5bG9hZCwKICAgICAgewogICAgICAgIC4uLnNlc3Npb25EYXRhLAogICAgICAgIGlnbV9hY3Rpb246ICJpc3N1ZV9jbG9zZSIsCiAgICAgIH0sCiAgICAgIHNlc3Npb25EYXRhPy51c2VyX2lucHV0cwogICAgKTsKfQ==
+      validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlX2Nsb3NlXzEwMCI7CgogIGlmICghdGFyZ2V0UGF5bG9hZCB8fCAhdGFyZ2V0UGF5bG9hZC5jb250ZXh0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHBheWxvYWQgY29udGV4dCIgfTsKICB9CgogIGlmICh0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICE9PSBDVVJSRU5UX1NURVBfQVBJKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJDb250ZXh0IGFjdGlvbiBkb2VzIG5vdCBtYXRjaCBzdGVwIEFQSTogIiArIHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gKyAiIGV4cGVjdGVkOiAiICsgQ1VSUkVOVF9TVEVQX0FQSSB9OwogIH0KCiAgY29uc3QgbWVzc2FnZSA9IHRhcmdldFBheWxvYWQubWVzc2FnZTsKICBpZiAoIW1lc3NhZ2UgfHwgIW1lc3NhZ2UuaXNzdWUpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgbWVzc2FnZSBvciBpc3N1ZSBvYmplY3QgaW4gcGF5bG9hZCIgfTsKICB9CgogIGNvbnN0IGlzc3VlID0gbWVzc2FnZS5pc3N1ZTsKICBpZiAoIWlzc3VlLmlkKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIElEIiB9OwogIH0KICBpZiAoIWlzc3VlLmNyZWF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgY3JlYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQogIGlmICghaXNzdWUudXBkYXRlZF9hdCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSB1cGRhdGVkX2F0IHRpbWVzdGFtcCIgfTsKICB9CgogIC8vIENyb3NzLXN0ZXAgdmVyaWZpY2F0aW9uCiAgbGV0IHNraXBDcm9zc1N0ZXAgPSBmYWxzZTsKICBpZiAoc2Vzc2lvbkRhdGEpIHsKICAgIGNvbnN0IHByZXZUeElkID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkKSA/IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWRbMF0gOiBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkOwogICAgY29uc3QgYWN0aXZlVHhJZCA9IHByZXZUeElkIHx8IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uX2lkOwogICAgaWYgKGFjdGl2ZVR4SWQgJiYgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LnRyYW5zYWN0aW9uX2lkICE9PSBhY3RpdmVUeElkKSB7CiAgICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogICAgfQogIH0gZWxzZSB7CiAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICB9CgogIGlmICghc2tpcENyb3NzU3RlcCAmJiBzZXNzaW9uRGF0YSkgewogICAgaWYgKGlzc3VlLnJlZnMgJiYgQXJyYXkuaXNBcnJheShpc3N1ZS5yZWZzKSkgewogICAgICBjb25zdCBvcmRlclJlZiA9IGlzc3VlLnJlZnMuZmluZChyID0+IHIucmVmX3R5cGUgPT09ICdPUkRFUicpOwogICAgICBpZiAob3JkZXJSZWYgJiYgc2Vzc2lvbkRhdGEub3JkZXJfaWQpIHsKICAgICAgICBjb25zdCBleHBlY3RlZE9yZGVyID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5vcmRlcl9pZCkgPyBzZXNzaW9uRGF0YS5vcmRlcl9pZFswXSA6IHNlc3Npb25EYXRhLm9yZGVyX2lkOwogICAgICAgIGlmIChvcmRlclJlZi5yZWZfaWQgIT09IGV4cGVjdGVkT3JkZXIpIHsKICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIE9SREVSIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIG9yZGVyX2lkIiB9OwogICAgICAgIH0KICAgICAgfQogICAgfQoKICAgIGlmICghaXNzdWUuaXNzdWVfYWN0aW9ucyAmJiAhaXNzdWUuYWN0aW9ucykgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3Rpb25zIiB9OwogICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgc3RhdHVzIG9ubHkgaWYgaXQgaXMgcHJlc2VudCAoVjIpCiAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gdW5kZWZpbmVkKSB7CiAgICBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfb3BlbiIpKSB7CiAgICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBPUEVOIGZvciBpc3N1ZV9vcGVuIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgICB9CiAgICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJDTE9TRUQiKSB7CiAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgQ0xPU0VEIGZvciBpc3N1ZV9jbG9zZSBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgICAgfQogICAgfSBlbHNlIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJyZXNvbHZlZCIpKSB7CiAgICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiUkVTT0xWRUQiICYmIGlzc3VlLnN0YXR1cyAhPT0gIlBST0NFU1NJTkciKSB7CiAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgUkVTT0xWRUQgb3IgUFJPQ0VTU0lORywgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgICB9CiAgICB9CiAgfSBlbHNlIHsKICAgIC8vIFYxIHNwZWNpZmljIGNoZWNrcwogICAgY29uc3QgaXNzdWVBY3Rpb25zID0gaXNzdWUuaXNzdWVfYWN0aW9uczsKICAgIGlmIChpc3N1ZUFjdGlvbnMpIHsKICAgICAgIGNvbnN0IHJlc3BBY3Rpb25zID0gaXNzdWVBY3Rpb25zLnJlc3BvbmRlbnRfYWN0aW9uczsKICAgICAgIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJyZXNvbHZlZCIpKSB7CiAgICAgICAgICBpZiAoIXJlc3BBY3Rpb25zIHx8IHJlc3BBY3Rpb25zLmxlbmd0aCA9PT0gMCB8fCByZXNwQWN0aW9uc1tyZXNwQWN0aW9ucy5sZW5ndGggLSAxXS5yZXNwb25kZW50X2FjdGlvbiAhPT0gIlJFU09MVkVEIikgewogICAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIFJFU09MVkVEIGFjdGlvbiBpbiByZXNwb25kZW50X2FjdGlvbnMgZm9yIFYxIiB9OwogICAgICAgICAgfQogICAgICAgfQogICAgICAgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoInByb2Nlc3NpbmciKSkgewogICAgICAgICAgaWYgKCFyZXNwQWN0aW9ucyB8fCByZXNwQWN0aW9ucy5sZW5ndGggPT09IDAgfHwgcmVzcEFjdGlvbnNbcmVzcEFjdGlvbnMubGVuZ3RoIC0gMV0ucmVzcG9uZGVudF9hY3Rpb24gIT09ICJQUk9DRVNTSU5HIikgewogICAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIFBST0NFU1NJTkcgYWN0aW9uIGluIHJlc3BvbmRlbnRfYWN0aW9ucyBmb3IgVjEiIH07CiAgICAgICAgICB9CiAgICAgICB9CiAgICB9CiAgfQoKICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
+      requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAxOTsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
+      defaultPayload:
+        context:
+          action: issue
+          bap_id: dev-automation.ondc.org
+          bap_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/buyer
+          bpp_id: dev-automation.ondc.org
+          bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:TRV10/2.1.0/seller
+          domain: ONDC:TRV10
+          location:
+            city:
+              code: std:080
+            country:
+              code: IND
+          message_id: 187450fc-7065-427a-bd7c-3915d1c7ea05
+          timestamp: 2026-03-23T11:45:09.388Z
+          transaction_id: 36e55fc3-47a2-4560-b8a3-b73007aef870
+          ttl: PT30S
+          version: 2.1.0
+        message:
+          issue:
+            id: I1
+            status: CLOSED
+            created_at: 2023-01-15T10:00:00.469Z
+            updated_at: 2023-01-15T10:41:30.723Z
+            rating: THUMBS-UP
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        city_code: $.context.location.city.code
+        latest_issue_payload: $.message.issue
+        message_id: $.context.message_id
+        last_action: $.context.action
+        issue_action: $.message.issue.actions[*]
+        issue_resolution: $.message.issue.resolutions[*]
+        issue_level: $.message.issue.level
+        issue_id: $.message.issue.id
+        issue_status: $.message.issue.status
+        issue_created_at: $.message.issue.created_at
+        issue_category: $.message.issue.category
+        issue_sub_category: $.message.issue.sub_category
+        issue_complaint_info: $.message.issue.complainant_info
+        issue_order_details: $.message.issue.order_details
+        issue_description: $.message.issue.description
+        issue_source: $.message.issue.source
+        issue_expected_response_time: $.message.issue.expected_response_time
+        issue_expected_resolution_time: $.message.issue.expected_resolution_time
+        issue_actions: $.message.issue.issue_actions
+        issue_issue_type: $.message.issue.issue_type
+      inputs:
+        id: ExampleInputId
+        jsonSchema:
+          $schema: http://json-schema.org/draft-07/schema#
+          type: object
+          properties:
+            rating:
+              type: string
+              description: Select Rating
+              enum:
+                - THUMBS_UP
+                - THUMBS_DOWN
+              default: THUMBS_UP
+          additionalProperties: true
+          default: {}
+    examples:
+      - name: example for issue
+        payload:
+          context:
+            domain: ONDC:TRV10
+            action: issue
+            timestamp: 2026-08-21T09:07:45.916Z
+            transaction_id: 72435cde-6a5c-4459-849a-b5258beddbbe
+            message_id: 5a28dd04-6c01-4183-89df-192f31254e34
+            bap_id: bap.example.com
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: bpp.example.com
+            bpp_uri: https://bpp.example.com
+            version: 2.1.0
+            location:
+              country:
+                code: IND
+              city:
+                code: std:080
+          message:
+            issue:
+              id: 29d77528-4108-4961-b81a-7daedf98a8c2
+              status: CLOSED
+              created_at: 2026-08-21T09:07:43.953Z
+              updated_at: 2026-08-21T09:07:45.916Z
+              rating: THUMBS_UP
+              issue_actions:
+                complainant_actions:
+                  - complainant_action: OPEN
+                    short_desc: Complaint created
+                    updated_at: 2026-08-21T09:07:43.953Z
+                    updated_by:
+                      org:
+                        name: bap.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9879879870"
+                        email: sam@yahoo.com
+                      person:
+                        name: Joe Adams
+                  - complainant_action: CLOSE
+                    short_desc: Complaint closed
+                    updated_at: 2026-08-21T09:07:45.916Z
+                    updated_by:
+                      org:
+                        name: bap.example.com::ONDC:TRV10
+                      contact:
+                        phone: "9879879870"
+                        email: sam@yahoo.com
+                      person:
+                        name: Joe Adams
+        type: request
+        description: The BAP reports an issue to the BPP regarding the confirmed ride
+          order, creating a formal grievance record with problem details,
+          expected response timelines, and resolution expectations.
 transaction_history: []
 validationLib: ""
-helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCmNvbnN0IGNyZWF0ZUZvcm1VUkwgPSAoZG9tYWluLGZvcm1JZCwgc2Vzc2lvbkRhdGEpID0+IHsKCWNvbnN0IGJhc2VVUkwgPSBzZXNzaW9uRGF0YS5tb2NrQmFzZVVybDsKCWNvbnN0IHRyYW5zYWN0aW9uSWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdOwoJY29uc3Qgc2Vzc2lvbklkID0gc2Vzc2lvbkRhdGEuc2Vzc2lvbklkOwoJcmV0dXJuIGAke2Jhc2VVUkx9L2Zvcm1zLyR7ZG9tYWlufS8ke2Zvcm1JZH0vP3RyYW5zYWN0aW9uX2lkPSR7dHJhbnNhY3Rpb25JZH0mc2Vzc2lvbl9pZD0ke3Nlc3Npb25JZH1gOwp9CgovLyBHZW5lcmF0ZXMgYSBVVUlEIHY0CmZ1bmN0aW9uIHV1aWR2NCgpIHsKCXJldHVybiAneHh4eHh4eHgteHh4eC00eHh4LXl4eHgteHh4eHh4eHh4eHh4Jy5yZXBsYWNlKC9beHldL2csIGZ1bmN0aW9uIChjKSB7CgkgIGNvbnN0IHIgPSBNYXRoLnJhbmRvbSgpICogMTYgfCAwOwoJICBjb25zdCB2ID0gYyA9PT0gJ3gnID8gciA6IChyICYgMHgzIHwgMHg4KTsKCSAgcmV0dXJuIHYudG9TdHJpbmcoMTYpOwoJfSk7Cn0KCi8vIEdlbmVyYXRlIGEgNiBkaWdpdCBzdHJpbmcgSUQKZnVuY3Rpb24gZ2VuZXJhdGU2RGlnaXRJZCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApLnRvU3RyaW5nKCk7Cn0KCi8vIFJldHVybnMgdGhlIGN1cnJlbnQgSVNPIHRpbWVzdGFtcApmdW5jdGlvbiBjdXJyZW50VGltZXN0YW1wKCkgewoJcmV0dXJuIG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKfQoKLy8gQ29udmVydHMgSVNPIDg2MDEgZHVyYXRpb24gc3RyaW5nIHRvIHRvdGFsIHNlY29uZHMKY29uc3QgaXNvRHVyVG9TZWMgPSAoZHVyYXRpb24pID0+IHsKICBjb25zdCBkdXJSRSA9IC9QKChkKylZKT8oKGQrKU0pPygoZCspVyk/KChkKylEKT9UPygoZCspSCk/KChkKylNKT8oKGQrKVMpPy87CiAgY29uc3QgcyA9IGR1clJFLmV4ZWMoZHVyYXRpb24pOwogIGlmICghcykgcmV0dXJuIDA7CiAgCiAgcmV0dXJuIChOdW1iZXIocz8uWzJdKSB8fCAwKSAqIDMxNTM2MDAwICsKCShOdW1iZXIocz8uWzRdKSB8fCAwKSAqIDI2MjgyODggKwoJKE51bWJlcihzPy5bNl0pIHx8IDApICogNjA0ODAwICsKCShOdW1iZXIocz8uWzhdKSB8fCAwKSAqIDg2NDAwICsKCShOdW1iZXIocz8uWzEwXSkgfHwgMCkgKiAzNjAwICsKCShOdW1iZXIocz8uWzEyXSkgfHwgMCkgKiA2MCArCgkoTnVtYmVyKHM/LlsxNF0pIHx8IDApOwp9OwoKY29uc3Qgc2V0Q2l0eUZyb21JbnB1dHMgPSAocGF5bG9hZCwgaW5wdXRzKSA9PiB7CglpZiAoIWlucHV0cykgcmV0dXJuICIqIjsKCWxldCB2ZXJzaW9uID0gcGF5bG9hZC5jb250ZXh0LnZlcnNpb24gfHwgcGF5bG9hZC5jb250ZXh0LmNvcmVfdmVyc2lvbiB8fCAiMi4wLjAiOwoJaWYgKHZlcnNpb24uc3RhcnRzV2l0aCgiMSIpKSB7CgkJcGF5bG9hZC5jb250ZXh0LmNpdHkgPSBpbnB1dHMuY2l0eV9jb2RlID8/ICIqIjsKCX0gZWxzZSB7CgkJcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IGlucHV0cy5jaXR5X2NvZGUgPz8gIioiOwoJfQp9CgpmdW5jdGlvbiBnZW5lcmF0ZU5lYXJieUxvY2F0aW9ucyhzdGFydEdwcywgZW5kR3BzKSB7Cgljb25zdCBbc3RhcnRMYXQsIHN0YXJ0TG9uXSA9IHN0YXJ0R3BzLnNwbGl0KCIsIikubWFwKE51bWJlcik7Cgljb25zdCBbZW5kTGF0LCBlbmRMb25dID0gZW5kR3BzLnNwbGl0KCIsIikubWFwKE51bWJlcik7CgoJY29uc3QgZ2V0UmFuZG9tT2Zmc2V0ID0gKCkgPT4gTWF0aC5hYnMoKE1hdGgucmFuZG9tKCkgLSAwLjUpICogMC4wMSk7IC8vIEFsd2F5cyBwb3NpdGl2ZQoKCXJldHVybiBbCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDEiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDIiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDMiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDQiLAoJCX0sCgldOwp9CgpmdW5jdGlvbiBnZW5lcmF0ZVF1b3RlRnJvbUl0ZW1zKGl0ZW1zKSB7CglpZiAoIUFycmF5LmlzQXJyYXkoaXRlbXMpIHx8IGl0ZW1zLmxlbmd0aCA9PT0gMCkgcmV0dXJuIG51bGw7CgoJcmV0dXJuIHsKCQlicmVha3VwOiBpdGVtcwoJCQkubWFwKChpdGVtKSA9PiB7CgkJCQljb25zdCBwcmljZSA9IHBhcnNlRmxvYXQoaXRlbS5wcmljZS52YWx1ZSk7CgkJCQljb25zdCBtaW5GYXJlID0gcGFyc2VGbG9hdCgKCQkJCQlpdGVtLnRhZ3MKCQkJCQkJLmZpbmQoKHRhZykgPT4gdGFnLmRlc2NyaXB0b3IuY29kZSA9PT0gIkZBUkVfUE9MSUNZIikKCQkJCQkJPy5saXN0LmZpbmQoKHQpID0+IHQuZGVzY3JpcHRvci5jb2RlID09PSAiTUlOX0ZBUkUiKT8udmFsdWUgfHwKCQkJCQkiMCIKCQkJCSk7CgoJCQkJY29uc3QgZGlzdGFuY2VGYXJlID0gcHJpY2UgLSBtaW5GYXJlOwoKCQkJCXJldHVybiBbCgkJCQkJewoJCQkJCQlwcmljZTogewoJCQkJCQkJY3VycmVuY3k6IGl0ZW0ucHJpY2UuY3VycmVuY3ksCgkJCQkJCQl2YWx1ZTogbWluRmFyZS50b1N0cmluZygpLAoJCQkJCQl9LAoJCQkJCQl0aXRsZTogIkJBU0VfRkFSRSIsCgkJCQkJfSwKCQkJCQl7CgkJCQkJCXByaWNlOiB7CgkJCQkJCQljdXJyZW5jeTogaXRlbS5wcmljZS5jdXJyZW5jeSwKCQkJCQkJCXZhbHVlOiBkaXN0YW5jZUZhcmUudG9TdHJpbmcoKSwKCQkJCQkJfSwKCQkJCQkJdGl0bGU6ICJESVNUQU5DRV9GQVJFIiwKCQkJCQl9LAoJCQkJXTsKCQkJfSkKCQkJLmZsYXQoKSwKCgkJcHJpY2U6IHsKCQkJY3VycmVuY3k6IGl0ZW1zWzBdLnByaWNlLmN1cnJlbmN5LAoJCQl2YWx1ZTogaXRlbXMKCQkJCS5yZWR1Y2UoKHRvdGFsLCBpdGVtKSA9PiB0b3RhbCArIHBhcnNlRmxvYXQoaXRlbS5wcmljZS52YWx1ZSksIDApCgkJCQkudG9TdHJpbmcoKSwKCQl9LAoJCXR0bDogIlBUMjAwUyIsCgl9Owp9CmZ1bmN0aW9uIGZpbHRlckZ1bGZpbGxtZW50c0J5SXRlbShpdGVtLCBmdWxmaWxsbWVudHMpIHsKCWlmICghaXRlbT8uZnVsZmlsbG1lbnRfaWRzIHx8ICFBcnJheS5pc0FycmF5KGZ1bGZpbGxtZW50cykpIHsKCQlyZXR1cm4gW107Cgl9CgoJcmV0dXJuIGZ1bGZpbGxtZW50cy5maWx0ZXIoKGZ1bGZpbGxtZW50KSA9PgoJCWl0ZW0uZnVsZmlsbG1lbnRfaWRzLmluY2x1ZGVzKGZ1bGZpbGxtZW50LmlkKQoJKTsKfQoKZnVuY3Rpb24gZmlsdGVySXRlbXNCeUlkKHNlc3Npb25EYXRhLCBzZWxlY3RlZF9pdGVtX2lkKSB7CglpZiAoc2Vzc2lvbkRhdGE/Lml0ZW1zICYmIEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuaXRlbXMpKSB7CgkJcmV0dXJuIHNlc3Npb25EYXRhLml0ZW1zLmZpbHRlcigKCQkJKGl0ZW0pID0+IGl0ZW0uaWQgPT09IHNlbGVjdGVkX2l0ZW1faWQKCQkpOwoJfQoJcmV0dXJuIFtdOwp9CgpmdW5jdGlvbiBpbml0TXVsdGlwbGVTdG9wc0dlbmVyYXRvcigKCWV4aXN0aW5nUGF5bG9hZCwKCXNlc3Npb25EYXRhLAoJaXNQcmljZVZhbHVlTmVlZGVkLAopIHsKCWV4aXN0aW5nUGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9CgkJc2Vzc2lvbkRhdGE/LmNpdHlfY29kZVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CgkJc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfZnVsZmlsbG1lbnRzOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdWyJjdXN0b21lciJdID0gewoJCWNvbnRhY3Q6IHsKCQkJcGhvbmU6ICI5ODc2NTU2Nzg5IiwKCQl9LAoJCXBlcnNvbjogewoJCQluYW1lOiAiSm9lIEFkYW1zIiwKCQl9LAoJfTsKCWRlbGV0ZSBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udHlwZTsKCWRlbGV0ZSBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udGFnczsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdID0gewoJCWlkOiBzZXNzaW9uRGF0YS5zZWxlY3RlZF9pdGVtX2lkWzBdLAoJfTsKCWlmIChpc1ByaWNlVmFsdWVOZWVkZWQpCgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfaXRlbXM7CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5jb2xsZWN0ZWRfYnkgPQoJCXNlc3Npb25EYXRhLmNvbGxlY3RlZF9ieVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmlkID0gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF07CgkvLyBVUERBVEUgU0VUVExFTUVOVCBBTU9VTlQgQkFTRUQgT04gUVVPVEUgUFJJQ0UKCS8vIGlmIChleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzKSB7CgkvLyAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MgPSB1cGRhdGVTZXR0bGVtZW50QW1vdW50KAoJLy8gICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MsCgkvLyAgICAgc2Vzc2lvbkRhdGEucXVvdGUsCgkvLyAgICk7CgkvLyB9CgoJY29uc3Qgc2VhcmNoVGFncyA9IChzZXNzaW9uRGF0YSkuc2VhcmNoX3RhZ3M/LmZsYXQoKSA/PyBbXTsKCgljb25zdCBiYXBUZXJtcyA9IHNlYXJjaFRhZ3MuZmluZCgKCQkodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCQVBfVEVSTVMiLAoJKTsKCgljb25zdCBiYXBMaXN0PSBiYXBUZXJtcz8ubGlzdCA/PyBbXTsKCgljb25zdCBvblNlYXJjaFRhZ3MgPSAoc2Vzc2lvbkRhdGEpLm9uX3NlYXJjaF90YWdzPy5mbGF0KCkgPz8gW107CgoJY29uc3Qgb25TZWFyY2hCYXBUZXJtcyA9IG9uU2VhcmNoVGFncy5maW5kKAoJCSh0YWcpID0+IHRhZz8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkJBUF9URVJNUyIsCgkpOwoKCWNvbnN0IG9uU2VhcmNoTGlzdCA9IG9uU2VhcmNoQmFwVGVybXM/Lmxpc3QgPz8gW107CgoJY29uc3QgYmFzZUxpc3QgPSBbCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJCVVlFUl9GSU5ERVJfRkVFU19QRVJDRU5UQUdFIiB9LCB2YWx1ZTogIjEiIH0sCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1dJTkRPVyIgfSwgdmFsdWU6ICJQVDYwTSIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIlNFVFRMRU1FTlRfQkFTSVMiIH0sIHZhbHVlOiAiREVMSVZFUlkiIH0sCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1RZUEUiIH0sIHZhbHVlOiAiVVBJIiB9LAoJCXsgZGVzY3JpcHRvcjogeyBjb2RlOiAiU0VUVExFTUVOVF9BTU9VTlQiIH0sIHZhbHVlOiAiMS40NiIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIk1BTkRBVE9SWV9BUkJJVFJBVElPTiIgfSwgdmFsdWU6ICJ0cnVlIiB9LAoJCXsgZGVzY3JpcHRvcjogeyBjb2RlOiAiQ09VUlRfSlVSSVNESUNUSU9OIiB9LCB2YWx1ZTogIk5ldyBEZWxoaSIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIkRFTEFZX0lOVEVSRVNUIiB9LCB2YWx1ZTogIjUiIH0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTVEFUSUNfVEVSTVMiIH0sCgkJCXZhbHVlOiAiaHR0cHM6Ly9leGFtcGxlLXRlc3QtYnBwLmNvbS9zdGF0aWMtdGVybXMudHh0IiwKCQl9LAoJXTsKCgljb25zdCBvdmVycmlkZUxpc3QgPSBbCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0JBTktfQ09ERSIgfSwgdmFsdWU6ICJYWFhYWFhYWFgiIH0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0JBTktfQUNDT1VOVF9OVU1CRVIiIH0sCgkJCXZhbHVlOiAieHh4eHh4eHh4eHh4eHgiLAoJCX0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1ZJUlRVQUxfUEFZTUVOVF9BRERSRVNTIiB9LAoJCQl2YWx1ZTogIjk5ODgxOTk3NzJAb2tpY2ljIiwKCQl9LAoJXTsKCgljb25zdCBtYXAgPSBuZXcgTWFwKCk7CgoJWy4uLmJhc2VMaXN0LCAuLi5vblNlYXJjaExpc3QsIC4uLmJhcExpc3QsIC4uLm92ZXJyaWRlTGlzdF0uZm9yRWFjaCgKCQkoaXRlbSkgPT4gewoJCQljb25zdCBjb2RlID0gaXRlbT8uZGVzY3JpcHRvcj8uY29kZTsKCQkJaWYgKGNvZGUpIHsKCQkJCW1hcC5zZXQoY29kZSwgaXRlbSk7CgkJCX0KCQl9LAoJKTsKCgljb25zdCBxdW90ZVByaWNlID0gTnVtYmVyKHNlc3Npb25EYXRhLnF1b3RlWzBdPy5wcmljZT8udmFsdWUgPz8gMCk7Cgljb25zdCBidXllckZlZVBlcmNlbnRhZ2UgPSBOdW1iZXIoCgkJbWFwLmdldCgiQlVZRVJfRklOREVSX0ZFRVNfUEVSQ0VOVEFHRSIpPy52YWx1ZSA/PyAxLAoJKTsKCWNvbnN0IGZlZUFtb3VudCA9IChxdW90ZVByaWNlIC8gMTAwKSAqIGJ1eWVyRmVlUGVyY2VudGFnZTsKCWNvbnN0IHNldHRsZW1lbnRBbW91bnQgPSAoCgkJc2Vzc2lvbkRhdGEuY29sbGVjdGVkX2J5WzBdID09PSAiQkFQIiA/IHF1b3RlUHJpY2UgLSBmZWVBbW91bnQgOiBmZWVBbW91bnQKCSkudG9GaXhlZCgyKTsKCgltYXAuc2V0KCJTRVRUTEVNRU5UX0FNT1VOVCIsIHsKCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0FNT1VOVCIgfSwKCQl2YWx1ZTogc2V0dGxlbWVudEFtb3VudCwKCX0pOwoKCWNvbnN0IGZpbmFsTGlzdCA9IEFycmF5LmZyb20obWFwLnZhbHVlcygpKTsKCglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0gWwoJCXsKCQkJZGVzY3JpcHRvcjogewoJCQkJY29kZTogIkJBUF9URVJNUyIsCgkJCQluYW1lOiAiQkFQIFRlcm1zIG9mIEVuZ2FnZW1lbnQiLAoJCQl9LAoJCQlkaXNwbGF5OiBmYWxzZSwKCQkJbGlzdDogZmluYWxMaXN0LAoJCX0sCgldOwoJcmV0dXJuIGV4aXN0aW5nUGF5bG9hZDsKfQoKCmZ1bmN0aW9uIHVwZGF0ZUZ1bGZpbGxtZW50Um91dGVUYWdzKHRhZ3MpIHsKICAvLyBsZWdhY3kgbm8tb3Ag4oCUIFJPVVRFX0lORk8gaXMgYXBwbGllZCBieSBfX2FwcGx5Um91dGVJbmZvIChzZXNzaW9uL29uX3NlbGVjdCkKICByZXR1cm4gdGFnczsKfQoKLy8gSGVscGVyIGZ1bmN0aW9uIHRvIHNsaWdodGx5IG1vZGlmeSBkaXN0YW5jZSBhbmQgRVRBCmZ1bmN0aW9uIHVwZGF0ZUl0ZW1JbmZvVGFncyh0YWdzKSB7CiAgcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKICAgIGlmICh0YWcuZGVzY3JpcHRvcj8uY29kZSA9PT0gIklORk8iICYmIEFycmF5LmlzQXJyYXkodGFnLmxpc3QpKSB7CiAgICAgIHJldHVybiB7CiAgICAgICAgLi4udGFnLAogICAgICAgIGxpc3Q6IHRhZy5saXN0Lm1hcCgodCkgPT4gewogICAgICAgICAgaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CiAgICAgICAgICAgIC8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCiAgICAgICAgICAgIGNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CiAgICAgICAgICAgIHJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CiAgICAgICAgICB9CiAgICAgICAgICBpZiAodC5kZXNjcmlwdG9yLmNvZGUgPT09ICJFVEFfVE9fTkVBUkVTVF9EUklWRVJfTUlOIikgewogICAgICAgICAgICAvLyBTbGlnaHRseSBhZGp1c3QgRVRBLCBlLmcuLCBhZGQgMSBtaW51dGUKICAgICAgICAgICAgY29uc3QgZXRhID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CiAgICAgICAgICAgIHJldHVybiB7IC4uLnQsIHZhbHVlOiAoZXRhIC0gMSkudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgcmV0dXJuIHQ7CiAgICAgICAgfSksCiAgICAgIH07CiAgICB9CiAgICByZXR1cm4gdGFnOwogIH0pOwp9CgpmdW5jdGlvbiBnZW5lcmF0ZVJhbmRvbTZEaWdpdCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCi8vIEhlbHBlciBmdW5jdGlvbiB0byBzbGlnaHRseSBtb2RpZnkgZGlzdGFuY2UgYW5kIEVUQQpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewoJcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKCQlpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewoJCQlyZXR1cm4gewoJCQkJLi4udGFnLAoJCQkJbGlzdDogdGFnLmxpc3QubWFwKCh0KSA9PiB7CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCgkJCQkJCWNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CgkJCQkJCXJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CgkJCQkJfQoJCQkJCWlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkVUQV9UT19ORUFSRVNUX0RSSVZFUl9NSU4iKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBFVEEsIGUuZy4sIGFkZCAxIG1pbnV0ZQoJCQkJCQljb25zdCBldGEgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChldGEgLSAwLjIpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJcmV0dXJuIHQ7CgkJCQl9KSwKCQkJfTsKCQl9CgkJcmV0dXJuIHRhZzsKCX0pOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudHMoZnVsZmlsbG1lbnRzKSB7CglyZXR1cm4gZnVsZmlsbG1lbnRzLm1hcCgoZnVsZmlsbG1lbnQpID0+IHsKCQkvLyBBZGQgdGhlIHZlaGljbGUgb2JqZWN0IHRvIGVhY2ggZnVsZmlsbG1lbnQKCQlpZiAoZnVsZmlsbG1lbnQudmVoaWNsZS5jYXRlZ29yeSA9PT0gIkFVVE9fUklDS1NIQVciKSB7CgkJCWZ1bGZpbGxtZW50LnZlaGljbGUgPSB7CgkJCQljYXRlZ29yeTogIkFVVE9fUklDS1NIQVciLAoJCQkJdmFyaWFudDogIkFVVE9fUklDS1NIQVciLAoJCQkJbWFrZTogIkJhamFqIiwKCQkJCW1vZGVsOiAiQ29tcGFjdCBSRSIsCgkJCQlyZWdpc3RyYXRpb246ICJLQS0wMS1BRC05ODc2IiwKCQkJfTsKCQl9IGVsc2UgewoJCQlmdWxmaWxsbWVudC52ZWhpY2xlID0gewoJCQkJY2F0ZWdvcnk6ICJDQUIiLAoJCQkJdmFyaWFudDogIlNFREFOIiwKCQkJCW1ha2U6ICJNYXJ1dGkiLAoJCQkJbW9kZWw6ICJTd2lmdCBEemlyZSIsCgkJCQlyZWdpc3RyYXRpb246ICJLQS0wMS1BRC05ODc2IiwKCQkJfTsKCQl9CgoJCS8vIEZpbmQgdGhlIHN0b3Agd2l0aCB0eXBlICJTVEFSVCIKCQljb25zdCBzdGFydFN0b3AgPSBmdWxmaWxsbWVudC5zdG9wcy5maW5kKAoJCQkoc3RvcCkgPT4gc3RvcC50eXBlID09PSAiU1RBUlQiCgkJKTsKCQljb25zdCBlbmRTdG9wID0gZnVsZmlsbG1lbnQuc3RvcHMuZmluZCgoc3RvcCkgPT4gc3RvcC50eXBlID09PSAiRU5EIik7CgoJCS8vIElmIGZvdW5kLCBhZGQgdGhlIGF1dGhvcml6YXRpb24gb2JqZWN0CgkJaWYgKHN0YXJ0U3RvcCkgewoJCQljb25zdCBub3cgPSBuZXcgRGF0ZSgpOwoJCQljb25zdCBuZXdUaW1lID0gbmV3IERhdGUobm93LmdldFRpbWUoKSArIDE1ICogNjAwMDApLnRvSVNPU3RyaW5nKCk7CgkJCXN0YXJ0U3RvcC5hdXRob3JpemF0aW9uID0gewoJCQkJdG9rZW46IGdlbmVyYXRlUmFuZG9tNkRpZ2l0KCkudG9TdHJpbmcoKSwKCQkJCXR5cGU6ICJPVFAiLAoJCQkJdmFsaWRfdG86IG5ld1RpbWUsCgkJCQlzdGF0dXM6ICJVTkNMQUlNRUQiLAoJCQl9OwoJCX0KCgkJcmV0dXJuIGZ1bGZpbGxtZW50OwoJfSk7Cn0KCmZ1bmN0aW9uIHVwZGF0ZUl0ZW1JbmZvVGFncyh0YWdzKSB7CglyZXR1cm4gdGFncy5tYXAoKHRhZykgPT4gewoJCWlmICh0YWcuZGVzY3JpcHRvcj8uY29kZSA9PT0gIklORk8iICYmIEFycmF5LmlzQXJyYXkodGFnLmxpc3QpKSB7CgkJCXJldHVybiB7CgkJCQkuLi50YWcsCgkJCQlsaXN0OiB0YWcubGlzdC5tYXAoKHQpID0+IHsKCQkJCQlpZiAodC5kZXNjcmlwdG9yLmNvZGUgPT09ICJESVNUQU5DRV9UT19ORUFSRVNUX0RSSVZFUl9NRVRFUiIpIHsKCQkJCQkJLy8gU2xpZ2h0bHkgYWRqdXN0IGRpc3RhbmNlLCBlLmcuLCBhZGQgNSBtZXRlcnMKCQkJCQkJY29uc3QgZGlzdGFuY2UgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChkaXN0YW5jZSAtIDUpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRVRBX1RPX05FQVJFU1RfRFJJVkVSX01JTiIpIHsKCQkJCQkJLy8gU2xpZ2h0bHkgYWRqdXN0IEVUQSwgZS5nLiwgYWRkIDEgbWludXRlCgkJCQkJCWNvbnN0IGV0YSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwoJCQkJCQlyZXR1cm4geyAuLi50LCB2YWx1ZTogKGV0YSAtIDAuMikudG9TdHJpbmcoKSB9OwoJCQkJCX0KCQkJCQlyZXR1cm4gdDsKCQkJCX0pLAoJCQl9OwoJCX0KCQlyZXR1cm4gdGFnOwoJfSk7Cn0KCmZ1bmN0aW9uIHVwZGF0ZUZ1bGZpbGxtZW50Um91dGVUYWdzKHRhZ3MpIHsKICAvLyBsZWdhY3kgbm8tb3Ag4oCUIFJPVVRFX0lORk8gaXMgYXBwbGllZCBieSBfX2FwcGx5Um91dGVJbmZvIChzZXNzaW9uL29uX3NlbGVjdCkKICByZXR1cm4gdGFnczsKfQoKZnVuY3Rpb24gdXBkYXRlRnVsZmlsbG1lbnRTdGF0dXMob3JkZXIpIHsKCS8vIENoZWNrIGlmIGZ1bGZpbGxtZW50cyBleGlzdAoJaWYgKG9yZGVyLmZ1bGZpbGxtZW50cykgewoJCW9yZGVyLmZ1bGZpbGxtZW50cy5mb3JFYWNoKChmdWxmaWxsbWVudCkgPT4gewoJCQlmdWxmaWxsbWVudC5zdGF0ZS5kZXNjcmlwdG9yLmNvZGUgPSAiUklERV9FTlJPVVRFX1BJQ0tVUCI7CgkJCWZ1bGZpbGxtZW50LmFnZW50ID0gYWdlbnQ7CgkJfSk7Cgl9CglyZXR1cm4gb3JkZXI7Cn0KCgpmdW5jdGlvbiBvblN0YXR1c011bHRpcGxlU3RvcHNHZW5lcmF0b3IoCglleGlzdGluZ1BheWxvYWQsCglzZXNzaW9uRGF0YQopIHsKCWlmIChzZXNzaW9uRGF0YT8ucGF5bWVudHM/Lmxlbmd0aCA+IDApIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50cyA9IHNlc3Npb25EYXRhLnBheW1lbnRzOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8uaXRlbXM/Lmxlbmd0aCA+IDApIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLml0ZW1zOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8uY2FuY2VsbGF0aW9uX2Z1bGZpbGxtZW50cz8ubGVuZ3RoID4gMCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CgkJCXNlc3Npb25EYXRhPy5jYW5jZWxsYXRpb25fZnVsZmlsbG1lbnRzOwoJfSBlbHNlIGlmIChzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzID0KCQkJc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfZnVsZmlsbG1lbnRzOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8ub3JkZXJfaWQpIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pZCA9IHNlc3Npb25EYXRhLm9yZGVyX2lkWzBdOwoJfQoKCWlmIChzZXNzaW9uRGF0YS5jYW5jZWxsYXRpb25fcXVvdGUgIT0gbnVsbCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGE/LmNhbmNlbGxhdGlvbl9xdW90ZTsKCX0gZWxzZSBpZiAoc2Vzc2lvbkRhdGE/LnF1b3RlPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucXVvdGUgPSBzZXNzaW9uRGF0YS5xdW90ZVswXTsKCX0KCglpZiAoc2Vzc2lvbkRhdGE/LmNhbmNlbGxhdGlvbl9yZWFzb24gIT0gbnVsbCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNhbmNlbGxhdGlvbiA9CgkJCXNlc3Npb25EYXRhLmNhbmNlbGxhdGlvbl9yZWFzb247Cgl9CgoJY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwoKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNyZWF0ZWRfYXQgPQoJCXNlc3Npb25EYXRhLmNyZWF0ZWRfYXRbMF07CgoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudXBkYXRlZF9hdCA9CgkJZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQudGltZXN0YW1wOwoKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmlkID0KCQlzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXTsKCglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0KCQlzZXNzaW9uRGF0YT8uY29uZmlybV90YWdzPy5mbGF0KCk7CgoJaWYgKAoJCUFycmF5LmlzQXJyYXkoCgkJCWV4aXN0aW5nUGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50cz8uWzBdPy50YWdzCgkJKQoJKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnRhZ3MgPQoJCQl1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncygKCQkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS50YWdzCgkJCSk7Cgl9CgoJaWYgKGV4aXN0aW5nUGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/Lml0ZW1zPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPQoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcy5tYXAoKGl0ZW0pID0+IHsKCQkJCWlmIChBcnJheS5pc0FycmF5KGl0ZW0udGFncykpIHsKCQkJCQlpdGVtLnRhZ3MgPSB1cGRhdGVJdGVtSW5mb1RhZ3MoaXRlbS50YWdzKTsKCQkJCX0KCQkJCXJldHVybiBpdGVtOwoJCQl9KTsKCX0KCglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9CgpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewoJcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKCQlpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewoJCQlyZXR1cm4gewoJCQkJLi4udGFnLAoJCQkJbGlzdDogdGFnLmxpc3QubWFwKCh0KSA9PiB7CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCgkJCQkJCWNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CgkJCQkJCXJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CgkJCQkJfQoJCQkJCWlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkVUQV9UT19ORUFSRVNUX0RSSVZFUl9NSU4iKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBFVEEsIGUuZy4sIGFkZCAxIG1pbnV0ZQoJCQkJCQljb25zdCBldGEgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChldGEgLSAwLjIpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJcmV0dXJuIHQ7CgkJCQl9KSwKCQkJfTsKCQl9CgkJcmV0dXJuIHRhZzsKCX0pOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCi8vIEhlbHBlciBmdW5jdGlvbiB0byBzbGlnaHRseSBtb2RpZnkgZGlzdGFuY2UgYW5kIEVUQQpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewogIHJldHVybiB0YWdzLm1hcCgodGFnKSA9PiB7CiAgICBpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewogICAgICByZXR1cm4gewogICAgICAgIC4uLnRhZywKICAgICAgICBsaXN0OiB0YWcubGlzdC5tYXAoKHQpID0+IHsKICAgICAgICAgIGlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkRJU1RBTkNFX1RPX05FQVJFU1RfRFJJVkVSX01FVEVSIikgewogICAgICAgICAgICAvLyBTbGlnaHRseSBhZGp1c3QgZGlzdGFuY2UsIGUuZy4sIGFkZCA1IG1ldGVycwogICAgICAgICAgICBjb25zdCBkaXN0YW5jZSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwogICAgICAgICAgICByZXR1cm4geyAuLi50LCB2YWx1ZTogKGRpc3RhbmNlIC0gNSkudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRVRBX1RPX05FQVJFU1RfRFJJVkVSX01JTiIpIHsKICAgICAgICAgICAgLy8gU2xpZ2h0bHkgYWRqdXN0IEVUQSwgZS5nLiwgYWRkIDEgbWludXRlCiAgICAgICAgICAgIGNvbnN0IGV0YSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwogICAgICAgICAgICByZXR1cm4geyAuLi50LCB2YWx1ZTogKGV0YSAtIDAuMikudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgcmV0dXJuIHQ7CiAgICAgICAgfSksCiAgICAgIH07CiAgICB9CiAgICByZXR1cm4gdGFnOwogIH0pOwp9CgoKZnVuY3Rpb24gb25VcGRhdGVNdWx0aXBsZVN0b3BzR2VuZXJhdG9yKAogIGV4aXN0aW5nUGF5bG9hZCwKICBzZXNzaW9uRGF0YQopIHsKICBpZiAoc2Vzc2lvbkRhdGEucGF5bWVudHMubGVuZ3RoID4gMCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMgPSBzZXNzaW9uRGF0YS5wYXltZW50czsKICB9CgogIGlmIChzZXNzaW9uRGF0YS5pdGVtcy5sZW5ndGggPiAwKSB7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLml0ZW1zOwogIH0KCiAgaWYgKHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50cy5sZW5ndGggPiAwKSB7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHMgPQogICAgICBzZXNzaW9uRGF0YS5zZWxlY3RlZF9mdWxmaWxsbWVudHM7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF1bInR5cGUiXSA9ICJERUxJVkVSWSI7CgogICAgY29uc3QgZnVsZmlsbG1lbnRzID0gZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzOwoKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IGZ1bGZpbGxtZW50cy5tYXAoCiAgICAgIChmdWxmaWxsbWVudCwgaW5kZXgpID0+IHsKICAgICAgICBmdWxmaWxsbWVudC5pZCA9CiAgICAgICAgICBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzW2luZGV4XT8uaWQgfHwgaW5kZXggKyAxOwogICAgICAgIGZ1bGZpbGxtZW50LnZlaGljbGUgPSB7CiAgICAgICAgICAuLi5mdWxmaWxsbWVudC52ZWhpY2xlLAogICAgICAgIH07CiAgICAgICAgcmV0dXJuIGZ1bGZpbGxtZW50OwogICAgICB9CiAgICApOwogIH0KICBpZiAoc2Vzc2lvbkRhdGEub3JkZXJfaWQpIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF07CiAgfQogIGlmIChzZXNzaW9uRGF0YS5xdW90ZS5sZW5ndGg+MCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucXVvdGUgPSBzZXNzaW9uRGF0YS5xdW90ZVswXTsKICB9CiAgY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNyZWF0ZWRfYXQgPSBzZXNzaW9uRGF0YS5jcmVhdGVkX2F0WzBdOwogIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQgPSBleGlzdGluZ1BheWxvYWQuY29udGV4dC50aW1lc3RhbXA7CiAgaWYgKHNlc3Npb25EYXRhLnBheW1lbnRzLmxlbmd0aCA+IDApIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzID0gc2Vzc2lvbkRhdGEucGF5bWVudHM7CiAgfQoKICAvLyBVUERBVEUgU0VUVExFTUVOVCBBTU9VTlQgQkFTRUQgT04gUVVPVEUgUFJJQ0UKICAvLyBpZiAoZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudGFncykgewogIC8vICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudGFncyA9IHVwZGF0ZVNldHRsZW1lbnRBbW91bnQoCiAgLy8gICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MsCiAgLy8gICAgIHNlc3Npb25EYXRhLnF1b3RlCiAgLy8gICApOwogIC8vIH0KICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0gKHNlc3Npb25EYXRhKS5jb25maXJtX3RhZ3M/LmZsYXQoKTsKICBpZiAoQXJyYXkuaXNBcnJheShleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udGFncykpIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS50YWdzID0KICAgICAgdXBkYXRlRnVsZmlsbG1lbnRSb3V0ZVRhZ3MoCiAgICAgICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnRhZ3MKICAgICAgKTsKICB9CgogIGlmIChleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcz8ubGVuZ3RoID4gMCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPQogICAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcy5tYXAoKGl0ZW0pID0+IHsKICAgICAgICBpZiAoQXJyYXkuaXNBcnJheShpdGVtLnRhZ3MpKSB7CiAgICAgICAgICBpdGVtLnRhZ3MgPSB1cGRhdGVJdGVtSW5mb1RhZ3MoaXRlbS50YWdzKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIGl0ZW07CiAgICAgIH0pOwogIH0KICByZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9CgpmdW5jdGlvbiBzZWxlY3RNdWx0aXBsZVN0b3BzR2VuZXJhdG9yKGV4aXN0aW5nUGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCWlmIChzZXNzaW9uRGF0YS5pdGVtX2lkcykgewoJCWNvbnN0IGl0ZW1faWQgPSBzZXNzaW9uRGF0YS51c2VyX2lucHV0cy5pdGVtc1swXS5pdGVtSWQKCQkvLyBjb25zdCBpdGVtX2lkID0gc2Vzc2lvbkRhdGEudXNlcl9pbnB1dHMuaXRlbV9pZAoJCWNvbnN0IGl0ZW0gPSBzZXNzaW9uRGF0YS5pdGVtcy5maW5kKGkgPT4gaS5pZCA9PT0gaXRlbV9pZCk7CgkJY29uc3QgZnVsZmlsbG1lbnRJZCA9IGl0ZW0/LmZ1bGZpbGxtZW50X2lkcz8uWzBdOwoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS5pZCA9IGZ1bGZpbGxtZW50SWQKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5pZCA9IGl0ZW1faWQKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wcm92aWRlci5pZCA9IHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkWzBdCgl9CglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9Cg==
+helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCmNvbnN0IGNyZWF0ZUZvcm1VUkwgPSAoZG9tYWluLGZvcm1JZCwgc2Vzc2lvbkRhdGEpID0+IHsKCWNvbnN0IGJhc2VVUkwgPSBzZXNzaW9uRGF0YS5tb2NrQmFzZVVybDsKCWNvbnN0IHRyYW5zYWN0aW9uSWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdOwoJY29uc3Qgc2Vzc2lvbklkID0gc2Vzc2lvbkRhdGEuc2Vzc2lvbklkOwoJcmV0dXJuIGAke2Jhc2VVUkx9L2Zvcm1zLyR7ZG9tYWlufS8ke2Zvcm1JZH0vP3RyYW5zYWN0aW9uX2lkPSR7dHJhbnNhY3Rpb25JZH0mc2Vzc2lvbl9pZD0ke3Nlc3Npb25JZH1gOwp9CgovLyBHZW5lcmF0ZXMgYSBVVUlEIHY0CmZ1bmN0aW9uIHV1aWR2NCgpIHsKCXJldHVybiAneHh4eHh4eHgteHh4eC00eHh4LXl4eHgteHh4eHh4eHh4eHh4Jy5yZXBsYWNlKC9beHldL2csIGZ1bmN0aW9uIChjKSB7CgkgIGNvbnN0IHIgPSBNYXRoLnJhbmRvbSgpICogMTYgfCAwOwoJICBjb25zdCB2ID0gYyA9PT0gJ3gnID8gciA6IChyICYgMHgzIHwgMHg4KTsKCSAgcmV0dXJuIHYudG9TdHJpbmcoMTYpOwoJfSk7Cn0KCi8vIEdlbmVyYXRlIGEgNiBkaWdpdCBzdHJpbmcgSUQKZnVuY3Rpb24gZ2VuZXJhdGU2RGlnaXRJZCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApLnRvU3RyaW5nKCk7Cn0KCi8vIFJldHVybnMgdGhlIGN1cnJlbnQgSVNPIHRpbWVzdGFtcApmdW5jdGlvbiBjdXJyZW50VGltZXN0YW1wKCkgewoJcmV0dXJuIG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKTsKfQoKLy8gQ29udmVydHMgSVNPIDg2MDEgZHVyYXRpb24gc3RyaW5nIHRvIHRvdGFsIHNlY29uZHMKY29uc3QgaXNvRHVyVG9TZWMgPSAoZHVyYXRpb24pID0+IHsKICBjb25zdCBkdXJSRSA9IC9QKChkKylZKT8oKGQrKU0pPygoZCspVyk/KChkKylEKT9UPygoZCspSCk/KChkKylNKT8oKGQrKVMpPy87CiAgY29uc3QgcyA9IGR1clJFLmV4ZWMoZHVyYXRpb24pOwogIGlmICghcykgcmV0dXJuIDA7CiAgCiAgcmV0dXJuIChOdW1iZXIocz8uWzJdKSB8fCAwKSAqIDMxNTM2MDAwICsKCShOdW1iZXIocz8uWzRdKSB8fCAwKSAqIDI2MjgyODggKwoJKE51bWJlcihzPy5bNl0pIHx8IDApICogNjA0ODAwICsKCShOdW1iZXIocz8uWzhdKSB8fCAwKSAqIDg2NDAwICsKCShOdW1iZXIocz8uWzEwXSkgfHwgMCkgKiAzNjAwICsKCShOdW1iZXIocz8uWzEyXSkgfHwgMCkgKiA2MCArCgkoTnVtYmVyKHM/LlsxNF0pIHx8IDApOwp9OwoKY29uc3Qgc2V0Q2l0eUZyb21JbnB1dHMgPSAocGF5bG9hZCwgaW5wdXRzKSA9PiB7CglpZiAoIWlucHV0cykgcmV0dXJuICIqIjsKCWxldCB2ZXJzaW9uID0gcGF5bG9hZC5jb250ZXh0LnZlcnNpb24gfHwgcGF5bG9hZC5jb250ZXh0LmNvcmVfdmVyc2lvbiB8fCAiMi4wLjAiOwoJaWYgKHZlcnNpb24uc3RhcnRzV2l0aCgiMSIpKSB7CgkJcGF5bG9hZC5jb250ZXh0LmNpdHkgPSBpbnB1dHMuY2l0eV9jb2RlID8/ICIqIjsKCX0gZWxzZSB7CgkJcGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IGlucHV0cy5jaXR5X2NvZGUgPz8gIioiOwoJfQp9CgpmdW5jdGlvbiBnZW5lcmF0ZU5lYXJieUxvY2F0aW9ucyhzdGFydEdwcywgZW5kR3BzKSB7Cgljb25zdCBbc3RhcnRMYXQsIHN0YXJ0TG9uXSA9IHN0YXJ0R3BzLnNwbGl0KCIsIikubWFwKE51bWJlcik7Cgljb25zdCBbZW5kTGF0LCBlbmRMb25dID0gZW5kR3BzLnNwbGl0KCIsIikubWFwKE51bWJlcik7CgoJY29uc3QgZ2V0UmFuZG9tT2Zmc2V0ID0gKCkgPT4gTWF0aC5hYnMoKE1hdGgucmFuZG9tKCkgLSAwLjUpICogMC4wMSk7IC8vIEFsd2F5cyBwb3NpdGl2ZQoKCXJldHVybiBbCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDEiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDIiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDMiLAoJCX0sCgkJewoJCQlncHM6IGAkeyhzdGFydExhdCArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfSwkeyhzdGFydExvbiArIGdldFJhbmRvbU9mZnNldCgpKS50b0ZpeGVkKDYpfWAsCgkJCWlkOiAiTDQiLAoJCX0sCgldOwp9CgpmdW5jdGlvbiBnZW5lcmF0ZVF1b3RlRnJvbUl0ZW1zKGl0ZW1zKSB7CglpZiAoIUFycmF5LmlzQXJyYXkoaXRlbXMpIHx8IGl0ZW1zLmxlbmd0aCA9PT0gMCkgcmV0dXJuIG51bGw7CgoJcmV0dXJuIHsKCQlicmVha3VwOiBpdGVtcwoJCQkubWFwKChpdGVtKSA9PiB7CgkJCQljb25zdCBwcmljZSA9IHBhcnNlRmxvYXQoaXRlbS5wcmljZS52YWx1ZSk7CgkJCQljb25zdCBtaW5GYXJlID0gcGFyc2VGbG9hdCgKCQkJCQlpdGVtLnRhZ3MKCQkJCQkJLmZpbmQoKHRhZykgPT4gdGFnLmRlc2NyaXB0b3IuY29kZSA9PT0gIkZBUkVfUE9MSUNZIikKCQkJCQkJPy5saXN0LmZpbmQoKHQpID0+IHQuZGVzY3JpcHRvci5jb2RlID09PSAiTUlOX0ZBUkUiKT8udmFsdWUgfHwKCQkJCQkiMCIKCQkJCSk7CgoJCQkJY29uc3QgZGlzdGFuY2VGYXJlID0gcHJpY2UgLSBtaW5GYXJlOwoKCQkJCXJldHVybiBbCgkJCQkJewoJCQkJCQlwcmljZTogewoJCQkJCQkJY3VycmVuY3k6IGl0ZW0ucHJpY2UuY3VycmVuY3ksCgkJCQkJCQl2YWx1ZTogbWluRmFyZS50b1N0cmluZygpLAoJCQkJCQl9LAoJCQkJCQl0aXRsZTogIkJBU0VfRkFSRSIsCgkJCQkJfSwKCQkJCQl7CgkJCQkJCXByaWNlOiB7CgkJCQkJCQljdXJyZW5jeTogaXRlbS5wcmljZS5jdXJyZW5jeSwKCQkJCQkJCXZhbHVlOiBkaXN0YW5jZUZhcmUudG9TdHJpbmcoKSwKCQkJCQkJfSwKCQkJCQkJdGl0bGU6ICJESVNUQU5DRV9GQVJFIiwKCQkJCQl9LAoJCQkJXTsKCQkJfSkKCQkJLmZsYXQoKSwKCgkJcHJpY2U6IHsKCQkJY3VycmVuY3k6IGl0ZW1zWzBdLnByaWNlLmN1cnJlbmN5LAoJCQl2YWx1ZTogaXRlbXMKCQkJCS5yZWR1Y2UoKHRvdGFsLCBpdGVtKSA9PiB0b3RhbCArIHBhcnNlRmxvYXQoaXRlbS5wcmljZS52YWx1ZSksIDApCgkJCQkudG9TdHJpbmcoKSwKCQl9LAoJCXR0bDogIlBUMjAwUyIsCgl9Owp9CmZ1bmN0aW9uIGZpbHRlckZ1bGZpbGxtZW50c0J5SXRlbShpdGVtLCBmdWxmaWxsbWVudHMpIHsKCWlmICghaXRlbT8uZnVsZmlsbG1lbnRfaWRzIHx8ICFBcnJheS5pc0FycmF5KGZ1bGZpbGxtZW50cykpIHsKCQlyZXR1cm4gW107Cgl9CgoJcmV0dXJuIGZ1bGZpbGxtZW50cy5maWx0ZXIoKGZ1bGZpbGxtZW50KSA9PgoJCWl0ZW0uZnVsZmlsbG1lbnRfaWRzLmluY2x1ZGVzKGZ1bGZpbGxtZW50LmlkKQoJKTsKfQoKZnVuY3Rpb24gZmlsdGVySXRlbXNCeUlkKHNlc3Npb25EYXRhLCBzZWxlY3RlZF9pdGVtX2lkKSB7CglpZiAoc2Vzc2lvbkRhdGE/Lml0ZW1zICYmIEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuaXRlbXMpKSB7CgkJcmV0dXJuIHNlc3Npb25EYXRhLml0ZW1zLmZpbHRlcigKCQkJKGl0ZW0pID0+IGl0ZW0uaWQgPT09IHNlbGVjdGVkX2l0ZW1faWQKCQkpOwoJfQoJcmV0dXJuIFtdOwp9CgpmdW5jdGlvbiBpbml0TXVsdGlwbGVTdG9wc0dlbmVyYXRvcigKCWV4aXN0aW5nUGF5bG9hZCwKCXNlc3Npb25EYXRhLAoJaXNQcmljZVZhbHVlTmVlZGVkLAopIHsKCWV4aXN0aW5nUGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9CgkJc2Vzc2lvbkRhdGE/LmNpdHlfY29kZVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CgkJc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfZnVsZmlsbG1lbnRzOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdWyJjdXN0b21lciJdID0gewoJCWNvbnRhY3Q6IHsKCQkJcGhvbmU6ICI5ODc2NTU2Nzg5IiwKCQl9LAoJCXBlcnNvbjogewoJCQluYW1lOiAiSm9lIEFkYW1zIiwKCQl9LAoJfTsKCWRlbGV0ZSBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udHlwZTsKCWRlbGV0ZSBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udGFnczsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdID0gewoJCWlkOiBzZXNzaW9uRGF0YS5zZWxlY3RlZF9pdGVtX2lkWzBdLAoJfTsKCWlmIChpc1ByaWNlVmFsdWVOZWVkZWQpCgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfaXRlbXM7CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5jb2xsZWN0ZWRfYnkgPQoJCXNlc3Npb25EYXRhLmNvbGxlY3RlZF9ieVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmlkID0gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF07CgkvLyBVUERBVEUgU0VUVExFTUVOVCBBTU9VTlQgQkFTRUQgT04gUVVPVEUgUFJJQ0UKCS8vIGlmIChleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzKSB7CgkvLyAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MgPSB1cGRhdGVTZXR0bGVtZW50QW1vdW50KAoJLy8gICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MsCgkvLyAgICAgc2Vzc2lvbkRhdGEucXVvdGUsCgkvLyAgICk7CgkvLyB9CgoJY29uc3Qgc2VhcmNoVGFncyA9IChzZXNzaW9uRGF0YSkuc2VhcmNoX3RhZ3M/LmZsYXQoKSA/PyBbXTsKCgljb25zdCBiYXBUZXJtcyA9IHNlYXJjaFRhZ3MuZmluZCgKCQkodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCQVBfVEVSTVMiLAoJKTsKCgljb25zdCBiYXBMaXN0PSBiYXBUZXJtcz8ubGlzdCA/PyBbXTsKCgljb25zdCBvblNlYXJjaFRhZ3MgPSAoc2Vzc2lvbkRhdGEpLm9uX3NlYXJjaF90YWdzPy5mbGF0KCkgPz8gW107CgoJY29uc3Qgb25TZWFyY2hCYXBUZXJtcyA9IG9uU2VhcmNoVGFncy5maW5kKAoJCSh0YWcpID0+IHRhZz8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkJBUF9URVJNUyIsCgkpOwoKCWNvbnN0IG9uU2VhcmNoTGlzdCA9IG9uU2VhcmNoQmFwVGVybXM/Lmxpc3QgPz8gW107CgoJY29uc3QgYmFzZUxpc3QgPSBbCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJCVVlFUl9GSU5ERVJfRkVFU19QRVJDRU5UQUdFIiB9LCB2YWx1ZTogIjEiIH0sCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1dJTkRPVyIgfSwgdmFsdWU6ICJQVDYwTSIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIlNFVFRMRU1FTlRfQkFTSVMiIH0sIHZhbHVlOiAiREVMSVZFUlkiIH0sCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1RZUEUiIH0sIHZhbHVlOiAiVVBJIiB9LAoJCXsgZGVzY3JpcHRvcjogeyBjb2RlOiAiU0VUVExFTUVOVF9BTU9VTlQiIH0sIHZhbHVlOiAiMS40NiIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIk1BTkRBVE9SWV9BUkJJVFJBVElPTiIgfSwgdmFsdWU6ICJ0cnVlIiB9LAoJCXsgZGVzY3JpcHRvcjogeyBjb2RlOiAiQ09VUlRfSlVSSVNESUNUSU9OIiB9LCB2YWx1ZTogIk5ldyBEZWxoaSIgfSwKCQl7IGRlc2NyaXB0b3I6IHsgY29kZTogIkRFTEFZX0lOVEVSRVNUIiB9LCB2YWx1ZTogIjUiIH0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTVEFUSUNfVEVSTVMiIH0sCgkJCXZhbHVlOiAiaHR0cHM6Ly9leGFtcGxlLXRlc3QtYnBwLmNvbS9zdGF0aWMtdGVybXMudHh0IiwKCQl9LAoJXTsKCgljb25zdCBvdmVycmlkZUxpc3QgPSBbCgkJeyBkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0JBTktfQ09ERSIgfSwgdmFsdWU6ICJYWFhYWFhYWFgiIH0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0JBTktfQUNDT1VOVF9OVU1CRVIiIH0sCgkJCXZhbHVlOiAieHh4eHh4eHh4eHh4eHgiLAoJCX0sCgkJewoJCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX1ZJUlRVQUxfUEFZTUVOVF9BRERSRVNTIiB9LAoJCQl2YWx1ZTogIjk5ODgxOTk3NzJAb2tpY2ljIiwKCQl9LAoJXTsKCgljb25zdCBtYXAgPSBuZXcgTWFwKCk7CgoJWy4uLmJhc2VMaXN0LCAuLi5vblNlYXJjaExpc3QsIC4uLmJhcExpc3QsIC4uLm92ZXJyaWRlTGlzdF0uZm9yRWFjaCgKCQkoaXRlbSkgPT4gewoJCQljb25zdCBjb2RlID0gaXRlbT8uZGVzY3JpcHRvcj8uY29kZTsKCQkJaWYgKGNvZGUpIHsKCQkJCW1hcC5zZXQoY29kZSwgaXRlbSk7CgkJCX0KCQl9LAoJKTsKCgljb25zdCBxdW90ZVByaWNlID0gTnVtYmVyKHNlc3Npb25EYXRhLnF1b3RlWzBdPy5wcmljZT8udmFsdWUgPz8gMCk7Cgljb25zdCBidXllckZlZVBlcmNlbnRhZ2UgPSBOdW1iZXIoCgkJbWFwLmdldCgiQlVZRVJfRklOREVSX0ZFRVNfUEVSQ0VOVEFHRSIpPy52YWx1ZSA/PyAxLAoJKTsKCWNvbnN0IGZlZUFtb3VudCA9IChxdW90ZVByaWNlIC8gMTAwKSAqIGJ1eWVyRmVlUGVyY2VudGFnZTsKCWNvbnN0IHNldHRsZW1lbnRBbW91bnQgPSAoCgkJc2Vzc2lvbkRhdGEuY29sbGVjdGVkX2J5WzBdID09PSAiQkFQIiA/IHF1b3RlUHJpY2UgLSBmZWVBbW91bnQgOiBmZWVBbW91bnQKCSkudG9GaXhlZCgyKTsKCgltYXAuc2V0KCJTRVRUTEVNRU5UX0FNT1VOVCIsIHsKCQlkZXNjcmlwdG9yOiB7IGNvZGU6ICJTRVRUTEVNRU5UX0FNT1VOVCIgfSwKCQl2YWx1ZTogc2V0dGxlbWVudEFtb3VudCwKCX0pOwoKCWNvbnN0IGZpbmFsTGlzdCA9IEFycmF5LmZyb20obWFwLnZhbHVlcygpKTsKCglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0gWwoJCXsKCQkJZGVzY3JpcHRvcjogewoJCQkJY29kZTogIkJBUF9URVJNUyIsCgkJCQluYW1lOiAiQkFQIFRlcm1zIG9mIEVuZ2FnZW1lbnQiLAoJCQl9LAoJCQlkaXNwbGF5OiBmYWxzZSwKCQkJbGlzdDogZmluYWxMaXN0LAoJCX0sCgldOwoJcmV0dXJuIGV4aXN0aW5nUGF5bG9hZDsKfQoKCmZ1bmN0aW9uIHVwZGF0ZUZ1bGZpbGxtZW50Um91dGVUYWdzKHRhZ3MpIHsKICAvLyBsZWdhY3kgbm8tb3Ag4oCUIFJPVVRFX0lORk8gaXMgYXBwbGllZCBieSBfX2FwcGx5Um91dGVJbmZvIChzZXNzaW9uL29uX3NlbGVjdCkKICByZXR1cm4gdGFnczsKfQoKLy8gSGVscGVyIGZ1bmN0aW9uIHRvIHNsaWdodGx5IG1vZGlmeSBkaXN0YW5jZSBhbmQgRVRBCmZ1bmN0aW9uIHVwZGF0ZUl0ZW1JbmZvVGFncyh0YWdzKSB7CiAgcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKICAgIGlmICh0YWcuZGVzY3JpcHRvcj8uY29kZSA9PT0gIklORk8iICYmIEFycmF5LmlzQXJyYXkodGFnLmxpc3QpKSB7CiAgICAgIHJldHVybiB7CiAgICAgICAgLi4udGFnLAogICAgICAgIGxpc3Q6IHRhZy5saXN0Lm1hcCgodCkgPT4gewogICAgICAgICAgaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CiAgICAgICAgICAgIC8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCiAgICAgICAgICAgIGNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CiAgICAgICAgICAgIHJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CiAgICAgICAgICB9CiAgICAgICAgICBpZiAodC5kZXNjcmlwdG9yLmNvZGUgPT09ICJFVEFfVE9fTkVBUkVTVF9EUklWRVJfTUlOIikgewogICAgICAgICAgICAvLyBTbGlnaHRseSBhZGp1c3QgRVRBLCBlLmcuLCBhZGQgMSBtaW51dGUKICAgICAgICAgICAgY29uc3QgZXRhID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CiAgICAgICAgICAgIHJldHVybiB7IC4uLnQsIHZhbHVlOiAoZXRhIC0gMSkudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgcmV0dXJuIHQ7CiAgICAgICAgfSksCiAgICAgIH07CiAgICB9CiAgICByZXR1cm4gdGFnOwogIH0pOwp9CgpmdW5jdGlvbiBnZW5lcmF0ZVJhbmRvbTZEaWdpdCgpIHsKCXJldHVybiBNYXRoLmZsb29yKDEwMDAwMCArIE1hdGgucmFuZG9tKCkgKiA5MDAwMDApOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCi8vIEhlbHBlciBmdW5jdGlvbiB0byBzbGlnaHRseSBtb2RpZnkgZGlzdGFuY2UgYW5kIEVUQQpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewoJcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKCQlpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewoJCQlyZXR1cm4gewoJCQkJLi4udGFnLAoJCQkJbGlzdDogdGFnLmxpc3QubWFwKCh0KSA9PiB7CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCgkJCQkJCWNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CgkJCQkJCXJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CgkJCQkJfQoJCQkJCWlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkVUQV9UT19ORUFSRVNUX0RSSVZFUl9NSU4iKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBFVEEsIGUuZy4sIGFkZCAxIG1pbnV0ZQoJCQkJCQljb25zdCBldGEgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChldGEgLSAwLjIpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJcmV0dXJuIHQ7CgkJCQl9KSwKCQkJfTsKCQl9CgkJcmV0dXJuIHRhZzsKCX0pOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudHMoZnVsZmlsbG1lbnRzKSB7CglyZXR1cm4gZnVsZmlsbG1lbnRzLm1hcCgoZnVsZmlsbG1lbnQpID0+IHsKCQkvLyBBZGQgdGhlIHZlaGljbGUgb2JqZWN0IHRvIGVhY2ggZnVsZmlsbG1lbnQKCQlpZiAoZnVsZmlsbG1lbnQudmVoaWNsZS5jYXRlZ29yeSA9PT0gIkFVVE9fUklDS1NIQVciKSB7CgkJCWZ1bGZpbGxtZW50LnZlaGljbGUgPSB7CgkJCQljYXRlZ29yeTogIkFVVE9fUklDS1NIQVciLAoJCQkJdmFyaWFudDogIkFVVE9fUklDS1NIQVciLAoJCQkJbWFrZTogIkJhamFqIiwKCQkJCW1vZGVsOiAiQ29tcGFjdCBSRSIsCgkJCQlyZWdpc3RyYXRpb246ICJLQS0wMS1BRC05ODc2IiwKCQkJfTsKCQl9IGVsc2UgewoJCQlmdWxmaWxsbWVudC52ZWhpY2xlID0gewoJCQkJY2F0ZWdvcnk6ICJDQUIiLAoJCQkJdmFyaWFudDogIlNFREFOIiwKCQkJCW1ha2U6ICJNYXJ1dGkiLAoJCQkJbW9kZWw6ICJTd2lmdCBEemlyZSIsCgkJCQlyZWdpc3RyYXRpb246ICJLQS0wMS1BRC05ODc2IiwKCQkJfTsKCQl9CgoJCS8vIEZpbmQgdGhlIHN0b3Agd2l0aCB0eXBlICJTVEFSVCIKCQljb25zdCBzdGFydFN0b3AgPSBmdWxmaWxsbWVudC5zdG9wcy5maW5kKAoJCQkoc3RvcCkgPT4gc3RvcC50eXBlID09PSAiU1RBUlQiCgkJKTsKCQljb25zdCBlbmRTdG9wID0gZnVsZmlsbG1lbnQuc3RvcHMuZmluZCgoc3RvcCkgPT4gc3RvcC50eXBlID09PSAiRU5EIik7CgoJCS8vIElmIGZvdW5kLCBhZGQgdGhlIGF1dGhvcml6YXRpb24gb2JqZWN0CgkJaWYgKHN0YXJ0U3RvcCkgewoJCQljb25zdCBub3cgPSBuZXcgRGF0ZSgpOwoJCQljb25zdCBuZXdUaW1lID0gbmV3IERhdGUobm93LmdldFRpbWUoKSArIDE1ICogNjAwMDApLnRvSVNPU3RyaW5nKCk7CgkJCXN0YXJ0U3RvcC5hdXRob3JpemF0aW9uID0gewoJCQkJdG9rZW46IGdlbmVyYXRlUmFuZG9tNkRpZ2l0KCkudG9TdHJpbmcoKSwKCQkJCXR5cGU6ICJPVFAiLAoJCQkJdmFsaWRfdG86IG5ld1RpbWUsCgkJCQlzdGF0dXM6ICJVTkNMQUlNRUQiLAoJCQl9OwoJCX0KCgkJcmV0dXJuIGZ1bGZpbGxtZW50OwoJfSk7Cn0KCmZ1bmN0aW9uIHVwZGF0ZUl0ZW1JbmZvVGFncyh0YWdzKSB7CglyZXR1cm4gdGFncy5tYXAoKHRhZykgPT4gewoJCWlmICh0YWcuZGVzY3JpcHRvcj8uY29kZSA9PT0gIklORk8iICYmIEFycmF5LmlzQXJyYXkodGFnLmxpc3QpKSB7CgkJCXJldHVybiB7CgkJCQkuLi50YWcsCgkJCQlsaXN0OiB0YWcubGlzdC5tYXAoKHQpID0+IHsKCQkJCQlpZiAodC5kZXNjcmlwdG9yLmNvZGUgPT09ICJESVNUQU5DRV9UT19ORUFSRVNUX0RSSVZFUl9NRVRFUiIpIHsKCQkJCQkJLy8gU2xpZ2h0bHkgYWRqdXN0IGRpc3RhbmNlLCBlLmcuLCBhZGQgNSBtZXRlcnMKCQkJCQkJY29uc3QgZGlzdGFuY2UgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChkaXN0YW5jZSAtIDUpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRVRBX1RPX05FQVJFU1RfRFJJVkVSX01JTiIpIHsKCQkJCQkJLy8gU2xpZ2h0bHkgYWRqdXN0IEVUQSwgZS5nLiwgYWRkIDEgbWludXRlCgkJCQkJCWNvbnN0IGV0YSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwoJCQkJCQlyZXR1cm4geyAuLi50LCB2YWx1ZTogKGV0YSAtIDAuMikudG9TdHJpbmcoKSB9OwoJCQkJCX0KCQkJCQlyZXR1cm4gdDsKCQkJCX0pLAoJCQl9OwoJCX0KCQlyZXR1cm4gdGFnOwoJfSk7Cn0KCmZ1bmN0aW9uIHVwZGF0ZUZ1bGZpbGxtZW50Um91dGVUYWdzKHRhZ3MpIHsKICAvLyBsZWdhY3kgbm8tb3Ag4oCUIFJPVVRFX0lORk8gaXMgYXBwbGllZCBieSBfX2FwcGx5Um91dGVJbmZvIChzZXNzaW9uL29uX3NlbGVjdCkKICByZXR1cm4gdGFnczsKfQoKZnVuY3Rpb24gdXBkYXRlRnVsZmlsbG1lbnRTdGF0dXMob3JkZXIpIHsKCS8vIENoZWNrIGlmIGZ1bGZpbGxtZW50cyBleGlzdAoJaWYgKG9yZGVyLmZ1bGZpbGxtZW50cykgewoJCW9yZGVyLmZ1bGZpbGxtZW50cy5mb3JFYWNoKChmdWxmaWxsbWVudCkgPT4gewoJCQlmdWxmaWxsbWVudC5zdGF0ZS5kZXNjcmlwdG9yLmNvZGUgPSAiUklERV9FTlJPVVRFX1BJQ0tVUCI7CgkJCWZ1bGZpbGxtZW50LmFnZW50ID0gYWdlbnQ7CgkJfSk7Cgl9CglyZXR1cm4gb3JkZXI7Cn0KCgpmdW5jdGlvbiBvblN0YXR1c011bHRpcGxlU3RvcHNHZW5lcmF0b3IoCglleGlzdGluZ1BheWxvYWQsCglzZXNzaW9uRGF0YQopIHsKCWlmIChzZXNzaW9uRGF0YT8ucGF5bWVudHM/Lmxlbmd0aCA+IDApIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50cyA9IHNlc3Npb25EYXRhLnBheW1lbnRzOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8uaXRlbXM/Lmxlbmd0aCA+IDApIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLml0ZW1zOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8uY2FuY2VsbGF0aW9uX2Z1bGZpbGxtZW50cz8ubGVuZ3RoID4gMCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9CgkJCXNlc3Npb25EYXRhPy5jYW5jZWxsYXRpb25fZnVsZmlsbG1lbnRzOwoJfSBlbHNlIGlmIChzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzID0KCQkJc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfZnVsZmlsbG1lbnRzOwoJfQoKCWlmIChzZXNzaW9uRGF0YT8ub3JkZXJfaWQpIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pZCA9IHNlc3Npb25EYXRhLm9yZGVyX2lkWzBdOwoJfQoKCWlmIChzZXNzaW9uRGF0YS5jYW5jZWxsYXRpb25fcXVvdGUgIT0gbnVsbCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGE/LmNhbmNlbGxhdGlvbl9xdW90ZTsKCX0gZWxzZSBpZiAoc2Vzc2lvbkRhdGE/LnF1b3RlPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucXVvdGUgPSBzZXNzaW9uRGF0YS5xdW90ZVswXTsKCX0KCglpZiAoc2Vzc2lvbkRhdGE/LmNhbmNlbGxhdGlvbl9yZWFzb24gIT0gbnVsbCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNhbmNlbGxhdGlvbiA9CgkJCXNlc3Npb25EYXRhLmNhbmNlbGxhdGlvbl9yZWFzb247Cgl9CgoJY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwoKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNyZWF0ZWRfYXQgPQoJCXNlc3Npb25EYXRhLmNyZWF0ZWRfYXRbMF07CgoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudXBkYXRlZF9hdCA9CgkJZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQudGltZXN0YW1wOwoKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmlkID0KCQlzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXTsKCglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0KCQlzZXNzaW9uRGF0YT8uY29uZmlybV90YWdzPy5mbGF0KCk7CgoJaWYgKAoJCUFycmF5LmlzQXJyYXkoCgkJCWV4aXN0aW5nUGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50cz8uWzBdPy50YWdzCgkJKQoJKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnRhZ3MgPQoJCQl1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncygKCQkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS50YWdzCgkJCSk7Cgl9CgoJaWYgKGV4aXN0aW5nUGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/Lml0ZW1zPy5sZW5ndGggPiAwKSB7CgkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPQoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcy5tYXAoKGl0ZW0pID0+IHsKCQkJCWlmIChBcnJheS5pc0FycmF5KGl0ZW0udGFncykpIHsKCQkJCQlpdGVtLnRhZ3MgPSB1cGRhdGVJdGVtSW5mb1RhZ3MoaXRlbS50YWdzKTsKCQkJCX0KCQkJCXJldHVybiBpdGVtOwoJCQl9KTsKCX0KCglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9CgpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewoJcmV0dXJuIHRhZ3MubWFwKCh0YWcpID0+IHsKCQlpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewoJCQlyZXR1cm4gewoJCQkJLi4udGFnLAoJCQkJbGlzdDogdGFnLmxpc3QubWFwKCh0KSA9PiB7CgkJCQkJaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRElTVEFOQ0VfVE9fTkVBUkVTVF9EUklWRVJfTUVURVIiKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBkaXN0YW5jZSwgZS5nLiwgYWRkIDUgbWV0ZXJzCgkJCQkJCWNvbnN0IGRpc3RhbmNlID0gTnVtYmVyKHQudmFsdWUgfHwgMCk7CgkJCQkJCXJldHVybiB7IC4uLnQsIHZhbHVlOiAoZGlzdGFuY2UgLSA1KS50b1N0cmluZygpIH07CgkJCQkJfQoJCQkJCWlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkVUQV9UT19ORUFSRVNUX0RSSVZFUl9NSU4iKSB7CgkJCQkJCS8vIFNsaWdodGx5IGFkanVzdCBFVEEsIGUuZy4sIGFkZCAxIG1pbnV0ZQoJCQkJCQljb25zdCBldGEgPSBOdW1iZXIodC52YWx1ZSB8fCAwKTsKCQkJCQkJcmV0dXJuIHsgLi4udCwgdmFsdWU6IChldGEgLSAwLjIpLnRvU3RyaW5nKCkgfTsKCQkJCQl9CgkJCQkJcmV0dXJuIHQ7CgkJCQl9KSwKCQkJfTsKCQl9CgkJcmV0dXJuIHRhZzsKCX0pOwp9CgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCgpmdW5jdGlvbiB1cGRhdGVGdWxmaWxsbWVudFJvdXRlVGFncyh0YWdzKSB7CiAgLy8gbGVnYWN5IG5vLW9wIOKAlCBST1VURV9JTkZPIGlzIGFwcGxpZWQgYnkgX19hcHBseVJvdXRlSW5mbyAoc2Vzc2lvbi9vbl9zZWxlY3QpCiAgcmV0dXJuIHRhZ3M7Cn0KCi8vIEhlbHBlciBmdW5jdGlvbiB0byBzbGlnaHRseSBtb2RpZnkgZGlzdGFuY2UgYW5kIEVUQQpmdW5jdGlvbiB1cGRhdGVJdGVtSW5mb1RhZ3ModGFncykgewogIHJldHVybiB0YWdzLm1hcCgodGFnKSA9PiB7CiAgICBpZiAodGFnLmRlc2NyaXB0b3I/LmNvZGUgPT09ICJJTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KSkgewogICAgICByZXR1cm4gewogICAgICAgIC4uLnRhZywKICAgICAgICBsaXN0OiB0YWcubGlzdC5tYXAoKHQpID0+IHsKICAgICAgICAgIGlmICh0LmRlc2NyaXB0b3IuY29kZSA9PT0gIkRJU1RBTkNFX1RPX05FQVJFU1RfRFJJVkVSX01FVEVSIikgewogICAgICAgICAgICAvLyBTbGlnaHRseSBhZGp1c3QgZGlzdGFuY2UsIGUuZy4sIGFkZCA1IG1ldGVycwogICAgICAgICAgICBjb25zdCBkaXN0YW5jZSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwogICAgICAgICAgICByZXR1cm4geyAuLi50LCB2YWx1ZTogKGRpc3RhbmNlIC0gNSkudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgaWYgKHQuZGVzY3JpcHRvci5jb2RlID09PSAiRVRBX1RPX05FQVJFU1RfRFJJVkVSX01JTiIpIHsKICAgICAgICAgICAgLy8gU2xpZ2h0bHkgYWRqdXN0IEVUQSwgZS5nLiwgYWRkIDEgbWludXRlCiAgICAgICAgICAgIGNvbnN0IGV0YSA9IE51bWJlcih0LnZhbHVlIHx8IDApOwogICAgICAgICAgICByZXR1cm4geyAuLi50LCB2YWx1ZTogKGV0YSAtIDAuMikudG9TdHJpbmcoKSB9OwogICAgICAgICAgfQogICAgICAgICAgcmV0dXJuIHQ7CiAgICAgICAgfSksCiAgICAgIH07CiAgICB9CiAgICByZXR1cm4gdGFnOwogIH0pOwp9CgoKZnVuY3Rpb24gb25VcGRhdGVNdWx0aXBsZVN0b3BzR2VuZXJhdG9yKAogIGV4aXN0aW5nUGF5bG9hZCwKICBzZXNzaW9uRGF0YQopIHsKICBpZiAoc2Vzc2lvbkRhdGEucGF5bWVudHMubGVuZ3RoID4gMCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMgPSBzZXNzaW9uRGF0YS5wYXltZW50czsKICB9CgogIGlmIChzZXNzaW9uRGF0YS5pdGVtcy5sZW5ndGggPiAwKSB7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLml0ZW1zOwogIH0KCiAgaWYgKHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50cy5sZW5ndGggPiAwKSB7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHMgPQogICAgICBzZXNzaW9uRGF0YS5zZWxlY3RlZF9mdWxmaWxsbWVudHM7CiAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF1bInR5cGUiXSA9ICJERUxJVkVSWSI7CgogICAgY29uc3QgZnVsZmlsbG1lbnRzID0gZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzOwoKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IGZ1bGZpbGxtZW50cy5tYXAoCiAgICAgIChmdWxmaWxsbWVudCwgaW5kZXgpID0+IHsKICAgICAgICBmdWxmaWxsbWVudC5pZCA9CiAgICAgICAgICBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzW2luZGV4XT8uaWQgfHwgaW5kZXggKyAxOwogICAgICAgIGZ1bGZpbGxtZW50LnZlaGljbGUgPSB7CiAgICAgICAgICAuLi5mdWxmaWxsbWVudC52ZWhpY2xlLAogICAgICAgIH07CiAgICAgICAgcmV0dXJuIGZ1bGZpbGxtZW50OwogICAgICB9CiAgICApOwogIH0KICBpZiAoc2Vzc2lvbkRhdGEub3JkZXJfaWQpIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF07CiAgfQogIGlmIChzZXNzaW9uRGF0YS5xdW90ZS5sZW5ndGg+MCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucXVvdGUgPSBzZXNzaW9uRGF0YS5xdW90ZVswXTsKICB9CiAgY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmNyZWF0ZWRfYXQgPSBzZXNzaW9uRGF0YS5jcmVhdGVkX2F0WzBdOwogIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQgPSBleGlzdGluZ1BheWxvYWQuY29udGV4dC50aW1lc3RhbXA7CiAgaWYgKHNlc3Npb25EYXRhLnBheW1lbnRzLmxlbmd0aCA+IDApIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzID0gc2Vzc2lvbkRhdGEucGF5bWVudHM7CiAgfQoKICAvLyBVUERBVEUgU0VUVExFTUVOVCBBTU9VTlQgQkFTRUQgT04gUVVPVEUgUFJJQ0UKICAvLyBpZiAoZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudGFncykgewogIC8vICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIudGFncyA9IHVwZGF0ZVNldHRsZW1lbnRBbW91bnQoCiAgLy8gICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MsCiAgLy8gICAgIHNlc3Npb25EYXRhLnF1b3RlCiAgLy8gICApOwogIC8vIH0KICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0gKHNlc3Npb25EYXRhKS5jb25maXJtX3RhZ3M/LmZsYXQoKTsKICBpZiAoQXJyYXkuaXNBcnJheShleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHNbMF0udGFncykpIHsKICAgIGV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS50YWdzID0KICAgICAgdXBkYXRlRnVsZmlsbG1lbnRSb3V0ZVRhZ3MoCiAgICAgICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnRhZ3MKICAgICAgKTsKICB9CgogIGlmIChleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcz8ubGVuZ3RoID4gMCkgewogICAgZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPQogICAgICBleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcy5tYXAoKGl0ZW0pID0+IHsKICAgICAgICBpZiAoQXJyYXkuaXNBcnJheShpdGVtLnRhZ3MpKSB7CiAgICAgICAgICBpdGVtLnRhZ3MgPSB1cGRhdGVJdGVtSW5mb1RhZ3MoaXRlbS50YWdzKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIGl0ZW07CiAgICAgIH0pOwogIH0KICByZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9CgpmdW5jdGlvbiBzZWxlY3RNdWx0aXBsZVN0b3BzR2VuZXJhdG9yKGV4aXN0aW5nUGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCWlmIChzZXNzaW9uRGF0YS5pdGVtX2lkcykgewoJCWNvbnN0IGl0ZW1faWQgPSBzZXNzaW9uRGF0YS51c2VyX2lucHV0cy5pdGVtc1swXS5pdGVtSWQKCQkvLyBjb25zdCBpdGVtX2lkID0gc2Vzc2lvbkRhdGEudXNlcl9pbnB1dHMuaXRlbV9pZAoJCWNvbnN0IGl0ZW0gPSBzZXNzaW9uRGF0YS5pdGVtcy5maW5kKGkgPT4gaS5pZCA9PT0gaXRlbV9pZCk7CgkJY29uc3QgZnVsZmlsbG1lbnRJZCA9IGl0ZW0/LmZ1bGZpbGxtZW50X2lkcz8uWzBdOwoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS5pZCA9IGZ1bGZpbGxtZW50SWQKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5pZCA9IGl0ZW1faWQKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wcm92aWRlci5pZCA9IHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkWzBdCgl9CglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9CgpmdW5jdGlvbiBpc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCglleGlzdGluZ1BheWxvYWQsCglzZXNzaW9uRGF0YSwKCWlucHV0cwopIHsKCWV4aXN0aW5nUGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9CgkJc2Vzc2lvbkRhdGE/LmNpdHlfY29kZVswXTsKCWNvbnN0IG5ld0RhdGUgPSBleGlzdGluZ1BheWxvYWQ/LmNvbnRleHQ/LnRpbWVzdGFtcDsKCglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5jcmVhdGVkX2F0ID0gbmV3RGF0ZTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnVwZGF0ZWRfYXQgPSBuZXdEYXRlOwoKCWNvbnN0IHByb3ZpZGVyID0gc2Vzc2lvbkRhdGE/LnByb3ZpZGVyX2lkWzBdOwoKCWxldCBmdWxmaWxsbWVudCA9ICJGMSI7CgoJaWYgKHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50cykgewoJCWZ1bGZpbGxtZW50ID0gc2Vzc2lvbkRhdGE/LmZ1bGZpbGxtZW50cz8uWzBdPy5pZDsKCX0KCgljb25zdCBpdGVtID0gc2Vzc2lvbkRhdGE/Lml0ZW1zPy5bMF0/LmlkOwoJY29uc3Qgb3JkZXIgPSBzZXNzaW9uRGF0YT8ub3JkZXJfaWRbMF07Cglzd2l0Y2ggKHNlc3Npb25EYXRhLmlnbV9hY3Rpb24pIHsKCQljYXNlICJpc3N1ZV9vcGVuIjoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuaWQgPSB1dWlkdjQoKTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmNhdGVnb3J5ID0KCQkJCSJGVUxGSUxMTUVOVCI7CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5zdWJfY2F0ZWdvcnkgPQoJCQkJIkZMTTExMiI7CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5jb21wbGFpbmFudF9pbmZvID0gewoJCQkJcGVyc29uOiB7CgkJCQkJbmFtZTogc2Vzc2lvbkRhdGE/LmJpbGxpbmc/LlswXT8ubmFtZSB8fCAiU2FtIE1hbnVlbCIsCgkJCQl9LAoJCQkJY29udGFjdDogewoJCQkJCXBob25lOgoJCQkJCQlzZXNzaW9uRGF0YT8uYmlsbGluZz8uWzBdLnBob25lIHx8CgkJCQkJCSI5ODc5ODc5ODcwIiwKCQkJCQllbWFpbDoKCQkJCQkJc2Vzc2lvbkRhdGE/LmJpbGxpbmc/LlswXT8uZW1haWwgfHwKCQkJCQkJInNhbUB5YWhvby5jb20iLAoJCQkJfSwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLm9yZGVyX2RldGFpbHMgPSB7CgkJCQlpZDoKCQkJCQlvcmRlciB8fAoJCQkJCSI0NTk3ZjcwMy1lODRmLTQzMWUtYTk2YS1kMTQ3Y2ZhMTQyZjkiLAoKCQkJCXN0YXRlOiAiQ09NUExFVEVEIiwKCgkJCQlpdGVtczogWwoJCQkJCXsKCQkJCQkJaWQ6IGl0ZW0gfHwgIjE4Mjc1LU9OREMtMS05IiwKCQkJCQkJcXVhbnRpdHk6IDEsCgkJCQkJfSwKCQkJCV0sCgoJCQkJZnVsZmlsbG1lbnRzOiBbCgkJCQkJewoJCQkJCQlpZDogZnVsZmlsbG1lbnQgfHwgIkZ1bGZpbGxtZW50MSIsCgkJCQkJCXN0YXRlOiAiQ0xBSU1FRCIsCgkJCQkJfSwKCQkJCV0sCgoJCQkJcHJvdmlkZXJfaWQ6IHByb3ZpZGVyIHx8ICJQcm92aWRlcjEiLAoJCQl9OwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuZGVzY3JpcHRpb24gPSB7CgkJCQlzaG9ydF9kZXNjOiAiRHJpdmVyIHRvb2sgYSBjaXJjdWl0aW91cyByb3V0ZS9sb25nZXIgcm91dGUgIC8gIERyaXZlciB0b29rIGEgZGlmZmVyZW50IHJvdXRlIiwKCgkJCQlsb25nX2Rlc2M6CgkJCQkJIkRyaXZlciB0b29rIGEgY2lyY3VpdGlvdXMgcm91dGUvbG9uZ2VyIHJvdXRlICAvICBEcml2ZXIgdG9vayBhIGRpZmZlcmVudCByb3V0ZSIsCgoJCQkJYWRkaXRpb25hbF9kZXNjOiB7CgkJCQkJdXJsOgoJCQkJCQkiaHR0cHM6Ly9idXllcmFwcC5jb20vYWRkaXRvbmFsLWRldGFpbHMvZGVzYy50eHQiLAoJCQkJCWNvbnRlbnRfdHlwZTogInRleHQvcGxhaW4iLAoJCQkJfSwKCgkJCQlpbWFnZXM6IFsKCQkJCQkiaHR0cDovL2J1eWVyYXBwLmNvbS9hZGR0aW9uYWwtZGV0YWlscy9pbWcxLnBuZyIsCgkJCQkJImh0dHA6Ly9idXllcmFwcC5jb20vYWRkdGlvbmFsLWRldGFpbHMvaW1nMi5wbmciLAoJCQkJXSwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnNvdXJjZSA9IHsKCQkJCW5ldHdvcmtfcGFydGljaXBhbnRfaWQ6CgkJCQkJZXhpc3RpbmdQYXlsb2FkPy5jb250ZXh0Py5iYXBfaWQgfHwKCQkJCQkiYnV5ZXJhcHAuY29tL29uZGMiLAoKCQkJCXR5cGU6ICJDT05TVU1FUiIsCgkJCX07CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5leHBlY3RlZF9yZXNwb25zZV90aW1lID0KCQkJewoJCQkJZHVyYXRpb246ICJQVDJIIiwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmV4cGVjdGVkX3Jlc29sdXRpb25fdGltZSA9CgkJCXsKCQkJCWR1cmF0aW9uOiAiUDFEIiwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmlzc3VlX2FjdGlvbnMgPSB7CgkJCQljb21wbGFpbmFudF9hY3Rpb25zOiBbCgkJCQkJewoJCQkJCQljb21wbGFpbmFudF9hY3Rpb246ICJPUEVOIiwKCgkJCQkJCXNob3J0X2Rlc2M6ICJDb21wbGFpbnQgY3JlYXRlZCIsCgoJCQkJCQl1cGRhdGVkX2F0OiBuZXdEYXRlLAoKCQkJCQkJdXBkYXRlZF9ieTogewoJCQkJCQkJb3JnOiB7CgkJCQkJCQkJbmFtZTogYCR7ZXhpc3RpbmdQYXlsb2FkPy5jb250ZXh0Py5iYXBfaWR9Ojoke2V4aXN0aW5nUGF5bG9hZD8uY29udGV4dD8uZG9tYWlufWAsCgkJCQkJCQl9LAoKCQkJCQkJCWNvbnRhY3Q6IHsKCQkJCQkJCQlwaG9uZToKCQkJCQkJCQkJc2Vzc2lvbkRhdGE/LmJpbGxpbmc/LlswXT8ucGhvbmUgfHwKCQkJCQkJCQkJIjk4Nzk4Nzk4NzAiLAoKCQkJCQkJCQllbWFpbDoKCQkJCQkJCQkJc2Vzc2lvbkRhdGE/LmJpbGxpbmc/LlswXT8uZW1haWwgfHwKCQkJCQkJCQkJInNhbUB5YWhvby5jb20iLAoJCQkJCQkJfSwKCgkJCQkJCQlwZXJzb246IHsKCQkJCQkJCQluYW1lOgoJCQkJCQkJCQlzZXNzaW9uRGF0YT8uYmlsbGluZz8uWzBdLm5hbWUgfHwKCQkJCQkJCQkJIlNhbSBNYW51ZWwiLAoJCQkJCQkJfSwKCQkJCQkJfSwKCQkJCQl9LAoJCQkJXSwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnN0YXR1cyA9ICJPUEVOIjsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmlzc3VlX3R5cGUgPSAiSVNTVUUiOwoKCQkJYnJlYWs7CgoJCWNhc2UgImlzc3VlX2Nsb3NlIjoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuaWQgPQoJCQkJc2Vzc2lvbkRhdGE/Lmlzc3VlX2lkWzBdIHx8ICJJMSI7CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5zdGF0dXMgPSAiQ0xPU0VEIjsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnJhdGluZyA9CgkJCQlpbnB1dHM/LnJhdGluZyB8fCAiVEhVTUJTX1VQIjsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmlzc3VlX2FjdGlvbnMgPSB7CgkJCQljb21wbGFpbmFudF9hY3Rpb25zOiBbCgkJCQkJLi4uKHNlc3Npb25EYXRhPy5pc3N1ZV9hY3Rpb25zWzBdCgkJCQkJCT8uY29tcGxhaW5hbnRfYWN0aW9ucyB8fCBbXSksCgoJCQkJCXsKCQkJCQkJY29tcGxhaW5hbnRfYWN0aW9uOiAiQ0xPU0UiLAoKCQkJCQkJc2hvcnRfZGVzYzogIkNvbXBsYWludCBjbG9zZWQiLAoKCQkJCQkJdXBkYXRlZF9hdDogbmV3RGF0ZSwKCgkJCQkJCXVwZGF0ZWRfYnk6IHsKCQkJCQkJCW9yZzogewoJCQkJCQkJCW5hbWU6IGAke2V4aXN0aW5nUGF5bG9hZD8uY29udGV4dD8uYmFwX2lkfTo6JHtleGlzdGluZ1BheWxvYWQ/LmNvbnRleHQ/LmRvbWFpbn1gLAoJCQkJCQkJfSwKCgkJCQkJCQljb250YWN0OiB7CgkJCQkJCQkJcGhvbmU6CgkJCQkJCQkJCXNlc3Npb25EYXRhPy5iaWxsaW5nPy5bMF0/LnBob25lIHx8CgkJCQkJCQkJCSI5ODc5ODc5ODcwIiwKCgkJCQkJCQkJZW1haWw6CgkJCQkJCQkJCXNlc3Npb25EYXRhPy5iaWxsaW5nPy5bMF0/LmVtYWlsIHx8CgkJCQkJCQkJCSJzYW1AeWFob28uY29tIiwKCQkJCQkJCX0sCgoJCQkJCQkJcGVyc29uOiB7CgkJCQkJCQkJbmFtZToKCQkJCQkJCQkJc2Vzc2lvbkRhdGE/LmJpbGxpbmc/LlswXT8ubmFtZSB8fAoJCQkJCQkJCQkiU2FtIE1hbnVlbCIsCgkJCQkJCQl9LAoJCQkJCQl9LAoJCQkJCX0sCgkJCQldLAoJCQl9OwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuY3JlYXRlZF9hdCA9CgkJCQlzZXNzaW9uRGF0YT8uaXNzdWVfY3JlYXRlZF9hdFswXSB8fCBuZXdEYXRlOwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUudXBkYXRlZF9hdCA9IG5ld0RhdGU7CgoJCQlicmVhazsKCgkJZGVmYXVsdDoKCQkJYnJlYWs7Cgl9CgoJcmV0dXJuIGV4aXN0aW5nUGF5bG9hZDsKfQoKZnVuY3Rpb24gb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCglleGlzdGluZ1BheWxvYWQsCglzZXNzaW9uRGF0YSwKCWlucHV0cwopIHsKCWV4aXN0aW5nUGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9CgkJc2Vzc2lvbkRhdGE/LmNpdHlfY29kZVswXTsKCWNvbnN0IG5ld0RhdGUgPSBleGlzdGluZ1BheWxvYWQ/LmNvbnRleHQ/LnRpbWVzdGFtcDsKCglzd2l0Y2ggKHNlc3Npb25EYXRhLmlnbV9hY3Rpb24pIHsKCQljYXNlICJvbl9pc3N1ZV9wcm9jZXNzaW5nIjoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuaWQgPQoJCQkJc2Vzc2lvbkRhdGE/Lmlzc3VlX2lkWzBdIHx8ICJJMSI7CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5pc3N1ZV9hY3Rpb25zID0gewoJCQkJcmVzcG9uZGVudF9hY3Rpb25zOiBbCgkJCQkJewoJCQkJCQlyZXNwb25kZW50X2FjdGlvbjogIlBST0NFU1NJTkciLAoKCQkJCQkJc2hvcnRfZGVzYzoKCQkJCQkJCSJDb21wbGFpbnQgaXMgYmVpbmcgcHJvY2Vzc2VkIiwKCgkJCQkJCXVwZGF0ZWRfYXQ6IG5ld0RhdGUsCgoJCQkJCQl1cGRhdGVkX2J5OiB7CgkJCQkJCQlvcmc6IHsKCQkJCQkJCQluYW1lOiBgJHtleGlzdGluZ1BheWxvYWQ/LmNvbnRleHQ/LmJwcF9pZH06OiR7ZXhpc3RpbmdQYXlsb2FkPy5jb250ZXh0Py5kb21haW59YCwKCQkJCQkJCX0sCgoJCQkJCQkJY29udGFjdDogewoJCQkJCQkJCXBob25lOiAiOTQ1MDM5NDE0MCIsCgkJCQkJCQkJZW1haWw6ICJyZXNwb25kZW50YXBwQHJlc3BvbmQuY29tIiwKCQkJCQkJCX0sCgoJCQkJCQkJcGVyc29uOiB7CgkJCQkJCQkJbmFtZTogIkphbmUgRG9lIiwKCQkJCQkJCX0sCgkJCQkJCX0sCgoJCQkJCQljYXNjYWRlZF9sZXZlbDogMSwKCQkJCQl9LAoJCQkJXSwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmNyZWF0ZWRfYXQgPQoJCQkJc2Vzc2lvbkRhdGE/Lmlzc3VlX2NyZWF0ZWRfYXRbMF0gfHwgbmV3RGF0ZTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnVwZGF0ZWRfYXQgPQoJCQkJbmV3RGF0ZTsKCgkJCWJyZWFrOwoKCQljYXNlICJvbl9pc3N1ZV9yZXNvbHZlZCI6CgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLmlkID0KCQkJCXNlc3Npb25EYXRhPy5pc3N1ZV9pZFswXSB8fCAiSTEiOwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuaXNzdWVfYWN0aW9ucyA9IHsKCQkJCXJlc3BvbmRlbnRfYWN0aW9uczogWwoJCQkJCS4uLihzZXNzaW9uRGF0YT8ub25faXNzdWVfYWN0aW9uc1swXQoJCQkJCQk/LnJlc3BvbmRlbnRfYWN0aW9ucyB8fCBbXSksCgoJCQkJCXsKCQkJCQkJcmVzcG9uZGVudF9hY3Rpb246ICJSRVNPTFZFRCIsCgoJCQkJCQlzaG9ydF9kZXNjOiAiQ29tcGxhaW50IHJlc29sdmVkIiwKCgkJCQkJCXVwZGF0ZWRfYXQ6IG5ld0RhdGUsCgoJCQkJCQl1cGRhdGVkX2J5OiB7CgkJCQkJCQlvcmc6IHsKCQkJCQkJCQluYW1lOiBgJHtleGlzdGluZ1BheWxvYWQ/LmNvbnRleHQ/LmJwcF9pZH06OiR7ZXhpc3RpbmdQYXlsb2FkPy5jb250ZXh0Py5kb21haW59YCwKCQkJCQkJCX0sCgoJCQkJCQkJY29udGFjdDogewoJCQkJCQkJCXBob25lOiAiOTQ1MDM5NDE0MCIsCgkJCQkJCQkJZW1haWw6ICJyZXNwb25kZW50YXBwQHJlc3BvbmQuY29tIiwKCQkJCQkJCX0sCgoJCQkJCQkJcGVyc29uOiB7CgkJCQkJCQkJbmFtZTogIkphbmUgRG9lIiwKCQkJCQkJCX0sCgkJCQkJCX0sCgoJCQkJCQljYXNjYWRlZF9sZXZlbDogMSwKCQkJCQl9LAoJCQkJXSwKCQkJfTsKCgkJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLmlzc3VlLnJlc29sdXRpb25fcHJvdmlkZXIgPQoJCQl7CgkJCQlyZXNwb25kZW50X2luZm86IHsKCQkJCQl0eXBlOiAiVFJBTlNBQ1RJT04tQ09VTlRFUlBBUlRZLU5QIiwKCgkJCQkJb3JnYW5pemF0aW9uOiB7CgkJCQkJCW9yZzogewoJCQkJCQkJbmFtZTogYCR7ZXhpc3RpbmdQYXlsb2FkPy5jb250ZXh0Py5icHBfaWR9Ojoke2V4aXN0aW5nUGF5bG9hZD8uY29udGV4dD8uZG9tYWlufWAsCgkJCQkJCX0sCgoJCQkJCQljb250YWN0OiB7CgkJCQkJCQlwaG9uZTogIjkwNTkzMDQ5NDAiLAoJCQkJCQkJZW1haWw6CgkJCQkJCQkJImVtYWlsQHJlc29sdXRpb25wcm92aWRlcm9yZy5jb20iLAoJCQkJCQl9LAoKCQkJCQkJcGVyc29uOiB7CgkJCQkJCQluYW1lOgoJCQkJCQkJCSJyZXNvbHV0aW9uIHByb3ZpZGVyIG9yZyBjb250YWN0IHBlcnNvbiBuYW1lIiwKCQkJCQkJfSwKCQkJCQl9LAoKCQkJCQlyZXNvbHV0aW9uX3N1cHBvcnQ6IHsKCQkJCQkJY2hhdF9saW5rOgoJCQkJCQkJImh0dHA6Ly9jaGF0LWxpbmsvcmVzcG9uZGVudCIsCgoJCQkJCQljb250YWN0OiB7CgkJCQkJCQlwaG9uZTogIjk5NDk1OTUwNTkiLAoJCQkJCQkJZW1haWw6CgkJCQkJCQkJInJlc3BvbmRhbnRlbWFpbEByZXNvbHV0aW9ucHJvdmlkZXIuY29tIiwKCQkJCQkJfSwKCgkJCQkJCWdyb3M6IFsKCQkJCQkJCXsKCQkJCQkJCQlwZXJzb246IHsKCQkJCQkJCQkJbmFtZTogIlNhbSBEIiwKCQkJCQkJCQl9LAoKCQkJCQkJCQljb250YWN0OiB7CgkJCQkJCQkJCXBob25lOiAiOTYwNTk2MDc5NiIsCgkJCQkJCQkJCWVtYWlsOiAiZW1haWxAZ3JvLmNvbSIsCgkJCQkJCQkJfSwKCgkJCQkJCQkJZ3JvX3R5cGU6CgkJCQkJCQkJCSJUUkFOU0FDVElPTi1DT1VOVEVSUEFSVFktTlAtR1JPIiwKCQkJCQkJCX0sCgkJCQkJCV0sCgkJCQkJfSwKCQkJCX0sCgkJCX07CgoJCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5pc3N1ZS5yZXNvbHV0aW9uID0gewoJCQkJc2hvcnRfZGVzYzogIlJlZnVuZCB0byBiZSBpbml0aWF0ZWQiLAoKCQkJCWxvbmdfZGVzYzoKCQkJCQkiRm9yIHRoaXMgY29tcGxhaW50LCByZWZ1bmQgaXMgdG8gYmUgaW5pdGlhdGVkIiwKCgkJCQlhY3Rpb25fdHJpZ2dlcmVkOiAiUkVGVU5EIiwKCgkJCQlyZWZ1bmRfYW1vdW50OgoJCQkJCXNlc3Npb25EYXRhPy5xdW90ZVswXT8ucHJpY2U/LnZhbHVlIHx8ICIxMDAiLAoJCQl9OwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUuY3JlYXRlZF9hdCA9CgkJCQlzZXNzaW9uRGF0YT8uaXNzdWVfY3JlYXRlZF9hdFswXSB8fCBuZXdEYXRlOwoKCQkJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2UuaXNzdWUudXBkYXRlZF9hdCA9CgkJCQluZXdEYXRlOwoKCQkJYnJlYWs7CgoJCWRlZmF1bHQ6CgkJCWJyZWFrOwoJfQoKCXJldHVybiBleGlzdGluZ1BheWxvYWQ7Cn0K
 extra_steps:
   steps:
     - api: on_track
@@ -5280,7 +5907,7 @@ extra_steps:
               status: active
               location:
                 gps: 28.620976, 77.046732
-                updated_at: 2023-03-23T05:41:09Z
+                updated_at: 2023-03-23T05:41:09.000Z
         saveData:
           driver_gps: $.message.tracking.location.gps
           transactionId: $.context.transaction_id
