@@ -217,9 +217,6 @@ components:
       properties:
         cancel_by:
           $ref: '#/components/schemas/Time'
-        cancel_eligible:
-          description: Indicates if cancellation is eligible
-          type: boolean
         cancellation_eligible:
           description: Indicates if cancellation is eligible
           type: boolean
@@ -621,7 +618,7 @@ components:
         multiple_submissions:
           type: boolean
         multiple_sumbissions:
-          description: Allows form to be submitted multiple times (preserves typo from spec)
+          description: 'Typo in ONDC spec: should be corrected to multiple_submissions domain-by-domain with backward compatibility management'
           type: boolean
         resubmit:
           type: boolean
@@ -1125,9 +1122,6 @@ components:
       type: string
     Item:
       properties:
-        $schema:
-          description: JSON Schema reference for the Item
-          type: string
         add_ons:
           items:
             $ref: '#/components/schemas/AddOn'
@@ -1235,9 +1229,6 @@ components:
           $ref: '#/components/schemas/Time'
         ttl:
           description: Time to live in seconds for an instance of this schema
-          type: string
-        type:
-          description: Type classification of the Item
           type: string
         xinput:
           $ref: '#/components/schemas/XInput'
@@ -2214,28 +2205,6 @@ components:
             $ref: '#/components/schemas/Tag'
           type: array
       type: object
-    Tag1:
-      type: array
-      items:
-        type: object
-        properties:
-          descriptor:
-            type: object
-          list:
-            type: array
-            items:
-              type: object
-              properties:
-                descriptor:
-                  type: object
-                  properties:
-                    code:
-                      type: string
-                  additionalProperties: false
-                value:
-                  type: string
-              additionalProperties: false
-        additionalProperties: false
     Time:
       properties:
         days:
@@ -2259,9 +2228,6 @@ components:
           $ref: '#/components/schemas/Schedule'
         timestamp:
           format: date-time
-          type: string
-        transaction_id:
-          description: Transaction ID associated with the time record
           type: string
       type: object
     Tracking:
