@@ -118,6 +118,7 @@
 | anchor.on-cancel | on cancel | trv12-2.0.0:actions/index.yaml#supportedActions.on_cancel | trv12-2.0.0 |
 | anchor.on-confirm | on confirm | trv12-2.0.0:actions/index.yaml#supportedActions.on_confirm | trv12-2.0.0 |
 | anchor.on-init | on init | trv12-2.0.0:actions/index.yaml#supportedActions.on_init | trv12-2.0.0 |
+| anchor.on-init-soft-lock-expired | on init after soft-lock expiry (error 90203 path; BAP returns to selection) | trv12-2.0.0:flows/Intercity/Intercity_Bus__Error_Response_Soft_Locking_Time_.yaml#steps[on_init_BUS_221].mock.defaultPayload.error | trv12-2.0.0 |
 | anchor.on-issue | on issue | trv12-2.0.0:actions/index.yaml#supportedActions.on_issue | trv12-2.0.0 |
 | anchor.on-issue-status | on issue status | trv12-2.0.0:actions/index.yaml#supportedActions.on_issue_status | trv12-2.0.0 |
 | anchor.on-rating | on rating | trv12-2.0.0:actions/index.yaml#supportedActions.on_rating | trv12-2.0.0 |

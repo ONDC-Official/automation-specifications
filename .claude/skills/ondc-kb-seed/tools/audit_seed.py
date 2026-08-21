@@ -26,6 +26,14 @@ BASIS = {"declared","sandbox-tested","observed-live","authority","ecosystem","de
 FLAGS = {"untethered","deprecated","desired","plane"}
 NEEDS_GROUND = BASIS - {"inferred","ecosystem"}
 ORDER = ["basis","asof","grounded-in"]
+# Field leaves too generic to use as a held-out match token: they occur inside
+# unrelated anchor names (anchor.status, anchor.type) and cause false positives.
+# For a new-enum-value deviation the specific enum VALUES are matched instead of
+# the field leaf; for a new-field on a generic leaf only the qualified Schema.field
+# is kept. See REVIEW-QUEUE.md gate 1 (the "869 false positives" note).
+GENERIC_LEAVES = {"type","status","name","code","id","value","values","tags","list",
+                  "display","url","time","state","order","item","form","error","price",
+                  "descriptor","symbol","data","text","title","label","kind","ref"}
 
 _cache = {}
 def load_yaml(path):
@@ -119,10 +127,17 @@ def main():
         if k.startswith("_"): continue
         toks = set()
         for d in v["deviations"]:
-            at = d["at"]
-            toks.add(at.split(".")[-1])         # field / schema leaf
-            toks.add(at.replace(".", "."))
-            if d["type"] == "new-schema": toks.add(at)
+            at = d["at"]; dt = d.get("type")
+            if dt == "new-schema":
+                toks.add(at)                     # distinctive schema name (e.g. Tag1)
+            elif dt == "new-enum-value":
+                for val in d.get("values", []):  # match the specific new enum values
+                    toks.add(str(val))           # (IN-PROGRESS, REFUND) — never the generic leaf
+            else:                                 # new-field
+                leaf = at.split(".")[-1]
+                toks.add(at)                     # qualified Schema.field (won't false-match anchors)
+                if leaf.lower() not in GENERIC_LEAVES:
+                    toks.add(leaf)               # bare leaf only when it is distinctive
         held[k] = {t for t in toks if t}
 
     rows, tot = [], collections.Counter()

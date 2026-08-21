@@ -23,8 +23,16 @@ configs use and the base does not cover. All 15 are **held out of seeding**.
 > substring, and `Order.status` and `Payment.type` reduce to `status` and `type`, so every unit whose
 > subject, object, or grounding path merely contains those words is flagged (`anchor.status | isa |
 > anchor.action` is a typical hit). **Fix the matcher before reading those 869 as findings** — it
-> should compare the qualified `Schema.field`, not a bare leaf. Nothing about the other books' KB
-> content changed in this pass; only the gate started firing.
+> should compare the qualified `Schema.field`, not a bare leaf.
+>
+> **RESOLVED (2026-08-22).** `audit_seed.py` now builds the held-out match set per deviation *kind*:
+> `new-schema` → the schema name (`Tag1`); `new-enum-value` → the specific enum **values**
+> (`IN-PROGRESS`, `REFUND`), never the field leaf; `new-field` → the qualified `Schema.field` plus the
+> bare leaf **only when it is distinctive** (a `GENERIC_LEAVES` stoplist drops `type`, `status`, `name`,
+> `code`, `id`, `value`, …). Result: **869 → 14** genuine hits. The fix is precise — e.g. trv11-2.0.1's
+> `anchor.order-item | has-slot | "type"` (generic leaf, and `item.type` is not a contiguous substring)
+> is correctly **not** flagged, while its `has-slot | "$schema"` (distinctive) is. The 14 residual are
+> catalogued below in **§5**.
 
 | element | kind | books |
 |---|---|---|
@@ -154,6 +162,19 @@ distinct subject confined with `scoped-to` — e.g. an `anchor.on-init-soft-lock
 the soft-lock context — so the exception stops contradicting the rule. Alternatively drop the
 negative under closed-world discipline (absence = not-known).
 
+**RESOLVED (2026-08-22)** — applied the recommended resolution. `knowledge/trv12-2.0.0/atoms.md`
+now carries the exception on a distinct, confined subject instead of on bare `anchor.on-init`:
+
+```
+anchor.on-init-soft-lock-expired | isa        | anchor.on-init        | basis:declared | ...
+anchor.on-init-soft-lock-expired | scoped-to  | anchor.soft-lock-expiry | basis:declared | ...
+anchor.on-init-soft-lock-expired | not-precedes | anchor.confirm      | basis:declared | ...
+```
+
+`anchor.on-init-soft-lock-expired` is registered (grounded at the `error 90203` node). The general
+rule `anchor.on-init | precedes | anchor.confirm` is untouched. Post-fix audit: **R-and-notR = 0**,
+book validates (739 atoms / 239 anchors, isa-DAG ok).
+
 ---
 
 ## 4. Degraded / noted, no action required
@@ -174,3 +195,32 @@ negative under closed-world discipline (absence = not-known).
 - **`basis:inferred` units (50 total, 0.5%)** carry no grounding and are never asserted, per the
   invariant. They are the model's explicit "I do not know" markers — read them as questions, not
   facts.
+
+---
+
+## 5. Held-out-asserted residual — 14 real findings (2026-08-22)
+
+With the matcher fixed (§1) the audit reports **14** `basis:declared` units that reference a
+still-held-out element. All 14 already carry `!untethered`, so the KB validates; these are
+reconciliation candidates, not validation failures. They fall into three kinds:
+
+| kind | example | count | disposition |
+|---|---|---|---|
+| **Deliberate hold-out record** | `anchor.tag1-schema \| isa \| anchor.held-out-base-deviation`; `anchor.tag1-schema \| not-part-of \| anchor.beckn-base`; `anchor.tag1 \| not-isa \| anchor.tag-group`; `anchor.tag1 \| wasDerivedFrom \| anchor.tag-group` | ~6 | **Correct — leave.** These *record* the hold-out (the last literally encodes the Tag1→TagGroup duplicate finding). |
+| **Over-assertion** | `anchor.tag1 \| isa \| anchor.beckn-object` (trv11-2.0.0, trv11-2.1.0, trv12-2.0.0, trv14-2.0.0) | 4 | Treats a held-out schema as canonical protocol. Re-base `declared → derived` (keep `!untethered`) to honour the hold-out. |
+| **Structural slot / literal** | `anchor.issue-resolution \| has-slot \| anchor.tag1`; `anchor.cancellation-term \| has-slot \| "cancel_eligible"`; `anchor.order-item \| has-slot \| "$schema"` | 4 | Genuinely declared in the config, but the referenced schema/field is held out. Interpretation call — `declared` (config-true) vs `derived` (not base-canonical). |
+
+**Base decisions applied this pass (from the review gate):**
+
+- **`Tag1` — kept held out; flagged for upstream fix.** It is `$ref`'d as `IssueResolution.tags` in
+  6 books and is structurally identical to a `TagGroup` array. Recommended upstream change: repoint
+  `$ref: "#/components/schemas/Tag1"` → the canonical `TagGroup` array in the ONDC configs. The KB
+  already carries `anchor.tag1 | wasDerivedFrom | anchor.tag-group` recording the duplication. No
+  local base change.
+- **`CancellationTerm.cancel_eligible`, `Item.$schema`, `Item.type`, `Time.transaction_id` — kept
+  held out.** `Item.$schema`/`Item.type` are JSON-Schema authoring artifacts; `cancel_eligible`
+  duplicates `cancellation_eligible`; `Time.transaction_id` is unused. Removed from
+  `beckn-base.yaml` in commit `172a3f52`.
+- **fis10 seeding restored** from `cf1945bc` (480 atoms / 156 anchors, validates) after a smoke-test
+  `run_pipeline.py` pass overwrote it with a 29-atom stub. `run_pipeline.py` only does Stage E→F for
+  the *first* discovered book — it is a demonstration harness, not the full per-book seed.
