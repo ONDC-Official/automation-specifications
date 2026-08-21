@@ -217,6 +217,9 @@ components:
       properties:
         cancel_by:
           $ref: '#/components/schemas/Time'
+        cancel_eligible:
+          description: Indicates if cancellation is eligible
+          type: boolean
         cancellation_eligible:
           description: Indicates if cancellation is eligible
           type: boolean
@@ -229,6 +232,11 @@ components:
         reason_required:
           description: Indicates whether a reason is required to cancel the order
           type: boolean
+        return_terms:
+          description: Return terms associated with cancellation
+          items:
+            $ref: '#/components/schemas/ReturnTerm'
+          type: array
         xinput:
           $ref: '#/components/schemas/XInput'
       type: object
@@ -482,6 +490,9 @@ components:
           type: string
         short_desc:
           type: string
+        symbol:
+          description: A symbol or icon code for the descriptor
+          type: string
       type: object
     DescriptorIgm:
       properties:
@@ -558,6 +569,20 @@ components:
           description: Path to json schema generating the error. Used only during
             json schema validation errors
           type: string
+        tags:
+          description: Tags associated with the error
+          items:
+            $ref: '#/components/schemas/TagGroup'
+          type: array
+        type:
+          description: Type or category of the error
+          enum:
+          - CONTEXT-ERROR
+          - CORE-ERROR
+          - DOMAIN-ERROR
+          - JSON-SCHEMA-ERROR
+          - POLICY-ERROR
+          type: string
       type: object
     Faq:
       properties:
@@ -590,8 +615,13 @@ components:
           - text/html
           - application/html
           - application/xml
+          - TEXT/HTML-MULTI
+          - NONE
           type: string
         multiple_submissions:
+          type: boolean
+        multiple_sumbissions:
+          description: Allows form to be submitted multiple times (preserves typo from spec)
           type: boolean
         resubmit:
           type: boolean
@@ -1095,6 +1125,9 @@ components:
       type: string
     Item:
       properties:
+        $schema:
+          description: JSON Schema reference for the Item
+          type: string
         add_ons:
           items:
             $ref: '#/components/schemas/AddOn'
@@ -1202,6 +1235,9 @@ components:
           $ref: '#/components/schemas/Time'
         ttl:
           description: Time to live in seconds for an instance of this schema
+          type: string
+        type:
+          description: Type classification of the Item
           type: string
         xinput:
           $ref: '#/components/schemas/XInput'
@@ -1513,6 +1549,8 @@ components:
           - SOFT_CANCEL
           - SOFT_UPDATE
           - UPDATED
+          - IN-PROGRESS
+          - ON-HOLD
           type: string
         tags:
           items:
@@ -1652,6 +1690,7 @@ components:
           - POST-FULFILLMENT
           - ON-ORDER
           - PART-PAYMENT
+          - REFUND
           type: string
         url:
           description: A payment url to be called by the BAP. If empty, then the payment
@@ -2061,6 +2100,8 @@ components:
         code:
           description: State code as per country or international standards
           type: string
+        descriptor:
+          $ref: '#/components/schemas/Descriptor'
         name:
           description: Name of the state
           type: string
@@ -2126,6 +2167,26 @@ components:
             it should not be displayed. This value can override the group display
             value.
           type: boolean
+        list:
+          description: List of key-value tag entries
+          items:
+            properties:
+              descriptor:
+                properties:
+                  code:
+                    description: Descriptor code of the individual tag
+                    type: string
+                required:
+                - code
+                type: object
+              value:
+                description: Value of the tag
+                type: string
+            required:
+            - descriptor
+            - value
+            type: object
+          type: array
         value:
           description: The value of the tag. This set by the BPP and rendered as-is
             by the BAP.
@@ -2153,6 +2214,28 @@ components:
             $ref: '#/components/schemas/Tag'
           type: array
       type: object
+    Tag1:
+      type: array
+      items:
+        type: object
+        properties:
+          descriptor:
+            type: object
+          list:
+            type: array
+            items:
+              type: object
+              properties:
+                descriptor:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                  additionalProperties: false
+                value:
+                  type: string
+              additionalProperties: false
+        additionalProperties: false
     Time:
       properties:
         days:
@@ -2176,6 +2259,9 @@ components:
           $ref: '#/components/schemas/Schedule'
         timestamp:
           format: date-time
+          type: string
+        transaction_id:
+          description: Transaction ID associated with the time record
           type: string
       type: object
     Tracking:
