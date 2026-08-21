@@ -83,7 +83,7 @@ The KB-storage format ships **with the skill**, so no external `KB-storage` repo
 
 ## Review gates (confirm with a human before acting)
 
-1. **Manifest-completeness (after A)** — surface orphans / partial or deprecated manifest; a book that fails is **held out**, not seeded. (Precedent: FIS12-2.3.0 excluded.)
+1. **Manifest-completeness (after A)** — surface orphans / partial or deprecated manifest; a book that fails is **held out**, not seeded. A file that only parses under the runtime's js-yaml anchor rules is **not** a failure — `tools/_yaml.py` reads it the way the runtime does and flags `runtime-only-yaml`; redefined anchors are ambiguity to confine with `scoped-to`, not a reason to hold a book out. (Precedent: FIS12-2.3.0 was held out on this and has since been seeded.)
 2. **Classifier `needs_human` (after C.cls)** — ambiguous invariant-vs-semantic items.
 3. **Governance (at F)** — auto-commit `declared`/`sandbox-tested`/`observed-live`; route `inferred`/`!desired`/ontology-evolution to human review.
 

@@ -54,8 +54,13 @@ def discover_books(root=None):
             books.append(os.path.dirname(cfg))
     return sorted(set(books))
 
+BOOK_PREFIX = re.compile(r"^(?:automation-specifications-)?release-eks-")
+
 def book_id(book_dir):
-    return re.sub(r"^automation-specifications-release-eks-", "", os.path.basename(book_dir)).lower()
+    """Book dir basename -> the id used for knowledge/<id>/. Submodule dirs have been
+    checked out under both `automation-specifications-release-eks-X` and the shorter
+    `release-eks-X`; both must normalise to `x` or the tools lose the existing output."""
+    return BOOK_PREFIX.sub("", os.path.basename(book_dir)).lower()
 
 def workbench_kb():
     hits = glob.glob(os.path.join(FRAMEWORK, "**", "protocol-workbench"), recursive=True)

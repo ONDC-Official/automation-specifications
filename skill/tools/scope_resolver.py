@@ -6,8 +6,8 @@ Emits: in-scope files, orphans (ignored), validation symbol table, flags.
 Contract: index.yaml is the sole scope authority; orphans excluded; anchors
 preserved as symbols (not inlined); lenient parse of invalid YAML with flags.
 """
-import os, re, sys, json, glob, yaml
-import _env
+import os, re, sys, json, glob
+import _env, _yaml
 
 def find_file_refs(node):
     """yield every $ref that points at a FILE (has a path part, not pure #/...)."""
@@ -26,12 +26,8 @@ def find_file_refs(node):
     return out
 
 def lenient_load(path):
-    """load YAML; on failure return (None, error) so we can flag not crash."""
-    try:
-        with open(path) as f:
-            return yaml.safe_load(f), None
-    except Exception as e:
-        return None, str(e).splitlines()[0]
+    """load YAML the way the runtime does; on failure return (None, error) so we flag not crash."""
+    return _yaml.load_file(path)
 
 def resolve_scope(book_root):
     cfg = os.path.join(book_root, "config")
@@ -80,14 +76,17 @@ def resolve_scope(book_root):
     vfile = os.path.join(cfg, "validations", "index.yaml")
     if os.path.isfile(vfile):
         raw = open(vfile).read()
-        defs = re.findall(r"&([A-Za-z0-9_]+)", raw)
-        uses = re.findall(r"\*([A-Za-z0-9_]+)", raw)
-        from collections import Counter
-        uc, dc = Counter(uses), Counter(defs)
+        dc, uc = _yaml.anchors(raw, is_text=True)
         dup = sorted([a for a, c in dc.items() if c > 1])
-        symbols = sorted(set(defs))
+        symbols = sorted(dc)
         if dup:
+            # The runtime (js-yaml) accepts redefinition, last-before-use wins, so this
+            # is not a parse failure. It IS ambiguity: each use must be confined with
+            # scoped-to rather than interned against one arbitrary definition.
             flags.append({"type": "duplicate-anchor", "detail": dup})
+        if not _yaml.strict_ok(vfile):
+            flags.append({"type": "runtime-only-yaml", "file": "validations/index.yaml",
+                          "detail": "parses under js-yaml semantics, not under PyYAML's stricter composer"})
 
     domain = (idx.get("info", {}) or {}).get("domain")
     version = (idx.get("info", {}) or {}).get("version")

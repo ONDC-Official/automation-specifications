@@ -15,7 +15,7 @@ Checks, across every seeded book:
  10. HELD-OUT gate: no basis:declared unit asserts a base-conformance deviation
 """
 import os, re, sys, json, glob, yaml, collections
-import _env
+import _env, _yaml
 
 KB = _env.ROOT
 KNOW = _env.KNOWLEDGE
@@ -27,31 +27,16 @@ FLAGS = {"untethered","deprecated","desired","plane"}
 NEEDS_GROUND = BASIS - {"inferred","ecosystem"}
 ORDER = ["basis","asof","grounded-in"]
 
-class Lenient(yaml.SafeLoader):
-    pass
-def _dup_ok(loader, node, deep=False):          # tolerate duplicate anchors/keys
-    mapping = {}
-    for k, v in node.value:
-        key = loader.construct_object(k, deep=deep)
-        mapping[key] = loader.construct_object(v, deep=deep)
-    return mapping
-Lenient.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _dup_ok)
-def _compose(self, anchor):                      # last-anchor-wins instead of raising
-    return yaml.composer.Composer.compose_node(self, None, None)
-
 _cache = {}
 def load_yaml(path):
+    """(doc, how). 'strict' = PyYAML's composer accepted it too; 'lenient' = it only
+    parses under the runtime's js-yaml anchor semantics (see _yaml.py)."""
     if path in _cache: return _cache[path]
-    doc, how = None, "fail"
-    try:
-        doc = yaml.safe_load(open(path, encoding="utf-8")); how = "strict"
-    except Exception:
-        try:
-            src = open(path, encoding="utf-8").read()
-            src = re.sub(r"(?m)^(\s*)&([A-Za-z0-9_]+)\s*$", r"\1", src)  # last resort
-            doc = yaml.load(open(path, encoding="utf-8"), Lenient); how = "lenient"
-        except Exception:
-            doc, how = None, "fail"
+    doc, err = _yaml.load_file(path)
+    if err:
+        how = "fail"
+    else:
+        how = "strict" if _yaml.strict_ok(path) else "lenient"
     _cache[path] = (doc, how); return _cache[path]
 
 TOKEN = re.compile(r"([^.\[\]]+)|\[([^\]]*)\]")

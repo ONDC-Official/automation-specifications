@@ -7,8 +7,8 @@ links from the in-scope flows. Validates: every step api is a known protocol
 action or a recognised UI step; responseFor points at an earlier step; entry
 actions non-empty. Input: scope-graphs.json. Output: sequence-graph.json.
 """
-import os, json, yaml
-import _env
+import os, json
+import _env, _yaml
 
 HERE = os.path.dirname(__file__)
 REF = _env.CONFIGS
@@ -16,9 +16,8 @@ SCOPE = _env.w("scope-graphs.json")
 UI_STEPS = {"html_form", "dynamic_form", "form"}   # non-protocol interactive steps
 
 def load(p):
-    try:
-        with open(p) as f: return yaml.safe_load(f)
-    except Exception: return None
+    doc, err = _yaml.load_file(p)
+    return None if err else doc
 
 def state_machine(cfg):
     doc = load(os.path.join(cfg, "actions", "index.yaml")) or {}

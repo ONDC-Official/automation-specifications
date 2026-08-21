@@ -5,16 +5,15 @@ Separates SEMANTIC INVARIANT from manual FORMAT/MANAGEMENT variance across
 FIS12 (credit), FIS13 (insurance), FIS14 (mutual funds), TRV14 (travel).
 Extracts a comparable 'signature' per dimension; classification is done in synthesis.
 """
-import os, re, json, glob, yaml, _env
+import os, re, json, glob, yaml, _env, _yaml
 from collections import Counter
 
 # generic book discovery (no hardcoded set)
 REL = {_env.book_id(b): b for b in _env.discover_books()}     # {id: book_dir}
 def cfg(r, rel): return os.path.join(REL[r], "config", rel)
 def yload(p):
-    try:
-        with open(p) as f: return yaml.safe_load(f)
-    except Exception: return None
+    doc, err = _yaml.load_file(p)
+    return None if err else doc
 def read(p):
     try:
         with open(p) as f: return f.read()
@@ -39,10 +38,15 @@ def sig_errors(r):
 
 def sig_validations(r):
     p = cfg(r,"validations/index.yaml"); raw = read(p)
-    defs = set(re.findall(r"&([A-Za-z0-9_]+)", raw))
-    strict = True; doc = None
-    try: doc = yaml.safe_load(raw) if raw.strip() else {}
+    dc, _uc = _yaml.anchors(raw, is_text=True)
+    defs = set(dc)
+    # strict = also parses under PyYAML's stricter-than-spec composer; the doc itself is
+    # read with runtime (js-yaml) semantics either way, so a False here is a report, not a loss.
+    strict = True
+    try: yaml.safe_load(raw) if raw.strip() else {}
     except Exception: strict = False
+    try: doc = _yaml.loads(raw) if raw.strip() else {}
+    except Exception: doc = None
     if doc is not None and isinstance(doc, dict): root = sorted(doc.keys())
     else: root = sorted(set(re.findall(r"^([A-Za-z_][A-Za-z0-9_]*):", raw, re.M)))
     ops = sorted(set(re.findall(r"_RETURN_:\s*([^\n]+)", raw)))[:0]  # placeholder

@@ -7,8 +7,8 @@ array item has a natural id (positional, never line numbers) so they survive reo
 An INDEPENDENT resolver navigates each node-path back to prove round-trip (invariant G-1: 100%).
 Input: scope-graphs.json (in-scope files from Tool A). Output: ground-map.json + round-trip report.
 """
-import os, sys, json, yaml
-import _env
+import os, sys, json
+import _env, _yaml
 
 HERE = os.path.dirname(__file__)
 REF = _env.CONFIGS
@@ -16,9 +16,11 @@ SCOPE = _env.w("scope-graphs.json")
 ID_KEYS = ("action_id", "_NAME_", "code", "id")   # array-item identity, in priority order
 
 def load(p):
+    if p.endswith((".yaml", ".yml")):
+        return _yaml.load_file(p)
     try:
         with open(p) as f:
-            return (yaml.safe_load(f) if p.endswith((".yaml",".yml")) else json.load(f)), None
+            return json.load(f), None
     except Exception as e:
         return None, str(e).splitlines()[0]
 

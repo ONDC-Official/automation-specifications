@@ -1,6 +1,6 @@
 # Index spine (Stage G, consolidated)
 
-Built from 16 books / 9770 units / 6969 distinct grounded config node-paths.
+Built from 16 books / 10781 units / 7774 distinct grounded config node-paths.
 
 ## Files
 
@@ -21,6 +21,7 @@ whole return on positional grounding.
 | config file | direct | +prov hop | untouched in book |
 |---|---|---|---|
 | `trv12-2.0.0:validations/index.yaml` | 374 | 0 | 363 |
+| `fis12-2.3.0:validations/index.yaml` | 337 | 8 | 694 |
 | `trv10-2.1.0:validations/index.yaml` | 340 | 0 | 445 |
 | `trv11-2.0.0:validations/index.yaml` | 309 | 0 | 377 |
 | `trv10-2.0.1:validations/index.yaml` | 305 | 1 | 545 |
@@ -31,12 +32,11 @@ whole return on positional grounding.
 | `trv10-2.0.1:attributes/Ride_hailing.yaml` | 194 | 1 | 656 |
 | `fis12-pf-2.2.1:validations/index.yaml` | 182 | 0 | 333 |
 | `fis12-2.0.3:validations/index.yaml` | 150 | 4 | 413 |
-| `trv11-2.0.1:validations/index.yaml` | 147 | 0 | 606 |
 
 ## Cross-book meaning reuse
 
-- interned meanings shared by >1 book: **355**
-- book-specific meanings: **1919**
-- present in both the FIS and TRV families: **197**
-- FIS-family only: **1002** · TRV-family only: **1075**
+- interned meanings shared by >1 book: **396**
+- book-specific meanings: **2196**
+- present in both the FIS and TRV families: **210**
+- FIS-family only: **1320** · TRV-family only: **1062**
 

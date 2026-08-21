@@ -11,8 +11,8 @@ domain-only field / different enum values / entry actions / search mode -> seman
 Inputs: the 3 book OpenAPI schemas + signatures.json + sequence-graph.json.
 Output: classification.json.
 """
-import os, re, sys, glob, json, yaml
-import _env
+import os, re, sys, glob, json
+import _env, _yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 REF = _env.CONFIGS
 CMP = _env.WORK
@@ -35,7 +35,7 @@ if len(BOOKS) < 2:
     sys.exit(0)
 
 def schemas(cfg):
-    d = yaml.safe_load(open(os.path.join(cfg, "specs/openapi.yaml")))
+    d = _yaml.load(os.path.join(cfg, "specs/openapi.yaml"))
     return (d.get("components",{}) or {}).get("schemas",{}) or {}
 REL = BOOKS                       # {name: config_dir}
 S = {r: schemas(cfg) for r, cfg in BOOKS.items()}
@@ -51,7 +51,7 @@ def lp(sc):
 
 # IGM feature-module schema set (from the derived base) — absence = minification, not semantics
 try:
-    _base = yaml.safe_load(open(_env.BECKN_BASE))
+    _base = _yaml.load(_env.BECKN_BASE)
     MODULE_SCHEMAS = set((_base.get("x-module-schemas", {}) or {}).get("IGM", []))
 except Exception:
     MODULE_SCHEMAS = set()

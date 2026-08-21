@@ -10,16 +10,14 @@ Usage: python3 kb_writer.py [book_dir]
 Degrades: if the workbench KB is absent, runtime-meaning atoms are omitted (not faked);
 object atoms ground to the book's own openapi schema.
 """
-import os, sys, re, glob, json, yaml
-import _env
+import os, sys, re, glob, json
+import _env, _yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 REFROOT = _env.CONFIGS
 CMP = _env.WORK
 
 def norm_book(dirname):
-    b = os.path.basename(dirname)
-    b = re.sub(r"^automation-specifications-release-eks-", "", b)
-    return b.lower()
+    return _env.book_id(dirname)
 
 def pick_book():
     if len(sys.argv) > 1: return sys.argv[1]
@@ -35,8 +33,8 @@ def pick_book():
     return hits[0]
 
 def load(p):
-    try: return yaml.safe_load(open(p))
-    except Exception: return None
+    doc, err = _yaml.load_file(p)
+    return None if err else doc
 
 def build(book_dir):
     BK = norm_book(book_dir)

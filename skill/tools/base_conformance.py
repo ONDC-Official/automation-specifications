@@ -18,11 +18,11 @@ semantics are unchanged.
 
 Output: knowledge/_work/base-conformance.json  ·  exit 0 = conformant, 3 = deviations.
 """
-import os, sys, json, yaml, _env
+import os, sys, json, _env, _yaml
 
 def load(p):
-    try: return yaml.safe_load(open(p))
-    except Exception: return {}
+    doc, err = _yaml.load_file(p)
+    return {} if err else doc
 
 def schemas_of(spec): return (spec.get("components",{}) or {}).get("schemas",{}) or {}
 def props(sc):
