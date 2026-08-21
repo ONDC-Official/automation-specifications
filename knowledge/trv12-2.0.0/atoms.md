@@ -735,7 +735,7 @@ anchor.track | not-part-of | anchor.trv12-flow-set | basis:declared | asof:trv12
 anchor.support | not-part-of | anchor.trv12-flow-set | basis:declared | asof:trv12-2.0.0 | grounded-in:trv12-2.0.0:flows/index.yaml#flows
 anchor.api-path | isa | anchor.runtime-behavioral | basis:authority | asof:trv12-2.0.0 | grounded-in:workbench:scripts/onix-request-lifecycle.md
 anchor.form | has-slot | anchor.form-multiple-submissions | basis:declared | asof:trv12-2.0.0 | !untethered
-anchor.tag1 | isa | anchor.beckn-object | basis:declared | asof:trv12-2.0.0 | !untethered
+anchor.tag1 | isa | anchor.beckn-object | basis:derived | asof:trv12-2.0.0 | !untethered
 anchor.issue-resolution | has-slot | anchor.tag1 | basis:declared | asof:trv12-2.0.0 | !untethered
 anchor.form-multiple-submissions | wasRevisionOf | anchor.form-resubmit | basis:inferred | asof:trv12-2.0.0
 anchor.flow | isa | anchor.runtime-behavioral | basis:authority | asof:trv12-2.0.0 | grounded-in:workbench:frames/mock-runner-lib.md

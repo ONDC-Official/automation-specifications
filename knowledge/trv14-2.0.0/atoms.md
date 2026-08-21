@@ -714,7 +714,7 @@ anchor.error-93201 | not-part-of | anchor.trv14-error-registry | basis:derived |
 anchor.error-93201 | sent-by | anchor.bpp | basis:declared | asof:trv14-2.0.0 | grounded-in:trv14-2.0.0:flows/unreserved-entry-pass/Cancellation_Rejected.yaml#steps[on_cancel_rejected].owner
 anchor.cancellation-error-block | requires | anchor.error-93201 | basis:declared | asof:trv14-2.0.0 | grounded-in:trv14-2.0.0:validations/index.yaml#_TESTS_.on_cancel[CANCELLATION_ERROR]._RETURN_[ERROR_CODE]
 anchor.trv14-error-registry | not-scoped-to | anchor.unreserved-entry-pass | basis:inferred | asof:trv14-2.0.0
-anchor.tag1-schema | isa | anchor.beckn-object | basis:declared | asof:trv14-2.0.0 | !untethered
+anchor.tag1-schema | isa | anchor.beckn-object | basis:derived | asof:trv14-2.0.0 | !untethered
 anchor.tag1-schema | not-part-of | anchor.beckn-base | basis:declared | asof:trv14-2.0.0 | !untethered
 anchor.tag1-schema | wasDerivedFrom | anchor.tag | basis:inferred | asof:trv14-2.0.0
 anchor.tag | isa | anchor.beckn-object | basis:declared | asof:trv14-2.0.0 | grounded-in:trv14-2.0.0:specs/openapi.yaml#components.schemas.Tag

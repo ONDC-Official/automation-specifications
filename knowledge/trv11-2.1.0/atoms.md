@@ -641,6 +641,6 @@ anchor.session-data | scoped-to | "selected_unlimited_pass_item" | basis:declare
 dom.trv11 | has-slot | anchor.validation-node | basis:declared | asof:trv11-2.1.0 | grounded-in:trv11-2.1.0:validations/index.yaml#_TESTS_
 anchor.session-data | not-part-of | anchor.validation-node | basis:declared | asof:trv11-2.1.0 | grounded-in:trv11-2.1.0:validations/index.yaml#_SESSION_DATA_
 anchor.attribute-dictionary | not-isa | anchor.runtime-behaviour | basis:declared | asof:trv11-2.1.0 | !untethered
-anchor.tag1 | isa | anchor.beckn-object | basis:declared | asof:trv11-2.1.0 | !untethered
+anchor.tag1 | isa | anchor.beckn-object | basis:derived | asof:trv11-2.1.0 | !untethered
 anchor.tag1 | not-isa | anchor.tag-group | basis:declared | asof:trv11-2.1.0 | !untethered
 anchor.tag1 | wasDerivedFrom | anchor.tag-group | basis:declared | asof:trv11-2.1.0 | !untethered

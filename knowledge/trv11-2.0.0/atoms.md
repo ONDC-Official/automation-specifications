@@ -94,7 +94,7 @@ anchor.authorization | part-of | anchor.stop | basis:declared | asof:trv11-2.0.0
 anchor.quotation | part-of | anchor.order | basis:declared | asof:trv11-2.0.0 | grounded-in:trv11-2.0.0:specs/openapi.yaml#components.schemas.Order.properties.quote
 anchor.item-quantity | part-of | anchor.item | basis:declared | asof:trv11-2.0.0 | grounded-in:trv11-2.0.0:specs/openapi.yaml#components.schemas.Item.properties.quantity
 anchor.vehicle | part-of | anchor.fulfillment | basis:declared | asof:trv11-2.0.0 | grounded-in:trv11-2.0.0:specs/openapi.yaml#components.schemas.Fulfillment.properties.vehicle
-anchor.tag1 | isa | anchor.beckn-object | basis:declared | asof:trv11-2.0.0 | !untethered
+anchor.tag1 | isa | anchor.beckn-object | basis:derived | asof:trv11-2.0.0 | !untethered
 anchor.issue-resolution | has-slot | anchor.tag1 | basis:declared | asof:trv11-2.0.0 | !untethered
 anchor.error-object | has-slot | "type" | basis:declared | asof:trv11-2.0.0 | !untethered
 anchor.error-object | has-slot | "tags" | basis:declared | asof:trv11-2.0.0 | !untethered

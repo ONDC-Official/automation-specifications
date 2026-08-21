@@ -207,16 +207,16 @@ reconciliation candidates, not validation failures. They fall into three kinds:
 | kind | example | count | disposition |
 |---|---|---|---|
 | **Deliberate hold-out record** | `anchor.tag1-schema \| isa \| anchor.held-out-base-deviation`; `anchor.tag1-schema \| not-part-of \| anchor.beckn-base`; `anchor.tag1 \| not-isa \| anchor.tag-group`; `anchor.tag1 \| wasDerivedFrom \| anchor.tag-group` | ~6 | **Correct — leave.** These *record* the hold-out (the last literally encodes the Tag1→TagGroup duplicate finding). |
-| **Over-assertion** | `anchor.tag1 \| isa \| anchor.beckn-object` (trv11-2.0.0, trv11-2.1.0, trv12-2.0.0, trv14-2.0.0) | 4 | Treats a held-out schema as canonical protocol. Re-base `declared → derived` (keep `!untethered`) to honour the hold-out. |
-| **Structural slot / literal** | `anchor.issue-resolution \| has-slot \| anchor.tag1`; `anchor.cancellation-term \| has-slot \| "cancel_eligible"`; `anchor.order-item \| has-slot \| "$schema"` | 4 | Genuinely declared in the config, but the referenced schema/field is held out. Interpretation call — `declared` (config-true) vs `derived` (not base-canonical). |
+| **Over-assertion** | `anchor.tag1 \| isa \| anchor.beckn-object` (trv11-2.0.0, trv11-2.1.0, trv12-2.0.0, trv14-2.0.0) | 4 | **DONE (2026-08-22)** — re-based `declared → derived` (kept `!untethered`). A held-out schema is no longer asserted as canonical protocol. |
+| **Structural slot / literal** | `anchor.issue-resolution \| has-slot \| anchor.tag1`; `anchor.cancellation-term \| has-slot \| "cancel_eligible"`; `anchor.order-item \| has-slot \| "$schema"` | 4 | **Kept as-is** (review decision). Genuinely declared in the config; left `declared` because the config truly declares the slot. They surface in the audit as the residual held-out hits until the elements are reconciled upstream. |
 
 **Base decisions applied this pass (from the review gate):**
 
-- **`Tag1` — kept held out; flagged for upstream fix.** It is `$ref`'d as `IssueResolution.tags` in
-  6 books and is structurally identical to a `TagGroup` array. Recommended upstream change: repoint
-  `$ref: "#/components/schemas/Tag1"` → the canonical `TagGroup` array in the ONDC configs. The KB
-  already carries `anchor.tag1 | wasDerivedFrom | anchor.tag-group` recording the duplication. No
-  local base change.
+- **`Tag1` — kept held out; the base is intentionally left unchanged.** `beckn-base.yaml` is **not**
+  edited for Tag1 — it stays a held-out deviation. The reconciliation is a **downstream config
+  change**, tracked as a backlog item in §6: repoint `$ref: "#/components/schemas/Tag1"` → the related
+  canonical schema (`TagGroup` array). The KB already carries `anchor.tag1 | wasDerivedFrom |
+  anchor.tag-group` recording the duplication.
 - **`CancellationTerm.cancel_eligible`, `Item.$schema`, `Item.type`, `Time.transaction_id` — kept
   held out.** `Item.$schema`/`Item.type` are JSON-Schema authoring artifacts; `cancel_eligible`
   duplicates `cancellation_eligible`; `Time.transaction_id` is unused. Removed from
@@ -224,3 +224,24 @@ reconciliation candidates, not validation failures. They fall into three kinds:
 - **fis10 seeding restored** from `cf1945bc` (480 atoms / 156 anchors, validates) after a smoke-test
   `run_pipeline.py` pass overwrote it with a 29-atom stub. `run_pipeline.py` only does Stage E→F for
   the *first* discovered book — it is a demonstration harness, not the full per-book seed.
+
+---
+
+## 6. Downstream backlog — config changes to track (base stays unchanged)
+
+These are **not** base edits and **not** KB edits. They are upstream/downstream **config-repo**
+action items. The base and the KB stay as they are (held-out, with the deviation recorded); the KB
+re-seeds these elements as `declared` automatically once the config change lands and conformance
+clears.
+
+- [ ] **Repoint `Tag1` → the related canonical schema (`TagGroup`).** In every config that defines
+  and `$ref`s `Tag1`, change `$ref: "#/components/schemas/Tag1"` (used as `IssueResolution.tags`) to
+  reference the canonical `TagGroup` array. `Tag1` is structurally a list of `TagGroup` — a duplicate.
+  Affected books (6): **fis12-2.3.0, fis13-health-2.0.0, trv11-2.0.0, trv11-2.1.0, trv12-2.0.0,
+  trv14-2.0.0**. **beckn-base is deliberately left unchanged for `Tag1`.** KB marker:
+  `anchor.tag1 | wasDerivedFrom | anchor.tag-group`.
+- [ ] **(Related, same pattern) `CancellationTerm.cancel_eligible` → `cancellation_eligible`.** fis10
+  uses a duplicate spelling of the existing base field. Repoint/rename downstream rather than
+  canonising the duplicate in the base.
+- [ ] **(Related) drop the JSON-Schema authoring artifacts `Item.$schema` / `Item.type`** from
+  `trv11-2.0.1`'s config surface — they are authoring leakage, not protocol; base stays unchanged.
