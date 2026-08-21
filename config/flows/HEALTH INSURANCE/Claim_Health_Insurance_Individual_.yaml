@@ -48,6 +48,18 @@ steps:
               code: "*"
         message:
           intent:
+            tags:
+              - descriptor:
+                  code: BAP_TERMS
+                  name: BAP Terms of Engagement
+                display: false
+                list:
+                  - descriptor:
+                      code: STATIC_TERMS
+                    value: https://api.example-bap.com/booking/terms
+                  - descriptor:
+                      code: OFFLINE_CONTRACT
+                    value: "true"
             category:
               descriptor:
                 code: HEALTH_INSURANCE
@@ -57,27 +69,6 @@ steps:
                   id: 0120TRVK
             payment:
               collected_by: BPP
-              tags:
-                - descriptor:
-                    code: BUYER_FINDER_FEES
-                  display: false
-                  list:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_TYPE
-                      value: percent-annualized
-                    - descriptor:
-                        code: BUYER_FINDER_FEES_PERCENTAGE
-                      value: "1"
-                - descriptor:
-                    code: SETTLEMENT_TERMS
-                  display: false
-                  list:
-                    - descriptor:
-                        code: STATIC_TERMS
-                      value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                    - descriptor:
-                        code: OFFLINE_CONTRACT
-                      value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -88,9 +79,9 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
         collected_by: $.message.intent.payment.collected_by
-        tags: $.message.intent.tags
         payment: $.message.intent.payment
         category: $.message.intent.category
+        search_tags: $.message.intent.tags[*]
       inputs:
         id: fis13_search
         jsonSchema:
@@ -107,9 +98,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: search
-            timestamp: 2026-07-10T20:44:05.238Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: ffd3a474-ee15-444b-9ef9-4a79c92b9303
+            timestamp: 2026-08-12T11:26:43.427Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 4b80750f-3948-4c5b-b0c0-a757f96df22c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -121,32 +112,23 @@ steps:
                 code: "*"
           message:
             intent:
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
               category:
                 descriptor:
                   code: HEALTH_INSURANCE
               payment:
                 collected_by: BPP
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
         type: request
         description: The BAP initiates a search request to discover available health
           insurance providers and their products within a specified geographic
@@ -186,6 +168,18 @@ steps:
               code: "*"
         message:
           catalog:
+            tags:
+              - descriptor:
+                  code: BPP_TERMS
+                  name: BPP Terms of Engagement
+                display: false
+                list:
+                  - descriptor:
+                      code: STATIC_TERMS
+                    value: https://api.example-bap.com/booking/terms
+                  - descriptor:
+                      code: OFFLINE_CONTRACT
+                    value: "true"
             descriptor:
               name: ABC Insurance Ltd
             providers:
@@ -260,6 +254,9 @@ steps:
                           - descriptor:
                               code: ROOM_CATEGORY
                             value: Deluxe
+                          - descriptor:
+                              code: UIN
+                            value: 512N314V02
                     add_ons:
                       - id: A1
                         quantity:
@@ -354,6 +351,7 @@ steps:
         selected_provider: $.message.catalog.providers[0]
         form_id: $.message.catalog.providers[0].items[0].xinput.form.id
         individual_information_form: $..form.url
+        on_search_tags: $.message.catalog.tags[*]
       inputs: {}
     examples:
       - name: example for on_search
@@ -361,9 +359,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_search
-            timestamp: 2026-07-10T20:44:05.261Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: ffd3a474-ee15-444b-9ef9-4a79c92b9303
+            timestamp: 2026-08-12T11:26:43.439Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 4b80750f-3948-4c5b-b0c0-a757f96df22c
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -377,10 +375,22 @@ steps:
                 code: "*"
           message:
             catalog:
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
               descriptor:
                 name: ABC Insurance Ltd
               providers:
-                - id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                - id: a9a32e0d-d484-499f-817d-29b8a75decbe
                   descriptor:
                     name: ABC Insurance Ltd.
                     short_desc: ABC Insurance Ltd. India
@@ -403,7 +413,7 @@ steps:
                         name: Health Insurance
                         code: HEALTH_INSURANCE
                   items:
-                    - id: ba438594-1c70-40c3-adc4-036dc0bb921b
+                    - id: 4ced5e18-9d3b-4e35-923d-d584d814f12a
                       category_ids:
                         - C1
                         - C3
@@ -451,6 +461,9 @@ steps:
                             - descriptor:
                                 code: ROOM_CATEGORY
                               value: Deluxe
+                            - descriptor:
+                                code: UIN
+                              value: 512N314V02
                       add_ons:
                         - id: A1
                           quantity:
@@ -499,9 +512,9 @@ steps:
                           headings:
                             - INSURED_PERSONAL_DETAILS
                         form:
-                          id: fc228c2e-44b7-43bc-9294-795d402aa57b
+                          id: 1653fbbd-c1fe-4b23-8eb5-dbb2c218a30c
                           mime_type: text/html
-                          url: undefined/forms/ONDC:FIS13/individual_information_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined
+                          url: undefined/forms/ONDC:FIS13/individual_information_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined
                           resubmit: true
                           multiple_sumbissions: false
                   payments:
@@ -549,21 +562,21 @@ steps:
       defaultPayload: {}
       saveData: {}
       inputs: {}
-      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPlBlcnNvbmFsIERldGFpbHM8L3RpdGxlPgo8L2hlYWQ+Cgo8Ym9keT4KICA8Zm9ybSBpZD0iaW5kaXZpZHVhbF9pbmZvcm1hdGlvbl9mb3JtIiBtZXRob2Q9IlBPU1QiIGFjdGlvbj0iPCU9IGFjdGlvblVybCAlPiI+CgogICAgPGxhYmVsIGZvcj0iZmlyc3ROYW1lIj5GaXJzdCBOYW1lIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iZmlyc3ROYW1lIiBuYW1lPSJmaXJzdE5hbWUiIHBsYWNlaG9sZGVyPSJFbnRlciB5b3VyIGZpcnN0IG5hbWUiIHBhdHRlcm49IltBLVphLXpcc117Miw1MH0iIG1heGxlbmd0aD0iNTAiIHRpdGxlPSJOYW1lIG11c3QgY29udGFpbiBvbmx5IGxldHRlcnMgYW5kIHNwYWNlcyAoMi01MCBjaGFyYWN0ZXJzKSIgcmVxdWlyZWQgLz4KCiAgICA8bGFiZWwgZm9yPSJsYXN0TmFtZSI+TGFzdCBOYW1lIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0ibGFzdE5hbWUiIG5hbWU9Imxhc3ROYW1lIiBwbGFjZWhvbGRlcj0iRW50ZXIgeW91ciBsYXN0IG5hbWUiIHBhdHRlcm49IltBLVphLXpcc117Miw1MH0iIG1heGxlbmd0aD0iNTAiIHRpdGxlPSJOYW1lIG11c3QgY29udGFpbiBvbmx5IGxldHRlcnMgYW5kIHNwYWNlcyAoMi01MCBjaGFyYWN0ZXJzKSIgcmVxdWlyZWQgLz4KCiAgICA8bGFiZWwgZm9yPSJkb2IiPkRhdGUgb2YgQmlydGggPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgPGlucHV0IHR5cGU9ImRhdGUiIGlkPSJkb2IiIG5hbWU9ImRvYiIgcmVxdWlyZWQgLz4KCiAgICA8bGFiZWwgZm9yPSJnZW5kZXIiPkdlbmRlciA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICA8c2VsZWN0IG5hbWU9ImdlbmRlciIgaWQ9ImdlbmRlciIgcmVxdWlyZWQ+CiAgICAgIDxvcHRpb24gdmFsdWU9IiI+LS0gU2VsZWN0IC0tPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9Im1hbGUiPk1hbGU8L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iZmVtYWxlIj5GZW1hbGU8L29wdGlvbj4KICAgIDwvc2VsZWN0PgoKICAgIDxsYWJlbCBmb3I9IlBFRCI+UEVEIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxzZWxlY3QgbmFtZT0iUEVEIiBpZD0iUEVEIiByZXF1aXJlZD4KICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4tLSBTZWxlY3QgLS08L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iWWVzIj5ZZXM8L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iTm8iPk5vPC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgIAoKICAgIDxsYWJlbCBmb3I9InBob25lIj5QaG9uZSA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGVsIiBpZD0icGhvbmUiIG5hbWU9InBob25lIiBwbGFjZWhvbGRlcj0iOTg3NjU0MzIxMCIgcGF0dGVybj0iWzYtOV1bMC05XXs5fSIgbWF4bGVuZ3RoPSIxMCIgdGl0bGU9IlBob25lIG51bWJlciBtdXN0IGJlIDEwIGRpZ2l0cyBzdGFydGluZyB3aXRoIDYsIDcsIDgsIG9yIDkiIHJlcXVpcmVkIC8+CgogICAgPGxhYmVsIGZvcj0iZW1haWwiPkVtYWlsPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJlbWFpbCIgaWQ9ImVtYWlsIiBuYW1lPSJlbWFpbCIgcGxhY2Vob2xkZXI9ImV4YW1wbGVAZW1haWwuY29tIiAvPgoKICAgIDxsYWJlbCBmb3I9ImFtb3VudCI+Q292ZXJhZ2UgQW1vdW50IDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJudW1iZXIiIGlkPSJhbW91bnQiIG5hbWU9ImFtb3VudCIgcGxhY2Vob2xkZXI9IkVudGVyIGNvdmVyYWdlIGFtb3VudCIgbWluPSIxIiByZXF1aXJlZCAvPgoKICAgIAoKICAgIDxsYWJlbCBmb3I9InBhbkluZGlhIj5QYW4gSW5kaWEgQ292ZXIgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgPHNlbGVjdCBuYW1lPSJwYW5JbmRpYSIgaWQ9InBhbkluZGlhIiByZXF1aXJlZD4KICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4tLSBTZWxlY3QgLS08L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0ieWVzIj5ZZXM8L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0ibm8iPk5vPC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgICA8bGFiZWwgZm9yPSJoZWlnaHQiPkhlaWdodCAoY20pIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJudW1iZXIiIGlkPSJoZWlnaHQiIG5hbWU9ImhlaWdodCIgcGxhY2Vob2xkZXI9IkVudGVyIGhlaWdodCBpbiBjbSIgbWluPSIxIiBtYXg9IjMwMCIgcmVxdWlyZWQgLz4KCiAgICA8bGFiZWwgZm9yPSJ3ZWlnaHQiPldlaWdodCAoa2cpIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJudW1iZXIiIGlkPSJ3ZWlnaHQiIG5hbWU9IndlaWdodCIgcGxhY2Vob2xkZXI9IkVudGVyIHdlaWdodCBpbiBrZyIgbWluPSIxIiBtYXg9IjUwMCIgcmVxdWlyZWQgLz4KCiAgICA8bGFiZWwgZm9yPSJwaW5jb2RlIj5QaW5jb2RlPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGluY29kZSIgbmFtZT0icGluY29kZSIgcGxhY2Vob2xkZXI9IjEyMzQ1NiIgcGF0dGVybj0iWzEtOV1bMC05XXs1fSIgbWF4bGVuZ3RoPSI2IiB0aXRsZT0iUGluY29kZSBtdXN0IGJlIDYgZGlnaXRzIGFuZCBjYW5ub3Qgc3RhcnQgd2l0aCAwIiAvPgoKICAKCiAgICA8bGFiZWw+UEVEIERldGFpbHM8L2xhYmVsPgoKICAgIDxsYWJlbCBmb3I9ImRpYWJldGVzIj5EaWFiZXRlczwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJkaWFiZXRlcyIgbmFtZT0iZGlhYmV0ZXMiIC8+CgogICAgPGxhYmVsIGZvcj0iYmxvb2RQcmVzc3VyZSI+Qmxvb2QgUHJlc3N1cmUgLyBIeXBlcnRlbnNpb248L2xhYmVsPgogICAgPGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iYmxvb2RQcmVzc3VyZSIgbmFtZT0iYmxvb2RQcmVzc3VyZSIgLz4KCiAgICA8bGFiZWwgZm9yPSJoZWFydEFpbG1lbnRzIj5IZWFydCBBaWxtZW50czwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJoZWFydEFpbG1lbnRzIiBuYW1lPSJoZWFydEFpbG1lbnRzIiAvPgoKICAgIDxsYWJlbCBmb3I9Im90aGVyIj5PdGhlciBoZWFsdGggaXNzdWVzPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9Im90aGVyIiBuYW1lPSJvdGhlciIgLz4KCiAgICA8bGFiZWwgZm9yPSJwYW5WYWx1ZSI+UEFOIE51bWJlcjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBhblZhbHVlIiBuYW1lPSJwYW5WYWx1ZSIgcGxhY2Vob2xkZXI9IkFCQ0RFMTIzNEYiIHBhdHRlcm49IltBLVpdezV9WzAtOV17NH1bQS1aXXsxfSIgbWF4bGVuZ3RoPSIxMCIgdGl0bGU9IlBBTiBtdXN0IGJlIGluIGZvcm1hdDogQUJDREUxMjM0RiIgLz4KCiAgCgogICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgaWQ9ImZvcm1JZCIgbmFtZT0iZm9ybUlkIiB2YWx1ZT0iRjAxIj4KCiAgICA8aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iU3VibWl0Ij4KICA8L2Zvcm0+CjwvYm9keT4KCjwvaHRtbD4K
+      formHtml: PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCjxoZWFkPgogIDxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgPHRpdGxlPlBlcnNvbmFsIERldGFpbHM8L3RpdGxlPgo8L2hlYWQ+Cgo8Ym9keT4KICA8Zm9ybSBpZD0iaW5kaXZpZHVhbF9pbmZvcm1hdGlvbl9mb3JtIiBtZXRob2Q9IlBPU1QiIGFjdGlvbj0iPCU9IGFjdGlvblVybCAlPiI+CgogICAgPGxhYmVsIGZvcj0iZmlyc3ROYW1lIj5GaXJzdCBOYW1lIDwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9ImZpcnN0TmFtZSIgbmFtZT0iZmlyc3ROYW1lIiBwbGFjZWhvbGRlcj0iRW50ZXIgeW91ciBmaXJzdCBuYW1lIiBwYXR0ZXJuPSJbQS1aYS16XHNdezIsNTB9IiBtYXhsZW5ndGg9IjUwIiB0aXRsZT0iTmFtZSBtdXN0IGNvbnRhaW4gb25seSBsZXR0ZXJzIGFuZCBzcGFjZXMgKDItNTAgY2hhcmFjdGVycykiICAvPgoKICAgIDxsYWJlbCBmb3I9Imxhc3ROYW1lIj5MYXN0IE5hbWUgPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0ibGFzdE5hbWUiIG5hbWU9Imxhc3ROYW1lIiBwbGFjZWhvbGRlcj0iRW50ZXIgeW91ciBsYXN0IG5hbWUiIHBhdHRlcm49IltBLVphLXpcc117Miw1MH0iIG1heGxlbmd0aD0iNTAiIHRpdGxlPSJOYW1lIG11c3QgY29udGFpbiBvbmx5IGxldHRlcnMgYW5kIHNwYWNlcyAoMi01MCBjaGFyYWN0ZXJzKSIgIC8+CgogICAgPGxhYmVsIGZvcj0iZG9iIj5EYXRlIG9mIEJpcnRoIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJkYXRlIiBpZD0iZG9iIiBuYW1lPSJkb2IiIHJlcXVpcmVkIC8+CgogICAgPGxhYmVsIGZvcj0iZ2VuZGVyIj5HZW5kZXIgPC9sYWJlbD4KICAgIDxzZWxlY3QgbmFtZT0iZ2VuZGVyIiBpZD0iZ2VuZGVyIiA+CiAgICAgIDxvcHRpb24gdmFsdWU9IiI+LS0gU2VsZWN0IC0tPC9vcHRpb24+CiAgICAgIDxvcHRpb24gdmFsdWU9Im1hbGUiPk1hbGU8L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iZmVtYWxlIj5GZW1hbGU8L29wdGlvbj4KICAgIDwvc2VsZWN0PgoKICAgIDxsYWJlbCBmb3I9IlBFRCI+UEVEIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxzZWxlY3QgbmFtZT0iUEVEIiBpZD0iUEVEIiByZXF1aXJlZD4KICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4tLSBTZWxlY3QgLS08L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iWWVzIj5ZZXM8L29wdGlvbj4KICAgICAgPG9wdGlvbiB2YWx1ZT0iTm8iPk5vPC9vcHRpb24+CiAgICA8L3NlbGVjdD4KCiAgIAoKICAgIDxsYWJlbCBmb3I9InBob25lIj5QaG9uZSA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0idGVsIiBpZD0icGhvbmUiIG5hbWU9InBob25lIiBwbGFjZWhvbGRlcj0iOTg3NjU0MzIxMCIgcGF0dGVybj0iWzYtOV1bMC05XXs5fSIgbWF4bGVuZ3RoPSIxMCIgdGl0bGU9IlBob25lIG51bWJlciBtdXN0IGJlIDEwIGRpZ2l0cyBzdGFydGluZyB3aXRoIDYsIDcsIDgsIG9yIDkiIHJlcXVpcmVkIC8+CgogICAgPGxhYmVsIGZvcj0iZW1haWwiPkVtYWlsPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJlbWFpbCIgaWQ9ImVtYWlsIiBuYW1lPSJlbWFpbCIgcGxhY2Vob2xkZXI9ImV4YW1wbGVAZW1haWwuY29tIiAvPgoKICAgIDxsYWJlbCBmb3I9ImFtb3VudCI+Q292ZXJhZ2UgQW1vdW50IDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJudW1iZXIiIGlkPSJhbW91bnQiIG5hbWU9ImFtb3VudCIgcGxhY2Vob2xkZXI9IkVudGVyIGNvdmVyYWdlIGFtb3VudCIgbWluPSIxIiByZXF1aXJlZCAvPgoKICAgIAoKICAgPGxhYmVsIGZvcj0icGFuSW5kaWEiPgogIFBhbiBJbmRpYSBDb3ZlciA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPgo8L2xhYmVsPgo8aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJwYW5JbmRpYSIgbmFtZT0icGFuSW5kaWEiIHJlcXVpcmVkIC8+CgogICAgPGxhYmVsIGZvcj0iaGVpZ2h0Ij5IZWlnaHQgKGNtKSA8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9Im51bWJlciIgaWQ9ImhlaWdodCIgbmFtZT0iaGVpZ2h0IiBwbGFjZWhvbGRlcj0iRW50ZXIgaGVpZ2h0IGluIGNtIiBtaW49IjEiIG1heD0iMzAwIiAgLz4KCiAgICA8bGFiZWwgZm9yPSJ3ZWlnaHQiPldlaWdodCAoa2cpIDwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0ibnVtYmVyIiBpZD0id2VpZ2h0IiBuYW1lPSJ3ZWlnaHQiIHBsYWNlaG9sZGVyPSJFbnRlciB3ZWlnaHQgaW4ga2ciIG1pbj0iMSIgbWF4PSI1MDAiICAvPgoKICAgIDxsYWJlbCBmb3I9InBpbmNvZGUiPlBpbmNvZGU8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9InRleHQiIGlkPSJwaW5jb2RlIiBuYW1lPSJwaW5jb2RlIiBwbGFjZWhvbGRlcj0iMTIzNDU2IiBwYXR0ZXJuPSJbMS05XVswLTldezV9IiBtYXhsZW5ndGg9IjYiIHRpdGxlPSJQaW5jb2RlIG11c3QgYmUgNiBkaWdpdHMgYW5kIGNhbm5vdCBzdGFydCB3aXRoIDAiIC8+CgogIAoKICAgIDxsYWJlbD5QRUQgRGV0YWlsczwvbGFiZWw+CgogICAgPGxhYmVsIGZvcj0iZGlhYmV0ZXMiPkRpYWJldGVzPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9ImRpYWJldGVzIiBuYW1lPSJkaWFiZXRlcyIgLz4KCiAgICA8bGFiZWwgZm9yPSJibG9vZFByZXNzdXJlIj5CbG9vZCBQcmVzc3VyZSAvIEh5cGVydGVuc2lvbjwvbGFiZWw+CiAgICA8aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJibG9vZFByZXNzdXJlIiBuYW1lPSJibG9vZFByZXNzdXJlIiAvPgoKICAgIDxsYWJlbCBmb3I9ImhlYXJ0QWlsbWVudHMiPkhlYXJ0IEFpbG1lbnRzPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9ImhlYXJ0QWlsbWVudHMiIG5hbWU9ImhlYXJ0QWlsbWVudHMiIC8+CgogICAgPGxhYmVsIGZvcj0ib3RoZXIiPk90aGVyIGhlYWx0aCBpc3N1ZXM8L2xhYmVsPgogICAgPGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0ib3RoZXIiIG5hbWU9Im90aGVyIiAvPgoKICAgIDxsYWJlbCBmb3I9InBhblZhbHVlIj5QQU4gTnVtYmVyPC9sYWJlbD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0icGFuVmFsdWUiIG5hbWU9InBhblZhbHVlIiBwbGFjZWhvbGRlcj0iQUJDREUxMjM0RiIgcGF0dGVybj0iW0EtWl17NX1bMC05XXs0fVtBLVpdezF9IiBtYXhsZW5ndGg9IjEwIiB0aXRsZT0iUEFOIG11c3QgYmUgaW4gZm9ybWF0OiBBQkNERTEyMzRGIiAvPgoKICAKCiAgICA8aW5wdXQgdHlwZT0iaGlkZGVuIiBpZD0iZm9ybUlkIiBuYW1lPSJmb3JtSWQiIHZhbHVlPSJGMDEiPgoKICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiPgogIDwvZm9ybT4KPC9ib2R5PgoKPC9odG1sPgo=
     examples:
       - name: example for html_form
         payload:
           firstName: test
           lastName: nikita
-          dob: 2026-07-14
+          dob: 2026-08-05
           gender: male
           PED: Yes
           phone: "9877667788"
-          email: nikita.sharma@ondc.org
-          amount: "4545"
-          panIndia: yes
-          height: "33"
-          weight: "22"
+          email: nikita.sharma@test.com
+          amount: "88"
+          panIndia: on
+          height: ""
+          weight: ""
           pincode: "134242"
           panValue: ""
           formId: F01
@@ -583,7 +596,7 @@ steps:
       BPP to present matching insurance offerings based on the search
       parameters.
     mock:
-      generate: LyoqCiAqIHNlYXJjaDMg4oCUIEJBUCBzZWFyY2hlcyBhZ2FpbiB3aXRoIHRoZSBzZWxlY3RlZCBwcm92aWRlci9pdGVtIGFuZCB0aGUgc3VibWl0dGVkCiAqIGluZGl2aWR1YWwtaW5mb3JtYXRpb24gZm9ybS4gUHJvdmlkZXIvaXRlbSBpZHMgYW5kIHRoZSBmb3JtIHN1Ym1pc3Npb24gYXJlIHJlc29sdmVkCiAqIGR5bmFtaWNhbGx5IGZyb20gc2Vzc2lvbiBkYXRhIG9yIHVzZXIgaW5wdXRzOyB0aGUgZGVmYXVsdCBwYXlsb2FkIGhvbGRzIG9ubHkgdGhlCiAqIHN0YXRpYyBpbnRlbnQgc2tlbGV0b24uCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJwcF9pZCA9IHNlc3Npb25EYXRhLmJwcElkWzBdOwogIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQuYnBwX3VyaSA9c2Vzc2lvbkRhdGEuYnBwVXJpOwogIAogIGNvbnN0IHVzZXJJbnB1dHMgPSBzZXNzaW9uRGF0YT8udXNlcl9pbnB1dHMgfHwge307CiAgY29uc3Qgc3VibWlzc2lvbklkID0gIHNlc3Npb25EYXRhPy5pbmRpdmlkdWFsX2luZm9ybWF0aW9uX2Zvcm07CiAgY29uc3QgZm9ybVN0YXR1cyA9IHN1Ym1pc3Npb25JZCA/ICJTVUNDRVNTIgogICAgOiAiUEVORElORyI7CgogIGNvbnN0IHByb3ZpZGVyID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQucHJvdmlkZXIgOwoKICBjb25zdCBwcm92aWRlcklkID0gdXNlcklucHV0cz8ucHJvdmlkZXIuaWQ7CiAgaWYgKHByb3ZpZGVySWQpIHsKICAgIHByb3ZpZGVyLmlkID0gcHJvdmlkZXJJZDsKICB9CiAgY29uc3QgaXRlbUlkID0gdXNlcklucHV0cy5wcm92aWRlci5pdGVtc1swXS5pZCAKICBpZiAoaXRlbUlkICkgewogICAgcHJvdmlkZXIuaXRlbXNbMF0uaWQgPSBpdGVtSWQ7CiAgfQogIGNvbnN0IGZvcm1JdGVtID0gcHJvdmlkZXI/Lml0ZW1zPy5bMF07CiAgaWYgKHN1Ym1pc3Npb25JZCkgewogICAgZm9ybUl0ZW0ueGlucHV0LmZvcm1fcmVzcG9uc2Uuc3VibWlzc2lvbl9pZCA9IHN1Ym1pc3Npb25JZDsKICAgIGZvcm1JdGVtLnhpbnB1dC5mb3JtX3Jlc3BvbnNlLnN0YXR1cyA9IGZvcm1TdGF0dXM7CiAgICBpZiAoZm9ybUl0ZW0ueGlucHV0LmZvcm0pIHsKICAgICAgZm9ybUl0ZW0ueGlucHV0LmZvcm0uaWQgPXNlc3Npb25EYXRhLmZvcm1faWRbMF0gfHwgIkYwMSI7CiAgICB9CiAgfQogZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQucGF5bWVudCA9IHNlc3Npb25EYXRhLnBheW1lbnRbMF07CiBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmludGVudC5jYXRlZ29yeSA9IHNlc3Npb25EYXRhLmNhdGVnb3J5WzBdOwogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
+      generate: LyoqCiAqIHNlYXJjaDMg4oCUIEJBUCBzZWFyY2hlcyBhZ2FpbiB3aXRoIHRoZSBzZWxlY3RlZCBwcm92aWRlci9pdGVtIGFuZCB0aGUgc3VibWl0dGVkCiAqIGluZGl2aWR1YWwtaW5mb3JtYXRpb24gZm9ybS4gUHJvdmlkZXIvaXRlbSBpZHMgYW5kIHRoZSBmb3JtIHN1Ym1pc3Npb24gYXJlIHJlc29sdmVkCiAqIGR5bmFtaWNhbGx5IGZyb20gc2Vzc2lvbiBkYXRhIG9yIHVzZXIgaW5wdXRzOyB0aGUgZGVmYXVsdCBwYXlsb2FkIGhvbGRzIG9ubHkgdGhlCiAqIHN0YXRpYyBpbnRlbnQgc2tlbGV0b24uCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJwcF9pZCA9IHNlc3Npb25EYXRhLmJwcElkWzBdOwogIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQuYnBwX3VyaSA9c2Vzc2lvbkRhdGEuYnBwVXJpOwogIAogIGNvbnN0IHVzZXJJbnB1dHMgPSBzZXNzaW9uRGF0YT8udXNlcl9pbnB1dHMgfHwge307CiAgY29uc3Qgc3VibWlzc2lvbklkID0gIHNlc3Npb25EYXRhPy5pbmRpdmlkdWFsX2luZm9ybWF0aW9uX2Zvcm07CiAgY29uc3QgZm9ybVN0YXR1cyA9IHN1Ym1pc3Npb25JZCA/ICJTVUNDRVNTIgogICAgOiAiUEVORElORyI7CgogIGNvbnN0IHByb3ZpZGVyID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQucHJvdmlkZXIgOwoKICBjb25zdCBwcm92aWRlcklkID0gdXNlcklucHV0cz8ucHJvdmlkZXIuaWQ7CiAgaWYgKHByb3ZpZGVySWQpIHsKICAgIHByb3ZpZGVyLmlkID0gcHJvdmlkZXJJZDsKICB9CiAgY29uc3QgaXRlbUlkID0gdXNlcklucHV0cy5wcm92aWRlci5pdGVtc1swXS5pZCAKICBpZiAoaXRlbUlkICkgewogICAgcHJvdmlkZXIuaXRlbXNbMF0uaWQgPSBpdGVtSWQ7CiAgfQogIGNvbnN0IGZvcm1JdGVtID0gcHJvdmlkZXI/Lml0ZW1zPy5bMF07CiAgaWYgKHN1Ym1pc3Npb25JZCkgewogICAgZm9ybUl0ZW0ueGlucHV0LmZvcm1fcmVzcG9uc2Uuc3VibWlzc2lvbl9pZCA9IHN1Ym1pc3Npb25JZDsKICAgIGZvcm1JdGVtLnhpbnB1dC5mb3JtX3Jlc3BvbnNlLnN0YXR1cyA9IGZvcm1TdGF0dXM7CiAgICBpZiAoZm9ybUl0ZW0ueGlucHV0LmZvcm0pIHsKICAgICAgZm9ybUl0ZW0ueGlucHV0LmZvcm0uaWQgPXNlc3Npb25EYXRhLmZvcm1faWRbMF0gfHwgIkYwMSI7CiAgICB9CiAgfQogZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQucGF5bWVudCA9IHNlc3Npb25EYXRhLnBheW1lbnRbMF07CiBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmludGVudC5jYXRlZ29yeSA9IHNlc3Npb25EYXRhLmNhdGVnb3J5WzBdOwogZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQudGFncyA9IHNlc3Npb25EYXRhLnNlYXJjaF90YWdzOwogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgc2VhcmNoMyByZXF1ZXN0OiBhIHByb3ZpZGVyIGlkLCBhIHNlbGVjdGVkIGl0ZW0gaWQgYW5kIGEgY29tcGxldGVkCiAqIGluZGl2aWR1YWwtaW5mb3JtYXRpb24gZm9ybSBzdWJtaXNzaW9uIG11c3QgYmUgcHJlc2VudC4KICovCgpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIGNvbnN0IGludGVudCA9IHRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/LmludGVudDsKICBpZiAoIWludGVudD8ucHJvdmlkZXI/LmlkKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDMwMDAxLCBkZXNjcmlwdGlvbjogInNlYXJjaDMgbXVzdCBjYXJyeSBhIHByb3ZpZGVyLmlkIHJlc29sdmVkIGZyb20gb25fc2VhcmNoIiB9OwogIH0KICBpZiAoIWludGVudC5wcm92aWRlcj8uaXRlbXM/LlswXT8uaWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogMzAwMDEsIGRlc2NyaXB0aW9uOiAic2VhcmNoMyBtdXN0IGNhcnJ5IGEgc2VsZWN0ZWQgcHJvdmlkZXIgaXRlbSBpZCIgfTsKICB9CiAgaWYgKCFpbnRlbnQucHJvdmlkZXIuaXRlbXNbMF0/LnhpbnB1dD8uZm9ybV9yZXNwb25zZT8uc3VibWlzc2lvbl9pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiAzMDAwMSwgZGVzY3JpcHRpb246ICJzZWFyY2gzIG11c3QgaW5jbHVkZSB0aGUgaW5kaXZpZHVhbC1pbmZvcm1hdGlvbiBmb3JtIHN1Ym1pc3Npb25faWQiIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgIGlmICghc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXSkgewogICAgICAgICAgICByZXR1cm4geyAKICAgICAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwgCiAgICAgICAgICAgICAgICBjb2RlOiAyMDMsIGRlc2NyaXB0aW9uOiAiTm8gdHJhbnNhY3Rpb25faWQgYXZhaWxhYmxlIGluIHNlc3Npb24gZGF0YSIgCiAgICAgICAgICAgIH07CiAgICAgICAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -626,8 +639,8 @@ steps:
         bppUri: $.context.bpp_uri
         city_code: $.context.location.city.code
         collected_by: $.message.intent.payment.collected_by
-        tags: $.message.intent.tags
         selected_item_id: $.message.intent.provider.items[0].id
+        tags: $.message.intent.tags
       inputs:
         id: fis12_search_pl
         jsonSchema:
@@ -671,9 +684,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: search
-            timestamp: 2026-07-10T20:44:25.979Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: ba2d326b-b58e-478c-aafb-2ad803992ea8
+            timestamp: 2026-08-12T11:27:04.393Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: a25f9722-3883-4891-9187-cb865cd25c6f
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -693,36 +706,27 @@ steps:
                   - id: item5678
                     xinput:
                       form:
-                        id: fc228c2e-44b7-43bc-9294-795d402aa57b
+                        id: 1653fbbd-c1fe-4b23-8eb5-dbb2c218a30c
                       form_response:
                         status: SUCCESS
-                        submission_id: 1b25fabe-d059-45c4-a39b-4a183d726dc3
+                        submission_id: 2eb056b4-7aeb-4605-a72a-7983b1d0030d
               payment:
                 collected_by: BPP
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
               category:
                 descriptor:
                   code: HEALTH_INSURANCE
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BAP initiates a search request to discover available health
           insurance providers and plans for the specified geographic location
@@ -738,7 +742,7 @@ steps:
       providers, plans, and fulfillment options in response to the BAP's search
       for insurance products in a specified city.
     mock:
-      generate: LyoqCiAqIG9uX3NlYXJjaDMg4oCUIEJQUCByZXR1cm5zIHRoZSByZWZpbmVkIGNhdGFsb2cgKGl0ZW0gdmFyaWFudHMgKyBwcmljaW5nKS4KICogQ2FycmllcyBmb3J3YXJkIHRoZSBzZWxlY3RlZCBwcm92aWRlciBpZCBhbmQgcmVzb2x2ZXMgcGFyZW50L2NoaWxkIGl0ZW0gaWRzOwogKiBvcHRpb25hbGx5IG5hcnJvd3MgcmV0dXJuZWQgaXRlbXMgdG8gdGhlIHVzZXItc2VsZWN0ZWQgaXRlbS4gY29sbGVjdGVkX2J5IGFuZAogKiBtZXNzYWdlX2lkIGNvbWUgZnJvbSB0aGUgZGVmYXVsdCBwYXlsb2FkIC8gcnVudGltZSBjb250ZXh0LgogKi8KYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcHJvdmlkZXIgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5jYXRhbG9nPy5wcm92aWRlcnNbMF07CgogIGlmIChwcm92aWRlcikgewogICAgcHJvdmlkZXIuaWQgPSBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXSAKICAgICAgfHwgc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfcHJvdmlkZXI/LmlkOwogIH0KCiAgY29uc3QgcGFyZW50SXRlbUlkID0gc2Vzc2lvbkRhdGEuaXRlbVswXT8uaWQKICAgIHx8IHNlc3Npb25EYXRhLml0ZW1zWzBdPy5pZCA7CgogIGlmIChwcm92aWRlcj8uaXRlbXMpIHsKICAgIHByb3ZpZGVyLml0ZW1zLmZvckVhY2goKGl0ZW0pID0+IHsKICAgICAgaWYgKCFpdGVtLnBhcmVudF9pdGVtX2lkKSB7CiAgICAgICAgaWYgKHBhcmVudEl0ZW1JZCkgewogICAgICAgICAgaXRlbS5pZCA9IHBhcmVudEl0ZW1JZDsKICAgICAgICB9CiAgICAgIH0gZWxzZSB7CiAgICAgICAgaXRlbS5pZCA9IHV1aWR2NCgpOwogICAgICAgIGlmIChwYXJlbnRJdGVtSWQpIHsKICAgICAgICAgIGl0ZW0ucGFyZW50X2l0ZW1faWQgPSBwYXJlbnRJdGVtSWQ7CiAgICAgICAgfQogICAgICB9CiAgICB9KTsKCiAgCiAgICBjb25zdCBzZWxlY3RlZEl0ZW1JZCA9IHNlc3Npb25EYXRhLnNlbGVjdGVkX2l0ZW1faWQ7CiAgICBpZiAoc2VsZWN0ZWRJdGVtSWQpIHsKICAgICAgY29uc3QgZmlsdGVyZWQgPSBwcm92aWRlci5pdGVtcy5maWx0ZXIoCiAgICAgICAgKGl0KSA9PiBpdC5pZCA9PT0gc2VsZWN0ZWRJdGVtSWQgfHwgaXQucGFyZW50X2l0ZW1faWQgPT09IHNlbGVjdGVkSXRlbUlkCiAgICAgICk7CiAgICAgIGlmIChmaWx0ZXJlZC5sZW5ndGggPiAwKSB7CiAgICAgICAgcHJvdmlkZXIuaXRlbXMgPSBmaWx0ZXJlZDsKICAgICAgfQogICAgfQogIH0KCiAgaWYgKHByb3ZpZGVyPy5mdWxmaWxsbWVudHMpIHsKICAgIHByb3ZpZGVyLmZ1bGZpbGxtZW50cy5mb3JFYWNoKChmKSA9PiB7CiAgICAgIGYuaWQgPSB1dWlkdjQoKTsKICAgIH0pOwogIH0KCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: LyoqCiAqIG9uX3NlYXJjaDMg4oCUIEJQUCByZXR1cm5zIHRoZSByZWZpbmVkIGNhdGFsb2cgKGl0ZW0gdmFyaWFudHMgKyBwcmljaW5nKS4KICogQ2FycmllcyBmb3J3YXJkIHRoZSBzZWxlY3RlZCBwcm92aWRlciBpZCBhbmQgcmVzb2x2ZXMgcGFyZW50L2NoaWxkIGl0ZW0gaWRzOwogKiBvcHRpb25hbGx5IG5hcnJvd3MgcmV0dXJuZWQgaXRlbXMgdG8gdGhlIHVzZXItc2VsZWN0ZWQgaXRlbS4gY29sbGVjdGVkX2J5IGFuZAogKiBtZXNzYWdlX2lkIGNvbWUgZnJvbSB0aGUgZGVmYXVsdCBwYXlsb2FkIC8gcnVudGltZSBjb250ZXh0LgogKi8KYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcHJvdmlkZXIgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5jYXRhbG9nPy5wcm92aWRlcnNbMF07CgogIGlmIChwcm92aWRlcikgewogICAgcHJvdmlkZXIuaWQgPSBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXSAKICAgICAgfHwgc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfcHJvdmlkZXI/LmlkOwogIH0KCiAgY29uc3QgcGFyZW50SXRlbUlkID0gc2Vzc2lvbkRhdGEuaXRlbVswXT8uaWQKICAgIHx8IHNlc3Npb25EYXRhLml0ZW1zWzBdPy5pZCA7CgogIGlmIChwcm92aWRlcj8uaXRlbXMpIHsKICAgIHByb3ZpZGVyLml0ZW1zLmZvckVhY2goKGl0ZW0pID0+IHsKICAgICAgaWYgKCFpdGVtLnBhcmVudF9pdGVtX2lkKSB7CiAgICAgICAgaWYgKHBhcmVudEl0ZW1JZCkgewogICAgICAgICAgaXRlbS5pZCA9IHBhcmVudEl0ZW1JZDsKICAgICAgICB9CiAgICAgIH0gZWxzZSB7CiAgICAgICAgaXRlbS5pZCA9IHV1aWR2NCgpOwogICAgICAgIGlmIChwYXJlbnRJdGVtSWQpIHsKICAgICAgICAgIGl0ZW0ucGFyZW50X2l0ZW1faWQgPSBwYXJlbnRJdGVtSWQ7CiAgICAgICAgfQogICAgICB9CiAgICB9KTsKCiAgCiAgICBjb25zdCBzZWxlY3RlZEl0ZW1JZCA9IHNlc3Npb25EYXRhLnNlbGVjdGVkX2l0ZW1faWQ7CiAgICBpZiAoc2VsZWN0ZWRJdGVtSWQpIHsKICAgICAgY29uc3QgZmlsdGVyZWQgPSBwcm92aWRlci5pdGVtcy5maWx0ZXIoCiAgICAgICAgKGl0KSA9PiBpdC5pZCA9PT0gc2VsZWN0ZWRJdGVtSWQgfHwgaXQucGFyZW50X2l0ZW1faWQgPT09IHNlbGVjdGVkSXRlbUlkCiAgICAgICk7CiAgICAgIGlmIChmaWx0ZXJlZC5sZW5ndGggPiAwKSB7CiAgICAgICAgcHJvdmlkZXIuaXRlbXMgPSBmaWx0ZXJlZDsKICAgICAgfQogICAgfQogIH0KCiAgaWYgKHByb3ZpZGVyPy5mdWxmaWxsbWVudHMpIHsKICAgIHByb3ZpZGVyLmZ1bGZpbGxtZW50cy5mb3JFYWNoKChmKSA9PiB7CiAgICAgIGYuaWQgPSB1dWlkdjQoKTsKICAgIH0pOwogIH0KICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5jYXRhbG9nLnRhZ3MgPSBzZXNzaW9uRGF0YS5vbl9zZWFyY2hfdGFnczsKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIGNvbnN0IHByb3ZpZGVyID0KICAgICAgICB0YXJnZXRQYXlsb2FkPy5tZXNzYWdlPy5jYXRhbG9nPy5wcm92aWRlcnM/LlswXTsKCiAgICBpZiAoIXByb3ZpZGVyKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiAzMDAxLAogICAgICAgICAgICBkZXNjcmlwdGlvbjogIlByb3ZpZGVyIG1pc3NpbmcgaW4gY2F0YWxvZyIKICAgICAgICB9OwogICAgfQoKICAgIGlmICghcHJvdmlkZXIuaWQpIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDMwMDEsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOiAiUHJvdmlkZXIgSUQgbWlzc2luZyIKICAgICAgICB9OwogICAgfQoKICAgIGlmICghcHJvdmlkZXIuaXRlbXMgfHwgcHJvdmlkZXIuaXRlbXMubGVuZ3RoID09PSAwKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiAzMDAxLAogICAgICAgICAgICBkZXNjcmlwdGlvbjogIk5vIGl0ZW1zIGZvdW5kIGluIGNhdGFsb2ciCiAgICAgICAgfTsKICAgIH0KCiAgICBjb25zdCBpbnZhbGlkSXRlbSA9IHByb3ZpZGVyLml0ZW1zLmZpbmQoaXRlbSA9PiAhaXRlbS5pZCk7CgogICAgaWYgKGludmFsaWRJdGVtKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiAzMDAxLAogICAgICAgICAgICBkZXNjcmlwdGlvbjogIk9uZSBvciBtb3JlIGl0ZW1zIGhhdmUgbm8gSUQiCiAgICAgICAgfTsKICAgIH0KCiAgICBpZiAocHJvdmlkZXIuZnVsZmlsbG1lbnRzKSB7CiAgICAgICAgY29uc3QgaW52YWxpZEZ1bGZpbGxtZW50ID0gcHJvdmlkZXIuZnVsZmlsbG1lbnRzLmZpbmQoCiAgICAgICAgICAgIGYgPT4gIWYuaWQKICAgICAgICApOwoKICAgICAgICBpZiAoaW52YWxpZEZ1bGZpbGxtZW50KSB7CiAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgICAgICBjb2RlOiAzMDAxLAogICAgICAgICAgICAgICAgZGVzY3JpcHRpb246ICJPbmUgb3IgbW9yZSBmdWxmaWxsbWVudHMgaGF2ZSBubyBJRCIKICAgICAgICAgICAgfTsKICAgICAgICB9CiAgICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgIGlmICghc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXSkgewogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgICAgICAgY29kZTogMjAzLAogICAgICAgICAgICBkZXNjcmlwdGlvbjogIk5vIHRyYW5zYWN0aW9uX2lkIGF2YWlsYWJsZSBpbiBzZXNzaW9uIGRhdGEiCiAgICAgICAgfTsKICAgIH0KCiAgICBjb25zdCBwcm92aWRlcklkID1zZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXQogICAgICAgICAgIHx8CiAgICAgICAgc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfcHJvdmlkZXI/LmlkOwoKICAgIGlmICghcHJvdmlkZXJJZCkgewogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgICAgICAgY29kZTogMjAzLAogICAgICAgICAgICBkZXNjcmlwdGlvbjogIk5vIHByb3ZpZGVyIHNlbGVjdGVkIgogICAgICAgIH07CiAgICB9CgogICAgY29uc3QgaXRlbUlkID0gc2Vzc2lvbkRhdGEuaXRlbVswXT8uaWQ7CgogICAgaWYgKCFpdGVtSWQpIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDIwMywKICAgICAgICAgICAgZGVzY3JpcHRpb246ICJObyBpdGVtIHNlbGVjdGVkIgogICAgICAgIH07CiAgICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
@@ -832,6 +836,9 @@ steps:
                           - descriptor:
                               code: ROOM_CATEGORY
                             value: Deluxe
+                          - descriptor:
+                              code: UIN
+                            value: 512N314V02
                     time:
                       duration: P1Y
                       label: TENURE
@@ -960,6 +967,9 @@ steps:
                               name: Offer validity
                               short_desc: Describes the offer validity
                             value: P15D
+                          - descriptor:
+                              code: UIN
+                            value: 512N314V02
                     time:
                       duration: P1Y
                       label: TENURE
@@ -1111,6 +1121,9 @@ steps:
                           - descriptor:
                               code: ROOM_CATEGORY
                             value: Deluxe
+                          - descriptor:
+                              code: UIN
+                            value: 512N314V02
                     time:
                       duration: P1Y
                       label: TENURE
@@ -1204,6 +1217,7 @@ steps:
         fullfillment_ids: $.message.catalog.providers[0].fulfillments[*].id
         selected_provider: $.message.catalog.providers[0]
         selected_add_ons: $.message.catalog.providers[0].items[0].add_ons[*]
+        tags: $.message.catalog.tags
       inputs: {}
     examples:
       - name: example for on_search
@@ -1211,9 +1225,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_search
-            timestamp: 2026-07-10T20:44:25.995Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: ba2d326b-b58e-478c-aafb-2ad803992ea8
+            timestamp: 2026-08-12T11:27:04.407Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: a25f9722-3883-4891-9187-cb865cd25c6f
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1251,9 +1265,9 @@ steps:
                     images:
                       - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                         size_type: xs
-                  id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                  id: a9a32e0d-d484-499f-817d-29b8a75decbe
                   items:
-                    - id: ba438594-1c70-40c3-adc4-036dc0bb921b
+                    - id: 4ced5e18-9d3b-4e35-923d-d584d814f12a
                       category_ids:
                         - C1
                         - C3
@@ -1298,6 +1312,9 @@ steps:
                             - descriptor:
                                 code: ROOM_CATEGORY
                               value: Deluxe
+                            - descriptor:
+                                code: UIN
+                              value: 512N314V02
                       time:
                         duration: P1Y
                         label: TENURE
@@ -1352,8 +1369,8 @@ steps:
                           price:
                             value: "100"
                             currency: INR
-                    - id: ffcbdad4-a724-4865-9b51-313bb6d04c48
-                      parent_item_id: ba438594-1c70-40c3-adc4-036dc0bb921b
+                    - id: 742d7a1d-30c6-44bd-ac2f-9160a33aeddc
+                      parent_item_id: 4ced5e18-9d3b-4e35-923d-d584d814f12a
                       category_ids:
                         - C1
                         - C3
@@ -1426,6 +1443,9 @@ steps:
                                 name: Offer validity
                                 short_desc: Describes the offer validity
                               value: P15D
+                            - descriptor:
+                                code: UIN
+                              value: 512N314V02
                       time:
                         duration: P1Y
                         label: TENURE
@@ -1503,8 +1523,8 @@ steps:
                           price:
                             value: "100"
                             currency: INR
-                    - id: acc598f9-e70f-47d0-8ca9-2d1a952efce7
-                      parent_item_id: ba438594-1c70-40c3-adc4-036dc0bb921b
+                    - id: 03451009-e594-4307-ac37-98e9ace6fcc4
+                      parent_item_id: 4ced5e18-9d3b-4e35-923d-d584d814f12a
                       category_ids:
                         - C1
                         - C3
@@ -1577,6 +1597,9 @@ steps:
                             - descriptor:
                                 code: ROOM_CATEGORY
                               value: Deluxe
+                            - descriptor:
+                                code: UIN
+                              value: 512N314V02
                       time:
                         duration: P1Y
                         label: TENURE
@@ -1654,6 +1677,18 @@ steps:
                             - descriptor:
                                 code: OFFLINE_CONTRACT
                               value: "true"
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BPP returns the catalog of available health insurance
           providers, plans, and fulfillment options in response to the BAP's
@@ -1753,9 +1788,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: select
-            timestamp: 2026-07-10T20:44:27.674Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: f3ef99b4-84c9-4651-8860-d6675f0e202e
+            timestamp: 2026-08-12T11:27:06.951Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 28023be0-b99e-4fd4-af44-ee4742589631
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1824,7 +1859,7 @@ steps:
                                   values are separated by a pipe (|) symbol
                               value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
         type: request
         description: please add relevant description
   - api: on_select
@@ -1910,6 +1945,9 @@ steps:
                       - descriptor:
                           code: PROPOSAL_ID
                         value: ""
+                      - descriptor:
+                          code: UIN
+                        value: 512N314V02
                 time:
                   duration: P1Y
                   label: TENURE
@@ -2033,9 +2071,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_select
-            timestamp: 2026-07-10T20:44:27.691Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: f3ef99b4-84c9-4651-8860-d6675f0e202e
+            timestamp: 2026-08-12T11:27:06.964Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 28023be0-b99e-4fd4-af44-ee4742589631
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2102,6 +2140,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -2117,12 +2158,63 @@ steps:
                         - PED
                         - EKYC
                     form:
-                      id: 4845a9db-c7db-46e6-aef7-c8e38b78a5e1
+                      id: 3d587c76-268b-469a-a5fb-434ed1842e11
                       mime_type: text/html
-                      url: undefined/forms/ONDC:FIS13/ped_details_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/ped_details_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined
                       resubmit: true
                       multiple_sumbissions: false
                     required: true
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -2132,9 +2224,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -2287,9 +2379,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: select
-            timestamp: 2026-07-10T20:44:31.274Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 08f3d517-b048-4ad8-967b-963b3bd79c62
+            timestamp: 2026-08-12T11:27:09.856Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: da384434-cd05-48ad-aa6c-94492239e236
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2308,12 +2400,63 @@ steps:
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 4845a9db-c7db-46e6-aef7-c8e38b78a5e1
+                      id: 3d587c76-268b-469a-a5fb-434ed1842e11
                     form_response:
                       status: SUCCESS
-                      submission_id: 9d111c64-ddc0-49a6-acf2-e27faa5d6dbf
+                      submission_id: 74840925-93c8-4876-9fe5-3b2fd5494b74
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
         type: request
         description: The BAP selects a specific health insurance provider and associated
           coverage items from the available options. This selection captures the
@@ -2382,9 +2525,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_select
-            timestamp: 2026-07-10T20:44:31.290Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 08f3d517-b048-4ad8-967b-963b3bd79c62
+            timestamp: 2026-08-12T11:27:09.870Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: da384434-cd05-48ad-aa6c-94492239e236
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2451,6 +2594,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -2466,12 +2612,63 @@ steps:
                         - PED
                         - EKYC
                     form:
-                      id: 32a729ba-9d49-4c4d-bae2-973f2ef1bdef
+                      id: 031328e9-57ee-41b9-9826-9d8f57381da7
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/Ekyc_details_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/Ekyc_details_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: true
                       multiple_sumbissions: false
                     required: true
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -2481,9 +2678,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -2607,9 +2804,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-10T20:44:33.558Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 1229ad2b-5464-4ec3-b19e-5e45a563b02e
+            timestamp: 2026-08-12T11:27:12.064Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 8e979ae8-d8dd-43f0-8165-b239c14696d2
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2676,15 +2873,69 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
                   xinput:
                     form:
-                      id: 32a729ba-9d49-4c4d-bae2-973f2ef1bdef
+                      id: 031328e9-57ee-41b9-9826-9d8f57381da7
                     form_response:
                       status: SUCCESS
-                      submission_id: 73afd0e5-e4d5-408a-84ae-dd1b718291e3
+                      submission_id: 729b241f-bf83-4e68-84b6-0a12e01124fd
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -2694,9 +2945,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -2751,7 +3002,7 @@ steps:
       health insurance products, add-ons, fulfillment options, and applicant
       information gathered during the pre-order phase.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCgogIGNvbnN0IHN1Ym1pc3Npb25faWQgPSBzZXNzaW9uRGF0YT8uRWt5Y19kZXRhaWxzX2Zvcm0KICBjb25zdCBmb3JtX3N0YXR1cyA9IHN1Ym1pc3Npb25faWQgPyAiU1VDQ0VTUyIKICAgIDogIlBFTkRJTkciOwoKICBpZiAoc2Vzc2lvbkRhdGEub3JkZXIpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5pdGVtczsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5wcm92aWRlcjsKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmNhdGVnb3J5X2lkcwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0uZGVzY3JpcHRvcgogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ucHJpY2UKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLnRhZ3MKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLnRpbWUKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmRlc2NyaXB0b3IKCgogIH0KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzPy5bMF0pIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0udHlwZSA9ICJQUkUtRlVMRklMTE1FTlQiOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5jb2xsZWN0ZWRfYnkgPSBzZXNzaW9uRGF0YS5jb2xsZWN0ZWRfYnlbMF07CiAgfQoKCgoKCgoKICAvLyBVbndyYXAgdG90YWxfcHJpY2UgZnJvbSBKU09OUGF0aCBhcnJheSB3cmFwcGVyOiBbIjkwMCJdIOKGkiAiOTAwIgogIGNvbnN0IHJhd1RvdGFsUHJpY2UgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRvdGFsX3ByaWNlKSA/IHNlc3Npb25EYXRhLnRvdGFsX3ByaWNlWzBdIDogc2Vzc2lvbkRhdGEudG90YWxfcHJpY2U7CiAgY29uc3QgdG90YWxQcmljZSA9IHBhcnNlRmxvYXQocmF3VG90YWxQcmljZSkgfHwgMDsKCgoKICAvLyBIYW5kbGUgb2ZmbGluZV9jb250cmFjdDogd2hlbiB0cnVlLCBzZXQgQkZGIHRvIDAgYW5kIHJlbW92ZSBTRVRUTEVNRU5UX0FNT1VOVC9TRVRUTEVNRU5UX0JBU0lTCiAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2U/Lm9yZGVyPy5wYXltZW50cz8uWzBdPy50YWdzKSB7CiAgICBjb25zdCBwYXltZW50VGFncyA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0udGFnczsKICAgIGNvbnN0IHNldHRsZW1lbnRUZXJtc1RhZyA9IHBheW1lbnRUYWdzLmZpbmQoKHQpID0+IHQuZGVzY3JpcHRvcj8uY29kZSA9PT0gJ1NFVFRMRU1FTlRfVEVSTVMnKTsKICAgIGNvbnN0IG9mZmxpbmVDb250cmFjdCA9IHNldHRsZW1lbnRUZXJtc1RhZz8ubGlzdD8uZmluZCgoaXRlbSkgPT4gaXRlbS5kZXNjcmlwdG9yPy5jb2RlID09PSAnT0ZGTElORV9DT05UUkFDVCcpOwogICAgaWYgKG9mZmxpbmVDb250cmFjdD8udmFsdWUgPT09ICd0cnVlJykgewogICAgICBjb25zdCBiZmZUYWcgPSBwYXltZW50VGFncy5maW5kKCh0KSA9PiB0LmRlc2NyaXB0b3I/LmNvZGUgPT09ICdCVVlFUl9GSU5ERVJfRkVFUycpOwogICAgICBpZiAoYmZmVGFnPy5saXN0KSB7CiAgICAgICAgYmZmVGFnLmxpc3QuZm9yRWFjaCgoaXRlbSkgPT4gewogICAgICAgICAgaWYgKGl0ZW0uZGVzY3JpcHRvcj8uY29kZSA9PT0gJ0JVWUVSX0ZJTkRFUl9GRUVTX1BFUkNFTlRBR0UnKSBpdGVtLnZhbHVlID0gJzAnOwogICAgICAgICAgaWYgKGl0ZW0uZGVzY3JpcHRvcj8uY29kZSA9PT0gJ0JVWUVSX0ZJTkRFUl9GRUVTX0FNT1VOVCcpIGl0ZW0udmFsdWUgPSAnMCc7CiAgICAgICAgfSk7CiAgICAgIH0KICAgICAgc2Vzc2lvbkRhdGEuc2V0dGxlbWVudF9hbW91bnQgPSAnMCc7CiAgICAgIGlmIChzZXR0bGVtZW50VGVybXNUYWc/Lmxpc3QpIHsKICAgICAgICBzZXR0bGVtZW50VGVybXNUYWcubGlzdCA9IHNldHRsZW1lbnRUZXJtc1RhZy5saXN0LmZpbHRlcigKICAgICAgICAgIChpdGVtKSA9PiBpdGVtLmRlc2NyaXB0b3I/LmNvZGUgIT09ICdTRVRUTEVNRU5UX0FNT1VOVCcgJiYgaXRlbS5kZXNjcmlwdG9yPy5jb2RlICE9PSAnU0VUVExFTUVOVF9CQVNJUycKICAgICAgICApOwogICAgICB9CiAgICB9CiAgfQogIC8vIFN5bmMgcGF5bWVudCBhbW91bnQgd2l0aCB0b3RhbCBwcmljZSBmcm9tIHNlc3Npb24KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnBhcmFtcy5hbW91bnQgPSBTdHJpbmcodG90YWxQcmljZSk7CiAgfQoKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCgogIGNvbnN0IHN1Ym1pc3Npb25faWQgPSBzZXNzaW9uRGF0YT8uRWt5Y19kZXRhaWxzX2Zvcm0KICBjb25zdCBmb3JtX3N0YXR1cyA9IHN1Ym1pc3Npb25faWQgPyAiU1VDQ0VTUyIKICAgIDogIlBFTkRJTkciOwoKICBpZiAoc2Vzc2lvbkRhdGEub3JkZXIpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5pdGVtczsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5wcm92aWRlcjsKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmNhdGVnb3J5X2lkcwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0uZGVzY3JpcHRvcgogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ucHJpY2UKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLnRhZ3MKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLnRpbWUKICAgIGRlbGV0ZSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyLmRlc2NyaXB0b3IKCgogIH0KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzPy5bMF0pIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0udHlwZSA9ICJQUkUtRlVMRklMTE1FTlQiOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5jb2xsZWN0ZWRfYnkgPSBzZXNzaW9uRGF0YS5jb2xsZWN0ZWRfYnlbMF07CiAgfQoKCgoKCgoKICAvLyBVbndyYXAgdG90YWxfcHJpY2UgZnJvbSBKU09OUGF0aCBhcnJheSB3cmFwcGVyOiBbIjkwMCJdIOKGkiAiOTAwIgogIGNvbnN0IHJhd1RvdGFsUHJpY2UgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRvdGFsX3ByaWNlKSA/IHNlc3Npb25EYXRhLnRvdGFsX3ByaWNlWzBdIDogc2Vzc2lvbkRhdGEudG90YWxfcHJpY2U7CiAgY29uc3QgdG90YWxQcmljZSA9IHBhcnNlRmxvYXQocmF3VG90YWxQcmljZSkgfHwgMDsKCgoKIAogIC8vIFN5bmMgcGF5bWVudCBhbW91bnQgd2l0aCB0b3RhbCBwcmljZSBmcm9tIHNlc3Npb24KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnBhcmFtcy5hbW91bnQgPSBTdHJpbmcodG90YWxQcmljZSk7CiAgfQppZihzZXNzaW9uRGF0YT8uc2VhcmNoX3RhZ3MpewogICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MgPSBzZXNzaW9uRGF0YS5zZWFyY2hfdGFnczsKfQoKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CgogICBpZiAoIXNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQpIHsKICAgICAgICAgICAgcmV0dXJuIHsgCiAgICAgICAgICAgICAgICB2YWxpZDogZmFsc2UsIAogICAgICAgICAgICAgICBjb2RlOjIwMywKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiAiTm8gdHJhbnNhY3Rpb25faWQgYXZhaWxhYmxlIGluIHNlc3Npb24gZGF0YSIgCiAgICAgICAgICAgIH07CiAgICAgICAgfQogICAgICAgIAogICAgICAgIGlmICghc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfaXRlbXMgfHwgIUFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfaXRlbXMpIHx8IHNlc3Npb25EYXRhLnNlbGVjdGVkX2l0ZW1zLmxlbmd0aCA9PT0gMCkgewogICAgICAgICAgICByZXR1cm4geyAKICAgICAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwgCiAgICAgICAgICAgICAgICBjb2RlOjIwMywKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiAiTm8gc2VsZWN0ZWRfaXRlbXMgYXZhaWxhYmxlIGluIHNlc3Npb24gZGF0YSIgCiAgICAgICAgICAgIH07CiAgICAgICAgfQogICAgICAgIAogICAgICAgIAogICAgICAgIGlmICghc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfcHJvdmlkZXIpIHsKICAgICAgICAgICAgcmV0dXJuIHsgCiAgICAgICAgICAgICAgICB2YWxpZDogZmFsc2UsIAogICAgICAgICAgICAgICAgY29kZToyMDMsCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbjogIk5vIHNlbGVjdGVkX3Byb3ZpZGVyIGF2YWlsYWJsZSBpbiBzZXNzaW9uIGRhdGEiIAogICAgICAgICAgICB9OwogICAgICAgIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlJlcXVpcmVtZW50cyBtZXQiIH07Cn0=
       defaultPayload:
@@ -2792,27 +3043,6 @@ steps:
                   bank_account_number: "1800002341"
                   bank_code: SBIN0001234
                   currency: INR
-                tags:
-                  - descriptor:
-                      code: BUYER_FINDER_FEES
-                    display: false
-                    list:
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_TYPE
-                        value: percent-annualized
-                      - descriptor:
-                          code: BUYER_FINDER_FEES_PERCENTAGE
-                        value: "1"
-                  - descriptor:
-                      code: SETTLEMENT_TERMS
-                    display: false
-                    list:
-                      - descriptor:
-                          code: STATIC_TERMS
-                        value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                      - descriptor:
-                          code: OFFLINE_CONTRACT
-                        value: "true"
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -2836,9 +3066,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-10T20:44:33.573Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 5d086cff-39ea-4e5d-b6c9-33cf25081346
+            timestamp: 2026-08-12T11:27:12.081Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e4572e56-ab22-4729-b76e-3f18a4805aa3
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2864,12 +3094,63 @@ steps:
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 32a729ba-9d49-4c4d-bae2-973f2ef1bdef
+                      id: 031328e9-57ee-41b9-9826-9d8f57381da7
                     form_response:
                       status: SUCCESS
-                      submission_id: 73afd0e5-e4d5-408a-84ae-dd1b718291e3
+                      submission_id: 729b241f-bf83-4e68-84b6-0a12e01124fd
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -2879,27 +3160,18 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
                     - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BAP initiates an order with the BPP, committing the selected
           health insurance products, add-ons, fulfillment options, and applicant
@@ -2915,7 +3187,7 @@ steps:
       response allows the BAP to present the form to the customer and proceed
       with collecting application details.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKHNlc3Npb25EYXRhLm9uX3NlbGVjdF9vcmRlcikgewogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLm9uX3NlbGVjdF9vcmRlclswXS5pdGVtczsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBzZXNzaW9uRGF0YS5vbl9zZWxlY3Rfb3JkZXJbMF0ucHJvdmlkZXI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGEub25fc2VsZWN0X29yZGVyWzBdLnF1b3RlOwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0uZnVsZmlsbG1lbnRfaWRzCgogIH0KCgoKICAvLyBHZW5lcmF0ZSBkeW5hbWljIGZ1bGZpbGxtZW50IElEIChCUFAgYXNzaWducyBmdWxmaWxsbWVudCBJRCBpbiBvbl9pbml0KQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uZnVsZmlsbG1lbnRzPy5bMF0pIHsKICAgIGNvbnN0IGR5bmFtaWNGdWxmaWxsbWVudElkID0gdXVpZHY0KCkKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLmlkID0gZHluYW1pY0Z1bGZpbGxtZW50SWQ7CiAgICAvLyBTYXZlIGdlbmVyYXRlZCBmdWxmaWxsbWVudF9pZCBiYWNrIHRvIHNlc3Npb25EYXRhIGZvciBkb3duc3RyZWFtIGdlbmVyYXRvcnMKICAgIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkID0gZHluYW1pY0Z1bGZpbGxtZW50SWQ7CiAgICAvLyBTeW5jIGl0ZW1zIGZ1bGZpbGxtZW50X2lkcyB3aXRoIHRoZSBuZXcgZnVsZmlsbG1lbnQgSUQKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uaXRlbXM/LlswXSkgewogICAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmZ1bGZpbGxtZW50X2lkcyA9IFtkeW5hbWljRnVsZmlsbG1lbnRJZF07CiAgICB9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS5jdXN0b21lciA9IHNlc3Npb25EYXRhLnNlbGVjdGVkX2Z1bGZpbGxtZW50c1swXS5jdXN0b21lcjsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnR5cGUgPSAiUE9MSUNZIgoKICB9CgoKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzPy5bMF0pIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0gPSBzZXNzaW9uRGF0YS5wYXltZW50c1swXQogICAgY29uc29sZS5sb2coSlNPTi5zdHJpbmdpZnkoc2Vzc2lvbkRhdGEucGF5bWVudHMpKQogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5pZCA9IHV1aWR2NCgpOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS50eXBlID0gIlBSRS1GVUxGSUxMTUVOVCI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLmNvbGxlY3RlZF9ieSA9IHNlc3Npb25EYXRhLmNvbGxlY3RlZF9ieVswXTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0ucGFyYW1zLmFtb3VudFswXSA9IFN0cmluZyhzZXNzaW9uRGF0YS50b3RhbF9wcmljZVswXSk7CgogIH0KCgoKCiAgLy8gVXBkYXRlIGZvcm0gVVJMcyBhbmQgZ2VuZXJhdGUgZHluYW1pYyBmb3JtIElEcyBmb3IgaXRlbXMKCiAgY29uc3QgeGlucHV0ID0gewogICAgImhlYWQiOiB7CiAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICJuYW1lIjogIlByb3Bvc2VyIGRldGFpbHMiCiAgICAgIH0sCiAgICAgICJpbmRleCI6IHsKICAgICAgICAibWluIjogMCwKICAgICAgICAiY3VyIjogMCwKICAgICAgICAibWF4IjogMwogICAgICB9LAogICAgICAiaGVhZGluZ3MiOiBbCiAgICAgICAgIlBST1BPU0VSX0RFVEFJTFMiLAogICAgICAgICJOT01JTkVFX0RFVEFJTFMiLAogICAgICAgICJNQU5VQUxfUkVWSUVXIiwKICAgICAgICAiQ0lTIgogICAgICBdCiAgICB9LAogICAgImZvcm0iOiB7CiAgICAgICJpZCI6ICJGMDYiLAogICAgICAibWltZV90eXBlIjogInRleHQvaHRtbCIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9maXMudGVzdC5icHAuaW8vZm9ybS9tZWRpY2FsX2R0bHM/Zm9ybWlkPUZPNSIsCiAgICAgICJyZXN1Ym1pdCI6IHRydWUsCiAgICAgICJtdWx0aXBsZV9zdW1iaXNzaW9ucyI6IGZhbHNlCiAgICB9LAogICAgInJlcXVpcmVkIjogdHJ1ZQogIH0KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcykgewoKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXM/LmZvckVhY2goKGl0ZW0pID0+IHsKICAgICAgaWYgKCFpdGVtPy54aW5wdXQ/LmhlYWQpIHJldHVybjsKCiAgICAgIGl0ZW0ueGlucHV0ID0geGlucHV0OwogICAgfSk7CiAgfQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uaXRlbXMpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zLm1hcCgoaXRlbSkgPT4gewogICAgICBpZiAoaXRlbS54aW5wdXQ/LmZvcm0pIHsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtLmlkID0gdXVpZHY0KCkKICAgICAgICBjb25zdCB1cmwgPSBjcmVhdGVGb3JtVVJMKCJPTkRDOkZJUzEzIiwgIlByb3Bvc2VyX0RldGFpbHNfZm9ybSIsIHNlc3Npb25EYXRhKTsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtLnVybCA9IHVybDsKICAgICAgfQogICAgICByZXR1cm4gaXRlbTsKICAgIH0pOwogIH0KCgoKIAoKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKHNlc3Npb25EYXRhLm9uX3NlbGVjdF9vcmRlcikgewogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLm9uX3NlbGVjdF9vcmRlclswXS5pdGVtczsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBzZXNzaW9uRGF0YS5vbl9zZWxlY3Rfb3JkZXJbMF0ucHJvdmlkZXI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGEub25fc2VsZWN0X29yZGVyWzBdLnF1b3RlOwogICAgZGVsZXRlIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0uZnVsZmlsbG1lbnRfaWRzCgogIH0KCgoKICAvLyBHZW5lcmF0ZSBkeW5hbWljIGZ1bGZpbGxtZW50IElEIChCUFAgYXNzaWducyBmdWxmaWxsbWVudCBJRCBpbiBvbl9pbml0KQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uZnVsZmlsbG1lbnRzPy5bMF0pIHsKICAgIGNvbnN0IGR5bmFtaWNGdWxmaWxsbWVudElkID0gdXVpZHY0KCkKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLmlkID0gZHluYW1pY0Z1bGZpbGxtZW50SWQ7CiAgICAvLyBTYXZlIGdlbmVyYXRlZCBmdWxmaWxsbWVudF9pZCBiYWNrIHRvIHNlc3Npb25EYXRhIGZvciBkb3duc3RyZWFtIGdlbmVyYXRvcnMKICAgIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkID0gZHluYW1pY0Z1bGZpbGxtZW50SWQ7CiAgICAvLyBTeW5jIGl0ZW1zIGZ1bGZpbGxtZW50X2lkcyB3aXRoIHRoZSBuZXcgZnVsZmlsbG1lbnQgSUQKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uaXRlbXM/LlswXSkgewogICAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLmZ1bGZpbGxtZW50X2lkcyA9IFtkeW5hbWljRnVsZmlsbG1lbnRJZF07CiAgICB9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50c1swXS5jdXN0b21lciA9IHNlc3Npb25EYXRhLnNlbGVjdGVkX2Z1bGZpbGxtZW50c1swXS5jdXN0b21lcjsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzWzBdLnR5cGUgPSAiUE9MSUNZIgoKICB9CgoKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXI/LnBheW1lbnRzPy5bMF0pIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0gPSBzZXNzaW9uRGF0YS5wYXltZW50c1swXQogICAgY29uc29sZS5sb2coSlNPTi5zdHJpbmdpZnkoc2Vzc2lvbkRhdGEucGF5bWVudHMpKQogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS5pZCA9IHV1aWR2NCgpOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS50eXBlID0gIlBSRS1GVUxGSUxMTUVOVCI7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLmNvbGxlY3RlZF9ieSA9IHNlc3Npb25EYXRhLmNvbGxlY3RlZF9ieVswXTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0ucGFyYW1zLmFtb3VudFswXSA9IFN0cmluZyhzZXNzaW9uRGF0YS50b3RhbF9wcmljZVswXSk7CgogIH0KCgoKCiAgLy8gVXBkYXRlIGZvcm0gVVJMcyBhbmQgZ2VuZXJhdGUgZHluYW1pYyBmb3JtIElEcyBmb3IgaXRlbXMKCiAgY29uc3QgeGlucHV0ID0gewogICAgImhlYWQiOiB7CiAgICAgICJkZXNjcmlwdG9yIjogewogICAgICAgICJuYW1lIjogIlByb3Bvc2VyIGRldGFpbHMiCiAgICAgIH0sCiAgICAgICJpbmRleCI6IHsKICAgICAgICAibWluIjogMCwKICAgICAgICAiY3VyIjogMCwKICAgICAgICAibWF4IjogMwogICAgICB9LAogICAgICAiaGVhZGluZ3MiOiBbCiAgICAgICAgIlBST1BPU0VSX0RFVEFJTFMiLAogICAgICAgICJOT01JTkVFX0RFVEFJTFMiLAogICAgICAgICJNQU5VQUxfUkVWSUVXIiwKICAgICAgICAiQ0lTIgogICAgICBdCiAgICB9LAogICAgImZvcm0iOiB7CiAgICAgICJpZCI6ICJGMDYiLAogICAgICAibWltZV90eXBlIjogInRleHQvaHRtbCIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9maXMudGVzdC5icHAuaW8vZm9ybS9tZWRpY2FsX2R0bHM/Zm9ybWlkPUZPNSIsCiAgICAgICJyZXN1Ym1pdCI6IHRydWUsCiAgICAgICJtdWx0aXBsZV9zdW1iaXNzaW9ucyI6IGZhbHNlCiAgICB9LAogICAgInJlcXVpcmVkIjogdHJ1ZQogIH0KICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcykgewoKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXM/LmZvckVhY2goKGl0ZW0pID0+IHsKICAgICAgaWYgKCFpdGVtPy54aW5wdXQ/LmhlYWQpIHJldHVybjsKCiAgICAgIGl0ZW0ueGlucHV0ID0geGlucHV0OwogICAgfSk7CiAgfQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uaXRlbXMpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zLm1hcCgoaXRlbSkgPT4gewogICAgICBpZiAoaXRlbS54aW5wdXQ/LmZvcm0pIHsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtLmlkID0gdXVpZHY0KCkKICAgICAgICBjb25zdCB1cmwgPSBjcmVhdGVGb3JtVVJMKCJPTkRDOkZJUzEzIiwgIlByb3Bvc2VyX0RldGFpbHNfZm9ybSIsIHNlc3Npb25EYXRhKTsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtLnVybCA9IHVybDsKICAgICAgfQogICAgICByZXR1cm4gaXRlbTsKICAgIH0pOwogIH0KCgoKaWYoc2Vzc2lvbkRhdGE/Lm9uX3NlYXJjaF90YWdzKXsKICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci50YWdzID0gc2Vzc2lvbkRhdGEub25fc2VhcmNoX3RhZ3M7Cn0KCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDMwMDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgb2JqZWN0IGlzIG1pc3NpbmcgaW4gcGF5bG9hZCIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5pdGVtcz8ubGVuZ3RoKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDMwMDEsCiAgICAgIGRlc2NyaXB0aW9uOiAiT3JkZXIgaXRlbXMgYXJlIG1pc3NpbmciCiAgICB9OwogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgICBpZiAoIXNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogMjAzLAogICAgICBkZXNjcmlwdGlvbjogIk5vIHRyYW5zYWN0aW9uX2lkIGF2YWlsYWJsZSBpbiBzZXNzaW9uIGRhdGEiCiAgICB9OwogIH0KCiAgaWYgKAogICAgIUFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub25fc2VsZWN0X29yZGVyKSB8fAogICAgc2Vzc2lvbkRhdGEub25fc2VsZWN0X29yZGVyLmxlbmd0aCA9PT0gMAogICkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAzMDAwLAogICAgICBkZXNjcmlwdGlvbjogIm9uX3NlbGVjdF9vcmRlciBub3QgZm91bmQgaW4gc2Vzc2lvbiBkYXRhIgogICAgfTsKICB9CgogIGlmICgKICAgICFBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnNlbGVjdGVkX2Z1bGZpbGxtZW50cykgfHwKICAgIHNlc3Npb25EYXRhLnNlbGVjdGVkX2Z1bGZpbGxtZW50cy5sZW5ndGggPT09IDAKICApIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogMzAwMSwKICAgICAgZGVzY3JpcHRpb246ICJzZWxlY3RlZF9mdWxmaWxsbWVudHMgbm90IGZvdW5kIGluIHNlc3Npb24gZGF0YSIKICAgIH07CiAgfQoKICBpZiAoCiAgICAhQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5wYXltZW50cykgfHwKICAgIHNlc3Npb25EYXRhLnBheW1lbnRzLmxlbmd0aCA9PT0gMAogICkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAzMDAyLAogICAgICBkZXNjcmlwdGlvbjogInBheW1lbnRzIG5vdCBmb3VuZCBpbiBzZXNzaW9uIGRhdGEiCiAgICB9OwogIH0KCiAgaWYgKAogICAgIUFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuY29sbGVjdGVkX2J5KSB8fAogICAgc2Vzc2lvbkRhdGEuY29sbGVjdGVkX2J5Lmxlbmd0aCA9PT0gMAogICkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiAzMDAzLAogICAgICBkZXNjcmlwdGlvbjogImNvbGxlY3RlZF9ieSBub3QgZm91bmQgaW4gc2Vzc2lvbiBkYXRhIgogICAgfTsKICB9CgogIGlmICgKICAgICFBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRvdGFsX3ByaWNlKSB8fAogICAgc2Vzc2lvbkRhdGEudG90YWxfcHJpY2UubGVuZ3RoID09PSAwCiAgKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDMwMDQsCiAgICAgIGRlc2NyaXB0aW9uOiAidG90YWxfcHJpY2Ugbm90IGZvdW5kIGluIHNlc3Npb24gZGF0YSIKICAgIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -2985,9 +3257,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-10T20:44:33.601Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 5d086cff-39ea-4e5d-b6c9-33cf25081346
+            timestamp: 2026-08-12T11:27:12.125Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e4572e56-ab22-4729-b76e-3f18a4805aa3
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3008,7 +3280,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -3063,6 +3335,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -3080,14 +3355,65 @@ steps:
                         - MANUAL_REVIEW
                         - CIS
                     form:
-                      id: 05b0f596-170b-4c24-9ecc-b45cf15dc153
+                      id: c5b93aa0-aa8f-4dbd-b0b6-87ada46d693a
                       mime_type: text/html
-                      url: undefined/forms/ONDC:FIS13/Proposer_Details_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/Proposer_Details_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined
                       resubmit: true
                       multiple_sumbissions: false
                     required: true
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 40ba0773-ac1d-4152-a722-1a6f0914350f
+                    - 78800bbd-5e61-4aba-80b9-a7d5757a4226
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -3097,28 +3423,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -3128,9 +3433,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -3176,6 +3481,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BPP sends the on_init callback to confirm order initialization
           and provides the initialized order structure including the insurance
@@ -3197,18 +3514,18 @@ steps:
       defaultPayload: {}
       saveData: {}
       inputs: {}
-      formHtml: CjwhRE9DVFlQRSBodG1sPgo8aHRtbCBsYW5nPSJlbiI+CiAgPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCIgLz4KICAgIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIiAvPgogICAgPHRpdGxlPkJ1eWVyIERldGFpbHM8L3RpdGxlPgogIDwvaGVhZD4KCiAgPGJvZHk+CiAgICA8Zm9ybSBpZD0iUHJvcG9zZXJfRGV0YWlsc19mb3JtIiBtZXRob2Q9IlBPU1QiIGFjdGlvbj0iPCU9IGFjdGlvblVybCAlPiI+CiAgICAgIDxsYWJlbCBmb3I9ImZpcnN0TmFtZSI+Rmlyc3QgTmFtZSA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iZmlyc3ROYW1lIiBuYW1lPSJmaXJzdE5hbWUiIHBhdHRlcm49IltBLVphLXpcc117Miw1MH0iIG1heGxlbmd0aD0iNTAiIHRpdGxlPSJOYW1lIG11c3QgY29udGFpbiBvbmx5IGxldHRlcnMgYW5kIHNwYWNlcyAoMi01MCBjaGFyYWN0ZXJzKSIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9Imxhc3ROYW1lIj5MYXN0IE5hbWUgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9Imxhc3ROYW1lIiBuYW1lPSJsYXN0TmFtZSIgcGF0dGVybj0iW0EtWmEtelxzXXsyLDUwfSIgbWF4bGVuZ3RoPSI1MCIgdGl0bGU9Ik5hbWUgbXVzdCBjb250YWluIG9ubHkgbGV0dGVycyBhbmQgc3BhY2VzICgyLTUwIGNoYXJhY3RlcnMpIiByZXF1aXJlZCAvPgoKICAgICAgPGxhYmVsIGZvcj0iYWRkcmVzcyI+QWRkcmVzcyA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iYWRkcmVzcyIgbmFtZT0iYWRkcmVzcyIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9ImRvYiI+RGF0ZSBvZiBCaXJ0aCA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJkYXRlIiBpZD0iZG9iIiBuYW1lPSJkb2IiIHJlcXVpcmVkIC8+CgogICAgICA8bGFiZWwgZm9yPSJnZW5kZXIiPkdlbmRlciA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxzZWxlY3QgbmFtZT0iZ2VuZGVyIiBpZD0iZ2VuZGVyIiByZXF1aXJlZD4KICAgICAgICA8b3B0aW9uIHZhbHVlPSIiPi0tIFNlbGVjdCAtLTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9Im1hbGUiPk1hbGU8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJmZW1hbGUiPkZlbWFsZTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgICA8L3NlbGVjdD4KCiAgICAgIDxsYWJlbCBmb3I9InBvbGl0aWNhbGx5RXhwb3NlZFBlcnNvbiI+UG9saXRpY2FsbHkgRXhwb3NlZCBQZXJzb24gPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8c2VsZWN0IG5hbWU9InBvbGl0aWNhbGx5RXhwb3NlZFBlcnNvbiIgaWQ9InBvbGl0aWNhbGx5RXhwb3NlZFBlcnNvbiIgcmVxdWlyZWQ+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4tLSBTZWxlY3QgLS08L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJ0cnVlIj5ZZXM8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJmYWxzZSI+Tm88L29wdGlvbj4KICAgICAgPC9zZWxlY3Q+CgogICAgICA8bGFiZWwgZm9yPSJlbWFpbCI+RW1haWwgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0iZW1haWwiIGlkPSJlbWFpbCIgbmFtZT0iZW1haWwiIHJlcXVpcmVkIC8+CgogICAgICA8bGFiZWwgZm9yPSJwaG9uZSI+UGhvbmUgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0idGVsIiBpZD0icGhvbmUiIG5hbWU9InBob25lIiBwYXR0ZXJuPSJbNi05XVswLTldezl9IiBtYXhsZW5ndGg9IjEwIiB0aXRsZT0iUGhvbmUgbnVtYmVyIG11c3QgYmUgMTAgZGlnaXRzIHN0YXJ0aW5nIHdpdGggNiwgNywgOCwgb3IgOSIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9ImdzdGluIj5HU1RJTjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iZ3N0aW4iIG5hbWU9ImdzdGluIiBwYXR0ZXJuPSJbMC05XXsyfVtBLVpdezV9WzAtOV17NH1bQS1aXXsxfVsxLTlBLVpdezF9WlswLTlBLVpdezF9IiBtYXhsZW5ndGg9IjE1IiB0aXRsZT0iRW50ZXIgYSB2YWxpZCAxNS1jaGFyYWN0ZXIgR1NUSU4iIC8+CgogICAgICA8IS0tIGluc3VyZWQtZGV0YWlscy1mb3JtLWRhdGEgLS0+CiAgICAgIDxsYWJlbCBmb3I9IndlaWdodCI+V2VpZ2h0IChrZykgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0ibnVtYmVyIiBpZD0id2VpZ2h0IiBuYW1lPSJ3ZWlnaHQiIG1pbj0iMSIgbWF4PSI1MDAiIHJlcXVpcmVkIC8+CgogICAgICA8bGFiZWwgZm9yPSJoZWlnaHQiPkhlaWdodCAoY20pIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgICAgPGlucHV0IHR5cGU9Im51bWJlciIgaWQ9ImhlaWdodCIgbmFtZT0iaGVpZ2h0IiBtaW49IjEiIG1heD0iMzAwIiByZXF1aXJlZCAvPgoKICAgICAgPGxhYmVsIGZvcj0icmVsYXRpb24iPlJlbGF0aW9uc2hpcCB3aXRoIEluc3VyZWQgUGVyc29uIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgICAgPHNlbGVjdCBuYW1lPSJyZWxhdGlvbiIgaWQ9InJlbGF0aW9uIiByZXF1aXJlZD4KICAgICAgICA8b3B0aW9uIHZhbHVlPSIiPi0tIFNlbGVjdCAtLTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9InNlbGYiPlNlbGY8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJzcG91c2UiPlNwb3VzZTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9InNvbiI+U29uPC9vcHRpb24+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0iZGF1Z2h0ZXIiPkRhdWdodGVyPC9vcHRpb24+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0iZmF0aGVyIj5GYXRoZXI8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJtb3RoZXIiPk1vdGhlcjwvb3B0aW9uPgogICAgICA8L3NlbGVjdD4KCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIGlkPSJmb3JtSWQiIG5hbWU9ImZvcm1JZCIgdmFsdWU9IkYwNSIgLz4KICAgICAgPGlucHV0IHR5cGU9InN1Ym1pdCIgdmFsdWU9IlN1Ym1pdCIgLz4KICAgIDwvZm9ybT4KICA8L2JvZHk+CjwvaHRtbD4K
+      formHtml: CjwhRE9DVFlQRSBodG1sPgo8aHRtbCBsYW5nPSJlbiI+CiAgPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCIgLz4KICAgIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIiAvPgogICAgPHRpdGxlPkJ1eWVyIERldGFpbHM8L3RpdGxlPgogIDwvaGVhZD4KCiAgPGJvZHk+CiAgICA8Zm9ybSBpZD0iUHJvcG9zZXJfRGV0YWlsc19mb3JtIiBtZXRob2Q9IlBPU1QiIGFjdGlvbj0iPCU9IGFjdGlvblVybCAlPiI+CiAgICAgIDxsYWJlbCBmb3I9ImZpcnN0TmFtZSI+Rmlyc3QgTmFtZSA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iZmlyc3ROYW1lIiBuYW1lPSJmaXJzdE5hbWUiIHBhdHRlcm49IltBLVphLXpcc117Miw1MH0iIG1heGxlbmd0aD0iNTAiIHRpdGxlPSJOYW1lIG11c3QgY29udGFpbiBvbmx5IGxldHRlcnMgYW5kIHNwYWNlcyAoMi01MCBjaGFyYWN0ZXJzKSIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9Imxhc3ROYW1lIj5MYXN0IE5hbWUgPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Kjwvc3Bhbj48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9Imxhc3ROYW1lIiBuYW1lPSJsYXN0TmFtZSIgcGF0dGVybj0iW0EtWmEtelxzXXsyLDUwfSIgbWF4bGVuZ3RoPSI1MCIgdGl0bGU9Ik5hbWUgbXVzdCBjb250YWluIG9ubHkgbGV0dGVycyBhbmQgc3BhY2VzICgyLTUwIGNoYXJhY3RlcnMpIiByZXF1aXJlZCAvPgoKICAgICAgPGxhYmVsIGZvcj0iYWRkcmVzcyI+QWRkcmVzcyA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iYWRkcmVzcyIgbmFtZT0iYWRkcmVzcyIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9ImRvYiI+RGF0ZSBvZiBCaXJ0aCA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJkYXRlIiBpZD0iZG9iIiBuYW1lPSJkb2IiIHJlcXVpcmVkIC8+CgogICAgICA8bGFiZWwgZm9yPSJnZW5kZXIiPkdlbmRlciA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxzZWxlY3QgbmFtZT0iZ2VuZGVyIiBpZD0iZ2VuZGVyIiByZXF1aXJlZD4KICAgICAgICA8b3B0aW9uIHZhbHVlPSIiPi0tIFNlbGVjdCAtLTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9Im1hbGUiPk1hbGU8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJmZW1hbGUiPkZlbWFsZTwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9InRyYW5zZ2VuZGVyIj5UcmFuc2dlbmRlcjwvb3B0aW9uPgogICAgICA8L3NlbGVjdD4KCiAgICAgPGxhYmVsIGZvcj0icG9saXRpY2FsbHlFeHBvc2VkUGVyc29uIj4KICBQb2xpdGljYWxseSBFeHBvc2VkIFBlcnNvbiA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPgo8L2xhYmVsPgo8aW5wdXQKICB0eXBlPSJjaGVja2JveCIKICBpZD0icG9saXRpY2FsbHlFeHBvc2VkUGVyc29uIgogIG5hbWU9InBvbGl0aWNhbGx5RXhwb3NlZFBlcnNvbiIKICByZXF1aXJlZAovPgoKICAgICAgPGxhYmVsIGZvcj0iZW1haWwiPkVtYWlsIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgICAgPGlucHV0IHR5cGU9ImVtYWlsIiBpZD0iZW1haWwiIG5hbWU9ImVtYWlsIiByZXF1aXJlZCAvPgoKICAgICAgPGxhYmVsIGZvcj0icGhvbmUiPlBob25lIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgICAgPGlucHV0IHR5cGU9InRlbCIgaWQ9InBob25lIiBuYW1lPSJwaG9uZSIgcGF0dGVybj0iWzYtOV1bMC05XXs5fSIgbWF4bGVuZ3RoPSIxMCIgdGl0bGU9IlBob25lIG51bWJlciBtdXN0IGJlIDEwIGRpZ2l0cyBzdGFydGluZyB3aXRoIDYsIDcsIDgsIG9yIDkiIHJlcXVpcmVkIC8+CgogICAgICA8bGFiZWwgZm9yPSJnc3RpbiI+R1NUSU48L2xhYmVsPgogICAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9ImdzdGluIiBuYW1lPSJnc3RpbiIgcGF0dGVybj0iWzAtOV17Mn1bQS1aXXs1fVswLTldezR9W0EtWl17MX1bMS05QS1aXXsxfVpbMC05QS1aXXsxfSIgbWF4bGVuZ3RoPSIxNSIgdGl0bGU9IkVudGVyIGEgdmFsaWQgMTUtY2hhcmFjdGVyIEdTVElOIiAvPgoKICAgICAgPCEtLSBpbnN1cmVkLWRldGFpbHMtZm9ybS1kYXRhIC0tPgogICAgICA8bGFiZWwgZm9yPSJ3ZWlnaHQiPldlaWdodCAoa2cpIDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPio8L3NwYW4+PC9sYWJlbD4KICAgICAgPGlucHV0IHR5cGU9Im51bWJlciIgaWQ9IndlaWdodCIgbmFtZT0id2VpZ2h0IiBtaW49IjEiIG1heD0iNTAwIiByZXF1aXJlZCAvPgoKICAgICAgPGxhYmVsIGZvcj0iaGVpZ2h0Ij5IZWlnaHQgKGNtKSA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxpbnB1dCB0eXBlPSJudW1iZXIiIGlkPSJoZWlnaHQiIG5hbWU9ImhlaWdodCIgbWluPSIxIiBtYXg9IjMwMCIgcmVxdWlyZWQgLz4KCiAgICAgIDxsYWJlbCBmb3I9InJlbGF0aW9uIj5SZWxhdGlvbnNoaXAgd2l0aCBJbnN1cmVkIFBlcnNvbiA8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4qPC9zcGFuPjwvbGFiZWw+CiAgICAgIDxzZWxlY3QgbmFtZT0icmVsYXRpb24iIGlkPSJyZWxhdGlvbiIgcmVxdWlyZWQ+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4tLSBTZWxlY3QgLS08L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJzZWxmIj5TZWxmPC9vcHRpb24+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0ic3BvdXNlIj5TcG91c2U8L29wdGlvbj4KICAgICAgICA8b3B0aW9uIHZhbHVlPSJzb24iPlNvbjwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9ImRhdWdodGVyIj5EYXVnaHRlcjwvb3B0aW9uPgogICAgICAgIDxvcHRpb24gdmFsdWU9ImZhdGhlciI+RmF0aGVyPC9vcHRpb24+CiAgICAgICAgPG9wdGlvbiB2YWx1ZT0ibW90aGVyIj5Nb3RoZXI8L29wdGlvbj4KICAgICAgPC9zZWxlY3Q+CgogICAgICA8aW5wdXQgdHlwZT0iaGlkZGVuIiBpZD0iZm9ybUlkIiBuYW1lPSJmb3JtSWQiIHZhbHVlPSJGMDUiIC8+CiAgICAgIDxpbnB1dCB0eXBlPSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQiIC8+CiAgICA8L2Zvcm0+CiAgPC9ib2R5Pgo8L2h0bWw+Cg==
     examples:
       - name: example for html_form
         payload:
           firstName: test
           lastName: nikita
           address: jhguguy
-          dob: 2026-07-22
-          gender: male
-          politicallyExposedPerson: "false"
-          email: nikita.sharma@ondc.org
-          phone: "9877667788"
+          dob: 2026-08-26
+          gender: female
+          politicallyExposedPerson: on
+          email: nikitasharma@gmail
+          phone: "9920294029"
           gstin: ""
           weight: "22"
           height: "33"
@@ -3273,9 +3590,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-10T20:44:44.075Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 80b8d9f6-6c6c-442b-9234-68724bc31273
+            timestamp: 2026-08-12T11:27:32.894Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 5d8b5525-3b71-49ca-805e-e3e2a1f235a0
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3296,19 +3613,70 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - id: CHILD_ITEM_ID_I1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 05b0f596-170b-4c24-9ecc-b45cf15dc153
+                      id: c5b93aa0-aa8f-4dbd-b0b6-87ada46d693a
                     form_response:
                       status: SUCCESS
-                      submission_id: bd3edcef-eb1e-40b3-95d4-98cb7d2344da
+                      submission_id: a3c92d28-1c16-4e74-b873-9ae51629bca5
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -3318,27 +3686,18 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
                     - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BAP initiates a health insurance policy order with the BPP,
           locking in the selected provider, coverage items, fulfillments, and
@@ -3447,6 +3806,9 @@ steps:
                       - descriptor:
                           code: PROPOSAL_ID
                         value: PROPOSAL_ID
+                      - descriptor:
+                          code: UIN
+                        value: 512N314V02
                 time:
                   label: TENURE
                   duration: P1Y
@@ -3532,6 +3894,12 @@ steps:
                       - descriptor:
                           code: OFFLINE_CONTRACT
                         value: "true"
+                      - descriptor:
+                          code: SETTLEMENT_BASIS
+                        value: Delivery
+                      - descriptor:
+                          code: SETTLEMENT_AMOUNT
+                        value: "400"
             quote:
               id: OFFER_ID/PROPOSAL_ID
               price:
@@ -3592,9 +3960,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-10T20:44:44.104Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 80b8d9f6-6c6c-442b-9234-68724bc31273
+            timestamp: 2026-08-12T11:27:32.923Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 5d8b5525-3b71-49ca-805e-e3e2a1f235a0
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3615,7 +3983,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -3670,6 +4038,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -3688,13 +4059,64 @@ steps:
                         - MANUAL_REVIEW
                         - CIS
                     form:
-                      id: 10385ffc-e1d4-4ac8-bb09-b965b8d108a0
+                      id: dff6d383-cfe6-4edf-bb45-93c096635a95
                       mime_type: text/html
-                      url: undefined/forms/ONDC:FIS13/nominee_details_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined
+                      url: undefined/forms/ONDC:FIS13/nominee_details_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined
                       resubmit: true
                       multiple_sumbissions: false
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 40ba0773-ac1d-4152-a722-1a6f0914350f
+                    - 78800bbd-5e61-4aba-80b9-a7d5757a4226
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -3704,28 +4126,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -3735,9 +4136,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -3783,6 +4184,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BPP sends the initialized order containing the selected health
           insurance coverage, fulfillment details, premium quote, and required
@@ -3809,7 +4222,7 @@ steps:
         payload:
           nominee1_firstName: NIKITA
           nominee1_lastName: nikita
-          nominee1_dob: 2026-07-07
+          nominee1_dob: 2026-08-03
           nominee1_relation: son
           nominee2_firstName: ""
           nominee2_lastName: ""
@@ -3867,9 +4280,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-10T20:44:50.898Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 4b93a978-21c6-42d8-b7e2-9bd43bbd01d8
+            timestamp: 2026-08-12T11:27:39.805Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e34cce43-72fd-4000-9801-8e79247fbc40
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3890,19 +4303,70 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - id: CHILD_ITEM_ID_I1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 10385ffc-e1d4-4ac8-bb09-b965b8d108a0
+                      id: dff6d383-cfe6-4edf-bb45-93c096635a95
                     form_response:
                       status: SUCCESS
-                      submission_id: 21f1176e-1a72-417c-bd5c-433b8644b31c
+                      submission_id: 0bf397e3-a32c-48f9-b029-d545f7281c5e
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -3912,27 +4376,18 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
                     - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: BAP submits init with nominee details.
   - api: on_init
@@ -3983,9 +4438,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-10T20:44:50.916Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 4b93a978-21c6-42d8-b7e2-9bd43bbd01d8
+            timestamp: 2026-08-12T11:27:39.833Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e34cce43-72fd-4000-9801-8e79247fbc40
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4006,7 +4461,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -4061,6 +4516,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -4079,13 +4537,64 @@ steps:
                         - MANUAL_REVIEW
                         - CIS
                     form:
-                      id: 5e0d13d9-d0bb-4f17-8c94-1eb8f8b8fc6d
+                      id: b6dbe705-f237-42a3-9654-b3bb19111bc7
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/manual_review_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/manual_review_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: true
                       multiple_sumbissions: false
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 40ba0773-ac1d-4152-a722-1a6f0914350f
+                    - 78800bbd-5e61-4aba-80b9-a7d5757a4226
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -4095,28 +4604,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -4126,9 +4614,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -4174,6 +4662,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: BPP returns the updated order with the manual review form.
   - api: dynamic_form
@@ -4241,9 +4741,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-10T20:44:54.509Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: f3f421af-368e-4efc-8b20-1a2805f00097
+            timestamp: 2026-08-12T11:27:41.898Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: ce97bcc8-fc90-4085-ba8a-2ee434103d46
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4264,7 +4764,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -4319,17 +4819,71 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
                   xinput:
                     form:
-                      id: 5e0d13d9-d0bb-4f17-8c94-1eb8f8b8fc6d
+                      id: b6dbe705-f237-42a3-9654-b3bb19111bc7
                     form_response:
                       status: SUCCESS
-                      submission_id: 61b990dc-6923-4264-82f7-0808605518a6
+                      submission_id: 9ab5c2cb-433d-4d22-af8b-721300e72891
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 40ba0773-ac1d-4152-a722-1a6f0914350f
+                    - 78800bbd-5e61-4aba-80b9-a7d5757a4226
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -4339,28 +4893,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -4370,9 +4903,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -4418,6 +4951,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: please add relevant description
   - api: init
@@ -4474,9 +5019,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: init
-            timestamp: 2026-07-10T20:44:54.526Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 7260464d-5fc5-45a1-ab57-17c50993a1e9
+            timestamp: 2026-08-12T11:27:41.912Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e88d0f7e-4b98-47a4-9ccb-8ae38e664170
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4497,19 +5042,70 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - id: CHILD_ITEM_ID_I1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 5e0d13d9-d0bb-4f17-8c94-1eb8f8b8fc6d
+                      id: b6dbe705-f237-42a3-9654-b3bb19111bc7
                     form_response:
                       status: SUCCESS
-                      submission_id: 48999db9-ccab-4850-9f43-c66ebbc0eccf
+                      submission_id: 54d066f0-0027-43a9-baba-eb7c8dd03b5a
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -4519,28 +5115,19 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
                     - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BAP initializes the health insurance order with the proposer's
           selected items, fulfillments, and provider information. This step
@@ -4603,9 +5190,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_init
-            timestamp: 2026-07-10T20:44:54.566Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 7260464d-5fc5-45a1-ab57-17c50993a1e9
+            timestamp: 2026-08-12T11:27:41.961Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: e88d0f7e-4b98-47a4-9ccb-8ae38e664170
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4626,7 +5213,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -4681,6 +5268,9 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
@@ -4698,12 +5288,63 @@ steps:
                         - MANUAL_REVIEW
                         - CIS
                     form:
-                      id: 7a57ba67-057d-4400-add9-167711c082ad
+                      id: 8deb54cd-1345-4346-9019-6ffab8448061
                       mime_type: application/html
-                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                      url: undefined/forms/ONDC:FIS13/consumer_information_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
                       resubmit: true
                       multiple_sumbissions: false
                     required: true
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -4713,28 +5354,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -4744,9 +5364,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -4792,6 +5412,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BPP returns the initialized order with the insurance quote,
           consumer information form, and fulfillment details to proceed with the
@@ -4876,9 +5508,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_status
-            timestamp: 2026-07-10T20:44:56.795Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: 0d37f58f-b0a5-448e-bc0f-3264730e76cc
+            timestamp: 2026-08-12T11:27:44.546Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: b4771c5c-1e87-49b9-ad87-70ffa7794ee7
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4899,7 +5531,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - category_ids:
@@ -4954,15 +5586,69 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
                   xinput:
                     form:
-                      id: 7a57ba67-057d-4400-add9-167711c082ad
+                      id: 8deb54cd-1345-4346-9019-6ffab8448061
                     form_response:
                       status: SUCCESS
-                      submission_id: 21d2f832-a2c4-415d-bd90-dc23ab3da3ae
+                      submission_id: e9e1bbf6-cd66-47bc-a3b2-4ad6c444ef3a
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -4972,28 +5658,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  id: 439c0979-ee2a-41d6-ae88-d3c021723b23
+                  id: 04d4ebb8-459c-47b8-ad4f-0dbd035922e1
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -5003,9 +5668,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -5051,6 +5716,18 @@ steps:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
+              tags:
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
         type: request
         description: The BPP sends an unsolicited status notification to the BAP
           regarding the health insurance application's current state within the
@@ -5066,7 +5743,7 @@ steps:
       transmitting the selected items, fulfillment details, and agreed payment
       terms to authorize policy issuance.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCgogIGNvbnN0IHN1Ym1pc3Npb25faWQgPSBzZXNzaW9uRGF0YT8uY29uc3VtZXJfaW5mb3JtYXRpb25fZm9ybQogIGNvbnN0IGZvcm1fc3RhdHVzID0gc3VibWlzc2lvbl9pZCA/ICJTVUNDRVNTIgogICAgOiAiUEVORElORyI7CgoKCgogIGNvbnN0IHhpbnB1dCA9IHsKICAgICJmb3JtIjogewogICAgICAiaWQiOiAiRjA4IgogICAgfSwKICAgICJmb3JtX3Jlc3BvbnNlIjogewogICAgICAic3RhdHVzIjogIlNVQ0NFU1MiLAogICAgICAic3VibWlzc2lvbl9pZCI6ICJhYWI4ZTE4Ni1lOWQ2LTRiOTMtOGE3MC04ZjZiOGM0NzE4NjIiCiAgICB9CiAgfQogIGlmIChzZXNzaW9uRGF0YS5pbml0X29yZGVyKSB7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyID0gc2Vzc2lvbkRhdGEuaW5pdF9vcmRlclswXTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzID0gc2Vzc2lvbkRhdGEub3JkZXJbMF0uZnVsZmlsbG1lbnRzOwoKCiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLml0ZW1zWzBdLnhpbnB1dCA9IHhpbnB1dDsKICAgIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzKSB7CiAgICAgIGNvbnN0IHVybCA9IGNyZWF0ZUZvcm1VUkwoIk9OREM6RklTMTMiLCAicGF5bWVudF9mb3JtIiwgc2Vzc2lvbkRhdGEpICsgJyZiYXBfdXJpPScgKyBlbmNvZGVVUklDb21wb25lbnQoZGVmYXVsdFBheWxvYWQuY29udGV4dC5iYXBfdXJpKTsKCiAgICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHNbMF0udXJsID0gdXJsOwogICAgfQogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5xdW90ZSA9IHNlc3Npb25EYXRhLnF1b3RlWzBdOwoKICB9CgoKCgogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcj8uaXRlbXM/LlswXSkgewogICAgY29uc3QgaXRlbSA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF07CiAgICBpZiAoaXRlbS54aW5wdXQ/LmZvcm0pIHsKICAgICAgY29uc3QgZm9ybUlkID0gc2Vzc2lvbkRhdGEuZm9ybV9pZCB8fCAiRjA4IjsKICAgICAgaXRlbS54aW5wdXQuZm9ybS5pZCA9IGZvcm1JZFswXTsKICAgIH0KCiAgICAvLyAgIC8vIFNldCBmb3JtIHN0YXR1cyBhbmQgc3VibWlzc2lvbl9pZAogICAgaWYgKGl0ZW0ueGlucHV0KSB7CiAgICAgIC8vIENyZWF0ZSBmb3JtX3Jlc3BvbnNlIGlmIGl0IGRvZXNuJ3QgZXhpc3QKICAgICAgaWYgKCFpdGVtLnhpbnB1dC5mb3JtX3Jlc3BvbnNlKSB7CiAgICAgICAgaXRlbS54aW5wdXQuZm9ybV9yZXNwb25zZSA9IHt9OwogICAgICB9CiAgICAgIGlmIChmb3JtX3N0YXR1cykgewogICAgICAgIGl0ZW0ueGlucHV0LmZvcm1fcmVzcG9uc2Uuc3RhdHVzID0gZm9ybV9zdGF0dXM7CiAgICAgIH0KICAgICAgaWYgKHN1Ym1pc3Npb25faWQpIHsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtX3Jlc3BvbnNlLnN1Ym1pc3Npb25faWQgPSBzdWJtaXNzaW9uX2lkOwogICAgICB9CiAgICB9CiAgfQoKCgogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQ==
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKbGV0IGNvbWJpbmVkVGFncyAKaWYoc2Vzc2lvbkRhdGE/LnNlYXJjaF90YWdzICYmIHNlc3Npb25EYXRhPy5vbl9zZWFyY2hfdGFncyl7CiAgY29tYmluZWRUYWdzID0gW3Nlc3Npb25EYXRhPy5zZWFyY2hfdGFnc1swXSxzZXNzaW9uRGF0YT8ub25fc2VhcmNoX3RhZ3NbMF1dCn0KCiAgY29uc3Qgc3VibWlzc2lvbl9pZCA9IHNlc3Npb25EYXRhPy5jb25zdW1lcl9pbmZvcm1hdGlvbl9mb3JtCiAgY29uc3QgZm9ybV9zdGF0dXMgPSBzdWJtaXNzaW9uX2lkID8gIlNVQ0NFU1MiCiAgICA6ICJQRU5ESU5HIjsKCgoKCiAgY29uc3QgeGlucHV0ID0gewogICAgImZvcm0iOiB7CiAgICAgICJpZCI6ICJGMDgiCiAgICB9LAogICAgImZvcm1fcmVzcG9uc2UiOiB7CiAgICAgICJzdGF0dXMiOiAiU1VDQ0VTUyIsCiAgICAgICJzdWJtaXNzaW9uX2lkIjogImFhYjhlMTg2LWU5ZDYtNGI5My04YTcwLThmNmI4YzQ3MTg2MiIKICAgIH0KICB9CiAgaWYgKHNlc3Npb25EYXRhLmluaXRfb3JkZXIpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIgPSBzZXNzaW9uRGF0YS5pbml0X29yZGVyWzBdOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHMgPSBzZXNzaW9uRGF0YS5vcmRlclswXS5mdWxmaWxsbWVudHM7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MgPSBjb21iaW5lZFRhZ3M7CgoKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXNbMF0ueGlucHV0ID0geGlucHV0OwogICAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMpIHsKICAgICAgY29uc3QgdXJsID0gY3JlYXRlRm9ybVVSTCgiT05EQzpGSVMxMyIsICJwYXltZW50X2Zvcm0iLCBzZXNzaW9uRGF0YSkgKyAnJmJhcF91cmk9JyArIGVuY29kZVVSSUNvbXBvbmVudChkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJhcF91cmkpOwoKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS51cmwgPSB1cmw7CiAgICB9CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGEucXVvdGVbMF07CgogIH0KCgoKCiAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2U/Lm9yZGVyPy5pdGVtcz8uWzBdKSB7CiAgICBjb25zdCBpdGVtID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXTsKICAgIGlmIChpdGVtLnhpbnB1dD8uZm9ybSkgewogICAgICBjb25zdCBmb3JtSWQgPSBzZXNzaW9uRGF0YS5mb3JtX2lkIHx8ICJGMDgiOwogICAgICBpdGVtLnhpbnB1dC5mb3JtLmlkID0gZm9ybUlkWzBdOwogICAgfQoKICAgIC8vICAgLy8gU2V0IGZvcm0gc3RhdHVzIGFuZCBzdWJtaXNzaW9uX2lkCiAgICBpZiAoaXRlbS54aW5wdXQpIHsKICAgICAgLy8gQ3JlYXRlIGZvcm1fcmVzcG9uc2UgaWYgaXQgZG9lc24ndCBleGlzdAogICAgICBpZiAoIWl0ZW0ueGlucHV0LmZvcm1fcmVzcG9uc2UpIHsKICAgICAgICBpdGVtLnhpbnB1dC5mb3JtX3Jlc3BvbnNlID0ge307CiAgICAgIH0KICAgICAgaWYgKGZvcm1fc3RhdHVzKSB7CiAgICAgICAgaXRlbS54aW5wdXQuZm9ybV9yZXNwb25zZS5zdGF0dXMgPSBmb3JtX3N0YXR1czsKICAgICAgfQogICAgICBpZiAoc3VibWlzc2lvbl9pZCkgewogICAgICAgIGl0ZW0ueGlucHV0LmZvcm1fcmVzcG9uc2Uuc3VibWlzc2lvbl9pZCA9IHN1Ym1pc3Npb25faWQ7CiAgICAgIH0KICAgIH0KICB9CgoKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBjb25zdCBpdGVtID0gdGFyZ2V0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/Lml0ZW1zPy5bMF07CgogIGlmICghaXRlbT8ueGlucHV0Py5mb3JtPy5pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyB4aW5wdXQuZm9ybS5pZCIKICAgIH07CiAgfQoKICBpZiAoIWl0ZW0/LnhpbnB1dD8uZm9ybV9yZXNwb25zZT8uc3RhdHVzKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIHhpbnB1dC5mb3JtX3Jlc3BvbnNlLnN0YXR1cyIKICAgIH07CiAgfQoKICBpZiAoCiAgICBpdGVtPy54aW5wdXQ/LmZvcm1fcmVzcG9uc2U/LnN0YXR1cyAmJgogICAgIWl0ZW0/LnhpbnB1dD8uZm9ybV9yZXNwb25zZT8uc3VibWlzc2lvbl9pZAogICkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyB4aW5wdXQuZm9ybV9yZXNwb25zZS5zdWJtaXNzaW9uX2lkIgogICAgfTsKICB9CgogIGlmICghdGFyZ2V0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LnF1b3RlKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yZGVyLnF1b3RlIgogICAgfTsKICB9CgogIGlmICghdGFyZ2V0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50cz8ubGVuZ3RoKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yZGVyLmZ1bGZpbGxtZW50cyIKICAgIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgaWYgKCFzZXNzaW9uRGF0YS5pbml0X29yZGVyKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJpbml0X29yZGVyIGlzIHJlcXVpcmVkIgogICAgfTsKICB9CgogIGlmICghc2Vzc2lvbkRhdGEub3JkZXIpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIm9yZGVyIGlzIHJlcXVpcmVkIgogICAgfTsKICB9CgogIGlmICghc2Vzc2lvbkRhdGEucXVvdGUpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogInF1b3RlIGlzIHJlcXVpcmVkIgogICAgfTsKICB9CgogIGlmICgKICAgICFzZXNzaW9uRGF0YS5jb25zdW1lcl9pbmZvcm1hdGlvbl9mb3JtICYmCiAgICAhc2Vzc2lvbkRhdGE/LmZvcm1fZGF0YT8uY29uc3VtZXJfaW5mb3JtYXRpb25fZm9ybQogICkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiY29uc3VtZXJfaW5mb3JtYXRpb25fZm9ybSBpcyByZXF1aXJlZCIKICAgIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -5101,10 +5778,10 @@ steps:
         selected_items: $.message.order.items[*]
         selected_fulfillments: $.message.order.fulfillments[*]
         selected_provider: $.message.order.provider
-        tags: $.message.order.tags[*]
         payments: $.message.order.payments[*]
         quote: $.message.order.quote
         confirm_payments: $.message.order.payments
+        combined_tags: $.message.order.tags[*]
       inputs: {}
     examples:
       - name: example for confirm
@@ -5112,9 +5789,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: confirm
-            timestamp: 2026-07-10T20:44:56.814Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: d3623901-cb50-472c-a6d7-7a015e690dfc
+            timestamp: 2026-08-12T11:27:44.569Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 9658fd1a-c971-4cb2-a5ec-3eb27725ae01
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5135,19 +5812,70 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - id: CHILD_ITEM_ID_I1
                   parent_item_id: I1
                   xinput:
                     form:
-                      id: 7a57ba67-057d-4400-add9-167711c082ad
+                      id: 8deb54cd-1345-4346-9019-6ffab8448061
                     form_response:
                       status: SUCCESS
-                      submission_id: d9f7b397-5f1b-4e2a-b39e-f5816814ee33
+                      submission_id: fc288d40-dd1c-43b9-9bfa-166e89f73534
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
               provider:
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -5157,30 +5885,32 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
+                  url: undefined/forms/ONDC:FIS13/payment_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
                     - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
                     - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  url: undefined/forms/ONDC:FIS13/payment_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                        code: OFFLINE_CONTRACT
+                      value: "true"
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -5235,7 +5965,7 @@ steps:
       signifying acceptance and completion of the pre-order application. This
       callback response finalizes the order confirmation initiated by the BAP.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKCiAgaWYgKHNlc3Npb25EYXRhLm9uX2luaXRfb3JkZXIpIHsKCgogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5xdW90ZSA9IHNlc3Npb25EYXRhLm9uX2luaXRfb3JkZXJbMF0ucXVvdGU7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnByb3ZpZGVyID0gc2Vzc2lvbkRhdGEub25faW5pdF9vcmRlclswXS5wcm92aWRlcjsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YS5vbl9pbml0X29yZGVyWzBdLml0ZW1zOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5mdWxmaWxsbWVudHMgPSBzZXNzaW9uRGF0YS5vbl9pbml0X29yZGVyWzBdLmZ1bGZpbGxtZW50czsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMgPSBzZXNzaW9uRGF0YS5jb25maXJtX3BheW1lbnRzWzBdOwogICAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudHMpIHsKICAgICAgY29uc3QgdXJsID0gY3JlYXRlRm9ybVVSTCgiT05EQzpGSVMxMyIsICJwYXltZW50X2Zvcm0iLCBzZXNzaW9uRGF0YSkgKyAnJmJhcF91cmk9JyArIGVuY29kZVVSSUNvbXBvbmVudChkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmJhcF91cmkpOwoKICAgICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50c1swXS51cmwgPSB1cmw7CiAgICB9CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5jYXRlZ29yeV9pZHM7CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS54aW5wdXQ7CiAgfQoKICAKCi8vIEdlbmVyYXRlIGR5bmFtaWMgb3JkZXIgSUQKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXIpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaWQgPSB1dWlkdjQoKTsKICB9CgogIC8vIFNldCBjcmVhdGVkX2F0IGFuZCB1cGRhdGVkX2F0IHRvIGN1cnJlbnQgZGF0ZQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcikgewogICAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuY3JlYXRlZF9hdCkgewogICAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0OwogICAgfQogICAgY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gbm93OwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbm93OwogIH0KCgoKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKbGV0IGNvbWJpbmVkVGFncyAKaWYoc2Vzc2lvbkRhdGE/LnNlYXJjaF90YWdzICYmIHNlc3Npb25EYXRhPy5vbl9zZWFyY2hfdGFncyl7CiAgY29tYmluZWRUYWdzID0gW3Nlc3Npb25EYXRhPy5zZWFyY2hfdGFnc1swXSxzZXNzaW9uRGF0YT8ub25fc2VhcmNoX3RhZ3NbMF1dCn0KICBpZiAoc2Vzc2lvbkRhdGEub25faW5pdF9vcmRlcikgewoKCiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGEub25faW5pdF9vcmRlclswXS5xdW90ZTsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucHJvdmlkZXIgPSBzZXNzaW9uRGF0YS5vbl9pbml0X29yZGVyWzBdLnByb3ZpZGVyOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtcyA9IHNlc3Npb25EYXRhLm9uX2luaXRfb3JkZXJbMF0uaXRlbXM7CiAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IHNlc3Npb25EYXRhLm9uX2luaXRfb3JkZXJbMF0uZnVsZmlsbG1lbnRzOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50cyA9IHNlc3Npb25EYXRhLmNvbmZpcm1fcGF5bWVudHNbMF07CiAgICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50cykgewogICAgICBjb25zdCB1cmwgPSBjcmVhdGVGb3JtVVJMKCJPTkRDOkZJUzEzIiwgInBheW1lbnRfZm9ybSIsIHNlc3Npb25EYXRhKSArICcmYmFwX3VyaT0nICsgZW5jb2RlVVJJQ29tcG9uZW50KGRlZmF1bHRQYXlsb2FkLmNvbnRleHQuYmFwX3VyaSk7CgogICAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnBheW1lbnRzWzBdLnVybCA9IHVybDsKICAgIH0KICAgICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyLnRhZ3MgPSBjb21iaW5lZFRhZ3M7CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS5jYXRlZ29yeV9pZHM7CiAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5pdGVtc1swXS54aW5wdXQ7CiAgfQoKICAKCi8vIEdlbmVyYXRlIGR5bmFtaWMgb3JkZXIgSUQKICBpZiAoZGVmYXVsdFBheWxvYWQubWVzc2FnZT8ub3JkZXIpIHsKICAgIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaWQgPSB1dWlkdjQoKTsKICB9CgogIC8vIFNldCBjcmVhdGVkX2F0IGFuZCB1cGRhdGVkX2F0IHRvIGN1cnJlbnQgZGF0ZQogIGlmIChkZWZhdWx0UGF5bG9hZC5tZXNzYWdlPy5vcmRlcikgewogICAgaWYgKGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuY3JlYXRlZF9hdCkgewogICAgICBkZWxldGUgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0OwogICAgfQogICAgY29uc3Qgbm93ID0gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gbm93OwogICAgZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlci51cGRhdGVkX2F0ID0gbm93OwogIH0KCgoKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0=
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5pZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlci5pZCIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5wcm92aWRlcikgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlci5wcm92aWRlciIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5xdW90ZSkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlci5xdW90ZSIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5wYXltZW50cykgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlci5wYXltZW50cyIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5pdGVtcz8ubGVuZ3RoKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yZGVyLml0ZW1zIgogICAgfTsKICB9CgogIGlmICghdGFyZ2V0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50cz8ubGVuZ3RoKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yZGVyLmZ1bGZpbGxtZW50cyIKICAgIH07CiAgfQoKICBpZiAoIXRhcmdldFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yZGVyLmNyZWF0ZWRfYXQiCiAgICB9OwogIH0KCiAgaWYgKCF0YXJnZXRQYXlsb2FkPy5tZXNzYWdlPy5vcmRlcj8udXBkYXRlZF9hdCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvcmRlci51cGRhdGVkX2F0IgogICAgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgICBpZiAoIXNlc3Npb25EYXRhLm9uX2luaXRfb3JkZXIpIHsKICAgIHJldHVybiB7CiAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgY29kZTogNDAwLAogICAgICBkZXNjcmlwdGlvbjogIm9uX2luaXRfb3JkZXIgaXMgcmVxdWlyZWQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5jb25maXJtX3BheW1lbnRzKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJjb25maXJtX3BheW1lbnRzIGlzIHJlcXVpcmVkIgogICAgfTsKICB9CgogIGlmICghc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgewogICAgcmV0dXJuIHsKICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICBjb2RlOiA0MDAsCiAgICAgIGRlc2NyaXB0aW9uOiAidHJhbnNhY3Rpb25faWQgaXMgcmVxdWlyZWQiCiAgICB9OwogIH0KCiAgaWYgKCFzZXNzaW9uRGF0YS5sYXRlc3RNZXNzYWdlX2lkKSB7CiAgICByZXR1cm4gewogICAgICB2YWxpZDogZmFsc2UsCiAgICAgIGNvZGU6IDQwMCwKICAgICAgZGVzY3JpcHRpb246ICJtZXNzYWdlX2lkIGlzIHJlcXVpcmVkIgogICAgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
@@ -5316,9 +6046,9 @@ steps:
           context:
             domain: ONDC:FIS13
             action: on_confirm
-            timestamp: 2026-07-10T20:44:56.862Z
-            transaction_id: 66407d9e-52e2-4f47-9578-d3467a88c92e
-            message_id: d3623901-cb50-472c-a6d7-7a015e690dfc
+            timestamp: 2026-08-12T11:27:44.652Z
+            transaction_id: 8a5f94c0-59d7-42a2-9035-d5c725b6fda4
+            message_id: 9658fd1a-c971-4cb2-a5ec-3eb27725ae01
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -5339,7 +6069,7 @@ steps:
                       phone: +91-9999999999
                     person:
                       name: Joe Adam
-                  id: 40ba0773-ac1d-4152-a722-1a6f0914350f
+                  id: 78800bbd-5e61-4aba-80b9-a7d5757a4226
                   type: POLICY
               items:
                 - descriptor:
@@ -5391,12 +6121,66 @@ steps:
                         - descriptor:
                             code: PROPOSAL_ID
                           value: ""
+                        - descriptor:
+                            code: UIN
+                          value: 512N314V02
                   time:
                     duration: P1Y
                     label: TENURE
+                  add_ons:
+                    - id: A1
+                      descriptor:
+                        name: Consumables Cover
+                        code: CONSUMABLES_COVER
+                      quantity:
+                        selected:
+                          count: 1
+                      price:
+                        currency: INR
+                        value: "900"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
+                    - id: A2
+                      descriptor:
+                        name: Depreciation Cover
+                        code: DEPRECIATION_COVER
+                      quantity:
+                        selected:
+                          count: 2
+                      price:
+                        currency: INR
+                        value: "1000"
+                      tags:
+                        - descriptor:
+                            name: BAP Inputs
+                            code: BAP_INPUTS
+                          list:
+                            - descriptor:
+                                code: SUM_INSURED
+                              value: "50000"
+                            - descriptor:
+                                code: NOMINEE_DETAILS
+                                short_desc: Describes the format as 'Salutation | First Name | Middle Name |
+                                  Last Name | Relationship | Contact Number'
+                                  represents a full name structure, where the
+                                  values are separated by a pipe (|) symbol
+                              value: Mr. | Joe | Wick | Adams | Son | +91-9988776655
                   fulfillment_ids:
-                    - 40ba0773-ac1d-4152-a722-1a6f0914350f
-              id: 432cf6db-0d51-412d-9c22-006dcdf9cccf
+                    - 78800bbd-5e61-4aba-80b9-a7d5757a4226
+              id: 8259d663-9ca2-4050-927b-11e6eeff6091
               payments:
                 - collected_by: BPP
                   status: NOT-PAID
@@ -5406,28 +6190,7 @@ steps:
                     bank_code: SBIN0001234
                     currency: INR
                     amount: "3000"
-                  tags:
-                    - descriptor:
-                        code: BUYER_FINDER_FEES
-                      display: false
-                      list:
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_TYPE
-                          value: percent-annualized
-                        - descriptor:
-                            code: BUYER_FINDER_FEES_PERCENTAGE
-                          value: "1"
-                    - descriptor:
-                        code: SETTLEMENT_TERMS
-                      display: false
-                      list:
-                        - descriptor:
-                            code: STATIC_TERMS
-                          value: https://www.icicibank.com/personal-banking/loans/personal-loan
-                        - descriptor:
-                            code: OFFLINE_CONTRACT
-                          value: "true"
-                  url: undefined/forms/ONDC:FIS13/payment_form/?transaction_id=66407d9e-52e2-4f47-9578-d3467a88c92e&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
+                  url: undefined/forms/ONDC:FIS13/payment_form/?transaction_id=8a5f94c0-59d7-42a2-9035-d5c725b6fda4&session_id=undefined&bap_uri=https%3A%2F%2Fbap.example.com
               provider:
                 descriptor:
                   long_desc: ABC Insurance Ltd. Deals in multiple Insurance Services like Health,
@@ -5437,9 +6200,9 @@ steps:
                   images:
                     - url: https://www.abcinsurance.com/content/dam/abc/india/assets/images/header/logo.png
                       size_type: xs
-                id: 2f46be9b-6f92-4a05-a7ed-0a7c326ecffa
+                id: a9a32e0d-d484-499f-817d-29b8a75decbe
               quote:
-                id: ecd81287-ef67-4bc6-90ac-622a7d224c5c
+                id: 412da864-a259-42fc-aa52-4767bc17eb32
                 breakup:
                   - price:
                       value: "900"
@@ -5509,12 +6272,35 @@ steps:
                       following URL
                   mime_type: application/html
                   url: https://abcinsurance.com/renew-policy/
-              updated_at: 2026-07-10T20:44:56.863Z
+              updated_at: 2026-08-12T11:27:44.654Z
               cancellation_terms:
                 - external_ref:
                     mimetype: text/html,
                     url: https://fis.test.bpp.io/cancellation-terms
-              created_at: 2026-07-10T20:44:56.863Z
+              tags:
+                - descriptor:
+                    code: BAP_TERMS
+                    name: BAP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
+                - descriptor:
+                    code: BPP_TERMS
+                    name: BPP Terms of Engagement
+                  display: false
+                  list:
+                    - descriptor:
+                        code: STATIC_TERMS
+                      value: https://api.example-bap.com/booking/terms
+                    - descriptor:
+                        code: OFFLINE_CONTRACT
+                      value: "true"
+              created_at: 2026-08-12T11:27:44.654Z
         type: request
         description: The BPP confirms the health insurance order with the BAP,
           signifying acceptance and completion of the pre-order application.
@@ -5544,6 +6330,7 @@ steps:
         description: The BPP requests eKYC credentials and personal identification
           information through a dynamic form to verify the applicant's identity
           and eligibility for health insurance coverage.
+  
   - api: on_update
     action_id: on_update
     owner: BPP
