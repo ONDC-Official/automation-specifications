@@ -1,0 +1,17 @@
+---
+id: flow.purchase-igm-rejection
+kind: instance
+layer: domain
+status: draft
+asof: trv14-2.0.0
+---
+
+# flow.purchase-igm-rejection
+
+Declared node for `flow.purchase-igm-rejection` — the `purchase_journey_without_form_with_IGM_Rejection(v-2.0.0)` flow of the unreserved-entry-pass use case.
+
+Grounded at: `trv14-2.0.0:flows/unreserved-entry-pass/purchase_journey_without_form_with_IGM_Rejection_v-2_0_0_.yaml#meta.flowId`
+
+Atom handle: `anchor.flow-purchase-igm-rejection`
+
+Body intentionally light — the facts live in `atoms.md`, not in prose.

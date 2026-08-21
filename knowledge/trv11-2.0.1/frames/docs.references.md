@@ -1,6 +1,6 @@
 ---
 id: docs.references
-kind: reference-note
+kind: instance
 layer: domain
 status: draft
 asof: trv11-2.0.1

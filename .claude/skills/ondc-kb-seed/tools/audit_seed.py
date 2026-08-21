@@ -34,6 +34,79 @@ ORDER = ["basis","asof","grounded-in"]
 GENERIC_LEAVES = {"type","status","name","code","id","value","values","tags","list",
                   "display","url","time","state","order","item","form","error","price",
                   "descriptor","symbol","data","text","title","label","kind","ref"}
+# Frame vocabularies (kb-format/vocabularies.md) + the navigation surface (invariants.md #18).
+FRAME_KINDS  = {"class","instance","concept","pattern"}
+FRAME_LAYERS = {"protocol","domain"}
+FRAME_STATUS = {"draft","solidified"}
+
+
+def frontmatter(path):
+    """Parse a frame's leading --- YAML block. Returns {} when absent/unparseable."""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            if fh.readline().strip() != "---": return {}
+            buf = []
+            for line in fh:
+                if line.strip() == "---": break
+                buf.append(line)
+    except OSError:
+        return {}
+    try:
+        doc, _err = _yaml.loads("".join(buf))
+    except Exception:
+        doc = None
+    if not isinstance(doc, dict):
+        doc = {}
+        for line in buf:                      # minimal k: v fallback
+            if ":" in line:
+                k, v = line.split(":", 1); doc[k.strip()] = v.strip()
+    return doc
+
+
+def format_completeness(rows_bids, atoms_text):
+    """Mechanize the [G] format invariants the validator does not cover:
+       #12 atom<->frame traceability, #13 anchor handles, #18 navigable (INDEX/LOCATOR).
+       Returns (per-book table rows, violations dict)."""
+    out, v = [], collections.defaultdict(list)
+    for bid in rows_bids:
+        d = os.path.join(KNOW, bid)
+        has_i = os.path.exists(os.path.join(d, "INDEX.md"))
+        has_l = os.path.exists(os.path.join(d, "LOCATOR.md"))
+        if not has_i: v["missing-INDEX"].append(bid)
+        if not has_l: v["missing-LOCATOR"].append(bid)
+        fdir = os.path.join(d, "frames")
+        frames = sorted(glob.glob(os.path.join(fdir, "*.md"))) if os.path.isdir(fdir) else []
+        if not frames: v["no-frames"].append(bid)
+        body = atoms_text.get(bid, "")
+        bad_fm = untraced = 0
+        for fp in frames:
+            fm = frontmatter(fp)
+            fid = str(fm.get("id", "")).strip()
+            stem = os.path.basename(fp)[:-3]
+            if (fm.get("kind") not in FRAME_KINDS or fm.get("layer") not in FRAME_LAYERS
+                    or fm.get("status") not in FRAME_STATUS or str(fm.get("asof", "")).strip() != bid):
+                bad_fm += 1
+                if len(v["frame-frontmatter"]) < 12:
+                    v["frame-frontmatter"].append(f"{bid}/{stem} kind={fm.get('kind')} "
+                                                  f"layer={fm.get('layer')} status={fm.get('status')} asof={fm.get('asof')}")
+            if fid and fid != stem and len(v["frame-id-filename"]) < 8:
+                v["frame-id-filename"].append(f"{bid}/{stem} id={fid}")
+            # Invariant 12 is about a frame's asserted FACTS, not its mere existence: "every frame
+            # Fact traces to >=1 unit; a frame asserts no fact its units don't carry." A LIGHT frame
+            # (declaration + grounding pointer, no Facts section) asserts nothing and is vacuously
+            # compliant — flagging it would punish the intended shape. So only a frame that actually
+            # carries a Facts section is required to have a unit behind it; a light frame whose id
+            # never appears in atoms.md is reported as coverage (framesNoUnit), not as a violation.
+            if fid and fid not in body:
+                untraced += 1
+                try:
+                    txt = open(fp, encoding="utf-8").read()
+                except OSError:
+                    txt = ""
+                if re.search(r"^#{1,6}\s*Facts?\b", txt, re.M | re.I):
+                    if len(v["frame-untraced"]) < 12: v["frame-untraced"].append(f"{bid}/{stem}")
+        out.append((bid, len(frames), "Y" if has_i else "-", "Y" if has_l else "-", bad_fm, untraced))
+    return out, v
 
 _cache = {}
 def load_yaml(path):
@@ -143,11 +216,13 @@ def main():
     rows, tot = [], collections.Counter()
     viol = collections.defaultdict(list)
     lenient_books = set()
+    atoms_text = {}          # bid -> raw atoms.md, for frame traceability (invariant 12)
     for d in sorted(glob.glob(os.path.join(KNOW, "*"))):
         bid = os.path.basename(d)
         if bid.startswith("_") or not os.path.isdir(d): continue
         atoms = os.path.join(d, "atoms.md")
         if not os.path.exists(atoms): continue
+        atoms_text[bid] = open(atoms, encoding="utf-8").read()
         cfg = book_config(bid)
         reg = set()
         ai = os.path.join(d, "anchors", "index.md")
@@ -265,11 +340,27 @@ def main():
     for k, v in tot.most_common(): print(f"  {k:18} {v:>6}  ({100.0*v/T[0]:.1f}%)")
 
     print("\n" + "=" * 108)
+    print("FORMAT COMPLETENESS (frames + navigation — invariants 12 / 13 / 18)")
+    fc_rows, fc_viol = format_completeness([r[0] for r in rows], atoms_text)
+    print(f"  {'book':22} {'frames':>7} {'INDEX':>6} {'LOCATOR':>8} {'badFM':>6} {'untraced':>9}")
+    print("  " + "-" * 68)
+    for (bid, nf, i, l, bfm, unt) in fc_rows:
+        print(f"  {bid:22} {nf:>7} {i:>6} {l:>8} {bfm:>6} {unt:>9}")
+    print("  " + "-" * 68)
+    print(f"  {'TOTAL':22} {sum(r[1] for r in fc_rows):>7} "
+          f"{sum(1 for r in fc_rows if r[2]=='Y'):>6} {sum(1 for r in fc_rows if r[3]=='Y'):>8} "
+          f"{sum(r[4] for r in fc_rows):>6} {sum(r[5] for r in fc_rows):>9}")
+    for k, vv in fc_viol.items():
+        viol[k] = vv
+
+    print("\n" + "=" * 108)
     print("INVARIANT VIOLATIONS")
     order = ["HELD-OUT-ASSERTED","confidence-field","inferred-with-ground","untethered-untagged",
              "bad-relation","bad-basis","bad-flag","field-order","asof-mismatch","duplicate-unit",
              "R-and-notR","line-number-anchor","ground-book-mismatch","ground-file-missing",
-             "ground-unparseable","anchor-not-registered","malformed","malformed-field"]
+             "ground-unparseable","anchor-not-registered","malformed","malformed-field",
+             "no-frames","missing-INDEX","missing-LOCATOR","frame-frontmatter",
+             "frame-id-filename","frame-untraced"]
     clean = True
     for k in order:
         v = viol.get(k, [])
