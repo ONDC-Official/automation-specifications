@@ -33,7 +33,11 @@ ORDER = ["basis","asof","grounded-in"]
 # is kept. See REVIEW-QUEUE.md gate 1 (the "869 false positives" note).
 GENERIC_LEAVES = {"type","status","name","code","id","value","values","tags","list",
                   "display","url","time","state","order","item","form","error","price",
-                  "descriptor","symbol","data","text","title","label","kind","ref"}
+                  "descriptor","symbol","data","text","title","label","kind","ref",
+                  # ubiquitous protocol field names: `Time.transaction_id` is held out,
+                  # but `$.context.transaction_id` is a different, universal field —
+                  # matching on the bare leaf flagged 20 correct atoms as violations.
+                  "transaction_id","message_id","timestamp","version","domain","action"}
 # Frame vocabularies (kb-format/vocabularies.md) + the navigation surface (invariants.md #18).
 FRAME_KINDS  = {"class","instance","concept","pattern"}
 FRAME_LAYERS = {"protocol","domain"}

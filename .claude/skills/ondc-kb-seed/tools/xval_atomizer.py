@@ -138,9 +138,25 @@ def rule_atoms(rule, action, ground, book):
     # confined to that path — and with one such unit per rule the same action would
     # be "scoped-to" many conflicting things. So the qualifier is folded into the
     # constraint literal it actually governs, keeping it attached to its own rule.
+    quals = []
     scope = rule.get("useCasePath")
-    if out and isinstance(scope, str) and scope.strip():
-        tag = f" [when {norm(scope)}]"
+    if isinstance(scope, str) and scope.strip():
+        quals.append(f"when {norm(scope)}")
+    # `_CONTINUE_` is a SKIP GUARD: when it holds, the test is not applied. A rule
+    # carrying one is therefore CONDITIONAL and must never be asserted flat. Ignoring
+    # it produced a real contradiction — REQUIRED_CONTEXT_BPP_ID has
+    # `_CONTINUE_: (action all in var_search)`, i.e. bpp_id is required EXCEPT for
+    # broadcast search, and emitting the bare positive collided with the existing
+    # (correct) `anchor.search | not-requires | "$.context.bpp_id"`. 25% of rules are
+    # guarded, so the qualifier rides in the literal and nothing is over-asserted.
+    guard = rule.get("_CONTINUE_")
+    if isinstance(guard, str) and guard.strip():
+        quals.append(f"unless {norm(guard)}")
+    if out and quals:
+        # The qualifier is spliced in AFTER lit(), so it must be pipe-sanitised too —
+        # a guard containing `||` (disjunctive guards do occur) would otherwise split
+        # the atom into extra fields and fail the parser.
+        tag = " [" + "; ".join(quals).replace("|", "/").replace('"', "'") + "]"
         out = [(l.replace('" | basis:declared', tag + '" | basis:declared', 1)
                 if " | constrains | " in l or " | requires | " in l else l, a) for l, a in out]
     return out
