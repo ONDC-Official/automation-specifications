@@ -253,3 +253,14 @@
 | anchor.xinput-form-url | xinput form url | - | fis12-2.0.3 |
 | anchor.xinput-head-index | xinput head index | fis12-2.0.3:docs/xinput-form-response.md#seller-side-form | fis12-2.0.3 |
 | anchor.xinput-headings | xinput headings | fis12-2.0.3:validations/index.yaml#_TESTS_.on_search[ON_SEARCH_ITEMS_PL]._RETURN_[VALID_XINPUT_HEADINGS_ENUM].enumList | fis12-2.0.3 |
+| anchor.registered-expectation | api-service gate: a call is accepted only against a pre-registered expectation (sandbox-observed) | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.expectation-expiry | an expectation lapses (~4.5 min from flow start), after which a well-formed call still NACKs 412 | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.ttl-validation | the runtime's TTL check, applied to on_* callbacks only | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.transaction-history-validation | the runtime's transaction-history check, first stage of the per-action pipeline | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.transaction-id-check | the runtime's transaction-id check, after TTL validation | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.callback-action | an on_* action (a callback), as distinct from a request action | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.request-action | a non-on_* action (a request), as distinct from a callback | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.mock-auto-drive | starting a flow fires the MOCK-side steps with no outbound call from the NP under test | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.mock-sandbox | the workbench mock-runner sandbox: stub fixtures, not protocol enforcement | workbench:frames/mock-runner-lib.md | fis12-2.0.3 |
+| anchor.api-service | the domain api-service instance (beckn-onix adapter) that receives protocol calls | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |
+| anchor.transaction-session | the workbench session a transaction and its expectations belong to (sandbox-observed) | obs-sandbox:fis12-2.0.3-dedupe-20260822 | fis12-2.0.3 |

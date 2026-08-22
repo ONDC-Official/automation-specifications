@@ -1145,3 +1145,16 @@ anchor.on-issue-status | requires | "['$.message.issue.resolution.action_trigger
 anchor.on-issue-status | requires | "$.message.issue.resolution_provider.respondent_info.type" | basis:declared | asof:fis12-2.0.3 | grounded-in:fis12-2.0.3:validations/index.yaml#_TESTS_.on_issue_status[ISSUE_ON_ISSUE_STATUS_VALIDATION]._RETURN_[REQUIRED_RESOLUTION_PROVIDER_TYPE]
 anchor.on-issue-status | requires | "$.message.issue.resolution_provider.respondent_info.organization.org.name" | basis:declared | asof:fis12-2.0.3 | grounded-in:fis12-2.0.3:validations/index.yaml#_TESTS_.on_issue_status[ISSUE_ON_ISSUE_STATUS_VALIDATION]._RETURN_[REQUIRED_RESOLUTION_PROVIDER_ORG_NAME]
 anchor.on-issue-status | requires | "$.message.issue.resolution_provider.respondent_info.organization.person.name" | basis:declared | asof:fis12-2.0.3 | grounded-in:fis12-2.0.3:validations/index.yaml#_TESTS_.on_issue_status[ISSUE_ON_ISSUE_STATUS_VALIDATION]._RETURN_[REQUIRED_RESOLUTION_PROVIDER_PERSON_NAME]
+
+# --- sandbox runtime observation (obs-sandbox:fis12-2.0.3-dedupe-20260822) ---
+# SANDBOX execution, user-authorized. Never observed-live: no real participant involved.
+anchor.api-service | requires | anchor.registered-expectation | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.registered-expectation | scoped-to | anchor.transaction-session | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.registered-expectation | constrains | "keyed by (SessionId, FlowId, transaction_id, subscriber URL, role)" | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.registered-expectation | causes | anchor.expectation-expiry | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.expectation-expiry | causes | anchor.nack-response | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.ttl-validation | scoped-to | anchor.callback-action | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.ttl-validation | not-constrains | anchor.request-action | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.transaction-history-validation | precedes | anchor.ttl-validation | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.ttl-validation | precedes | anchor.transaction-id-check | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822
+anchor.mock-auto-drive | scoped-to | anchor.mock-sandbox | basis:sandbox-tested | asof:fis12-2.0.3 | grounded-in:obs-sandbox:fis12-2.0.3-dedupe-20260822

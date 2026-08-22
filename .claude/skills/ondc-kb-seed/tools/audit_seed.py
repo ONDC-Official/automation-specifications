@@ -264,11 +264,22 @@ def main():
             # marking, authorization, and a name tag. 19 such atoms existed and were all
             # grounded at `workbench:` DOC files — reading documentation and claiming
             # production. Re-based to `authority`, which is what doc-grounded means.
+            # The obs ref IS the name tag: vocabularies.md already says both runtime
+            # bases carry an observation reference in `grounded-in`, so authorization
+            # and attribution ride there rather than needing a new field.
+            #   sandbox  -> grounded-in:obs-sandbox:<run-id>   (a recorded sandbox run)
+            #   live     -> grounded-in:obs-live:<authorizer>/<ref>  (human-marked only)
             if b == "observed-live":
-                viol["observed-live-unauthorized"].append(f"{bid}:{ln} {line[:110]}")
-            # `sandbox-tested` is legitimate ONLY with a real execution/observation ref.
-            # A workbench doc is not an observation — that is `authority`.
-            if b == "sandbox-tested" and (not g or g.startswith("workbench:")):
+                if not (g or "").startswith("obs-live:"):
+                    # pipeline output, or an untagged claim: production runtime asserted
+                    # with no authorization and no name tag. Never permitted.
+                    viol["observed-live-unauthorized"].append(f"{bid}:{ln} {line[:110]}")
+                else:
+                    # correctly tagged, but still exceptional — surface for confirmation
+                    viol["observed-live-needs-confirmation"].append(f"{bid}:{ln} {line[:110]}")
+            # `sandbox-tested` is legitimate ONLY with a real execution ref. A workbench
+            # doc is not an observation — that is `authority`.
+            if b == "sandbox-tested" and not (g or "").startswith("obs-sandbox:"):
                 viol["sandbox-tested-without-obs"].append(f"{bid}:{ln} {line[:110]}")
             if "__malformed__" in kv: viol["malformed-field"].append(f"{bid}:{ln}")
             # field order
@@ -377,6 +388,8 @@ def main():
              "bad-relation","bad-basis","bad-flag","field-order","asof-mismatch","duplicate-unit",
              "R-and-notR","line-number-anchor","ground-book-mismatch","ground-file-missing",
              "ground-unparseable","anchor-not-registered","malformed","malformed-field",
+             "observed-live-unauthorized","observed-live-needs-confirmation",
+             "sandbox-tested-without-obs",
              "no-frames","missing-INDEX","missing-LOCATOR","frame-frontmatter",
              "frame-id-filename","frame-untraced"]
     clean = True
