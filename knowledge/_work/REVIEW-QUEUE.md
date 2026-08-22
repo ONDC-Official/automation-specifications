@@ -245,3 +245,67 @@ clears.
   canonising the duplicate in the base.
 - [ ] **(Related) drop the JSON-Schema authoring artifacts `Item.$schema` / `Item.type`** from
   `trv11-2.0.1`'s config surface — they are authoring leakage, not protocol; base stays unchanged.
+
+---
+
+## 7. Runtime + x-validation enrichment (2026-08-22, branch `kb-runtime-enrichment`)
+
+**Architecture correction.** The KB had been treating the mock-runner `validate()` blocks as
+the validation story. They are the **sandbox**. The real enforcement path is:
+`x-validations` → `validations/index.yaml` `_TESTS_` DSL → compiled by
+`automation-validation-compiler` (JVAL) into a Go `validationpkg` → consumed by the
+`ondc-validator` beckn plugin → executed inside **`beckn-onix`** (the API-service instance)
+as `PerformL1validations`. Confirmed in `ondcvalidator.go`. The plugin set makes the split
+legible: `ondc-validator`/`signer`/`signvalidator`/`encryption-middleware` are runtime;
+`workbench-*` are sandbox. New concepts the KB still lacks: **L1 validation**,
+**`StateFullValidations`**, `StorageInterface`.
+
+**New tools** (all deterministic, committed under `skill/tools/`):
+- `runtime_decoder.py` — decodes the base64 step logic. **18,770 blocks, 0 failures, 2,280
+  distinct** (`generate` 5,171 · `validate` 5,167 · `requirements` 5,167 · `getSave` 3,265).
+  The 3,265 `EVAL#` `getSave` extractors in `saveData` are a *fourth* kind of embedded logic
+  a first pass missed entirely.
+- `runtime_probe.py` + `.mjs` — executes that logic on the **real** `@ondc/automation-mock-runner`
+  (built locally; no Docker needed). ~15,300 executions across 16 books.
+- `xval_atomizer.py` — turns `_TESTS_` into grounded protocol atoms. **11,985 new atoms,
+  UNRES 0.** Deterministic because the grammar is regular: 13,959 rules, 25 `_RETURN_` shapes.
+
+**KB: 10,783 → 22,768 atoms.** All 16 books VALID. Audit: R-and-notR 0, duplicate 0,
+bad-relation/basis/flag 0, untethered-untagged 0, malformed 0, config-anchor resolution 99.96%.
+
+**Four generator bugs caught by reviewing output — worth remembering as a method:**
+1. Action-level `scoped-to` over-assertion (scope belongs to the RULE, not the action).
+   **This error was also in the subagent prompts** — it would have shipped in all 16 books.
+2. `subTags` is relative to `_SCOPE_` and must be joined to the full path.
+3. **`_CONTINUE_` is a SKIP GUARD** — a guarded rule is conditional. 2,929 of 11,578 rules
+   (25.3%) carry one. Ignoring it produced a real contradiction: `REQUIRED_CONTEXT_BPP_ID`
+   has `_CONTINUE_: (action all in var_search)` (bpp_id required EXCEPT broadcast search),
+   colliding with the pre-existing correct `anchor.search | not-requires | "$.context.bpp_id"`.
+   Guards now ride in the literal as `[unless <guard>]`.
+4. Disjunctive guards contain `||`, which split the pipe-delimited atom.
+
+**Audit matcher false-positived again** (same class as §1): held-out `Time.transaction_id`
+matched the bare leaf in `$.context.transaction_id`, a different universal field — 20 correct
+atoms flagged. `GENERIC_LEAVES` now also stops transaction_id/message_id/timestamp/version/
+domain/action.
+
+**Basis discipline applied:** reading code yields `basis:declared` grounded at the config
+node — NOT `sandbox-tested`, which requires actual execution and an obs ref. Sandbox fixture
+values ("xyz.com", "SHAHEED_STHAL") are never asserted as protocol fact.
+
+**STILL OPEN — `meetsRequirements` interpretation.** x-validation is per-payload and
+structurally cannot express "step N needs what step N-1 saved". The sandbox `requirements`
+blocks encode exactly those **unwritten cross-step preconditions**. Turning them into
+`precedes`/`requires` sequencing (session-logic plane) is genuinely interpretive, not
+mechanical — it needs agents and was deliberately NOT faked by a tool. Sandbox-required is
+NOT runtime-required, so any such fact must be confined `scoped-to anchor.mock-sandbox`.
+
+**Doc drift found (source is truth):** `packages/automation-mock-runner-lib/CLAUDE.md` says
+`generate` times out at 35s and that the AST walk rejects `fetch`. Source says **45s**
+(`function-registry.ts`, `node-worker.js` "between 1-45000ms") and `fetch` is deliberately
+**not** in `FORBIDDEN_GLOBALS` (runtime-gated by `allowedFetchBaseUrls`). The workbench frame
+`knowledge/protocol-workbench/frames/mock-runner-lib.md` is the accurate one.
+
+**Dead runtime API:** `generate6DigitId`, `currentTimestamp`, `isoDurToSec` are exported to
+`generate` scope but called by ZERO configs across all 16 books.
+**Session-key spelling split:** `transactionId` (140) and `transaction_id` (92) coexist.
