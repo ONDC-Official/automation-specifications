@@ -256,6 +256,20 @@ def main():
             for fn, fa in flags.items():
                 if fn not in FLAGS: viol["bad-flag"].append(f"{bid}:{ln} !{fn}")
             if "confidence" in kv: viol["confidence-field"].append(f"{bid}:{ln}")
+            # RUNTIME-BASIS POLICY (user-set, 2026-08-22).
+            # Everything this pipeline can reach is SANDBOX: the mock-runner executes
+            # stub fixtures, and the local beckn-onix stack is a sandbox instance too.
+            # `observed-live` means a real network participant was seen doing it in
+            # PRODUCTION. The pipeline must never write it: it requires explicit human
+            # marking, authorization, and a name tag. 19 such atoms existed and were all
+            # grounded at `workbench:` DOC files — reading documentation and claiming
+            # production. Re-based to `authority`, which is what doc-grounded means.
+            if b == "observed-live":
+                viol["observed-live-unauthorized"].append(f"{bid}:{ln} {line[:110]}")
+            # `sandbox-tested` is legitimate ONLY with a real execution/observation ref.
+            # A workbench doc is not an observation — that is `authority`.
+            if b == "sandbox-tested" and (not g or g.startswith("workbench:")):
+                viol["sandbox-tested-without-obs"].append(f"{bid}:{ln} {line[:110]}")
             if "__malformed__" in kv: viol["malformed-field"].append(f"{bid}:{ln}")
             # field order
             ks = [k for k in order if k != "!"]

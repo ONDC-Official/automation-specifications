@@ -49,8 +49,15 @@ def kebab(s):
 
 
 def lit(s):
-    """A literal object in the atom grammar is a quoted string; keep pipes out."""
-    return '"' + str(s).replace('"', "'").replace("|", "/") + '"'
+    """A literal object in the atom grammar is a quoted string. The atom line is
+    pipe-delimited, so a raw `|` inside a literal would split it into extra fields.
+
+    Escape it as `%7C` (percent-encoding) rather than substituting another character:
+    416 of 687 regexes in these configs use alternation, and replacing `|` with `/`
+    silently produced a DIFFERENT regex — `(?:http|https|www)` became
+    `(?:http/https/www)`. That was caught by comparing an atom against the live NACK
+    the sandbox validator emits for the same rule. %7C is reversible and unambiguous."""
+    return '"' + str(s).replace('"', "'").replace("|", "%7C") + '"'
 
 
 def conj_parts(expr):
@@ -156,7 +163,7 @@ def rule_atoms(rule, action, ground, book):
         # The qualifier is spliced in AFTER lit(), so it must be pipe-sanitised too —
         # a guard containing `||` (disjunctive guards do occur) would otherwise split
         # the atom into extra fields and fail the parser.
-        tag = " [" + "; ".join(quals).replace("|", "/").replace('"', "'") + "]"
+        tag = " [" + "; ".join(quals).replace("|", "%7C").replace('"', "'") + "]"
         out = [(l.replace('" | basis:declared', tag + '" | basis:declared', 1)
                 if " | constrains | " in l or " | requires | " in l else l, a) for l, a in out]
     return out
