@@ -5754,6 +5754,14 @@ _TESTS_:
       - rate_basis
       - diff_value
       _RETURN_: subTags all in validValues
+    - _NAME_: validate_tag_2_fulfillment_proof
+      _SCOPE_: $.message.order.fulfillments[*].tags[?(@.code=='fulfillment_proof')]
+      subTags: $.list[*].code
+      validValues:
+        - state
+        - type
+        - url
+      _RETURN_: subTags all in validValues
     - _NAME_: validate_tag_2_rider_details
       _SCOPE_: $.message.order.fulfillments[*].tags[?(@.code=='rider_details')]
       subTags: $.list[*].code
