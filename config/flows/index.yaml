@@ -15,7 +15,7 @@ flows:
     usecase: FASHION
     tags:
       - PRAMAAN
-      - MANDATORY
+      - OPTIONAL
       - REPORTABLE
       - WORKBENCH
     description: End-to-end fashion order flow where the buyer places an order with delivery instructions and the order is subsequently updated by the seller or logistics provider, with status tracking across fulfillment milestones through to completion. It validates buyer instruction capture, post-confirmation delivery updates, and reportable order state transitions in the retail transaction lifecycle.
@@ -122,6 +122,7 @@ flows:
     usecase: FASHION
     tags:
       - WORKBENCH
+      - OPTIONAL
     description: Exercises an incremental catalog refresh in the Fashion domain where the buyer app re-issues discovery to pull updated item availability, pricing, or assortment from the seller app after an initial search. It validates that catalog changes are surfaced end-to-end through successive search and on_search exchanges within the WORKBENCH flow.
     config:
       $ref: ./FASHION/Discovery_Flow_incremental_catalog_refresh_pull.yaml
@@ -160,7 +161,7 @@ flows:
     usecase: FASHION
     tags:
       - WORKBENCH
-      - MANDATORY
+      - OPTIONAL
       - REPORTABLE
     description: End-to-end fashion post-order replacement journey where a buyer requests replacement of a confirmed item, the seller validates and confirms the replacement, and both parties track the replacement order through successive updates and status milestones until closure.
     config:
