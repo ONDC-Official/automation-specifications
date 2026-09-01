@@ -1256,101 +1256,68 @@ _TESTS_:
             - _NAME_: QUOTE_PRICE_VALUE
               attr: $.message.order.quote.price.value
               _RETURN_: attr are present
-            - _NAME_: QUOTE_TTL
-              attr: $.message.order.quote.ttl
+            - _NAME_: BREAKUP_ITEM_ID
+              attr: $.message.order.quote.breakup[*]['@ondc/org/item_id']
               _RETURN_: attr are present
-            - _NAME_: QUOTE_BREAKUP
-              _RETURN_:
-                - _NAME_: BREAKUP_ITEM
-                  _RETURN_:
-                    - _NAME_: BREAKUP_ITEM_ID
-                      attr: $.message.order.quote.breakup[*]['@ondc/org/item_id']
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_QUANTITY_COUNT
-                      _CONTINUE_: "!(attr are present)"
-                      attr: $.message.order.quote.breakup[*]['@ondc/org/item_quantity'].count
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_TITLE
-                      attr: $.message.order.quote.breakup[*].title
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_TITLE_TYPE
-                      attr: $.message.order.quote.breakup[*]['@ondc/org/title_type']
-                      var_enum:
-                        - item
-                        - delivery
-                        - packing
-                        - tax
-                        - misc
-                        - discount
-                        - offer
-                      _RETURN_: attr all in var_enum
-                    - _NAME_: BREAKUP_ITEM_PRICE_CURRENCY
-                      attr: $.message.order.quote.breakup[*].price.currency
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_PRICE_VALUE
-                      attr: $.message.order.quote.breakup[*].price.value
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_ITEM
-                      _RETURN_:
-                        - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_AVAILABLE_COUNT
-                          _CONTINUE_: "!(attr are present)"
-                          attr: $.message.order.quote.breakup[*].item.quantity.available.count
-                          var_enum:
-                            - "99"
-                            - "0"
-                          _RETURN_: attr all in var_enum
-                        - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_MAXIMUM_COUNT
-                          _SCOPE_: $.message.order.quote.breakup[*]
-                          maximumCount: $.item.quantity.maximum.count
-                          value: "$['@ondc/org/title_type']"
-                          item: ["item"]
-                          _CONTINUE_: "!(value all in item)"
-                          _RETURN_: maximumCount are present
-                        - _NAME_: BREAKUP_ITEM_ITEM_PRICE_CURRENCY
-                          _SCOPE_: $.message.order.quote.breakup[*]
-                          priceCurrency: $.item.price.currency
-                          value: "$['@ondc/org/title_type']"
-                          item: ["item"]
-                          _CONTINUE_: "!(value all in item)"
-                          _RETURN_: priceCurrency are present
-                        - _NAME_: BREAKUP_ITEM_ITEM_PRICE_VALUE
-                          _SCOPE_: $.message.order.quote.breakup[*]
-                          priceValue: $.item.price.value
-                          value: "$['@ondc/org/title_type']"
-                          item: ["item"]
-                          _CONTINUE_: "!(value all in item)"
-                          _RETURN_: priceValue are present
-                        - _NAME_: BREAKUP_ITEM_ITEM_TAGS
-                          _RETURN_:
-                            - _NAME_: BREAKUP_ITEM_VALID_TAGS
-                              _CONTINUE_: "!(attr are present)"
-                              attr: $.message.order.quote.breakup[*].item.tags[*].code
-                              valid:
-                                - quote
-                                - np_fees
-                                - offer
-                              _RETURN_: attr all in valid
-                            - _NAME_: BREAKUP_ITEM_ITEM_TAGS_TAGS_QUOTE
-                              _RETURN_:
-                                - _NAME_: BREAKUP_ITEM_ITEM_TAGS_TAGS_QUOTE_TYPE
-                                  attr: $.message.order.quote.breakup[*].item.tags[?(@.code=='quote')].list[?(@.code=='type')].value
-                                  var_enum:
-                                    - fulfillment
-                                    - order
-                                    - item
-                                  _CONTINUE_: "!(attr are present)"
-                                  _RETURN_: attr all in var_enum
-                                - _NAME_: BREAKUP_ITEM_ITEM_TAGS_TAGS_QUOTE_SUBTYPE
-                                  _CONTINUE_: "!(attr are present)"
-                                  attr: $.message.order.quote.breakup[*].item.tags[?(@.code=='quote')].list[?(@.code=='subtype')].value
-                                  var_enum:
-                                    - delivery
-                                    - packaging
-                                    - misc
-                                  _RETURN_: attr all in var_enum
-        - _NAME_: BREAKUP_ITEM_ITEM_TAGS_TAGS_NP_FEES
+            - _NAME_: BREAKUP_TITLE
+              attr: $.message.order.quote.breakup[*].title
+              _RETURN_: attr are present
+            - _NAME_: BREAKUP_TITLE_TYPE
+              attr: $.message.order.quote.breakup[*]['@ondc/org/title_type']
+              var_enum:
+                - item
+                - tax
+                - delivery
+                - packing
+                - discount
+                - misc
+              _RETURN_: attr are present && attr all in var_enum
+            - _NAME_: BREAKUP_PRICE_CURRENCY
+              attr: $.message.order.quote.breakup[*].price.currency
+              var_enum:
+                - INR
+              _RETURN_: attr are present && attr all in var_enum
+            - _NAME_: BREAKUP_PRICE_VALUE
+              attr: $.message.order.quote.breakup[*].price.value
+              reg:
+                - ^-?(\\d+\\.\\d{1,2}|\\d+)$
+              _RETURN_: attr are present && attr follow regex reg
+            - _NAME_: BREAKUP_ITEM_QUANTITY_COUNT
+              attr: $.message.order.quote.breakup[*]['@ondc/org/item_quantity'].count
+              _RETURN_: attr are present
+        - _NAME_: ORDER_PAYMENTS
           _RETURN_:
-            - _NAME_: BREAKUP_ITEM_ITEM_TAGS_VALID_TAGS
+            - _NAME_: PAYMENTS_ID
+              attr: $.message.order.payments[*].id
+              reg:
+                - ^[A-Za-z0-9_-]{1,50}$
+              _RETURN_: attr follow regex reg
+            - _NAME_: PAYMENTS_ID_UNIQUE
+              attr: $.message.order.payments[*].id
+              _RETURN_: attr are present
+            - _NAME_: PAYMENTS_TYPE
+              attr: $.message.order.payments[*].type
+              var_enum:
+                - ON-ORDER
+                - ON-FULFILLMENT
+                - POST-FULFILLMENT
+                - PART-PAYMENT
+              _RETURN_: attr all in var_enum
+            - _NAME_: PAYMENTS_STATUS
+              attr: $.message.order.payments[?(@.type!='PART-PAYMENT' && @.status)].status
+              var_enum:
+                - PAID
+                - NOT-PAID
+              _RETURN_: attr all in var_enum
+            - _NAME_: PAYMENTS_COLLECTED_BY
+              attr: $.message.order.payments[*].collected_by
+              var_enum:
+                - BAP
+                - BPP
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr all in var_enum
+            - _NAME_: PART_PAYMENT_VALIDATION
+              attr: $.message.order.payments[?(@.type=='PART-PAYMENT')].tags[*].descriptor.code
               _CONTINUE_: "!(attr are present)"
               attr: $.message.order.fulfillments[*].tags[?(@.code=='np_fees')].list[*].code
               valid:
