@@ -111,35 +111,43 @@ _TESTS_:
             - _NAME_: CATEGORY_REQUIRED_ID
               attr: $.message.intent.category.id
               valid:
-                - Fruits and Vegetables
-                - Masala & Seasoning
-                - Oil & Ghee
-                - Eggs, Meat & Fish
-                - Bakery, Cakes & Dairy
-                - Pet Care
-                - Detergents and Dishwash
-                - Dairy and Cheese
-                - Snacks, Dry Fruits, Nuts
-                - Pasta, Soup and Noodles
-                - Cereals and Breakfast
-                - Sauces, Spreads and Dips
-                - Chocolates and Biscuits
-                - Cooking and Baking Needs
-                - Tinned and Processed Food
-                - Atta, Flours and Sooji
-                - Rice and Rice Products
-                - Dals and Pulses
-                - Salt, Sugar and Jaggery
-                - Energy and Soft Drinks
-                - Water
-                - Tea and Coffee
-                - Fruit Juices and Fruit Drinks
-                - Snacks and Namkeen
-                - Ready to Cook and Eat
-                - Pickles and Chutney
-                - Indian Sweets
-                - Frozen Vegetables
-                - Frozen Snacks
+                - Pain Relief
+                - Nutrition and Fitness Supplements
+                - Speciality Care
+                - Covid Essentials
+                - Diabetes Control
+                - Healthcare & Fitness Devices
+                - Ayurvedic
+                - Homeopathy
+                - Unani and Siddha
+                - Elder Care
+                - Baby Care
+                - Orthopaedic Care
+                - Mobility Aids
+                - Medicated Hair Care
+                - Medicated Skin Care
+                - Speciality Face Cleansers
+                - Gastric Care
+                - ENT Care
+                - Eye Care
+                - Cold and Cough
+                - Sexual Wellness
+                - Feminine Care
+                - Maternity Care
+                - Nursing and Feeding
+                - Hand Wash
+                - Sanitizers
+                - Baby Care - Wipes and Buds
+                - Baby Care - Rash Creams
+                - Baby Care - Diapers and Accessories
+                - Health and Safety
+                - Oral Care
+                - Contraceptives
+                - Breathe Easy
+                - Health Foods and Drinks
+                - Wound Care and Dressings
+                - Surgicals
+                - Mental Wellness
                 - Gift Voucher
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in valid
@@ -335,35 +343,43 @@ _TESTS_:
             - _NAME_: TAGS_BAP_PROMOS_CATEGORY
               attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='category')].value
               var_enum_promo_categories:
-                - Fruits and Vegetables
-                - Masala & Seasoning
-                - Oil & Ghee
-                - Eggs, Meat & Fish
-                - Bakery, Cakes & Dairy
-                - Pet Care
-                - Detergents and Dishwash
-                - Dairy and Cheese
-                - Snacks, Dry Fruits, Nuts
-                - Pasta, Soup and Noodles
-                - Cereals and Breakfast
-                - Sauces, Spreads and Dips
-                - Chocolates and Biscuits
-                - Cooking and Baking Needs
-                - Tinned and Processed Food
-                - Atta, Flours and Sooji
-                - Rice and Rice Products
-                - Dals and Pulses
-                - Salt, Sugar and Jaggery
-                - Energy and Soft Drinks
-                - Water
-                - Tea and Coffee
-                - Fruit Juices and Fruit Drinks
-                - Snacks and Namkeen
-                - Ready to Cook and Eat
-                - Pickles and Chutney
-                - Indian Sweets
-                - Frozen Vegetables
-                - Frozen Snacks
+                - Pain Relief
+                - Nutrition and Fitness Supplements
+                - Speciality Care
+                - Covid Essentials
+                - Diabetes Control
+                - Healthcare & Fitness Devices
+                - Ayurvedic
+                - Homeopathy
+                - Unani and Siddha
+                - Elder Care
+                - Baby Care
+                - Orthopaedic Care
+                - Mobility Aids
+                - Medicated Hair Care
+                - Medicated Skin Care
+                - Speciality Face Cleansers
+                - Gastric Care
+                - ENT Care
+                - Eye Care
+                - Cold and Cough
+                - Sexual Wellness
+                - Feminine Care
+                - Maternity Care
+                - Nursing and Feeding
+                - Hand Wash
+                - Sanitizers
+                - Baby Care - Wipes and Buds
+                - Baby Care - Rash Creams
+                - Baby Care - Diapers and Accessories
+                - Health and Safety
+                - Oral Care
+                - Contraceptives
+                - Breathe Easy
+                - Health Foods and Drinks
+                - Wound Care and Dressings
+                - Surgicals
+                - Mental Wellness
                 - Gift Voucher
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in var_enum_promo_categories
@@ -767,214 +783,170 @@ _TESTS_:
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
+                    - Health Foods and Drinks
+                    - Nutrition and Fitness Supplements
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_BRAND_OWNER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].brand_owner_FSSAI_license_no
                   _RETURN_: attr are present
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
+                    - Health Foods and Drinks
+                    - Nutrition and Fitness Supplements
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_IMPORTER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].importer_FSSAI_license_no
                   _RETURN_: attr are present
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
+                    - Health Foods and Drinks
+                    - Nutrition and Fitness Supplements
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_NUTRITIONAL_INFO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].nutritional_info
                   _RETURN_: attr are present
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
+                    - Health Foods and Drinks
+                    - Nutrition and Fitness Supplements
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_OTHER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].other_FSSAI_license_no
                   _RETURN_: attr are present
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
+                    - Health Foods and Drinks
+                    - Nutrition and Fitness Supplements
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_COMMON_OR_GENERIC_NAME_OF_COMMODITY
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].common_or_generic_name_of_commodity
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MANUFACTURER_OR_PACKER_ADDRESS
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_address
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MANUFACTURER_OR_PACKER_NAME
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_name
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _CONTINUE_: "!(category all in applicable_categories)"
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MONTH_YEAR_OF_MANUFACTURE_PACKING_IMPORT
@@ -982,37 +954,44 @@ _TESTS_:
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_TAGS
                   _RETURN_:
