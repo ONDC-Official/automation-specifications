@@ -1,0 +1,530 @@
+meta:
+  domain: ONDC:RETeB2B
+  version: 1.2.5
+  flowId: Discovery_Flow_incremental_catalog_push
+  description: An eB2B incremental catalog push scenario where a buyer platform subscribes to continuous catalog updates from a distributor, receives unsolicited item change, store-close, and store-reopen pushes, then unsubscribes.
+  flowName: Discovery flow incremental catalog push
+  use_case_id: eB2B
+transaction_data:
+  transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+  latest_timestamp: 1970-01-01T00:00:00.000Z
+  bap_id: sample-bap-id
+  bap_uri: https://bap.example.com
+  bpp_id: sample-bpp-id
+  bpp_uri: https://bpp.example.com
+steps:
+  - api: search
+    action_id: search_inc
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: The BAP subscribes to incremental catalog updates from the SNP by sending a search request with the catalog_inc tag mode set to start.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBpbnB1dHMgPSBzZXNzaW9uRGF0YS51c2VyX2lucHV0cyB8fCB7fTsKICBpZiAoaW5wdXRzLmNpdHkpIHsKICAgIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQuY2l0eSA9IGlucHV0cy5jaXR5OwogIH0KICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0K
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+      defaultPayload:
+        context:
+          domain: ONDC:RETeB2B
+          action: search
+          country: IND
+          city: std:080
+          core_version: 1.2.5
+          transaction_id: T1
+          message_id: M1
+          bap_id: sample-bap-id
+          bap_uri: https://bap.example.com
+          timestamp: 2025-01-08T08:00:00.000Z
+          ttl: PT30S
+        message:
+          intent:
+            payment:
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/buyer_app_finder_fee_amount": "3.54"
+            tags:
+              - code: bap_terms
+                list:
+                  - code: static_terms
+                    value: "https://buyerapp.com/ondc/terms-and-conditions"
+                  - code: static_terms_new
+                    value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                  - code: effective_date
+                    value: 2025-02-01T00:00:00.000Z
+              - code: catalog_inc
+                list:
+                  - code: mode
+                    value: start
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        inc_mode: $.message.intent.tags[?(@.code=='catalog_inc')].list[0].value
+      inputs:
+        id: ExampleInputId
+        jsonSchema:
+          $schema: http://json-schema.org/draft-07/schema#
+          type: object
+          properties:
+            city:
+              type: string
+              description: Enter the city code
+              minLength: 1
+              default: std:080
+          required:
+            - city
+          additionalProperties: false
+    examples:
+      - name: example for search
+        payload:
+          context:
+            domain: ONDC:RETeB2B
+            action: search
+            timestamp: 2026-08-27T08:00:00.000Z
+            transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+            message_id: 1a2b3c4d-0001-4aaa-8bbb-000000000001
+            bap_id: sample-bap-id
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            country: IND
+            city: std:080
+            core_version: 1.2.5
+          message:
+            intent:
+              payment:
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/buyer_app_finder_fee_amount": "3.54"
+              tags:
+                - code: bap_terms
+                  list:
+                    - code: static_terms
+                      value: "https://buyerapp.com/ondc/terms-and-conditions"
+                    - code: static_terms_new
+                      value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                    - code: effective_date
+                      value: 2026-08-27T00:00:00.000Z
+                - code: catalog_inc
+                  list:
+                    - code: mode
+                      value: start
+        type: request
+        description: BAP subscribes to incremental catalog updates
+  - api: on_search
+    action_id: on_search_inc
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: The SNP pushes an unsolicited incremental catalog update containing only the item whose price and availability changed since the last update.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBwcm92aWRlcnMgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmNhdGFsb2dbImJwcC9wcm92aWRlcnMiXTsKICBpZiAocHJvdmlkZXJzICYmIHByb3ZpZGVyc1swXSAmJiBwcm92aWRlcnNbMF0uaXRlbXMgJiYgcHJvdmlkZXJzWzBdLml0ZW1zWzBdKSB7CiAgICBwcm92aWRlcnNbMF0uaXRlbXNbMF0udGltZS50aW1lc3RhbXAgPSBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCk7CiAgfQogIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKfQo=
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+      defaultPayload:
+        context:
+          domain: ONDC:RETeB2B
+          action: on_search
+          country: IND
+          city: std:080
+          core_version: 1.2.5
+          transaction_id: T1
+          message_id: M1
+          bap_id: sample-bap-id
+          bap_uri: https://bap.example.com
+          bpp_id: sample-bpp-id
+          bpp_uri: https://bpp.example.com
+          timestamp: 2025-01-08T08:05:00.000Z
+          ttl: PT30S
+        message:
+          catalog:
+            bpp/providers:
+              - id: P1
+                items:
+                  - id: I1
+                    parent_item_id: V1
+                    descriptor:
+                      name: Ashirwad Plain Atta 1kg
+                      code: 1:XXXXXXXXXXXXX
+                      symbol: https://seller-np.com/images/ashirwad-atta-1kg.png
+                      short_desc: Ashirwad Plain Atta 1kg Pack
+                      long_desc: Premium quality wheat flour
+                      images:
+                        - https://seller-np.com/images/ashirwad-atta-1kg.png
+                    price:
+                      currency: INR
+                      value: "48.00"
+                      maximum_value: "52.00"
+                    quantity:
+                      unitized:
+                        count: "10"
+                        measure:
+                          unit: kilogram
+                          value: "1"
+                      available:
+                        count: "80"
+                      maximum:
+                        count: "100"
+                      minimum:
+                        count: "20"
+                    category_id: Atta, Flours and Sooji
+                    fulfillment_id: F1
+                    location_id: L1
+                    "@ondc/org/returnable": true
+                    "@ondc/org/cancellable": true
+                    "@ondc/org/return_window": P2D
+                    "@ondc/org/seller_pickup_return": true
+                    "@ondc/org/time_to_ship": PT4H
+                    "@ondc/org/available_on_cod": true
+                    "@ondc/org/contact_details_consumer_care": support,support@abcdist.com,18004254444
+                    "@ondc/org/statutory_reqs_packaged_commodities":
+                      manufacturer_or_packer_name: ITC Limited
+                      manufacturer_or_packer_address: ITC Quality Care Cell, P.O Box No.592, Bangalore-560005
+                      common_or_generic_name_of_commodity: Wheat Flour (Atta)
+                      month_year_of_manufacture_packing_import: 12/2024
+                    "@ondc/org/statutory_reqs_prepackaged_food":
+                      nutritional_info: Energy(KCal)-(per 100g) 348; Protein(g)-(per 100g) 11.8
+                      additives_info: None
+                      brand_owner_FSSAI_license_no: "12345678901234"
+                      other_FSSAI_license_no: "12345678901234"
+                      importer_FSSAI_license_no: ""
+                    time:
+                      label: enable
+                      timestamp: 2025-01-08T08:05:00.000Z
+                    tags:
+                      - code: origin
+                        list:
+                          - code: country
+                            value: IND
+                      - code: veg_nonveg
+                        list:
+                          - code: veg
+                            value: yes
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+      inputs: {}
+    examples:
+      - name: example for on_search
+        payload:
+          context:
+            domain: ONDC:RETeB2B
+            action: on_search
+            timestamp: 2026-08-27T08:05:00.000Z
+            transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+            message_id: 1a2b3c4d-0002-4aaa-8bbb-000000000002
+            bap_id: sample-bap-id
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: sample-bpp-id
+            bpp_uri: https://bpp.example.com
+            country: IND
+            city: std:080
+            core_version: 1.2.5
+          message:
+            catalog:
+              bpp/providers:
+                - id: P1
+                  items:
+                    - id: I1
+                      parent_item_id: V1
+                      descriptor:
+                        name: Ashirwad Plain Atta 1kg
+                        code: 1:XXXXXXXXXXXXX
+                        symbol: https://seller-np.com/images/ashirwad-atta-1kg.png
+                        short_desc: Ashirwad Plain Atta 1kg Pack
+                        long_desc: Premium quality wheat flour
+                        images:
+                          - https://seller-np.com/images/ashirwad-atta-1kg.png
+                      price:
+                        currency: INR
+                        value: "48.00"
+                        maximum_value: "52.00"
+                      quantity:
+                        unitized:
+                          count: "10"
+                          measure:
+                            unit: kilogram
+                            value: "1"
+                        available:
+                          count: "80"
+                        maximum:
+                          count: "100"
+                        minimum:
+                          count: "20"
+                      category_id: Atta, Flours and Sooji
+                      fulfillment_id: F1
+                      location_id: L1
+                      "@ondc/org/returnable": true
+                      "@ondc/org/cancellable": true
+                      "@ondc/org/return_window": P2D
+                      "@ondc/org/seller_pickup_return": true
+                      "@ondc/org/time_to_ship": PT4H
+                      "@ondc/org/available_on_cod": true
+                      "@ondc/org/contact_details_consumer_care": support,support@abcdist.com,18004254444
+                      "@ondc/org/statutory_reqs_packaged_commodities":
+                        manufacturer_or_packer_name: ITC Limited
+                        manufacturer_or_packer_address: ITC Quality Care Cell, P.O Box No.592, Bangalore-560005
+                        common_or_generic_name_of_commodity: Wheat Flour (Atta)
+                        month_year_of_manufacture_packing_import: 12/2024
+                      "@ondc/org/statutory_reqs_prepackaged_food":
+                        nutritional_info: Energy(KCal)-(per 100g) 348; Protein(g)-(per 100g) 11.8
+                        additives_info: None
+                        brand_owner_FSSAI_license_no: "12345678901234"
+                        other_FSSAI_license_no: "12345678901234"
+                        importer_FSSAI_license_no: ""
+                      time:
+                        label: enable
+                        timestamp: 2026-08-27T08:05:00.000Z
+                      tags:
+                        - code: origin
+                          list:
+                            - code: country
+                              value: IND
+                        - code: veg_nonveg
+                          list:
+                            - code: veg
+                              value: yes
+        type: request
+        description: SNP pushes an incremental item price/availability update
+  - api: on_search
+    action_id: on_search_inc_close
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: The SNP pushes an unsolicited store-closure update for a provider location.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmNhdGFsb2dbImJwcC9wcm92aWRlcnMiXSA9IFsKICAgIHsKICAgICAgaWQ6ICJQMSIsCiAgICAgIGxvY2F0aW9uczogWwogICAgICAgIHsKICAgICAgICAgIGlkOiAiTDEiLAogICAgICAgICAgdGltZTogewogICAgICAgICAgICBsYWJlbDogImNsb3NlIiwKICAgICAgICAgICAgdGltZXN0YW1wOiBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCksCiAgICAgICAgICAgIHJhbmdlOiB7CiAgICAgICAgICAgICAgc3RhcnQ6IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKQogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICBdCiAgICB9CiAgXTsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0K
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+      defaultPayload:
+        context:
+          domain: ONDC:RETeB2B
+          action: on_search
+          country: IND
+          city: std:080
+          core_version: 1.2.5
+          transaction_id: T1
+          message_id: M1
+          bap_id: sample-bap-id
+          bap_uri: https://bap.example.com
+          bpp_id: sample-bpp-id
+          bpp_uri: https://bpp.example.com
+          timestamp: 2025-01-08T10:20:00.000Z
+          ttl: PT30S
+        message:
+          catalog:
+            bpp/providers:
+              - id: P1
+                locations:
+                  - id: L1
+                    time:
+                      label: close
+                      timestamp: 2025-01-08T10:20:00.000Z
+                      range:
+                        start: 2025-01-08T16:00:00.000Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+      inputs: {}
+    examples:
+      - name: example for on_search
+        payload:
+          context:
+            domain: ONDC:RETeB2B
+            action: on_search
+            timestamp: 2026-08-27T10:20:00.000Z
+            transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+            message_id: 1a2b3c4d-0003-4aaa-8bbb-000000000003
+            bap_id: sample-bap-id
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: sample-bpp-id
+            bpp_uri: https://bpp.example.com
+            country: IND
+            city: std:080
+            core_version: 1.2.5
+          message:
+            catalog:
+              bpp/providers:
+                - id: P1
+                  locations:
+                    - id: L1
+                      time:
+                        label: close
+                        timestamp: 2026-08-27T10:20:00.000Z
+                        range:
+                          start: 2026-08-27T16:00:00.000Z
+        type: request
+        description: SNP pushes a store-closure update
+  - api: on_search
+    action_id: on_search_inc_open
+    owner: BPP
+    responseFor: null
+    unsolicited: true
+    description: The SNP pushes an unsolicited store-reopen update for a provider location.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLmNhdGFsb2dbImJwcC9wcm92aWRlcnMiXSA9IFsKICAgIHsKICAgICAgaWQ6ICJQMSIsCiAgICAgIGxvY2F0aW9uczogWwogICAgICAgIHsKICAgICAgICAgIGlkOiAiTDEiLAogICAgICAgICAgdGltZTogewogICAgICAgICAgICBsYWJlbDogIm9wZW4iLAogICAgICAgICAgICB0aW1lc3RhbXA6IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKQogICAgICAgICAgfQogICAgICAgIH0KICAgICAgXQogICAgfQogIF07CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+      defaultPayload:
+        context:
+          domain: ONDC:RETeB2B
+          action: on_search
+          country: IND
+          city: std:080
+          core_version: 1.2.5
+          transaction_id: T1
+          message_id: M1
+          bap_id: sample-bap-id
+          bap_uri: https://bap.example.com
+          bpp_id: sample-bpp-id
+          bpp_uri: https://bpp.example.com
+          timestamp: 2025-01-09T08:30:00.000Z
+          ttl: PT30S
+        message:
+          catalog:
+            bpp/providers:
+              - id: P1
+                locations:
+                  - id: L1
+                    time:
+                      label: open
+                      timestamp: 2025-01-09T08:30:00.000Z
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+      inputs: {}
+    examples:
+      - name: example for on_search
+        payload:
+          context:
+            domain: ONDC:RETeB2B
+            action: on_search
+            timestamp: 2026-08-27T08:30:00.000Z
+            transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+            message_id: 1a2b3c4d-0004-4aaa-8bbb-000000000004
+            bap_id: sample-bap-id
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            bpp_id: sample-bpp-id
+            bpp_uri: https://bpp.example.com
+            country: IND
+            city: std:080
+            core_version: 1.2.5
+          message:
+            catalog:
+              bpp/providers:
+                - id: P1
+                  locations:
+                    - id: L1
+                      time:
+                        label: open
+                        timestamp: 2026-08-27T08:30:00.000Z
+        type: request
+        description: SNP pushes a store-reopen update
+  - api: search
+    action_id: search_inc_stop
+    owner: BAP
+    responseFor: null
+    unsolicited: false
+    description: The BAP unsubscribes from incremental catalog updates by sending a search request with the catalog_inc tag mode set to stop.
+    mock:
+      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCB0YWdzID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5pbnRlbnQudGFncyB8fCBbXTsKICBjb25zdCBjYXRhbG9nSW5jVGFnID0gdGFncy5maW5kKHQgPT4gdC5jb2RlID09PSAiY2F0YWxvZ19pbmMiKTsKICBpZiAoY2F0YWxvZ0luY1RhZykgewogICAgY29uc3QgbW9kZUl0ZW0gPSBjYXRhbG9nSW5jVGFnLmxpc3QuZmluZChsID0+IGwuY29kZSA9PT0gIm1vZGUiKTsKICAgIGlmIChtb2RlSXRlbSkgewogICAgICBtb2RlSXRlbS52YWx1ZSA9ICJzdG9wIjsKICAgIH0KICB9CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
+      validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+      requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+      defaultPayload:
+        context:
+          domain: ONDC:RETeB2B
+          action: search
+          country: IND
+          city: std:080
+          core_version: 1.2.5
+          transaction_id: T1
+          message_id: M1
+          bap_id: sample-bap-id
+          bap_uri: https://bap.example.com
+          timestamp: 2025-01-09T09:00:00.000Z
+          ttl: PT30S
+        message:
+          intent:
+            payment:
+              "@ondc/org/buyer_app_finder_fee_type": percent
+              "@ondc/org/buyer_app_finder_fee_amount": "3.54"
+            tags:
+              - code: bap_terms
+                list:
+                  - code: static_terms
+                    value: "https://buyerapp.com/ondc/terms-and-conditions"
+                  - code: static_terms_new
+                    value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                  - code: effective_date
+                    value: 2025-02-01T00:00:00.000Z
+              - code: catalog_inc
+                list:
+                  - code: mode
+                    value: stop
+      saveData:
+        transactionId: $.context.transaction_id
+        latestMessage_id: $.context.message_id
+        latestTimestamp: $.context.timestamp
+        bapId: $.context.bap_id
+        bapUri: $.context.bap_uri
+        bppId: $.context.bpp_id
+        bppUri: $.context.bpp_uri
+        inc_mode: $.message.intent.tags[?(@.code=='catalog_inc')].list[0].value
+      inputs: {}
+    examples:
+      - name: example for search
+        payload:
+          context:
+            domain: ONDC:RETeB2B
+            action: search
+            timestamp: 2026-08-27T09:00:00.000Z
+            transaction_id: b385ea70-3088-4fbc-821e-916c4e78e52f
+            message_id: 1a2b3c4d-0005-4aaa-8bbb-000000000005
+            bap_id: sample-bap-id
+            bap_uri: https://bap.example.com
+            ttl: PT30S
+            country: IND
+            city: std:080
+            core_version: 1.2.5
+          message:
+            intent:
+              payment:
+                "@ondc/org/buyer_app_finder_fee_type": percent
+                "@ondc/org/buyer_app_finder_fee_amount": "3.54"
+              tags:
+                - code: bap_terms
+                  list:
+                    - code: static_terms
+                      value: "https://buyerapp.com/ondc/terms-and-conditions"
+                    - code: static_terms_new
+                      value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
+                    - code: effective_date
+                      value: 2026-08-27T00:00:00.000Z
+                - code: catalog_inc
+                  list:
+                    - code: mode
+                      value: stop
+        type: request
+        description: BAP unsubscribes from incremental catalog updates
+transaction_history: []
+validationLib: ""
+helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCi8vIEdlbmVyYXRlcyBhIFVVSUQgdjQKZnVuY3Rpb24gdXVpZHY0KCkgewoJcmV0dXJuICd4eHh4eHh4eC14eHh4LTR4eHgteXh4eC14eHh4eHh4eHh4eHgnLnJlcGxhY2UoL1t4eV0vZywgZnVuY3Rpb24gKGMpIHsKCSAgY29uc3QgciA9IE1hdGgucmFuZG9tKCkgKiAxNiB8IDA7CgkgIGNvbnN0IHYgPSBjID09PSAneCcgPyByIDogKHIgJiAweDMgfCAweDgpOwoJICByZXR1cm4gdi50b1N0cmluZygxNik7Cgl9KTsKfQoKLy8gR2VuZXJhdGUgYSA2IGRpZ2l0IHN0cmluZyBJRApmdW5jdGlvbiBnZW5lcmF0ZTZEaWdpdElkKCkgewoJcmV0dXJuIE1hdGguZmxvb3IoMTAwMDAwICsgTWF0aC5yYW5kb20oKSAqIDkwMDAwMCkudG9TdHJpbmcoKTsKfQoKLy8gUmV0dXJucyB0aGUgY3VycmVudCBJU08gdGltZXN0YW1wCmZ1bmN0aW9uIGN1cnJlbnRUaW1lc3RhbXAoKSB7CglyZXR1cm4gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwp9CgovLyBDb252ZXJ0cyBJU08gODYwMSBkdXJhdGlvbiBzdHJpbmcgdG8gdG90YWwgc2Vjb25kcwpjb25zdCBpc29EdXJUb1NlYyA9IChkdXJhdGlvbikgPT4gewogIGNvbnN0IGR1clJFID0gL1AoKGQrKVkpPygoZCspTSk/KChkKylXKT8oKGQrKUQpP1Q/KChkKylIKT8oKGQrKU0pPygoZCspUyk/LzsKICBjb25zdCBzID0gZHVyUkUuZXhlYyhkdXJhdGlvbik7CiAgaWYgKCFzKSByZXR1cm4gMDsKICAKICByZXR1cm4gKE51bWJlcihzPy5bMl0pIHx8IDApICogMzE1MzYwMDAgKwoJKE51bWJlcihzPy5bNF0pIHx8IDApICogMjYyODI4OCArCgkoTnVtYmVyKHM/Lls2XSkgfHwgMCkgKiA2MDQ4MDAgKwoJKE51bWJlcihzPy5bOF0pIHx8IDApICogODY0MDAgKwoJKE51bWJlcihzPy5bMTBdKSB8fCAwKSAqIDM2MDAgKwoJKE51bWJlcihzPy5bMTJdKSB8fCAwKSAqIDYwICsKCShOdW1iZXIocz8uWzE0XSkgfHwgMCk7Cn07CgoKZnVuY3Rpb24gYXBwbHlEeW5hbWljVGltZXN0YW1wcyhwYXlsb2FkKSB7CiAgY29uc3Qgbm93ID0gbmV3IERhdGUoKTsKICBjb25zdCBub3dJU08gPSBub3cudG9JU09TdHJpbmcoKTsKCiAgLy8gZGVmYXVsdCB2YWxpZGl0eSA9ICs5MCBkYXlzCiAgY29uc3QgZnV0dXJlID0gbmV3IERhdGUobm93KTsKICBmdXR1cmUuc2V0RGF0ZShub3cuZ2V0RGF0ZSgpICsgOTApOwogIGNvbnN0IGZ1dHVyZUlTTyA9IGZ1dHVyZS50b0lTT1N0cmluZygpOwoKICBmdW5jdGlvbiB1cGRhdGUob2JqKSB7CiAgICBpZiAoIW9iaiB8fCB0eXBlb2Ygb2JqICE9PSAib2JqZWN0IikgcmV0dXJuOwoKICAgIGZvciAoY29uc3Qga2V5IGluIG9iaikgewoKICAgICAgaWYgKGtleSA9PT0gInRpbWVzdGFtcCIgfHwga2V5ID09PSAiY3JlYXRlZF9hdCIgfHwga2V5ID09PSAidXBkYXRlZF9hdCIpIHsKICAgICAgICBvYmpba2V5XSA9IG5vd0lTTzsKICAgICAgfQoKICAgICAgLy8gRml4IE9OREMgdGFnIHRpbWVzdGFtcHMgbGlrZSB2YWxpZF90aWxsCiAgICAgIGlmIChrZXkgPT09ICJjb2RlIiAmJiBvYmpba2V5XSA9PT0gInZhbGlkX3RpbGwiICYmIG9iai52YWx1ZSkgewogICAgICAgIG9iai52YWx1ZSA9IGZ1dHVyZUlTTzsKICAgICAgfQoKICAgICAgaWYgKHR5cGVvZiBvYmpba2V5XSA9PT0gIm9iamVjdCIpIHsKICAgICAgICB1cGRhdGUob2JqW2tleV0pOwogICAgICB9CiAgICB9CiAgfQoKICB1cGRhdGUocGF5bG9hZCk7CgogIHJldHVybiBwYXlsb2FkOwp9

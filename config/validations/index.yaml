@@ -851,6 +851,7 @@ _TESTS_:
           
           - _NAME_: ITEMS_TIME_LABEL
             attr: "$.message.catalog['bpp/providers'][*].items[*].time.label"
+            _CONTINUE_: "!(attr are present)"
             _RETURN_: attr are present
           - _NAME_: ITEMS_TIME_TIMESTAMP
             attr: "$.message.catalog['bpp/providers'][*].items[*].time.timestamp"
@@ -887,9 +888,9 @@ _TESTS_:
             _RETURN_: attr are present
           - _NAME_: ITEMS_QUANTITY_AVAILABLE_COUNT
             attr: "$.message.catalog['bpp/providers'][*].items[*].quantity.available.count"
-            var_enum: ["99", "0"]
+            reg: ["^(0|[1-9][0-9]?)$"]
             _CONTINUE_: "!(attr are present)"
-            _RETURN_: attr all in var_enum
+            _RETURN_: attr are present && attr follow regex reg
           - _NAME_: ITEMS_QUANTITY_MAXIMUM_COUNT
             attr: "$.message.catalog['bpp/providers'][*].items[*].quantity.maximum.count"
             _CONTINUE_: "!(attr are present)"
@@ -1854,8 +1855,8 @@ _TESTS_:
 
           - _NAME_: ITEMS_QUANTITY_AVAILABLE_COUNT
             attr: "$.message.catalog['bpp/providers'][*].items[*].quantity.available.count"
-            var_enum: ["99", "0"]
-            _RETURN_: attr all in var_enum
+            reg: ["^(0|[1-9][0-9]?)$"]
+            _RETURN_: attr are present && attr follow regex reg
           - _NAME_: ITEMS_QUANTITY_MAXIMUM_COUNT
             attr: "$.message.catalog['bpp/providers'][*].items[*].quantity.maximum.count"
             _RETURN_: attr are present
@@ -2614,10 +2615,9 @@ _TESTS_:
                 attr: "$.message.order.quote.breakup[*].item.parent_item_id"
                 _RETURN_: attr are present
               - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_AVAILABLE_COUNT
-                _CONTINUE_: "!(attr are present)"
                 attr: "$.message.order.quote.breakup[*].item.quantity.available.count"
-                var_enum: ["99", "0"]
-                _RETURN_: attr all in var_enum
+                reg: ["^(0|[1-9][0-9]?)$"]
+                _RETURN_: attr are present && attr follow regex reg
               - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_MAXIMUM_COUNT
                 _CONTINUE_: "!(attr are present)"
                 attr: "$.message.order.quote.breakup[*].item.quantity.maximum.count"

@@ -1214,6 +1214,7 @@ steps:
         payload_list: $.message.catalog["bpp/providers"][0].tags[?(@.code=="retailer_info_required")].list
         payload_retailer: $.payload_retailer
         providerId: $.message.catalog["bpp/providers"][0].id
+        providerData: $.message.catalog["bpp/providers"][0]
       inputs: {}
     examples:
       - name: example for on_search
@@ -2325,7 +2326,6 @@ steps:
         bppId: $.context.bpp_id
         bppUri: $.context.bpp_uri
         search_request: $
-        providerData: $.message.catalog["bpp/providers"][0]
         customerData: $.message.intent.fulfillment.customer
       inputs:
         id: RetailerCustomerInput
