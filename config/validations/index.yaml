@@ -2617,7 +2617,8 @@ _TESTS_:
               - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_AVAILABLE_COUNT
                 attr: "$.message.order.quote.breakup[*].item.quantity.available.count"
                 reg: ["^(0|[1-9][0-9]?)$"]
-                _RETURN_: attr are present && attr follow regex reg
+                _CONTINUE_: "!(attr are present)"
+                _RETURN_: attr follow regex reg
               - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_MAXIMUM_COUNT
                 _CONTINUE_: "!(attr are present)"
                 attr: "$.message.order.quote.breakup[*].item.quantity.maximum.count"
