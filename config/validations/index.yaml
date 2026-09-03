@@ -2263,6 +2263,20 @@ _TESTS_:
       enumPath: $.message.catalog['bpp/providers'][*].categories[*].id
       _CONTINUE_: "!(enumPath are present)"
       _RETURN_: enumPath all in enumList
+    - _NAME_: VALID_STANDARD_DELIVERY_SUBCATEGORIES
+      _DESCRIPTION_: When a provider offers "Standard Delivery" (surface), it must also offer all surface sub-categories ("Immediate Delivery", "Same Day Delivery", "Next Day Delivery") in the same /on_search response
+      _SCOPE_: $.message.catalog['bpp/providers'][*]
+      categoryIds: $.categories[*].id
+      standardCategory:
+        - Standard Delivery
+      requiredSurfaceCategories:
+        - Standard Delivery
+        - Immediate Delivery
+        - Same Day Delivery
+        - Next Day Delivery
+        - Express Delivery
+      _CONTINUE_: "!(categoryIds any in standardCategory)"
+      _RETURN_: requiredSurfaceCategories all in categoryIds
     - _NAME_: VALID_ENUM_MESSAGE_TYPE
       enumList:
         - Delivery
