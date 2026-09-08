@@ -1,6 +1,7 @@
 enums:
   loanCategories: &loanCategories
       - &LOAN LOAN
+      - &PURCHASE_FINANCE PURCHASE_FINANCE
       - &UNSECURED_PERSONAL UNSECURED_PERSONAL
       - &SECURED_PERSONAL SECURED_PERSONAL
       - &OFFERS OFFERS
@@ -957,6 +958,8 @@ _TESTS_:
           category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
           var_category_code:
             - *LOAN
+            - *PURCHASE_FINANCE
+            - *BUREAU_LOAN
           _CONTINUE_: '(category_code_path any in var_category_code)'
           _RETURN_: attr are present
 
