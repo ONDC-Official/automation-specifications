@@ -383,30 +383,36 @@ _TESTS_:
                 - Gift Voucher
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in var_enum_promo_categories
-            - _NAME_: TAGS_BAP_PROMOS_FROM
-              attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='from')].value
-              var_datetime_regex:
-                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr follow regex var_datetime_regex
-            - _NAME_: TAGS_BAP_PROMOS_TO
-              attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='to')].value
-              var_datetime_regex:
-                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr follow regex var_datetime_regex
-        - _NAME_: TAGS_BNP_DEMAND_SIGNAL
+            - _NAME_: PAYMENT_ENUM
+              _RETURN_:
+                - _NAME_: PAYMENT_ENUM_TYPE
+                  attr: $.message.intent.payment['@ondc/org/buyer_app_finder_fee_type']
+                  var_fee_type:
+                    - percent
+                    - amount
+                  _RETURN_: attr all in var_fee_type
+        - _NAME_: FULFILMENT_ENUM
           _RETURN_:
-            - _NAME_: TAGS_BAP_PROMOS_VALID_ENUMS
+            - _NAME_: FULFILMENT_ENUM_TYPE
+              attr: $.message.intent.fulfillment.type
+              var_types:
+                - Delivery
+                - Self-Pickup
+                - Buyer-Delivery
               _CONTINUE_: "!(attr are present)"
-              attr: $.message.intent.tags[?(@.code=='bnp_demand_signal')].list[*].code
-              valid:
-                - search_term
-              _RETURN_: attr all in valid
-            - _NAME_: TAGS_BNP_DEMAND_SIGNAL_SEARCH_TERM
-              attr: $.message.intent.tags[?(@.code=='bnp_demand_signal')].list[?(@.code=='search_term')].value
+              _RETURN_: attr all in var_types
+            - _NAME_: FULFILMENT_REQUIRED_END_LOCATION_GPS
+              attr: $.message.intent.fulfillment.end.location.gps
+              reg:
+                - ^-?\d{1,2}\.\d+,-?\d{1,3}\.\d+$
               _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr are present
+              _RETURN_: attr follow regex reg
+            - _NAME_: FULFILMENT_REQUIRED_END_LOCATION_AREA_CODE
+              attr: $.message.intent.fulfillment.end.location.address.area_code
+              reg:
+                - ^\d{6}$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr follow regex reg
   on_search:
     - _NAME_: ON_SEARCH_CONTEXT
       _DESCRIPTION_: Validate on_search context
