@@ -69,10 +69,12 @@ steps:
                     value: https://example-test-bap.com/static-terms.txt
             fulfillment:
               stops:
-                - type: START
-                  location: {}
-                - type: END
-                  location: {}
+                - location:
+                    gps: 13.008935, 77.644408
+                  type: START
+                - location:
+                    gps: 12.971186, 77.586812
+                  type: END
             payment:
               collected_by: BPP
       saveData:
@@ -103,33 +105,33 @@ steps:
             city_code:
               type: string
               description: Enter city code
-              default: std:080
               x-payloadField: $.context.location.city.code
+              default: std:080
             start_gps:
               type: string
               description: Enter start gps coordinates
-              default: 30.748844, 76.642899
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.gps
+              default: 30.748844, 76.642899
             end_gps:
               type: string
               description: Enter end gps coordinates
-              default: 30.690880, 76.711488
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.gps
+              default: 30.690880, 76.711488
             start_address:
               type: string
               description: Enter pickup address
-              default: 7/6, August Kranti Marg, Siri Fort Institutional Area
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.address
+              default: 7/6, August Kranti Marg, Siri Fort Institutional Area
             start_city_code:
               type: string
               description: Enter pickup city code
-              default: std:080
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.city.code
+              default: std:080
             start_district:
               type: string
               description: Enter pickup district
-              default: Bangalore
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.district
+              default: Bangalore
             start_country_code:
               type: string
               description: Enter pickup country code
@@ -138,23 +140,23 @@ steps:
             start_area_code:
               type: string
               description: Enter pickup area code
-              default: "560001"
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='START')].location.area_code
+              default: "560001"
             end_address:
               type: string
               description: Enter drop address
-              default: Jai Singh Road, Connaught Place
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.address
+              default: Jai Singh Road, Connaught Place
             end_city_code:
               type: string
               description: Enter drop city code
-              default: std:080
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.city.code
+              default: std:080
             end_district:
               type: string
               description: Enter drop district
-              default: Bangalore
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.district
+              default: Bangalore
             end_country_code:
               type: string
               description: Enter drop country code
@@ -163,8 +165,8 @@ steps:
             end_area_code:
               type: string
               description: Enter drop area code
-              default: "560001"
               x-payloadField: $.message.intent.fulfillment.stops[?(@.type=='END')].location.area_code
+              default: "560001"
           required:
             - city_code
             - start_gps
@@ -192,9 +194,9 @@ steps:
           context:
             domain: ONDC:TRV10
             action: search
-            timestamp: 2026-08-18T14:03:35.612Z
+            timestamp: 2026-09-10T07:18:50.829Z
             transaction_id: aa48e3c1-bba9-4bfa-b91f-e98e11031523
-            message_id: d01085c1-3d75-4c1b-ba4d-729eca29b902
+            message_id: 5fdf2126-87c1-4dc0-87f8-3a81e30e6455
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -226,8 +228,7 @@ steps:
                       value: https://example-test-bap.com/static-terms.txt
               fulfillment:
                 stops:
-                  - type: START
-                    location:
+                  - location:
                       gps: 30.748844, 76.642899
                       address: 7/6, August Kranti Marg, Siri Fort Institutional Area
                       city:
@@ -236,8 +237,8 @@ steps:
                       country:
                         code: IND
                       area_code: "560001"
-                  - type: END
-                    location:
+                    type: START
+                  - location:
                       gps: 30.690880, 76.711488
                       address: Jai Singh Road, Connaught Place
                       city:
@@ -246,6 +247,7 @@ steps:
                       country:
                         code: IND
                       area_code: "560001"
+                    type: END
               payment:
                 collected_by: BPP
         type: request
