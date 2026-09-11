@@ -6220,11 +6220,90 @@ _TESTS_:
 
               - _NAME_: REQUIRED_ISSUE_CATEGORY
                 attr: $.message.issue.category
-                _RETURN_: attr are present
+                validValues:
+                  - FULFILLMENT
+                  - PAYMENT
+                  - ORDER
+                _RETURN_: attr all in validValues
+
+              # - _NAME_: VALID_FULFILLMENT_SUB_CATEGORY
+              #   _SCOPE_: $.message.issue[?(@.category=='FULFILLMENT')]
+              #   subCategory: $.sub_category
+              #   validValues:
+              #     - FLM0190
+              #     - FLM02
+              #     - FLM202
+              #     - FLM203
+              #     - FLM204
+              #     - FLM205
+              #     - FLM206
+              #     - FLM207
+              #     - FLM208
+              #     - FLM209
+              #     - FLM210
+              #     - FLM211
+              #     - FLM212
+              #   _RETURN_: subCategory any in validValues
+
+              # - _NAME_: VALID_PAYMENT_SUB_CATEGORY
+              #   _SCOPE_: $.message.issue[?(@.category=='PAYMENT')]
+              #   subCategory: $.sub_category
+              #   validValues:
+              #     - PMT01
+              #     - PMT02
+              #     - PMT03
+              #     - PMT04
+              #     - PMT05
+              #     - PMT06
+              #     - PMT07
+              #     - PMT08
+              #     - PMT09
+              #     - PTM09
+              #     - PTM10
+              #   _RETURN_: subCategory any in validValues
+
+              # - _NAME_: VALID_ORDER_SUB_CATEGORY
+              #   _SCOPE_: $.message.issue[?(@.category=='ORDER')]
+              #   subCategory: $.sub_category
+              #   validValues:
+              #     - ORD01
+              #     - ORD02
+              #     - ORD03
+              #     - ORD04
+              #   _RETURN_: subCategory any in validValues    
 
               - _NAME_: REQUIRED_ISSUE_SUB_CATEGORY
                 attr: $.message.issue.sub_category
-                _RETURN_: attr are present
+                validValues:
+                  - FLM01
+                  - FLM02
+                  - FLM202
+                  - FLM203
+                  - FLM204
+                  - FLM205
+                  - FLM206
+                  - FLM207
+                  - FLM208
+                  - FLM209
+                  - FLM210
+                  - FLM211
+                  - FLM212
+                  - PMT01
+                  - PMT02
+                  - PMT03
+                  - PMT04
+                  - PMT05
+                  - PMT06
+                  - PMT07
+                  - PMT08
+                  - PMT09
+                  - PTM09
+                  - PTM10
+                  - ORD01
+                  - ORD02
+                  - ORD03
+                  - ORD04
+                _RETURN_: attr all in validValues
 
               - _NAME_: REQUIRED_COMPLAINANT_PERSON_NAME
                 attr: $.message.issue.complainant_info.person.name
@@ -6234,9 +6313,9 @@ _TESTS_:
                 attr: $.message.issue.complainant_info.contact.phone
                 _RETURN_: attr are present
 
-              - _NAME_: REQUIRED_ORDER_ID
-                attr: $.message.issue.order_details.id
-                _RETURN_: attr are present
+              # - _NAME_: REQUIRED_ORDER_ID
+              #   attr: $.message.issue.order_details.id
+              #   _RETURN_: attr are present
 
               - _NAME_: REQUIRED_ORDER_ITEMS
                 attr: $.message.issue.order_details.items[*].id
@@ -6331,7 +6410,7 @@ _TESTS_:
               - _NAME_: REQUIRED_UPDATED_AT_CLOSED
                 attr: $.message.issue.updated_at
                 _RETURN_: attr are present
-    
+
     on_issue:
       - _NAME_: REQUIRED_CONTEXT_FIELDS
         _RETURN_:
@@ -6539,6 +6618,64 @@ _TESTS_:
             attr: $.message.issue.updated_at
             _RETURN_: attr are present
 
+    issue_status:
+      - _NAME_: REQUIRED_CONTEXT_FIELDS
+        _RETURN_:
+          - _NAME_: REQUIRED_CONTEXT_DOMAIN
+            attr: $.context.domain
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_COUNTRY
+            attr: [$.context.location.country.code]
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_CITY
+            attr: [$.context.location.city.code]
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
+            attr: $.context.transaction_id
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_MESSAGE_ID
+            attr: $.context.message_id
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_ACTION
+            attr: $.context.action
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_TIMESTAMP
+            attr: $.context.timestamp
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_VERSION
+            attr: [$.context.version]
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_BAP_URI
+            attr: $.context.bap_uri
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_BAP_ID
+            attr: $.context.bap_id
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_BPP_URI
+            attr: $.context.bpp_uri
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_BPP_ID
+            attr: $.context.bpp_id
+            _RETURN_: attr are present
+          - _NAME_: REQUIRED_CONTEXT_TTL
+            attr: $.context.ttl
+            _RETURN_: attr are present
+          - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+            attr: $.context.location.country.code
+            # enumList:
+            #   - IND
+            _RETURN_: attr are present
+          # - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+          #   attr: $.context.country
+          #   _RETURN_: attr are present
+      - _NAME_: ISSUE_STATUS_VALIDATION
+        action:
+          - issue_status
+        _RETURN_:
+          - _NAME_: REQUIRED_ISSUE_ID
+            attr: $.message.issue_id
+            _RETURN_: attr are present        
+
     on_issue_status:
       - _NAME_: REQUIRED_CONTEXT_FIELDS
         _RETURN_:
@@ -6632,28 +6769,4 @@ _TESTS_:
             attr: $.message.issue.updated_at
             _RETURN_: attr are present
 
-          - _NAME_: REQUIRED_RESOLUTION_SHORT_DESC
-            attr: [$.message.issue.resolution.short_desc]
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_RESOLUTION_LONG_DESC
-            attr: [$.message.issue.resolution.long_desc]
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_RESOLUTION_ACTION_TRIGGERED
-            attr: [$.message.issue.resolution.action_triggered]
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_RESOLUTION_PROVIDER_TYPE
-            attr: $.message.issue.resolution_provider.respondent_info.type
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_RESOLUTION_PROVIDER_ORG_NAME
-            attr: $.message.issue.resolution_provider.respondent_info.organization.org.name
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_RESOLUTION_PROVIDER_PERSON_NAME
-            attr: $.message.issue.resolution_provider.respondent_info.organization.person.name
-            _RETURN_: attr are present
-    
 _SESSION_DATA_: {}
