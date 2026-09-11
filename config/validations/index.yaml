@@ -6660,14 +6660,14 @@ _TESTS_:
           - _NAME_: REQUIRED_CONTEXT_TTL
             attr: $.context.ttl
             _RETURN_: attr are present
-          - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-            attr: $.context.location.country.code
-            # enumList:
-            #   - IND
-            _RETURN_: attr are present
           # - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          #   attr: $.context.country
-          #   _RETURN_: attr are present
+          #   attr: [$.context.location.country.code]
+          #   enumList:
+          #     - IND
+          #   _RETURN_: attr any in enumList
+          - _NAME_: VALID_CONTEXT_COUNTRY_CODE
+            attr: $.context.country
+            _RETURN_: attr are present
       - _NAME_: ISSUE_STATUS_VALIDATION
         action:
           - issue_status
