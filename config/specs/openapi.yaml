@@ -2592,3 +2592,27 @@ paths:
                     update_target:
                       type: string
       responses: *responses
+  /issue_status:
+    post:
+      operationId: issue_status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context: *context_2
+                message:
+                  type: object
+                  properties:
+                    issue_id:
+                      description: >-
+                        issue id to check the status of issue.
+                      type: string
+                  required:
+                    - issue_id
+              required:
+                - context
+                - message      
+      responses: *responses    
