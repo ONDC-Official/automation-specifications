@@ -2183,6 +2183,10 @@ _TESTS_:
           _RETURN_:
             - _NAME_: REQUIRED_ISSUE_ID
               attr: $.message.issue.id
+              usecasepath: $.message.issue.status
+              status: 
+                - OPEN
+              _CONTINUE_: '!(usecasepath all in status)'
               _RETURN_: attr are present
             - _NAME_: REQUIRED_ISSUE_STATUS
               attr: $.message.issue.status
