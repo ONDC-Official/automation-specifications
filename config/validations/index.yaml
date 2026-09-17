@@ -2305,6 +2305,22 @@ _TESTS_:
         - motorable_distance_type
         - motorable_distance
       _RETURN_: subTags all in validValues
+    - _NAME_: REQUIRED_MESSAGE_FULFILLMENT_START_TIME_DURATION_DELIVERY
+      _DESCRIPTION_: Fulfillment start.time.duration should be present for fulfillments with type 'Delivery'
+      startTimeDuration: $.message.catalog['bpp/providers'][*].fulfillments[?(@.type=='Delivery')].start.time.duration
+      _RETURN_: startTimeDuration are present
+    - _NAME_: REQUIRED_MESSAGE_FULFILLMENT_DISTANCE_TAG_DELIVERY_P2P
+      _DESCRIPTION_: Fulfillment tags should include a 'distance' tag (with motorable_distance_type and motorable_distance) for fulfillments with type 'Delivery'
+      distanceTag: $.message.catalog['bpp/providers'][*].fulfillments[?(@.type=='Delivery')].tags[?(@.code=='distance')].code
+      _RETURN_: distanceTag are present
+    - _NAME_: REQUIRED_MESSAGE_FULFILLMENT_DISTANCE_TAG_DELIVERY_ITEM_P2P
+      _DESCRIPTION_: When a P2P item (item.descriptor.code=='P2P') is present, its
+        linked fulfillment should carry a 'distance' tag if that fulfillment's
+        type is 'Delivery'
+      p2pItemFulfillmentIds: $.message.catalog['bpp/providers'][*].items[?(@.descriptor.code=='P2P')].fulfillment_id
+      _CONTINUE_: "!(p2pItemFulfillmentIds are present)"
+      distanceTag: $.message.catalog['bpp/providers'][*].fulfillments[?(@.type=='Delivery')].tags[?(@.code=='distance')].code
+      _RETURN_: distanceTag are present
     - _NAME_: validate_tag_1_motorable_distance
       _SCOPE_: $.message.catalog['bpp/providers'][*].fulfillments[*].tags[?(@.code=='motorable_distance')]
       subTags: $.list[*].code
