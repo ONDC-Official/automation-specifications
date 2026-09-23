@@ -526,6 +526,7 @@ _TESTS_:
           attr: $.message.order.items[*].descriptor.code
           enumList: &a12
             - LOAN
+            - CARD
             - PERSONAL_LOAN
             - CREDIT_CARD
             - PRE_QUALIFIER
@@ -943,6 +944,7 @@ _TESTS_:
           _RETURN_: attr are present
     - _NAME_: CONFIRM_XINPUT
       usecasepath: $.message.order.items[*].xinput.form.id
+      _CONTINUE_: "!(usecasepath are present)"
       _RETURN_:
         - _NAME_: REQUIRED_XINPUT_FORM_ID
           attr: $.message.order.items[*].xinput.form.id
