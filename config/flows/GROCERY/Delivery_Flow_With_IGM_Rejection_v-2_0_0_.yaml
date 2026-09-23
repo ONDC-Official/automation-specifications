@@ -3590,35 +3590,32 @@ steps:
       - name: example for issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: issue
-            timestamp: 2026-08-25T11:20:10.507Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 888c770f-e56e-482a-bd84-9fd5dac17cb1
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:46.624Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 4108de6e-4fd9-415f-8923-5b2171444e5d
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: OPEN
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:10.507Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:46.624Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -3638,28 +3635,28 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
               source_id: CUST1
               complainant_id: NP1
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
@@ -3668,16 +3665,16 @@ steps:
                     size_type: xs
                 media:
                   - url: https://transitsolutions.in/logos/logo.icon
-              last_action_id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+              last_action_id: d5861a35-11db-4831-a868-2f1801685a36
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
+                    name: ONDC buyer
         type: request
         description: The BAP initiates an issue with the BPP to lodge a grievance
           regarding the assigned driver or ride fulfillment for the confirmed
@@ -3827,38 +3824,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:10.552Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 888c770f-e56e-482a-bd84-9fd5dac17cb1
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:46.737Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 4108de6e-4fd9-415f-8923-5b2171444e5d
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:10.552Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:46.737Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -3878,64 +3872,64 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bpp.example.com::ONDC:TRV11
+                      name: sample-bpp-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
               source_id: CUST1
               complainant_id: NP1
               respondent_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
         type: request
         description: The BPP provides an on_issue callback response to the BAP's issue
           notification, communicating its action on the grievance to advance the
@@ -3949,7 +3943,7 @@ steps:
       raised grievance to the BAP regarding the driver assignment or ride
       fulfillment.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcihkZWZhdWx0UGF5bG9hZCwgewogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAib25faXNzdWVfcmVzb2x1dGlvbiIsCiAgICAgICAgICAgIH0pOwp9
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIGF3YWl0IG9uSXNzdWVTdGF0dXNHZW5lcmF0b3IoZGVmYXVsdFBheWxvYWQsIHsKICAgIC4uLnNlc3Npb25EYXRhLAogICAgaWdtX2FjdGlvbjogIm9uX2lzc3VlX3Jlc29sdXRpb24iLAogIH0pOwp9
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Jlc29sdXRpb24iOwoKICBpZiAoIXRhcmdldFBheWxvYWQgfHwgIXRhcmdldFBheWxvYWQuY29udGV4dCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBwYXlsb2FkIGNvbnRleHQiIH07CiAgfQoKICBpZiAodGFyZ2V0UGF5bG9hZC5jb250ZXh0LmFjdGlvbiAhPT0gQ1VSUkVOVF9TVEVQX0FQSSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiQ29udGV4dCBhY3Rpb24gZG9lcyBub3QgbWF0Y2ggc3RlcCBBUEk6ICIgKyB0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uIH07CiAgfQoKICBjb25zdCBtZXNzYWdlID0gdGFyZ2V0UGF5bG9hZC5tZXNzYWdlOwogIGlmICghbWVzc2FnZSB8fCAhbWVzc2FnZS5pc3N1ZSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBtZXNzYWdlIG9yIGlzc3VlIG9iamVjdCBpbiBwYXlsb2FkIiB9OwogIH0KCiAgY29uc3QgaXNzdWUgPSBtZXNzYWdlLmlzc3VlOwogIGlmICghaXNzdWUuaWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgSUQiIH07CiAgfQogIGlmICghaXNzdWUuY3JlYXRlZF9hdCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBjcmVhdGVkX2F0IHRpbWVzdGFtcCIgfTsKICB9CiAgaWYgKCFpc3N1ZS51cGRhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIHVwZGF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KCiAgLy8gQ3Jvc3Mtc3RlcCB2ZXJpZmljYXRpb24KICBsZXQgc2tpcENyb3NzU3RlcCA9IGZhbHNlOwogIGlmIChzZXNzaW9uRGF0YSkgewogICAgY29uc3QgcHJldlR4SWQgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQpID8gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZFswXSA6IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWQ7CiAgICBjb25zdCBhY3RpdmVUeElkID0gcHJldlR4SWQgfHwgc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25faWQ7CiAgICBpZiAoYWN0aXZlVHhJZCAmJiB0YXJnZXRQYXlsb2FkLmNvbnRleHQudHJhbnNhY3Rpb25faWQgIT09IGFjdGl2ZVR4SWQpIHsKICAgICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgICB9CiAgfSBlbHNlIHsKICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogIH0KCiAgaWYgKCFza2lwQ3Jvc3NTdGVwICYmIHNlc3Npb25EYXRhKSB7CiAgICAvLyBWYWxpZGF0ZSByZWZzCiAgICBpZiAoaXNzdWUucmVmcyAmJiBBcnJheS5pc0FycmF5KGlzc3VlLnJlZnMpKSB7CiAgICAgIGNvbnN0IG9yZGVyUmVmID0gaXNzdWUucmVmcy5maW5kKHIgPT4gci5yZWZfdHlwZSA9PT0gJ09SREVSJyk7CiAgICAgIGlmIChvcmRlclJlZiAmJiBzZXNzaW9uRGF0YS5vcmRlcl9pZCkgewogICAgICAgIGNvbnN0IGV4cGVjdGVkT3JkZXIgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLm9yZGVyX2lkKSA/IHNlc3Npb25EYXRhLm9yZGVyX2lkWzBdIDogc2Vzc2lvbkRhdGEub3JkZXJfaWQ7CiAgICAgICAgaWYgKG9yZGVyUmVmLnJlZl9pZCAhPT0gZXhwZWN0ZWRPcmRlcikgewogICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgT1JERVIgcmVmX2lkICgiICsgb3JkZXJSZWYucmVmX2lkICsgIikgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBvcmRlcl9pZCAoIiArIGV4cGVjdGVkT3JkZXIgKyAiKSIgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IHByb3ZpZGVyUmVmID0gaXNzdWUucmVmcy5maW5kKHIgPT4gci5yZWZfdHlwZSA9PT0gJ1BST1ZJREVSJyk7CiAgICAgIGlmIChwcm92aWRlclJlZiAmJiBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZCkgewogICAgICAgIGNvbnN0IGV4cGVjdGVkUHJvdmlkZXIgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkKSA/IHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkWzBdIDogc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQ7CiAgICAgICAgaWYgKHByb3ZpZGVyUmVmLnJlZl9pZCAhPT0gZXhwZWN0ZWRQcm92aWRlcikgewogICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgUFJPVklERVIgcmVmX2lkIGRvZXMgbm90IG1hdGNoIHNlc3Npb24gcHJvdmlkZXJfaWQiIH07CiAgICAgICAgfQogICAgICB9CgogICAgICBjb25zdCBmdWxmaWxsbWVudFJlZiA9IGlzc3VlLnJlZnMuZmluZCgKICAgICAgICByID0+IHIucmVmX3R5cGUgPT09ICJGVUxGSUxMTUVOVCIKICAgICAgKTsKCiAgICAgIGlmIChmdWxmaWxsbWVudFJlZiAmJiBzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMpIHsKICAgICAgICBjb25zdCBleHBlY3RlZEZ1bGZpbGxtZW50cyA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzKQogICAgICAgICAgPyBzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMKICAgICAgICAgIDogW3Nlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkc107CgogICAgICAgIGlmICghZXhwZWN0ZWRGdWxmaWxsbWVudHMuaW5jbHVkZXMoZnVsZmlsbG1lbnRSZWYucmVmX2lkKSkgewogICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiA0MDAsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICJJc3N1ZSBGVUxGSUxMTUVOVCByZWZfaWQgZG9lcyBub3QgbWF0Y2ggYW55IHNlc3Npb24gZnVsZmlsbG1lbnRfaWRzIgogICAgICAgICAgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IGl0ZW1SZWYgPSBpc3N1ZS5yZWZzLmZpbmQoCiAgICAgICAgciA9PiByLnJlZl90eXBlID09PSAiSVRFTSIKICAgICAgKTsKCiAgICAgIGlmIChpdGVtUmVmICYmIHNlc3Npb25EYXRhLml0ZW1faWRzKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRJdGVtcyA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEuaXRlbV9pZHMpCiAgICAgICAgICA/IHNlc3Npb25EYXRhLml0ZW1faWRzCiAgICAgICAgICA6IFtzZXNzaW9uRGF0YS5pdGVtX2lkc107CgogICAgICAgIGlmICghZXhwZWN0ZWRJdGVtcy5pbmNsdWRlcyhpdGVtUmVmLnJlZl9pZCkpIHsKICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgICAgICAgY29kZTogNDAwLAogICAgICAgICAgICBkZXNjcmlwdGlvbjoKICAgICAgICAgICAgICAiSXNzdWUgSVRFTSByZWZfaWQgZG9lcyBub3QgbWF0Y2ggYW55IHNlc3Npb24gaXRlbV9pZHMiCiAgICAgICAgICB9OwogICAgICAgIH0KICAgICAgfQogICAgfSBlbHNlIHsKICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBvciBpbnZhbGlkIGlzc3VlIHJlZnMgYXJyYXkiIH07CiAgICB9CgogICAgLy8gVmFsaWRhdGUgYWN0b3JzLCBzb3VyY2UsIGNvbXBsYWluYW50CiAgICBpZiAoIWlzc3VlLmFjdG9ycyB8fCAhQXJyYXkuaXNBcnJheShpc3N1ZS5hY3RvcnMpIHx8IGlzc3VlLmFjdG9ycy5sZW5ndGggPT09IDApIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgYWN0b3JzIGFycmF5IiB9OwogICAgfQogICAgaWYgKCFpc3N1ZS5zb3VyY2VfaWQpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgc291cmNlX2lkIiB9OwogICAgfQogICAgaWYgKCFpc3N1ZS5jb21wbGFpbmFudF9pZCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBjb21wbGFpbmFudF9pZCIgfTsKICAgIH0KICB9CgogIC8vIFZhbGlkYXRlIHN0YXR1cyBiYXNlZCBvbiBhY3Rpb24KICBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfb3BlbiIpKSB7CiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIE9QRU4gZm9yIGlzc3VlX29wZW4gYWN0aW9uLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfSBlbHNlIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9jbG9zZSIpKSB7CiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIkNMT1NFRCIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgQ0xPU0VEIGZvciBpc3N1ZV9jbG9zZSBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BUEkgPT09ICJpc3N1ZSIgJiYgIUNVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICAvLyBGb3IgZXNjYWxhdGUsIHJlc29sdXRpb24gYWNjZXB0LCByZWplY3QgZXRjLgogICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJQUk9DRVNTSU5HIiAmJiBpc3N1ZS5zdGF0dXMgIT09ICJPUEVOIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBQUk9DRVNTSU5HL09QRU4gZm9yICIgKyBDVVJSRU5UX1NURVBfQUNUSU9OX0lEICsgIiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgYWN0aW9ucyBhcnJheQogIGlmICghaXNzdWUuYWN0aW9ucyB8fCAhQXJyYXkuaXNBcnJheShpc3N1ZS5hY3Rpb25zKSB8fCBpc3N1ZS5hY3Rpb25zLmxlbmd0aCA9PT0gMCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3Rpb25zIGFycmF5IiB9OwogIH0KICAKICBjb25zdCBsYXN0QWN0aW9uID0gaXNzdWUuYWN0aW9uc1tpc3N1ZS5hY3Rpb25zLmxlbmd0aCAtIDFdOwogIGlmICghbGFzdEFjdGlvbi5pZCB8fCAhbGFzdEFjdGlvbi5kZXNjcmlwdG9yIHx8ICFsYXN0QWN0aW9uLmRlc2NyaXB0b3IuY29kZSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTGFzdCBhY3Rpb24gaW4gYWN0aW9ucyBhcnJheSBpcyBtYWxmb3JtZWQiIH07CiAgfQoKICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAxODsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -4129,24 +4123,6 @@ steps:
                 ref_id: R_PARENT
                 ref_type: PARENT
                 descriptor:
-                  code: REFUND
-                  short_desc: Providing refund for the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
-                      - descriptor:
-                          code: REFUND_AMOUNT
-                        value: "200"
-              - id: R2
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
                   code: REPLACEMENT
                   short_desc: Providing replacement of the item
                 updated_at: 2024-08-14T09:57:58.841Z
@@ -4178,38 +4154,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:10.612Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 4956f2eb-869f-4208-ac33-19d08e23baea
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:46.781Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 1656e255-1a2d-4ec8-870c-06a4537f84b9
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:10.612Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:46.781Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -4229,40 +4202,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bpp.example.com::ONDC:TRV11
+                      name: sample-bpp-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bpp.example.com::ONDC:TRV11
+                      name: sample-bpp-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -4272,75 +4245,57 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: e2ff911e-9019-4257-92dd-86c47adfa5bf
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:10.612Z
-                  proposed_by: NP2
-                  tags:
-                    - descriptor:
-                        code: RESOLUTION_DETAILS
-                      list:
-                        - descriptor:
-                            code: ITEM
-                          value: I1
-                        - descriptor:
-                            code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
-                  ref_id: R_PARENT
-                  ref_type: PARENT
-                  descriptor:
                     code: REPLACEMENT
                     short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -4574,38 +4529,35 @@ steps:
       - name: example for issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: issue
-            timestamp: 2026-08-25T11:20:11.785Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: d4641cef-8f88-40dd-bb12-6bd4a236dba4
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:48.295Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: ac8045dc-bfb9-4243-8a9e-c1bb5ace24fe
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:11.785Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:48.295Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -4625,40 +4577,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -4668,87 +4620,69 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
                 media:
                   - url: https://transitsolutions.in/logos/logo.icon
-              last_action_id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+              last_action_id: 2ea25297-fd72-444b-a025-fde25840fb27
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
+                    name: ONDC buyer
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:10.612Z
-                  proposed_by: NP2
-                  tags:
-                    - descriptor:
-                        code: RESOLUTION_DETAILS
-                      list:
-                        - descriptor:
-                            code: ITEM
-                          value: I1
-                        - descriptor:
-                            code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
-                  ref_id: R_PARENT
-                  ref_type: PARENT
-                  descriptor:
                     code: REPLACEMENT
                     short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -4770,7 +4704,7 @@ steps:
     description: BPP rejects the BAP's proposed resolution for the issue related to
       the assigned ride-hailing transaction.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcihkZWZhdWx0UGF5bG9hZCwgewogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAib25faXNzdWVfcHJvY2Vzc2luZ18xIiwKICAgICAgICAgICAgfSk7Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBvbklzc3VlU3RhdHVzR2VuZXJhdG9yKGRlZmF1bHRQYXlsb2FkLCB7CiAgICAuLi5zZXNzaW9uRGF0YSwKICAgIGlnbV9hY3Rpb246ICJvbl9pc3N1ZV9wcm9jZXNzaW5nXzEiLAogIH0pOwogIGlmIChzZXNzaW9uRGF0YT8uaXNzdWVfcmVzb2x1dGlvbi5sZW5ndGgpIHsKICAgIHJlc3BvbnNlLm1lc3NhZ2UuaXNzdWUucmVzb2x1dGlvbnMgPSBzZXNzaW9uRGF0YT8uaXNzdWVfcmVzb2x1dGlvbgogIH0KCiAgcmV0dXJuIHJlc3BvbnNlCn0=
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Byb2Nlc3NpbmdfMSI7CgogIGlmICghdGFyZ2V0UGF5bG9hZCB8fCAhdGFyZ2V0UGF5bG9hZC5jb250ZXh0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHBheWxvYWQgY29udGV4dCIgfTsKICB9CgogIGlmICh0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICE9PSBDVVJSRU5UX1NURVBfQVBJKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJDb250ZXh0IGFjdGlvbiBkb2VzIG5vdCBtYXRjaCBzdGVwIEFQSTogIiArIHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gfTsKICB9CgogIGNvbnN0IG1lc3NhZ2UgPSB0YXJnZXRQYXlsb2FkLm1lc3NhZ2U7CiAgaWYgKCFtZXNzYWdlIHx8ICFtZXNzYWdlLmlzc3VlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG1lc3NhZ2Ugb3IgaXNzdWUgb2JqZWN0IGluIHBheWxvYWQiIH07CiAgfQoKICBjb25zdCBpc3N1ZSA9IG1lc3NhZ2UuaXNzdWU7CiAgaWYgKCFpc3N1ZS5pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBJRCIgfTsKICB9CiAgaWYgKCFpc3N1ZS5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNyZWF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KICBpZiAoIWlzc3VlLnVwZGF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgdXBkYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQoKICAvLyBDcm9zcy1zdGVwIHZlcmlmaWNhdGlvbgogIGxldCBza2lwQ3Jvc3NTdGVwID0gZmFsc2U7CiAgaWYgKHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwcmV2VHhJZCA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgPyBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdIDogc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZDsKICAgIGNvbnN0IGFjdGl2ZVR4SWQgPSBwcmV2VHhJZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICAgIGlmIChhY3RpdmVUeElkICYmIHRhcmdldFBheWxvYWQuY29udGV4dC50cmFuc2FjdGlvbl9pZCAhPT0gYWN0aXZlVHhJZCkgewogICAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICAgIH0KICB9IGVsc2UgewogICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXAgJiYgc2Vzc2lvbkRhdGEpIHsKICAgIC8vIFZhbGlkYXRlIHJlZnMKICAgIGlmIChpc3N1ZS5yZWZzICYmIEFycmF5LmlzQXJyYXkoaXNzdWUucmVmcykpIHsKICAgICAgY29uc3Qgb3JkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnT1JERVInKTsKICAgICAgaWYgKG9yZGVyUmVmICYmIHNlc3Npb25EYXRhLm9yZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRPcmRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub3JkZXJfaWQpID8gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5vcmRlcl9pZDsKICAgICAgICBpZiAob3JkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZE9yZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBPUkRFUiByZWZfaWQgKCIgKyBvcmRlclJlZi5yZWZfaWQgKyAiKSBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIG9yZGVyX2lkICgiICsgZXhwZWN0ZWRPcmRlciArICIpIiB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgcHJvdmlkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnUFJPVklERVInKTsKICAgICAgaWYgKHByb3ZpZGVyUmVmICYmIHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRQcm92aWRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpID8gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZDsKICAgICAgICBpZiAocHJvdmlkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZFByb3ZpZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBQUk9WSURFUiByZWZfaWQgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBwcm92aWRlcl9pZCIgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IGZ1bGZpbGxtZW50UmVmID0gaXNzdWUucmVmcy5maW5kKAogICAgICAgIHIgPT4gci5yZWZfdHlwZSA9PT0gIkZVTEZJTExNRU5UIgogICAgICApOwoKICAgICAgaWYgKGZ1bGZpbGxtZW50UmVmICYmIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcykgewogICAgICAgIGNvbnN0IGV4cGVjdGVkRnVsZmlsbG1lbnRzID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMpCiAgICAgICAgICA/IHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcwogICAgICAgICAgOiBbc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEZ1bGZpbGxtZW50cy5pbmNsdWRlcyhmdWxmaWxsbWVudFJlZi5yZWZfaWQpKSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDQwMCwKICAgICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICAgIklzc3VlIEZVTEZJTExNRU5UIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBmdWxmaWxsbWVudF9pZHMiCiAgICAgICAgICB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgaXRlbVJlZiA9IGlzc3VlLnJlZnMuZmluZCgKICAgICAgICByID0+IHIucmVmX3R5cGUgPT09ICJJVEVNIgogICAgICApOwoKICAgICAgaWYgKGl0ZW1SZWYgJiYgc2Vzc2lvbkRhdGEuaXRlbV9pZHMpIHsKICAgICAgICBjb25zdCBleHBlY3RlZEl0ZW1zID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5pdGVtX2lkcykKICAgICAgICAgID8gc2Vzc2lvbkRhdGEuaXRlbV9pZHMKICAgICAgICAgIDogW3Nlc3Npb25EYXRhLml0ZW1faWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEl0ZW1zLmluY2x1ZGVzKGl0ZW1SZWYucmVmX2lkKSkgewogICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiA0MDAsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICJJc3N1ZSBJVEVNIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBpdGVtX2lkcyIKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9CiAgICB9IGVsc2UgewogICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yIGludmFsaWQgaXNzdWUgcmVmcyBhcnJheSIgfTsKICAgIH0KCiAgICAvLyBWYWxpZGF0ZSBhY3RvcnMsIHNvdXJjZSwgY29tcGxhaW5hbnQKICAgIGlmICghaXNzdWUuYWN0b3JzIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdG9ycykgfHwgaXNzdWUuYWN0b3JzLmxlbmd0aCA9PT0gMCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3RvcnMgYXJyYXkiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLnNvdXJjZV9pZCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBzb3VyY2VfaWQiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLmNvbXBsYWluYW50X2lkKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNvbXBsYWluYW50X2lkIiB9OwogICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgc3RhdHVzIGJhc2VkIG9uIGFjdGlvbgogIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgT1BFTiBmb3IgaXNzdWVfb3BlbiBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiQ0xPU0VEIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FQSSA9PT0gImlzc3VlIiAmJiAhQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgIC8vIEZvciBlc2NhbGF0ZSwgcmVzb2x1dGlvbiBhY2NlcHQsIHJlamVjdCBldGMuCiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIlBST0NFU1NJTkciICYmIGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIFBST0NFU1NJTkcvT1BFTiBmb3IgIiArIENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgKyAiLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBhY3Rpb25zIGFycmF5CiAgaWYgKCFpc3N1ZS5hY3Rpb25zIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdGlvbnMpIHx8IGlzc3VlLmFjdGlvbnMubGVuZ3RoID09PSAwKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMgYXJyYXkiIH07CiAgfQogIAogIGNvbnN0IGxhc3RBY3Rpb24gPSBpc3N1ZS5hY3Rpb25zW2lzc3VlLmFjdGlvbnMubGVuZ3RoIC0gMV07CiAgaWYgKCFsYXN0QWN0aW9uLmlkIHx8ICFsYXN0QWN0aW9uLmRlc2NyaXB0b3IgfHwgIWxhc3RBY3Rpb24uZGVzY3JpcHRvci5jb2RlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJMYXN0IGFjdGlvbiBpbiBhY3Rpb25zIGFycmF5IGlzIG1hbGZvcm1lZCIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAyMDsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -4906,38 +4840,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:11.811Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: d4641cef-8f88-40dd-bb12-6bd4a236dba4
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:48.369Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: ac8045dc-bfb9-4243-8a9e-c1bb5ace24fe
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:11.811Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:48.369Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -4957,40 +4888,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -4998,61 +4929,85 @@ steps:
               respondent_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
+              resolver_ids:
+                - NP2
+              resolutions:
+                - id: R_PARENT
+                  descriptor:
+                    code: PARENT
+                    short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                - id: R1
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
         type: request
         description: BPP rejects the BAP's proposed resolution for the issue related to
           the assigned ride-hailing transaction.
@@ -5065,7 +5020,7 @@ steps:
       communicate a grievance or problem encountered during the driver
       assignment phase in the on-demand ride-hailing transaction.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcihkZWZhdWx0UGF5bG9hZCwgewogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAib25faXNzdWVfcmVzb2x1dGlvbl8xIiwKICAgICAgICAgICAgfSk7Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBvbklzc3VlU3RhdHVzR2VuZXJhdG9yKGRlZmF1bHRQYXlsb2FkLCB7CiAgICAuLi5zZXNzaW9uRGF0YSwKICAgIGlnbV9hY3Rpb246ICJvbl9pc3N1ZV9yZXNvbHV0aW9uXzEiLAogIH0pOwogIGlmIChzZXNzaW9uRGF0YT8uaXNzdWVfcmVzb2x1dGlvbi5sZW5ndGgpIHsKICAgIHJlc3BvbnNlLm1lc3NhZ2UuaXNzdWUucmVzb2x1dGlvbnMgPSBzZXNzaW9uRGF0YT8uaXNzdWVfcmVzb2x1dGlvbgogIH0KICBjb25zdCByZXNvbHV0aW9ucyA9IHJlc3BvbnNlPy5tZXNzYWdlPy5pc3N1ZT8ucmVzb2x1dGlvbnM7CgogIGlmIChyZXNvbHV0aW9ucz8ubGVuZ3RoKSB7CiAgICBjb25zdCB0YXJnZXRJdGVtID0gcmVzb2x1dGlvbnMuZmluZCgoaXRlbSkgPT4gaXRlbT8ucmVmX2lkICYmIGl0ZW0/LnJlZl90eXBlKTsKCiAgICBpZiAodGFyZ2V0SXRlbSkgewogICAgICBjb25zdCBjbG9uZWRJdGVtID0gdHlwZW9mIHN0cnVjdHVyZWRDbG9uZSA9PT0gImZ1bmN0aW9uIgogICAgICAgID8gc3RydWN0dXJlZENsb25lKHRhcmdldEl0ZW0pCiAgICAgICAgOiBKU09OLnBhcnNlKEpTT04uc3RyaW5naWZ5KHRhcmdldEl0ZW0pKTsKCiAgICAgIGNsb25lZEl0ZW0uaWQgPSAiUjIiOwogICAgICBjbG9uZWRJdGVtLmRlc2NyaXB0b3IuY29kZSA9ICJSRUZVTkQiOwogICAgICBjbG9uZWRJdGVtLmRlc2NyaXB0b3Iuc2hvcnRfZGVzYyA9ICJQcm92aWRpbmcgcmVmdW5kIG9mIHRoZSBpdGVtIjsKICAgICAgY2xvbmVkSXRlbS51cGRhdGVkX2F0ID0gcmVzcG9uc2UuY29udGV4dC50aW1lc3RhbXAKCiAgICAgIGlmIChjbG9uZWRJdGVtPy50YWdzPy5sZW5ndGgpIHsKICAgICAgICBjbG9uZWRJdGVtLnRhZ3MgPSBjbG9uZWRJdGVtPy50YWdzPy5tYXAoKHRhZykgPT4gKHsKICAgICAgICAgIC4uLnRhZywKICAgICAgICAgIGxpc3Q6IFsKICAgICAgICAgICAgLi4uKHRhZz8ubGlzdCB8fCBbXSksCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBkZXNjcmlwdG9yOiB7CiAgICAgICAgICAgICAgICBjb2RlOiAiUkVGVU5EX0FNT1VOVCIsCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICB2YWx1ZTogKE51bWJlcihzZXNzaW9uRGF0YT8ucXVvdGU/LlswXT8ucHJpY2U/LnZhbHVlIHx8IDApIC0gMjApLnRvRml4ZWQoMiksCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdLAogICAgICAgIH0pKTsKICAgICAgfQoKICAgICAgcmVzcG9uc2UubWVzc2FnZS5pc3N1ZS5yZXNvbHV0aW9ucy5wdXNoKGNsb25lZEl0ZW0pOwogICAgfQogIH0KCiAgcmV0dXJuIHJlc3BvbnNlCn0=
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Jlc29sdXRpb25fMSI7CgogIGlmICghdGFyZ2V0UGF5bG9hZCB8fCAhdGFyZ2V0UGF5bG9hZC5jb250ZXh0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHBheWxvYWQgY29udGV4dCIgfTsKICB9CgogIGlmICh0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICE9PSBDVVJSRU5UX1NURVBfQVBJKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJDb250ZXh0IGFjdGlvbiBkb2VzIG5vdCBtYXRjaCBzdGVwIEFQSTogIiArIHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gfTsKICB9CgogIGNvbnN0IG1lc3NhZ2UgPSB0YXJnZXRQYXlsb2FkLm1lc3NhZ2U7CiAgaWYgKCFtZXNzYWdlIHx8ICFtZXNzYWdlLmlzc3VlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG1lc3NhZ2Ugb3IgaXNzdWUgb2JqZWN0IGluIHBheWxvYWQiIH07CiAgfQoKICBjb25zdCBpc3N1ZSA9IG1lc3NhZ2UuaXNzdWU7CiAgaWYgKCFpc3N1ZS5pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBJRCIgfTsKICB9CiAgaWYgKCFpc3N1ZS5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNyZWF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KICBpZiAoIWlzc3VlLnVwZGF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgdXBkYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQoKICAvLyBDcm9zcy1zdGVwIHZlcmlmaWNhdGlvbgogIGxldCBza2lwQ3Jvc3NTdGVwID0gZmFsc2U7CiAgaWYgKHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwcmV2VHhJZCA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgPyBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdIDogc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZDsKICAgIGNvbnN0IGFjdGl2ZVR4SWQgPSBwcmV2VHhJZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICAgIGlmIChhY3RpdmVUeElkICYmIHRhcmdldFBheWxvYWQuY29udGV4dC50cmFuc2FjdGlvbl9pZCAhPT0gYWN0aXZlVHhJZCkgewogICAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICAgIH0KICB9IGVsc2UgewogICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXAgJiYgc2Vzc2lvbkRhdGEpIHsKICAgIC8vIFZhbGlkYXRlIHJlZnMKICAgIGlmIChpc3N1ZS5yZWZzICYmIEFycmF5LmlzQXJyYXkoaXNzdWUucmVmcykpIHsKICAgICAgY29uc3Qgb3JkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnT1JERVInKTsKICAgICAgaWYgKG9yZGVyUmVmICYmIHNlc3Npb25EYXRhLm9yZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRPcmRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub3JkZXJfaWQpID8gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5vcmRlcl9pZDsKICAgICAgICBpZiAob3JkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZE9yZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBPUkRFUiByZWZfaWQgKCIgKyBvcmRlclJlZi5yZWZfaWQgKyAiKSBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIG9yZGVyX2lkICgiICsgZXhwZWN0ZWRPcmRlciArICIpIiB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgcHJvdmlkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnUFJPVklERVInKTsKICAgICAgaWYgKHByb3ZpZGVyUmVmICYmIHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRQcm92aWRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpID8gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZDsKICAgICAgICBpZiAocHJvdmlkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZFByb3ZpZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBQUk9WSURFUiByZWZfaWQgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBwcm92aWRlcl9pZCIgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IGZ1bGZpbGxtZW50UmVmID0gaXNzdWUucmVmcy5maW5kKAogICAgICAgIHIgPT4gci5yZWZfdHlwZSA9PT0gIkZVTEZJTExNRU5UIgogICAgICApOwoKICAgICAgaWYgKGZ1bGZpbGxtZW50UmVmICYmIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcykgewogICAgICAgIGNvbnN0IGV4cGVjdGVkRnVsZmlsbG1lbnRzID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMpCiAgICAgICAgICA/IHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcwogICAgICAgICAgOiBbc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEZ1bGZpbGxtZW50cy5pbmNsdWRlcyhmdWxmaWxsbWVudFJlZi5yZWZfaWQpKSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDQwMCwKICAgICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICAgIklzc3VlIEZVTEZJTExNRU5UIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBmdWxmaWxsbWVudF9pZHMiCiAgICAgICAgICB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgaXRlbVJlZiA9IGlzc3VlLnJlZnMuZmluZCgKICAgICAgICByID0+IHIucmVmX3R5cGUgPT09ICJJVEVNIgogICAgICApOwoKICAgICAgaWYgKGl0ZW1SZWYgJiYgc2Vzc2lvbkRhdGEuaXRlbV9pZHMpIHsKICAgICAgICBjb25zdCBleHBlY3RlZEl0ZW1zID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5pdGVtX2lkcykKICAgICAgICAgID8gc2Vzc2lvbkRhdGEuaXRlbV9pZHMKICAgICAgICAgIDogW3Nlc3Npb25EYXRhLml0ZW1faWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEl0ZW1zLmluY2x1ZGVzKGl0ZW1SZWYucmVmX2lkKSkgewogICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiA0MDAsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICJJc3N1ZSBJVEVNIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBpdGVtX2lkcyIKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9CiAgICB9IGVsc2UgewogICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yIGludmFsaWQgaXNzdWUgcmVmcyBhcnJheSIgfTsKICAgIH0KCiAgICAvLyBWYWxpZGF0ZSBhY3RvcnMsIHNvdXJjZSwgY29tcGxhaW5hbnQKICAgIGlmICghaXNzdWUuYWN0b3JzIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdG9ycykgfHwgaXNzdWUuYWN0b3JzLmxlbmd0aCA9PT0gMCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3RvcnMgYXJyYXkiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLnNvdXJjZV9pZCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBzb3VyY2VfaWQiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLmNvbXBsYWluYW50X2lkKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNvbXBsYWluYW50X2lkIiB9OwogICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgc3RhdHVzIGJhc2VkIG9uIGFjdGlvbgogIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgT1BFTiBmb3IgaXNzdWVfb3BlbiBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiQ0xPU0VEIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FQSSA9PT0gImlzc3VlIiAmJiAhQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgIC8vIEZvciBlc2NhbGF0ZSwgcmVzb2x1dGlvbiBhY2NlcHQsIHJlamVjdCBldGMuCiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIlBST0NFU1NJTkciICYmIGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIFBST0NFU1NJTkcvT1BFTiBmb3IgIiArIENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgKyAiLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBhY3Rpb25zIGFycmF5CiAgaWYgKCFpc3N1ZS5hY3Rpb25zIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdGlvbnMpIHx8IGlzc3VlLmFjdGlvbnMubGVuZ3RoID09PSAwKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMgYXJyYXkiIH07CiAgfQogIAogIGNvbnN0IGxhc3RBY3Rpb24gPSBpc3N1ZS5hY3Rpb25zW2lzc3VlLmFjdGlvbnMubGVuZ3RoIC0gMV07CiAgaWYgKCFsYXN0QWN0aW9uLmlkIHx8ICFsYXN0QWN0aW9uLmRlc2NyaXB0b3IgfHwgIWxhc3RBY3Rpb24uZGVzY3JpcHRvci5jb2RlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJMYXN0IGFjdGlvbiBpbiBhY3Rpb25zIGFycmF5IGlzIG1hbGZvcm1lZCIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAyMTsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -5234,46 +5189,6 @@ steps:
                 action_by: NP2
                 actor_details:
                   name: mock-person
-            resolutions:
-              - id: R_PARENT
-                descriptor:
-                  code: PARENT
-                  short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-              - id: R1
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
-                  code: REFUND
-                  short_desc: Providing refund for the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
-                      - descriptor:
-                          code: REFUND_AMOUNT
-                        value: "200"
-              - id: R2
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
-                  code: REPLACEMENT
-                  short_desc: Providing replacement of the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -5294,38 +5209,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:11.855Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 2e8989ad-23c0-4cf2-a038-9c07de821251
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:48.567Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: da2ec487-dbfa-4fcd-821e-29102bc624f6
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: ISSUE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:11.855Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:48.567Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -5345,40 +5257,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -5388,85 +5300,100 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: d5ae3717-d844-459f-8517-1ce36c57cf84
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
                     code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:11.855Z
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -5477,22 +5404,7 @@ steps:
                           value: I1
                         - descriptor:
                             code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
-                  ref_id: R_PARENT
-                  ref_type: PARENT
-                  descriptor:
-                    code: REPLACEMENT
-                    short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:11.855Z
-                  proposed_by: NP2
-                  tags:
-                    - descriptor:
-                        code: RESOLUTION_DETAILS
-                      list:
-                        - descriptor:
-                            code: ITEM
-                          value: I1
+                          value: "180.00"
         type: request
         description: The BPP sends an unsolicited issue notification to the BAP to
           communicate a grievance or problem encountered during the driver
@@ -5506,7 +5418,7 @@ steps:
       grievance management workflow to address problems with order fulfillment
       or service delivery.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgaXNzdWVTdGF0dXNHZW5lcmF0b3IoCiAgICAgICAgICAgICAgICBkZWZhdWx0UGF5bG9hZCwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAuLi5zZXNzaW9uRGF0YSwKICAgICAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAiaXNzdWVfZXNjYWxhdGUiLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHNlc3Npb25EYXRhPy51c2VyX2lucHV0cwogICAgICAgICAgICApOwp9
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGlzc3VlU3RhdHVzR2VuZXJhdG9yKAogICAgICAgIGRlZmF1bHRQYXlsb2FkLAogICAgICAgIHsKICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgIGlnbV9hY3Rpb246ICJpc3N1ZV9lc2NhbGF0ZSIsCiAgICAgICAgfSwKICAgICAgICBzZXNzaW9uRGF0YT8udXNlcl9pbnB1dHMKICAgICk7CgogICAgaWYgKHNlc3Npb25EYXRhPy5pc3N1ZV9yZXNvbHV0aW9uLmxlbmd0aCkgewogICAgICAgIHJlc3BvbnNlLm1lc3NhZ2UuaXNzdWUucmVzb2x1dGlvbnMgPSBzZXNzaW9uRGF0YT8uaXNzdWVfcmVzb2x1dGlvbgogICAgfQoKICAgIHJldHVybiByZXNwb25zZQp9
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlX2VzY2FsYXRlIjsKCiAgaWYgKCF0YXJnZXRQYXlsb2FkIHx8ICF0YXJnZXRQYXlsb2FkLmNvbnRleHQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgcGF5bG9hZCBjb250ZXh0IiB9OwogIH0KCiAgaWYgKHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gIT09IENVUlJFTlRfU1RFUF9BUEkpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIkNvbnRleHQgYWN0aW9uIGRvZXMgbm90IG1hdGNoIHN0ZXAgQVBJOiAiICsgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LmFjdGlvbiB9OwogIH0KCiAgY29uc3QgbWVzc2FnZSA9IHRhcmdldFBheWxvYWQubWVzc2FnZTsKICBpZiAoIW1lc3NhZ2UgfHwgIW1lc3NhZ2UuaXNzdWUpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgbWVzc2FnZSBvciBpc3N1ZSBvYmplY3QgaW4gcGF5bG9hZCIgfTsKICB9CgogIGNvbnN0IGlzc3VlID0gbWVzc2FnZS5pc3N1ZTsKICBpZiAoIWlzc3VlLmlkKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIElEIiB9OwogIH0KICBpZiAoIWlzc3VlLmNyZWF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgY3JlYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQogIGlmICghaXNzdWUudXBkYXRlZF9hdCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSB1cGRhdGVkX2F0IHRpbWVzdGFtcCIgfTsKICB9CgogIC8vIENyb3NzLXN0ZXAgdmVyaWZpY2F0aW9uCiAgbGV0IHNraXBDcm9zc1N0ZXAgPSBmYWxzZTsKICBpZiAoc2Vzc2lvbkRhdGEpIHsKICAgIGNvbnN0IHByZXZUeElkID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkKSA/IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWRbMF0gOiBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkOwogICAgY29uc3QgYWN0aXZlVHhJZCA9IHByZXZUeElkIHx8IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uX2lkOwogICAgaWYgKGFjdGl2ZVR4SWQgJiYgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LnRyYW5zYWN0aW9uX2lkICE9PSBhY3RpdmVUeElkKSB7CiAgICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogICAgfQogIH0gZWxzZSB7CiAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICB9CgogIGlmICghc2tpcENyb3NzU3RlcCAmJiBzZXNzaW9uRGF0YSkgewogICAgLy8gVmFsaWRhdGUgcmVmcwogICAgaWYgKGlzc3VlLnJlZnMgJiYgQXJyYXkuaXNBcnJheShpc3N1ZS5yZWZzKSkgewogICAgICBjb25zdCBvcmRlclJlZiA9IGlzc3VlLnJlZnMuZmluZChyID0+IHIucmVmX3R5cGUgPT09ICdPUkRFUicpOwogICAgICBpZiAob3JkZXJSZWYgJiYgc2Vzc2lvbkRhdGEub3JkZXJfaWQpIHsKICAgICAgICBjb25zdCBleHBlY3RlZE9yZGVyID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5vcmRlcl9pZCkgPyBzZXNzaW9uRGF0YS5vcmRlcl9pZFswXSA6IHNlc3Npb25EYXRhLm9yZGVyX2lkOwogICAgICAgIGlmIChvcmRlclJlZi5yZWZfaWQgIT09IGV4cGVjdGVkT3JkZXIpIHsKICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIE9SREVSIHJlZl9pZCAoIiArIG9yZGVyUmVmLnJlZl9pZCArICIpIGRvZXMgbm90IG1hdGNoIHNlc3Npb24gb3JkZXJfaWQgKCIgKyBleHBlY3RlZE9yZGVyICsgIikiIH07CiAgICAgICAgfQogICAgICB9CgogICAgICBjb25zdCBwcm92aWRlclJlZiA9IGlzc3VlLnJlZnMuZmluZChyID0+IHIucmVmX3R5cGUgPT09ICdQUk9WSURFUicpOwogICAgICBpZiAocHJvdmlkZXJSZWYgJiYgc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpIHsKICAgICAgICBjb25zdCBleHBlY3RlZFByb3ZpZGVyID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5wcm92aWRlcl9pZCkgPyBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZFswXSA6IHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkOwogICAgICAgIGlmIChwcm92aWRlclJlZi5yZWZfaWQgIT09IGV4cGVjdGVkUHJvdmlkZXIpIHsKICAgICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIFBST1ZJREVSIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIHByb3ZpZGVyX2lkIiB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgZnVsZmlsbG1lbnRSZWYgPSBpc3N1ZS5yZWZzLmZpbmQoCiAgICAgICAgciA9PiByLnJlZl90eXBlID09PSAiRlVMRklMTE1FTlQiCiAgICAgICk7CgogICAgICBpZiAoZnVsZmlsbG1lbnRSZWYgJiYgc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRGdWxmaWxsbWVudHMgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcykKICAgICAgICAgID8gc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzCiAgICAgICAgICA6IFtzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHNdOwoKICAgICAgICBpZiAoIWV4cGVjdGVkRnVsZmlsbG1lbnRzLmluY2x1ZGVzKGZ1bGZpbGxtZW50UmVmLnJlZl9pZCkpIHsKICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgIHZhbGlkOiBmYWxzZSwKICAgICAgICAgICAgY29kZTogNDAwLAogICAgICAgICAgICBkZXNjcmlwdGlvbjoKICAgICAgICAgICAgICAiSXNzdWUgRlVMRklMTE1FTlQgcmVmX2lkIGRvZXMgbm90IG1hdGNoIGFueSBzZXNzaW9uIGZ1bGZpbGxtZW50X2lkcyIKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9CgogICAgICBjb25zdCBpdGVtUmVmID0gaXNzdWUucmVmcy5maW5kKAogICAgICAgIHIgPT4gci5yZWZfdHlwZSA9PT0gIklURU0iCiAgICAgICk7CgogICAgICBpZiAoaXRlbVJlZiAmJiBzZXNzaW9uRGF0YS5pdGVtX2lkcykgewogICAgICAgIGNvbnN0IGV4cGVjdGVkSXRlbXMgPSBBcnJheS5pc0FycmF5KHNlc3Npb25EYXRhLml0ZW1faWRzKQogICAgICAgICAgPyBzZXNzaW9uRGF0YS5pdGVtX2lkcwogICAgICAgICAgOiBbc2Vzc2lvbkRhdGEuaXRlbV9pZHNdOwoKICAgICAgICBpZiAoIWV4cGVjdGVkSXRlbXMuaW5jbHVkZXMoaXRlbVJlZi5yZWZfaWQpKSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDQwMCwKICAgICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICAgIklzc3VlIElURU0gcmVmX2lkIGRvZXMgbm90IG1hdGNoIGFueSBzZXNzaW9uIGl0ZW1faWRzIgogICAgICAgICAgfTsKICAgICAgICB9CiAgICAgIH0KICAgIH0gZWxzZSB7CiAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3Npbmcgb3IgaW52YWxpZCBpc3N1ZSByZWZzIGFycmF5IiB9OwogICAgfQoKICAgIC8vIFZhbGlkYXRlIGFjdG9ycywgc291cmNlLCBjb21wbGFpbmFudAogICAgaWYgKCFpc3N1ZS5hY3RvcnMgfHwgIUFycmF5LmlzQXJyYXkoaXNzdWUuYWN0b3JzKSB8fCBpc3N1ZS5hY3RvcnMubGVuZ3RoID09PSAwKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdG9ycyBhcnJheSIgfTsKICAgIH0KICAgIGlmICghaXNzdWUuc291cmNlX2lkKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIHNvdXJjZV9pZCIgfTsKICAgIH0KICAgIGlmICghaXNzdWUuY29tcGxhaW5hbnRfaWQpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgY29tcGxhaW5hbnRfaWQiIH07CiAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBzdGF0dXMgYmFzZWQgb24gYWN0aW9uCiAgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX29wZW4iKSkgewogICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJPUEVOIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBPUEVOIGZvciBpc3N1ZV9vcGVuIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgIGlmIChpc3N1ZS5zdGF0dXMgIT09ICJDTE9TRUQiKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIENMT1NFRCBmb3IgaXNzdWVfY2xvc2UgYWN0aW9uLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfSBlbHNlIGlmIChDVVJSRU5UX1NURVBfQVBJID09PSAiaXNzdWUiICYmICFDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9jbG9zZSIpKSB7CiAgICAgLy8gRm9yIGVzY2FsYXRlLCByZXNvbHV0aW9uIGFjY2VwdCwgcmVqZWN0IGV0Yy4KICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiUFJPQ0VTU0lORyIgJiYgaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgUFJPQ0VTU0lORy9PUEVOIGZvciAiICsgQ1VSUkVOVF9TVEVQX0FDVElPTl9JRCArICIsIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9CgogIC8vIFZhbGlkYXRlIGFjdGlvbnMgYXJyYXkKICBpZiAoIWlzc3VlLmFjdGlvbnMgfHwgIUFycmF5LmlzQXJyYXkoaXNzdWUuYWN0aW9ucykgfHwgaXNzdWUuYWN0aW9ucy5sZW5ndGggPT09IDApIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgYWN0aW9ucyBhcnJheSIgfTsKICB9CiAgCiAgY29uc3QgbGFzdEFjdGlvbiA9IGlzc3VlLmFjdGlvbnNbaXNzdWUuYWN0aW9ucy5sZW5ndGggLSAxXTsKICBpZiAoIWxhc3RBY3Rpb24uaWQgfHwgIWxhc3RBY3Rpb24uZGVzY3JpcHRvciB8fCAhbGFzdEFjdGlvbi5kZXNjcmlwdG9yLmNvZGUpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIkxhc3QgYWN0aW9uIGluIGFjdGlvbnMgYXJyYXkgaXMgbWFsZm9ybWVkIiB9OwogIH0KCiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gImlzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAyMjsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -5632,35 +5544,32 @@ steps:
       - name: example for issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: issue
-            timestamp: 2026-08-25T11:20:11.917Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 783081ee-b5b9-4be0-9e95-b52bf45b19cd
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:48.768Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: c859aead-a117-4005-b75b-d0e6fba60afd
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:11.917Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:48.768Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -5680,120 +5589,164 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
               complainant_id: NP1
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
                 media:
                   - url: https://transitsolutions.in/logos/logo.icon
-              last_action_id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+              last_action_id: 6ecec38a-feab-4f37-8e30-7756225f5565
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
+                    name: ONDC buyer
+              respondent_ids:
+                - NP2
+              resolver_ids:
+                - NP2
+              resolutions:
+                - id: R_PARENT
+                  descriptor:
+                    code: PARENT
+                    short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                - id: R1
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "180.00"
         type: request
         description: The BAP submits an issue complaint to the BPP, initiating the
           grievance management workflow to address problems with order
@@ -5808,7 +5761,7 @@ steps:
       callback enables resolution tracking within the ride assignment grievance
       management process.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcihkZWZhdWx0UGF5bG9hZCwgewogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAib25faXNzdWVfcHJvY2Vzc2luZ18yIiwKICAgICAgICAgICAgfSk7Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBvbklzc3VlU3RhdHVzR2VuZXJhdG9yKGRlZmF1bHRQYXlsb2FkLCB7CiAgICAuLi5zZXNzaW9uRGF0YSwKICAgIGlnbV9hY3Rpb246ICJvbl9pc3N1ZV9wcm9jZXNzaW5nXzIiLAogIH0pOwoKICBpZiAoc2Vzc2lvbkRhdGE/Lmlzc3VlX3Jlc29sdXRpb24ubGVuZ3RoKSB7CiAgICByZXNwb25zZS5tZXNzYWdlLmlzc3VlLnJlc29sdXRpb25zID0gc2Vzc2lvbkRhdGE/Lmlzc3VlX3Jlc29sdXRpb24KICB9CgogIHJldHVybiByZXNwb25zZQp9
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Byb2Nlc3NpbmdfMiI7CgogIGlmICghdGFyZ2V0UGF5bG9hZCB8fCAhdGFyZ2V0UGF5bG9hZC5jb250ZXh0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHBheWxvYWQgY29udGV4dCIgfTsKICB9CgogIGlmICh0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICE9PSBDVVJSRU5UX1NURVBfQVBJKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJDb250ZXh0IGFjdGlvbiBkb2VzIG5vdCBtYXRjaCBzdGVwIEFQSTogIiArIHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gfTsKICB9CgogIGNvbnN0IG1lc3NhZ2UgPSB0YXJnZXRQYXlsb2FkLm1lc3NhZ2U7CiAgaWYgKCFtZXNzYWdlIHx8ICFtZXNzYWdlLmlzc3VlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG1lc3NhZ2Ugb3IgaXNzdWUgb2JqZWN0IGluIHBheWxvYWQiIH07CiAgfQoKICBjb25zdCBpc3N1ZSA9IG1lc3NhZ2UuaXNzdWU7CiAgaWYgKCFpc3N1ZS5pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBJRCIgfTsKICB9CiAgaWYgKCFpc3N1ZS5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNyZWF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KICBpZiAoIWlzc3VlLnVwZGF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgdXBkYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQoKICAvLyBDcm9zcy1zdGVwIHZlcmlmaWNhdGlvbgogIGxldCBza2lwQ3Jvc3NTdGVwID0gZmFsc2U7CiAgaWYgKHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwcmV2VHhJZCA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgPyBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdIDogc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZDsKICAgIGNvbnN0IGFjdGl2ZVR4SWQgPSBwcmV2VHhJZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICAgIGlmIChhY3RpdmVUeElkICYmIHRhcmdldFBheWxvYWQuY29udGV4dC50cmFuc2FjdGlvbl9pZCAhPT0gYWN0aXZlVHhJZCkgewogICAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICAgIH0KICB9IGVsc2UgewogICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXAgJiYgc2Vzc2lvbkRhdGEpIHsKICAgIC8vIFZhbGlkYXRlIHJlZnMKICAgIGlmIChpc3N1ZS5yZWZzICYmIEFycmF5LmlzQXJyYXkoaXNzdWUucmVmcykpIHsKICAgICAgY29uc3Qgb3JkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnT1JERVInKTsKICAgICAgaWYgKG9yZGVyUmVmICYmIHNlc3Npb25EYXRhLm9yZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRPcmRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub3JkZXJfaWQpID8gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5vcmRlcl9pZDsKICAgICAgICBpZiAob3JkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZE9yZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBPUkRFUiByZWZfaWQgKCIgKyBvcmRlclJlZi5yZWZfaWQgKyAiKSBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIG9yZGVyX2lkICgiICsgZXhwZWN0ZWRPcmRlciArICIpIiB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgcHJvdmlkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnUFJPVklERVInKTsKICAgICAgaWYgKHByb3ZpZGVyUmVmICYmIHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRQcm92aWRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpID8gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZDsKICAgICAgICBpZiAocHJvdmlkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZFByb3ZpZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBQUk9WSURFUiByZWZfaWQgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBwcm92aWRlcl9pZCIgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IGZ1bGZpbGxtZW50UmVmID0gaXNzdWUucmVmcy5maW5kKAogICAgICAgIHIgPT4gci5yZWZfdHlwZSA9PT0gIkZVTEZJTExNRU5UIgogICAgICApOwoKICAgICAgaWYgKGZ1bGZpbGxtZW50UmVmICYmIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcykgewogICAgICAgIGNvbnN0IGV4cGVjdGVkRnVsZmlsbG1lbnRzID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMpCiAgICAgICAgICA/IHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcwogICAgICAgICAgOiBbc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEZ1bGZpbGxtZW50cy5pbmNsdWRlcyhmdWxmaWxsbWVudFJlZi5yZWZfaWQpKSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDQwMCwKICAgICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICAgIklzc3VlIEZVTEZJTExNRU5UIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBmdWxmaWxsbWVudF9pZHMiCiAgICAgICAgICB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgaXRlbVJlZiA9IGlzc3VlLnJlZnMuZmluZCgKICAgICAgICByID0+IHIucmVmX3R5cGUgPT09ICJJVEVNIgogICAgICApOwoKICAgICAgaWYgKGl0ZW1SZWYgJiYgc2Vzc2lvbkRhdGEuaXRlbV9pZHMpIHsKICAgICAgICBjb25zdCBleHBlY3RlZEl0ZW1zID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5pdGVtX2lkcykKICAgICAgICAgID8gc2Vzc2lvbkRhdGEuaXRlbV9pZHMKICAgICAgICAgIDogW3Nlc3Npb25EYXRhLml0ZW1faWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEl0ZW1zLmluY2x1ZGVzKGl0ZW1SZWYucmVmX2lkKSkgewogICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiA0MDAsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICJJc3N1ZSBJVEVNIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBpdGVtX2lkcyIKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9CiAgICB9IGVsc2UgewogICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yIGludmFsaWQgaXNzdWUgcmVmcyBhcnJheSIgfTsKICAgIH0KCiAgICAvLyBWYWxpZGF0ZSBhY3RvcnMsIHNvdXJjZSwgY29tcGxhaW5hbnQKICAgIGlmICghaXNzdWUuYWN0b3JzIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdG9ycykgfHwgaXNzdWUuYWN0b3JzLmxlbmd0aCA9PT0gMCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3RvcnMgYXJyYXkiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLnNvdXJjZV9pZCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBzb3VyY2VfaWQiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLmNvbXBsYWluYW50X2lkKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNvbXBsYWluYW50X2lkIiB9OwogICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgc3RhdHVzIGJhc2VkIG9uIGFjdGlvbgogIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgT1BFTiBmb3IgaXNzdWVfb3BlbiBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiQ0xPU0VEIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FQSSA9PT0gImlzc3VlIiAmJiAhQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgIC8vIEZvciBlc2NhbGF0ZSwgcmVzb2x1dGlvbiBhY2NlcHQsIHJlamVjdCBldGMuCiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIlBST0NFU1NJTkciICYmIGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIFBST0NFU1NJTkcvT1BFTiBmb3IgIiArIENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgKyAiLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBhY3Rpb25zIGFycmF5CiAgaWYgKCFpc3N1ZS5hY3Rpb25zIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdGlvbnMpIHx8IGlzc3VlLmFjdGlvbnMubGVuZ3RoID09PSAwKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMgYXJyYXkiIH07CiAgfQogIAogIGNvbnN0IGxhc3RBY3Rpb24gPSBpc3N1ZS5hY3Rpb25zW2lzc3VlLmFjdGlvbnMubGVuZ3RoIC0gMV07CiAgaWYgKCFsYXN0QWN0aW9uLmlkIHx8ICFsYXN0QWN0aW9uLmRlc2NyaXB0b3IgfHwgIWxhc3RBY3Rpb24uZGVzY3JpcHRvci5jb2RlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJMYXN0IGFjdGlvbiBpbiBhY3Rpb25zIGFycmF5IGlzIG1hbGZvcm1lZCIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAyMzsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -5944,38 +5897,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:11.967Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 783081ee-b5b9-4be0-9e95-b52bf45b19cd
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:48.912Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: c859aead-a117-4005-b75b-d0e6fba60afd
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:11.967Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:48.912Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -5995,40 +5945,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -6036,87 +5986,129 @@ steps:
               respondent_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                    name: ONDC buyer
+                - id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.967Z
+                  updated_at: 2026-09-23T09:41:48.912Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
+              resolver_ids:
+                - NP2
+              resolutions:
+                - id: R_PARENT
+                  descriptor:
+                    code: PARENT
+                    short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                - id: R1
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "180.00"
         type: request
         description: The BPP sends an on_issue response to the BAP's issue escalation,
           providing issue details, available actions, and proposed resolutions.
@@ -6131,7 +6123,7 @@ steps:
       to the BAP, conveying proposed resolution actions, issue assessment
       details, and expected timelines for addressing the complaint.
     mock:
-      generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gYXdhaXQgb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcihkZWZhdWx0UGF5bG9hZCwgewogICAgICAgICAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgICAgICAgICBpZ21fYWN0aW9uOiAib25faXNzdWVfcmVzb2x1dGlvbl8yIiwKICAgICAgICAgICAgfSk7Cn0=
+      generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBvbklzc3VlU3RhdHVzR2VuZXJhdG9yKGRlZmF1bHRQYXlsb2FkLCB7CiAgICAuLi5zZXNzaW9uRGF0YSwKICAgIGlnbV9hY3Rpb246ICJvbl9pc3N1ZV9yZXNvbHV0aW9uXzIiLAogIH0pOwoKICBpZiAoc2Vzc2lvbkRhdGE/Lmlzc3VlX3Jlc29sdXRpb24ubGVuZ3RoKSB7CiAgICByZXNwb25zZS5tZXNzYWdlLmlzc3VlLnJlc29sdXRpb25zID0gc2Vzc2lvbkRhdGE/Lmlzc3VlX3Jlc29sdXRpb24KICB9CiAgY29uc3QgcmVzb2x1dGlvbnMgPSByZXNwb25zZT8ubWVzc2FnZT8uaXNzdWU/LnJlc29sdXRpb25zOwoKICBpZiAocmVzb2x1dGlvbnM/Lmxlbmd0aCkgewogICAgY29uc3QgdGFyZ2V0SXRlbSA9IHJlc29sdXRpb25zLmZpbmQoKGl0ZW0pID0+IGl0ZW0/LnJlZl9pZCAmJiBpdGVtPy5yZWZfdHlwZSAmJiBpdGVtLmRlc2NyaXB0b3IuY29kZSA9PT0gIlJFRlVORCIpOwoKICAgIGlmICh0YXJnZXRJdGVtKSB7CiAgICAgIGNvbnN0IGNsb25lZEl0ZW0gPSB0eXBlb2Ygc3RydWN0dXJlZENsb25lID09PSAiZnVuY3Rpb24iCiAgICAgICAgPyBzdHJ1Y3R1cmVkQ2xvbmUodGFyZ2V0SXRlbSkKICAgICAgICA6IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkodGFyZ2V0SXRlbSkpOwoKICAgICAgY2xvbmVkSXRlbS5pZCA9ICJSMyI7CiAgICAgIGNsb25lZEl0ZW0udXBkYXRlZF9hdCA9IHJlc3BvbnNlLmNvbnRleHQudGltZXN0YW1wCgogICAgICBpZiAoY2xvbmVkSXRlbT8udGFncz8ubGVuZ3RoKSB7CiAgICAgICAgY2xvbmVkSXRlbS50YWdzID0gY2xvbmVkSXRlbS50YWdzLm1hcCgodGFnKSA9PiAoewogICAgICAgICAgLi4udGFnLAogICAgICAgICAgbGlzdDogdGFnPy5saXN0Py5tYXAoKGxpc3RJdGVtKSA9PiB7CiAgICAgICAgICAgIGlmIChsaXN0SXRlbT8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIlJFRlVORF9BTU9VTlQiKSB7CiAgICAgICAgICAgICAgY29uc3QgdXBkYXRlZEFtb3VudCA9IE51bWJlcihzZXNzaW9uRGF0YT8ucXVvdGU/LlswXT8ucHJpY2U/LnZhbHVlIHx8IDApLnRvRml4ZWQoMik7CiAgICAgICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgICAgIC4uLmxpc3RJdGVtLAogICAgICAgICAgICAgICAgdmFsdWU6IFN0cmluZyh1cGRhdGVkQW1vdW50KSwKICAgICAgICAgICAgICB9OwogICAgICAgICAgICB9CiAgICAgICAgICAgIHJldHVybiBsaXN0SXRlbTsKICAgICAgICAgIH0pLAogICAgICAgIH0pKTsKICAgICAgfQoKICAgICAgcmVzcG9uc2UubWVzc2FnZS5pc3N1ZS5yZXNvbHV0aW9ucy5wdXNoKGNsb25lZEl0ZW0pOwogICAgfQogIH0KCiAgcmV0dXJuIHJlc3BvbnNlCn0=
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlX3Jlc29sdXRpb25fMiI7CgogIGlmICghdGFyZ2V0UGF5bG9hZCB8fCAhdGFyZ2V0UGF5bG9hZC5jb250ZXh0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHBheWxvYWQgY29udGV4dCIgfTsKICB9CgogIGlmICh0YXJnZXRQYXlsb2FkLmNvbnRleHQuYWN0aW9uICE9PSBDVVJSRU5UX1NURVBfQVBJKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJDb250ZXh0IGFjdGlvbiBkb2VzIG5vdCBtYXRjaCBzdGVwIEFQSTogIiArIHRhcmdldFBheWxvYWQuY29udGV4dC5hY3Rpb24gfTsKICB9CgogIGNvbnN0IG1lc3NhZ2UgPSB0YXJnZXRQYXlsb2FkLm1lc3NhZ2U7CiAgaWYgKCFtZXNzYWdlIHx8ICFtZXNzYWdlLmlzc3VlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG1lc3NhZ2Ugb3IgaXNzdWUgb2JqZWN0IGluIHBheWxvYWQiIH07CiAgfQoKICBjb25zdCBpc3N1ZSA9IG1lc3NhZ2UuaXNzdWU7CiAgaWYgKCFpc3N1ZS5pZCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBJRCIgfTsKICB9CiAgaWYgKCFpc3N1ZS5jcmVhdGVkX2F0KSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNyZWF0ZWRfYXQgdGltZXN0YW1wIiB9OwogIH0KICBpZiAoIWlzc3VlLnVwZGF0ZWRfYXQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgaXNzdWUgdXBkYXRlZF9hdCB0aW1lc3RhbXAiIH07CiAgfQoKICAvLyBDcm9zcy1zdGVwIHZlcmlmaWNhdGlvbgogIGxldCBza2lwQ3Jvc3NTdGVwID0gZmFsc2U7CiAgaWYgKHNlc3Npb25EYXRhKSB7CiAgICBjb25zdCBwcmV2VHhJZCA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCkgPyBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkWzBdIDogc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZDsKICAgIGNvbnN0IGFjdGl2ZVR4SWQgPSBwcmV2VHhJZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICAgIGlmIChhY3RpdmVUeElkICYmIHRhcmdldFBheWxvYWQuY29udGV4dC50cmFuc2FjdGlvbl9pZCAhPT0gYWN0aXZlVHhJZCkgewogICAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICAgIH0KICB9IGVsc2UgewogICAgc2tpcENyb3NzU3RlcCA9IHRydWU7CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXAgJiYgc2Vzc2lvbkRhdGEpIHsKICAgIC8vIFZhbGlkYXRlIHJlZnMKICAgIGlmIChpc3N1ZS5yZWZzICYmIEFycmF5LmlzQXJyYXkoaXNzdWUucmVmcykpIHsKICAgICAgY29uc3Qgb3JkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnT1JERVInKTsKICAgICAgaWYgKG9yZGVyUmVmICYmIHNlc3Npb25EYXRhLm9yZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRPcmRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEub3JkZXJfaWQpID8gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5vcmRlcl9pZDsKICAgICAgICBpZiAob3JkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZE9yZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBPUkRFUiByZWZfaWQgKCIgKyBvcmRlclJlZi5yZWZfaWQgKyAiKSBkb2VzIG5vdCBtYXRjaCBzZXNzaW9uIG9yZGVyX2lkICgiICsgZXhwZWN0ZWRPcmRlciArICIpIiB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgcHJvdmlkZXJSZWYgPSBpc3N1ZS5yZWZzLmZpbmQociA9PiByLnJlZl90eXBlID09PSAnUFJPVklERVInKTsKICAgICAgaWYgKHByb3ZpZGVyUmVmICYmIHNlc3Npb25EYXRhLnByb3ZpZGVyX2lkKSB7CiAgICAgICAgY29uc3QgZXhwZWN0ZWRQcm92aWRlciA9IEFycmF5LmlzQXJyYXkoc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWQpID8gc2Vzc2lvbkRhdGEucHJvdmlkZXJfaWRbMF0gOiBzZXNzaW9uRGF0YS5wcm92aWRlcl9pZDsKICAgICAgICBpZiAocHJvdmlkZXJSZWYucmVmX2lkICE9PSBleHBlY3RlZFByb3ZpZGVyKSB7CiAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBQUk9WSURFUiByZWZfaWQgZG9lcyBub3QgbWF0Y2ggc2Vzc2lvbiBwcm92aWRlcl9pZCIgfTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGNvbnN0IGZ1bGZpbGxtZW50UmVmID0gaXNzdWUucmVmcy5maW5kKAogICAgICAgIHIgPT4gci5yZWZfdHlwZSA9PT0gIkZVTEZJTExNRU5UIgogICAgICApOwoKICAgICAgaWYgKGZ1bGZpbGxtZW50UmVmICYmIHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcykgewogICAgICAgIGNvbnN0IGV4cGVjdGVkRnVsZmlsbG1lbnRzID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5mdWxmaWxsbWVudF9pZHMpCiAgICAgICAgICA/IHNlc3Npb25EYXRhLmZ1bGZpbGxtZW50X2lkcwogICAgICAgICAgOiBbc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRfaWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEZ1bGZpbGxtZW50cy5pbmNsdWRlcyhmdWxmaWxsbWVudFJlZi5yZWZfaWQpKSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICB2YWxpZDogZmFsc2UsCiAgICAgICAgICAgIGNvZGU6IDQwMCwKICAgICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICAgIklzc3VlIEZVTEZJTExNRU5UIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBmdWxmaWxsbWVudF9pZHMiCiAgICAgICAgICB9OwogICAgICAgIH0KICAgICAgfQoKICAgICAgY29uc3QgaXRlbVJlZiA9IGlzc3VlLnJlZnMuZmluZCgKICAgICAgICByID0+IHIucmVmX3R5cGUgPT09ICJJVEVNIgogICAgICApOwoKICAgICAgaWYgKGl0ZW1SZWYgJiYgc2Vzc2lvbkRhdGEuaXRlbV9pZHMpIHsKICAgICAgICBjb25zdCBleHBlY3RlZEl0ZW1zID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS5pdGVtX2lkcykKICAgICAgICAgID8gc2Vzc2lvbkRhdGEuaXRlbV9pZHMKICAgICAgICAgIDogW3Nlc3Npb25EYXRhLml0ZW1faWRzXTsKCiAgICAgICAgaWYgKCFleHBlY3RlZEl0ZW1zLmluY2x1ZGVzKGl0ZW1SZWYucmVmX2lkKSkgewogICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgdmFsaWQ6IGZhbHNlLAogICAgICAgICAgICBjb2RlOiA0MDAsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICJJc3N1ZSBJVEVNIHJlZl9pZCBkb2VzIG5vdCBtYXRjaCBhbnkgc2Vzc2lvbiBpdGVtX2lkcyIKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9CiAgICB9IGVsc2UgewogICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIG9yIGludmFsaWQgaXNzdWUgcmVmcyBhcnJheSIgfTsKICAgIH0KCiAgICAvLyBWYWxpZGF0ZSBhY3RvcnMsIHNvdXJjZSwgY29tcGxhaW5hbnQKICAgIGlmICghaXNzdWUuYWN0b3JzIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdG9ycykgfHwgaXNzdWUuYWN0b3JzLmxlbmd0aCA9PT0gMCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBhY3RvcnMgYXJyYXkiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLnNvdXJjZV9pZCkgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBpc3N1ZSBzb3VyY2VfaWQiIH07CiAgICB9CiAgICBpZiAoIWlzc3VlLmNvbXBsYWluYW50X2lkKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGNvbXBsYWluYW50X2lkIiB9OwogICAgfQogIH0KCiAgLy8gVmFsaWRhdGUgc3RhdHVzIGJhc2VkIG9uIGFjdGlvbgogIGlmIChDVVJSRU5UX1NURVBfQUNUSU9OX0lELmluY2x1ZGVzKCJpc3N1ZV9vcGVuIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiT1BFTiIpIHsKICAgICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIklzc3VlIHN0YXR1cyBzaG91bGQgYmUgT1BFTiBmb3IgaXNzdWVfb3BlbiBhY3Rpb24sIGJ1dCBnb3QgIiArIGlzc3VlLnN0YXR1cyB9OwogICAgIH0KICB9IGVsc2UgaWYgKENVUlJFTlRfU1RFUF9BQ1RJT05fSUQuaW5jbHVkZXMoImlzc3VlX2Nsb3NlIikpIHsKICAgICBpZiAoaXNzdWUuc3RhdHVzICE9PSAiQ0xPU0VEIikgewogICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXNzdWUgc3RhdHVzIHNob3VsZCBiZSBDTE9TRUQgZm9yIGlzc3VlX2Nsb3NlIGFjdGlvbiwgYnV0IGdvdCAiICsgaXNzdWUuc3RhdHVzIH07CiAgICAgfQogIH0gZWxzZSBpZiAoQ1VSUkVOVF9TVEVQX0FQSSA9PT0gImlzc3VlIiAmJiAhQ1VSUkVOVF9TVEVQX0FDVElPTl9JRC5pbmNsdWRlcygiaXNzdWVfY2xvc2UiKSkgewogICAgIC8vIEZvciBlc2NhbGF0ZSwgcmVzb2x1dGlvbiBhY2NlcHQsIHJlamVjdCBldGMuCiAgICAgaWYgKGlzc3VlLnN0YXR1cyAhPT0gIlBST0NFU1NJTkciICYmIGlzc3VlLnN0YXR1cyAhPT0gIk9QRU4iKSB7CiAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJJc3N1ZSBzdGF0dXMgc2hvdWxkIGJlIFBST0NFU1NJTkcvT1BFTiBmb3IgIiArIENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgKyAiLCBidXQgZ290ICIgKyBpc3N1ZS5zdGF0dXMgfTsKICAgICB9CiAgfQoKICAvLyBWYWxpZGF0ZSBhY3Rpb25zIGFycmF5CiAgaWYgKCFpc3N1ZS5hY3Rpb25zIHx8ICFBcnJheS5pc0FycmF5KGlzc3VlLmFjdGlvbnMpIHx8IGlzc3VlLmFjdGlvbnMubGVuZ3RoID09PSAwKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGlzc3VlIGFjdGlvbnMgYXJyYXkiIH07CiAgfQogIAogIGNvbnN0IGxhc3RBY3Rpb24gPSBpc3N1ZS5hY3Rpb25zW2lzc3VlLmFjdGlvbnMubGVuZ3RoIC0gMV07CiAgaWYgKCFsYXN0QWN0aW9uLmlkIHx8ICFsYXN0QWN0aW9uLmRlc2NyaXB0b3IgfHwgIWxhc3RBY3Rpb24uZGVzY3JpcHRvci5jb2RlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJMYXN0IGFjdGlvbiBpbiBhY3Rpb25zIGFycmF5IGlzIG1hbGZvcm1lZCIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfQUNUSU9OX0lEID0gIm9uX2lzc3VlIjsKICBjb25zdCBDVVJSRU5UX1NURVBfSU5ERVggPSAyNDsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -6325,21 +6317,6 @@ steps:
                       - descriptor:
                           code: REFUND_AMOUNT
                         value: "200"
-              - id: R2
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
-                  code: REPLACEMENT
-                  short_desc: Providing replacement of the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -6360,38 +6337,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:12.030Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 041d4e2b-4dee-486d-8f68-66f78e9b7496
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:49.026Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 1e3113bc-6400-4d84-936c-27442cd1c688
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:12.030Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:49.026Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -6411,40 +6385,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -6454,111 +6428,126 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: 47c98973-fd07-4b5b-a221-869f102eb74a
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: d6a09a46-090c-4cf3-af7f-22075b4dd553
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                    name: ONDC buyer
+                - id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.967Z
+                  updated_at: 2026-09-23T09:41:48.912Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 47c98973-fd07-4b5b-a221-869f102eb74a
+                    name: mock-seller
+                - id: d6a09a46-090c-4cf3-af7f-22075b4dd553
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:49.026Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
                     code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -6569,14 +6558,14 @@ steps:
                           value: I1
                         - descriptor:
                             code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
+                          value: "180.00"
+                - id: R3
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REPLACEMENT
-                    short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:49.026Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -6585,6 +6574,9 @@ steps:
                         - descriptor:
                             code: ITEM
                           value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "200.00"
         type: request
         description: The BPP communicates its handling of a reported service grievance
           to the BAP, conveying proposed resolution actions, issue assessment
@@ -6809,38 +6801,35 @@ steps:
       - name: example for issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: issue
-            timestamp: 2026-08-25T11:20:12.922Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 8f3632ab-fe96-4ab4-a601-f1e0f99b9a6d
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:50.710Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 8d8e68cf-55c0-4a9a-baaf-3e39249cfaad
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: PROCESSING
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:12.922Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:50.710Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -6860,40 +6849,40 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Jane Doe
+                      name: mock-seller
                 - id: NP2-GRO
                   type: COUNTERPARTY_NP_GRO
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9999994039"
-                      email: sellerapp@interface.com
+                      phone: "8888884045"
+                      email: gro@interface.com
                     person:
                       name: Grievance Officer BNP
               source_id: CUST1
@@ -6903,123 +6892,138 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
                 media:
                   - url: https://transitsolutions.in/logos/logo.icon
-              last_action_id: b1a0d5f4-e7cf-4a6b-8b82-0964cd85dff5
+              last_action_id: c2a6e909-2778-4b27-91f0-5651cca90f4e
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                    name: ONDC buyer
+                - id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.967Z
+                  updated_at: 2026-09-23T09:41:48.912Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 47c98973-fd07-4b5b-a221-869f102eb74a
+                    name: mock-seller
+                - id: d6a09a46-090c-4cf3-af7f-22075b4dd553
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:49.026Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: b1a0d5f4-e7cf-4a6b-8b82-0964cd85dff5
+                    name: mock-seller
+                - id: c2a6e909-2778-4b27-91f0-5651cca90f4e
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_ACCEPTED
                     short_desc: Resolution is accepted
-                  updated_at: 2026-08-25T11:20:12.922Z
+                  updated_at: 2026-09-23T09:41:50.710Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
+                    name: ONDC buyer
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
                     code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -7030,14 +7034,14 @@ steps:
                           value: I1
                         - descriptor:
                             code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
+                          value: "180.00"
+                - id: R3
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REPLACEMENT
-                    short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:49.026Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -7046,6 +7050,9 @@ steps:
                         - descriptor:
                             code: ITEM
                           value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "200.00"
         type: request
         description: The BAP raises an issue with the BPP to formally report a problem
           or complaint regarding the confirmed ride order and initiate the issue
@@ -7274,21 +7281,6 @@ steps:
                       - descriptor:
                           code: REFUND_AMOUNT
                         value: "200"
-              - id: R2
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
-                  code: REPLACEMENT
-                  short_desc: Providing replacement of the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -7309,38 +7301,35 @@ steps:
       - name: example for on_issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: on_issue
-            timestamp: 2026-08-25T11:20:12.948Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 8f3632ab-fe96-4ab4-a601-f1e0f99b9a6d
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:50.764Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: 8d8e68cf-55c0-4a9a-baaf-3e39249cfaad
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: RESOLVED
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:12.948Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:50.764Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -7360,42 +7349,42 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: buyerapp.com::ONDC:RET10
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: mock-person
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: sam@yahoo.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: buyerapp.com::ONDC:RET10
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9450394039"
-                      email: buyerapp@interface.com
+                      email: buyer@gmail.com
                     person:
-                      name: John Doe
+                      name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: sellerapp.com::ONDC:RET10
-                    contact:
-                      phone: "9450394140"
-                      email: respondentapp@respond.com
-                    person:
-                      name: Jane Doe
-                - id: NP2-GRO
-                  type: COUNTERPARTY_NP_GRO
-                  info:
-                    org:
-                      name: sellerapp.com::ONDC:RET10
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Grievance Officer SNP
+                      name: mock-seller
+                - id: NP2-GRO
+                  type: COUNTERPARTY_NP_GRO
+                  info:
+                    org:
+                      name: sample-bap-id::ONDC:RET10
+                    contact:
+                      phone: "8888884045"
+                      email: gro@interface.com
+                    person:
+                      name: Grievance Officer BNP
               source_id: CUST1
               complainant_id: NP1
               respondent_ids:
@@ -7403,131 +7392,146 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
-              last_action_id: e938add9-af6e-42cb-9c86-bb94b59c4eb6
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
+              last_action_id: 7d3f4e95-dd3e-4a2c-8d0e-d0099b3998d7
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                    name: ONDC buyer
+                - id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.967Z
+                  updated_at: 2026-09-23T09:41:48.912Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 47c98973-fd07-4b5b-a221-869f102eb74a
+                    name: mock-seller
+                - id: d6a09a46-090c-4cf3-af7f-22075b4dd553
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:49.026Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: b1a0d5f4-e7cf-4a6b-8b82-0964cd85dff5
+                    name: mock-seller
+                - id: c2a6e909-2778-4b27-91f0-5651cca90f4e
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_ACCEPTED
                     short_desc: Resolution is accepted
-                  updated_at: 2026-08-25T11:20:12.922Z
+                  updated_at: 2026-09-23T09:41:50.710Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e938add9-af6e-42cb-9c86-bb94b59c4eb6
+                    name: ONDC buyer
+                - id: 7d3f4e95-dd3e-4a2c-8d0e-d0099b3998d7
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLVED
                     short_desc: Complaint is Resolved
-                  updated_at: 2026-08-25T11:20:12.948Z
+                  updated_at: 2026-09-23T09:41:50.764Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
+                    name: mock-seller
               resolutions:
                 - id: R_PARENT
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
                     code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -7538,14 +7542,14 @@ steps:
                           value: I1
                         - descriptor:
                             code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
+                          value: "180.00"
+                - id: R3
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REPLACEMENT
-                    short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:49.026Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -7554,6 +7558,9 @@ steps:
                         - descriptor:
                             code: ITEM
                           value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "200.00"
         type: request
         description: The BPP confirms receipt and acceptance of the issue resolution
           proposed by the BAP to close the dispute within the ONDC grievance
@@ -7790,21 +7797,6 @@ steps:
                       - descriptor:
                           code: REFUND_AMOUNT
                         value: "200"
-              - id: R2
-                ref_id: R_PARENT
-                ref_type: PARENT
-                descriptor:
-                  code: REPLACEMENT
-                  short_desc: Providing replacement of the item
-                updated_at: 2024-08-14T09:57:58.841Z
-                proposed_by: NP2
-                tags:
-                  - descriptor:
-                      code: RESOLUTION_DETAILS
-                    list:
-                      - descriptor:
-                          code: ITEM
-                        value: I1
       saveData:
         transactionId: $.context.transaction_id
         latestMessage_id: $.context.message_id
@@ -7852,38 +7844,35 @@ steps:
       - name: example for issue
         payload:
           context:
-            domain: ONDC:TRV11
+            domain: ONDC:RET10
             action: issue
-            timestamp: 2026-08-25T11:20:14.054Z
-            transaction_id: a5a70bf6-5d4b-45af-a589-23fc588edbea
-            message_id: 012ed0d7-672a-4ac3-b787-ecb92a10f482
-            bap_id: bap.example.com
+            timestamp: 2026-09-23T09:41:52.417Z
+            transaction_id: 3cd7243a-eef8-42e1-8d12-9c76eab6fcea
+            message_id: bebb6458-9186-4ee3-b532-2818ae1fc6f2
+            bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
-            bpp_id: bpp.example.com
+            bpp_id: sample-bpp-id
             bpp_uri: https://bpp.example.com
-            version: 2.0.0
-            location:
-              country:
-                code: IND
-              city:
-                code: std:080
+            country: IND
+            city: std:011
+            core_version: 1.2.5
           message:
             update_target:
               - path: issue.actions
                 action: APPENDED
             issue:
-              id: 29f56e04-6c78-4bbe-9125-eb7b56540c4f
+              id: ea4f9022-0c38-4e15-bf91-77801c21c54c
               status: CLOSED
               level: GREVIENCE
-              created_at: 2026-08-25T11:20:10.507Z
-              updated_at: 2026-08-25T11:20:14.054Z
+              created_at: 2026-09-23T09:41:46.624Z
+              updated_at: 2026-09-23T09:41:52.417Z
               expected_response_time:
                 duration: PT2H
               expected_resolution_time:
                 duration: P1D
               refs:
-                - ref_id: 6p1l1ubzpay
+                - ref_id: "596482"
                   ref_type: ORDER
                 - ref_id: P1
                   ref_type: PROVIDER
@@ -7903,42 +7892,42 @@ steps:
                   type: CONSUMER
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     person:
-                      name: Mock Consumer
+                      name: ONDC buyer
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9898989898"
+                      email: nobody@nomail.com
                 - id: NP1
                   type: INTERFACING_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
-                      phone: "9879879870"
-                      email: consumer@gmail.com
+                      phone: "9450394039"
+                      email: buyer@gmail.com
                     person:
                       name: Mock Buyer
                 - id: NP2
                   type: COUNTERPARTY_NP
                   info:
                     org:
-                      name: bap.example.com::ONDC:TRV11
-                    contact:
-                      phone: "9450394140"
-                      email: respondentapp@respond.com
-                    person:
-                      name: Jane Doe
-                - id: NP2-GRO
-                  type: COUNTERPARTY_NP_GRO
-                  info:
-                    org:
-                      name: bap.example.com::ONDC:TRV11
+                      name: sample-bap-id::ONDC:RET10
                     contact:
                       phone: "9999994039"
                       email: sellerapp@interface.com
                     person:
-                      name: Grievance Officer SNP
+                      name: mock-seller
+                - id: NP2-GRO
+                  type: COUNTERPARTY_NP_GRO
+                  info:
+                    org:
+                      name: sample-bap-id::ONDC:RET10
+                    contact:
+                      phone: "8888884045"
+                      email: gro@interface.com
+                    person:
+                      name: Grievance Officer BNP
               source_id: CUST1
               complainant_id: NP1
               respondent_ids:
@@ -7946,127 +7935,127 @@ steps:
               resolver_ids:
                 - NP2
               descriptor:
-                code: ITM004
-                short_desc: Issue with product quality
-                long_desc: Product quality is not correct. facing issues while using the product
+                code: ORD02
+                short_desc: Unsatisfactory order
+                long_desc: Unsatisfactory order
                 additional_desc:
                   url: https://example.com/issue-details
                   content_type: text/html
                 images:
-                  - url: https://example.com/image.jpg
-                    size_type: 2MB
+                  - url: https://transitsolutions.in/logos/logo.icon
+                    size_type: xs
                 media:
                   - url: https://transitsolutions.in/logos/logo.icon
-              last_action_id: 8dbdc43c-f48f-443c-8a86-c32b35c5c671
+              last_action_id: 79717280-71d3-4674-93fc-7516d05eac5c
               actions:
-                - id: 0e2d1e3a-f5d4-4c60-a017-9249d6d1fc41
+                - id: d5861a35-11db-4831-a868-2f1801685a36
                   descriptor:
                     code: OPEN
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.507Z
+                  updated_at: 2026-09-23T09:41:46.624Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 12177f76-ab38-40cb-b183-67ee7e7cc22f
+                    name: ONDC buyer
+                - id: c3ea36b6-94d4-475d-bfc5-b88817af7fbb
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:10.552Z
+                  updated_at: 2026-09-23T09:41:46.737Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4c0e12dc-a6e2-488f-9e36-e19aa19c51c8
+                    name: mock-seller
+                - id: e2ff911e-9019-4257-92dd-86c47adfa5bf
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:10.612Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 4dca4610-976b-4569-a61e-bcc5d58cbae5
+                    name: mock-seller
+                - id: 2ea25297-fd72-444b-a025-fde25840fb27
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_REJECTED
                     short_desc: Resolution is rejected
-                  updated_at: 2026-08-25T11:20:11.785Z
+                  updated_at: 2026-09-23T09:41:48.295Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e8fb345c-3fc7-4bf4-bac4-40373b39beb6
+                    name: ONDC buyer
+                - id: 0e6db3db-6ea9-4cd5-acb0-3485e177f626
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.811Z
+                  updated_at: 2026-09-23T09:41:48.369Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: d1ebfdb7-de56-42a1-bf76-ba0eab5cbc47
+                    name: mock-seller
+                - id: d5ae3717-d844-459f-8517-1ce36c57cf84
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:11.855Z
+                  updated_at: 2026-09-23T09:41:48.567Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: e24503f8-1eba-4ba5-9b52-a588d1d5192e
+                    name: mock-seller
+                - id: 6ecec38a-feab-4f37-8e30-7756225f5565
                   descriptor:
                     code: ESCALATED
                     short_desc: Complaint Escalated
-                  updated_at: 2026-08-25T11:20:11.917Z
+                  updated_at: 2026-09-23T09:41:48.768Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: 9a1d337a-1277-476c-b34b-af12ab983fea
+                    name: ONDC buyer
+                - id: f87baf31-cd87-4cd9-b90b-7eeae69aafac
                   descriptor:
                     code: PROCESSING
                     short_desc: Complaint created
-                  updated_at: 2026-08-25T11:20:11.967Z
+                  updated_at: 2026-09-23T09:41:48.912Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 47c98973-fd07-4b5b-a221-869f102eb74a
+                    name: mock-seller
+                - id: d6a09a46-090c-4cf3-af7f-22075b4dd553
                   ref_id: R_PARENT
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_PROPOSED
                     short_desc: Resolution is proposed
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:49.026Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: b1a0d5f4-e7cf-4a6b-8b82-0964cd85dff5
+                    name: mock-seller
+                - id: c2a6e909-2778-4b27-91f0-5651cca90f4e
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLUTION_ACCEPTED
                     short_desc: Resolution is accepted
-                  updated_at: 2026-08-25T11:20:12.922Z
+                  updated_at: 2026-09-23T09:41:50.710Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
-                - id: e938add9-af6e-42cb-9c86-bb94b59c4eb6
+                    name: ONDC buyer
+                - id: 7d3f4e95-dd3e-4a2c-8d0e-d0099b3998d7
                   ref_id: RESOLUTION123
                   ref_type: RESOLUTIONS
                   descriptor:
                     code: RESOLVED
                     short_desc: Complaint is Resolved
-                  updated_at: 2026-08-25T11:20:12.948Z
+                  updated_at: 2026-09-23T09:41:50.764Z
                   action_by: NP2
                   actor_details:
-                    name: mock-person
-                - id: 8dbdc43c-f48f-443c-8a86-c32b35c5c671
+                    name: mock-seller
+                - id: 79717280-71d3-4674-93fc-7516d05eac5c
                   descriptor:
                     code: CLOSED
                     short_desc: Closing the complaint
-                  updated_at: 2026-08-25T11:20:14.054Z
+                  updated_at: 2026-09-23T09:41:52.417Z
                   action_by: NP1
                   actor_details:
-                    name: mock-person
+                    name: ONDC buyer
                   tags:
                     - descriptor:
                         code: CLOSURE_DETAILS
@@ -8079,15 +8068,30 @@ steps:
                   descriptor:
                     code: PARENT
                     short_desc: PROVIDING RESOLUTION OPTIONS. PLEASE SELECT ONE
-                  updated_at: 2026-08-25T11:20:12.030Z
+                  updated_at: 2026-09-23T09:41:46.781Z
                   proposed_by: NP2
                 - id: R1
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
+                    code: REPLACEMENT
+                    short_desc: Providing replacement of the item
+                  updated_at: 2026-09-23T09:41:46.781Z
+                  proposed_by: NP2
+                  tags:
+                    - descriptor:
+                        code: RESOLUTION_DETAILS
+                      list:
+                        - descriptor:
+                            code: ITEM
+                          value: I1
+                - id: R2
+                  ref_id: R_PARENT
+                  ref_type: PARENT
+                  descriptor:
                     code: REFUND
-                    short_desc: Providing refund for the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:48.567Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -8098,14 +8102,14 @@ steps:
                           value: I1
                         - descriptor:
                             code: REFUND_AMOUNT
-                          value: "2260"
-                - id: R2
+                          value: "180.00"
+                - id: R3
                   ref_id: R_PARENT
                   ref_type: PARENT
                   descriptor:
-                    code: REPLACEMENT
-                    short_desc: Providing replacement of the item
-                  updated_at: 2026-08-25T11:20:12.030Z
+                    code: REFUND
+                    short_desc: Providing refund of the item
+                  updated_at: 2026-09-23T09:41:49.026Z
                   proposed_by: NP2
                   tags:
                     - descriptor:
@@ -8114,6 +8118,9 @@ steps:
                         - descriptor:
                             code: ITEM
                           value: I1
+                        - descriptor:
+                            code: REFUND_AMOUNT
+                          value: "200.00"
         type: request
         description: The BAP escalates a grievance with the BPP for the ride order,
           providing the complaint classification, description, and expected
