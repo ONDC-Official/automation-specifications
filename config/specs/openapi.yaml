@@ -1945,6 +1945,69 @@ paths:
                     order_id:
                       type: string
       responses: *responses
+  /rating:
+    post:
+      operationId: rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context: *context
+                message:
+                  type: object
+                  properties:
+                    order_id:
+                      type: string
+                    ratings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          ref_type:
+                            type: string
+                          ref_id:
+                            type: string
+                          id:
+                            type: string
+                          value:
+                            type: string
+                    feedbacks:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          ref_type:
+                            type: string
+                          ref_id:
+                            type: string
+                          id:
+                            type: string
+                          type:
+                            type: string
+                          ask:
+                            type: string
+                          comment:
+                            type: string
+                          additional_details:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                short_desc:
+                                  type: string
+                                long_desc:
+                                  type: string
+                                images:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      url:
+                                        type: string
+      responses: *responses
   /update:
     post:
       operationId: update
