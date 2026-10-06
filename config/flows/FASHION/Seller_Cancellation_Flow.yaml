@@ -4266,6 +4266,94 @@ steps:
               id: '013'
     type: request
     description: please add relevant description
+- api: update
+  action_id: update_partial_cancel_settlement_1
+  owner: BAP
+  responseFor: null
+  unsolicited: false
+  description: The BAP sends an update request to the BPP to communicate the buyer-side
+    order cancellation change in the Fashion retail flow, carrying the revised order
+    state, affected fulfillments, and settlement details needed to progress cancellation
+    handling.
+  mock:
+    generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZSgKCWV4aXN0aW5nUGF5bG9hZCwKCXNlc3Npb25EYXRhCikgewoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaWQgPSBzZXNzaW9uRGF0YS5vcmRlcl9pZFswXQoJY29uc3QgZnVsZmlsbG1lbnRzID0gc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRzCgoJY29uc29sZS5sb2coIm9iamVjdCAyIiwgSlNPTi5zdHJpbmdpZnkoc2Vzc2lvbkRhdGEuaXRlbXMpKQoKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IFtdCgljb25zdCBjYW5jZWxJZCA9CgkJZnVsZmlsbG1lbnRzLmZpbHRlcihmID0+IGYudHlwZSA9PT0gIkNhbmNlbCIpWzBdPy5pZCB8fCB1bmRlZmluZWQKCWlmIChjYW5jZWxJZCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cyA9IFsKCQkJeyBpZDogY2FuY2VsSWQsIHR5cGU6ICJDYW5jZWwiIH0KCQldCgl9Cgljb25zdCByZXR1cm5JZCA9CgkJZnVsZmlsbG1lbnRzLmZpbHRlcihmID0+IGYudHlwZSA9PT0gIlJldHVybiIpWzBdPy5pZCB8fCB1bmRlZmluZWQKCWlmIChyZXR1cm5JZCkgewoJCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmZ1bGZpbGxtZW50cy5wdXNoKHsKCQkJaWQ6IHJldHVybklkLAoJCQl0eXBlOiAiUmV0dXJuIgoJCX0pCgl9CgoJY29uc3QgdHJhaWwgPSBzZXNzaW9uRGF0YS5mdWxmaWxsbWVudHM/LmZsYXRNYXAoZiA9PgoJZi50YWdzPy5maWx0ZXIodGFnID0+IHRhZy5jb2RlID09PSAicXVvdGVfdHJhaWwiKSB8fCBbXQopIHx8IFtdOwoKCWNvbnNvbGUubG9nKCJ0cmFpbCIsIEpTT04uc3RyaW5naWZ5KHRyYWlsLCBudWxsLCAyKSkKCgljb25zdCBhbW91bnRzID0gdHJhaWwuZmxhdE1hcCh0ID0+IHsKCQlyZXR1cm4gdC5saXN0CgkJCS5maWx0ZXIobCA9PiBsLmNvZGUgPT09ICJ2YWx1ZSIpCgkJCS5tYXAobCA9PiB7CgkJCQlyZXR1cm4gcGFyc2VJbnQobC52YWx1ZSkKCQkJfSkKCX0pCgljb25zdCB0b3RhbEFtb3VudCA9IGFtb3VudHMucmVkdWNlKChhY2MsIGN1cnIpID0+IGFjYyArIGN1cnIsIDApCgoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudCA9IHsKCQkiQG9uZGMvb3JnL3NldHRsZW1lbnRfZGV0YWlscyI6IFsKCQkJewoJCQkJc2V0dGxlbWVudF9jb3VudGVycGFydHk6ICJidXllciIsCgkJCQlzZXR0bGVtZW50X3BoYXNlOiAicmVmdW5kIiwKCQkJCXNldHRsZW1lbnRfdHlwZTogIm5ldGJhbmtpbmciLAoJCQkJc2V0dGxlbWVudF9hbW91bnQ6IGAkey0xICogdG90YWxBbW91bnR9YCwKCQkJCXNldHRsZW1lbnRfdGltZXN0YW1wOiBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCkKCQkJfQoJCV0KCX0KCglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkCn0K
+    validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
+    requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
+    defaultPayload:
+      context:
+        action: update
+        bap_id: dev-automation.ondc.org
+        bap_uri: https://dev-automation.ondc.org/api-service/ONDC:RET12/1.2.5/buyer
+        bpp_id: dev-automation.ondc.org
+        bpp_uri: https://dev-automation.ondc.org/api-service/ONDC:RET12/1.2.5/seller
+        city: std:0124
+        core_version: 1.2.5
+        country: IND
+        domain: ONDC:RET12
+        message_id: ad1877d5-26d6-46f2-9d3a-f0b03e8181a1
+        timestamp: 2026-03-17T05:59:00.540Z
+        transaction_id: ed0e9982-3afd-42d7-a666-062ee3b4ea03
+        ttl: PT30S
+      message:
+        order:
+          fulfillments:
+          - id: C1123
+            type: Cancel
+          id: '432381'
+          payment:
+            '@ondc/org/settlement_details':
+            - settlement_amount: '2360'
+              settlement_counterparty: buyer
+              settlement_phase: refund
+              settlement_timestamp: 2026-03-17T05:59:00.546Z
+              settlement_type: netbanking
+        update_target: payment
+    saveData:
+      transactionId: $.context.transaction_id
+      latestMessage_id: $.context.message_id
+      latestTimestamp: $.context.timestamp
+      bapId: $.context.bap_id
+      bapUri: $.context.bap_uri
+      bppId: $.context.bpp_id
+      bppUri: $.context.bpp_uri
+      city_code: $.context.city
+      message_id: $.context.message_id
+      update_fulfillments: $.message.order.fulfillments[*]
+      update_payment: $.message.order.payment["@ondc/org/settlement_details"]
+    inputs: {}
+  examples:
+  - name: example for update
+    payload:
+      context:
+        domain: ONDC:RET12
+        action: update
+        timestamp: 2026-05-28T11:20:09.914Z
+        transaction_id: 4bedce87-1c61-4ab6-b0d5-63d819d583ad
+        message_id: beb91d76-6fae-40cf-ac61-6f452749a0c9
+        bap_id: bap.example.com
+        bap_uri: https://bap.example.com
+        ttl: PT30S
+        bpp_id: bpp.example.com
+        bpp_uri: https://bpp.example.com
+        country: IND
+        city: '*'
+        core_version: 1.2.5
+      message:
+        order:
+          fulfillments:
+          - id: C1123
+            type: Cancel
+          id: '981162'
+          payment:
+            '@ondc/org/settlement_details':
+            - settlement_counterparty: buyer
+              settlement_phase: refund
+              settlement_type: netbanking
+              settlement_amount: '200'
+              settlement_timestamp: 2026-05-28T11:20:09.916Z
+        update_target: payment
+    type: request
+    description: please add relevant description
 - api: on_status
   action_id: on_status_rto_delivereddisposed
   owner: BPP
