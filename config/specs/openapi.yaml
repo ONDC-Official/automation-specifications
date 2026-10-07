@@ -649,6 +649,10 @@ paths:
                       type: string
                     country:
                       type: string
+                    city:
+                      type: string
+                    core_version:
+                      type: string
                 message:
                   type: object
                   properties:
@@ -706,6 +710,33 @@ paths:
                                   type: string
                                 content_type:
                                   type: string
+                            images:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  url:
+                                    type: string
+                                  size_type:
+                                    type: string
+                        description:
+                          type: object
+                          properties:
+                            short_desc:
+                              type: string
+                            long_desc:
+                              type: string
+                            additional_desc:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                content_type:
+                                  type: string
+                            images:
+                              type: array
+                              items:
+                                type: string
                         last_action_id:
                           type: string
                         actions: &actions
@@ -734,7 +765,7 @@ paths:
                           type: object
                           properties:
                             person: *person
-                            contact:
+                            contact: &contact_2
                               type: object
                               properties:
                                 phone:
@@ -766,6 +797,16 @@ paths:
                                 properties:
                                   complainant_action:
                                     type: string
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_resolution_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
       responses: &responses_2
         "200":
           description: Synchronous ACK/NACK response
@@ -1141,6 +1182,16 @@ paths:
                         refs: *refs
                         actors: *actors
                         actions: *actions
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_resolution_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
                         issue_actions: &issue_actions
                           type: object
                           properties:
@@ -1185,6 +1236,15 @@ paths:
                           type: string
                         updated_at:
                           type: string
+                        resolution:
+                          type: object
+                          properties:
+                            short_desc:
+                              type: string
+                            long_desc:
+                              type: string
+                            action_triggered:
+                              type: string
                         resolution_provider:
                           type: object
                           properties:
