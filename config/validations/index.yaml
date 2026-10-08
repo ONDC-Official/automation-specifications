@@ -3776,190 +3776,541 @@ _TESTS_:
       _RETURN_:
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          reg:
-            - ^[0-9a-zA-Z/_-]{1,36}$
-          _RETURN_: attr follow regex reg
-        - _NAME_: ORDER_STATE
-          attr: $.message.order.state
-          var_enum:
-            - Created
-            - Accepted
-            - In-progress
-            - Completed
-            - Cancelled
-          _RETURN_: attr all in var_enum
-        - _NAME_: ORDER_PROVIDER
-          _RETURN_: *a2
-        - _NAME_: ORDER_ITEMS
-          _RETURN_: *a4
-        - _NAME_: ORDER_QUOTE
-          _RETURN_: *a7
-        - _NAME_: ORDER_BILLING
-          _RETURN_: *a5
-        - _NAME_: ORDER_PAYMENT
-          _RETURN_: *a10
-        - _NAME_: ORDER_UPDATED_AT
-          attr: $.message.order.updated_at
-          reg:
-            - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
-          _RETURN_: attr follow regex reg
-        - _NAME_: ORDER_CREATED_AT
-          attr: $.message.order.created_at
-          reg:
-            - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
-          _RETURN_: attr follow regex reg
+          _RETURN_: attr are present
         - _NAME_: ORDER_FULFILLMENTS
           _RETURN_:
             - _NAME_: FULFILLMENTS_ID
               attr: $.message.order.fulfillments[*].id
-              reg:
-                - ^[0-9a-zA-Z/_-]{1,36}$
-              _RETURN_: attr follow regex reg
+              _RETURN_: attr are present
             - _NAME_: FULFILLMENTS_TYPE
               attr: $.message.order.fulfillments[*].type
-              var_enum:
-                - Delivery
-                - Self-Pickup
-                - Buyer-Delivery
-                - Return
-                - Cancel
-              _RETURN_: attr all in var_enum
-            - _NAME_: FULFILLMENTS_ONDC_ORG_TAT
-              _CONTINUE_: "!(attr are present)"
-              attr: $.message.order.fulfillments[*]['@ondc/org/TAT']
-              reg:
-                - ^P(?=\\d|T)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+S)?)?$
-              _RETURN_: attr follow regex reg
-            - _NAME_: FULFILLMENTS_STATE_DESCRIPTOR_CODE
-              attr: $.message.order.fulfillments[*].state.descriptor.code
-              var_enum:
-                - Accepted
-                - Cancelled
-                - Pending
-                - Order-delivered
-                - Order-picked-up
-                - Return_Initiated
-                - Return_Pick_Failed
-                - Return_Approved
-                - Return_Picked
-                - Return_Delivered
-                - Liquidated
-                - Return_Rejected
-              _RETURN_: attr are present && attr all in var_enum
-            - _NAME_: FULFILLMENTS_START
-              _RETURN_:
-                - _NAME_: FULFILLMENTS_START_LOCATION
-                  _RETURN_:
-                    - _NAME_: FULFILLMENTS_START_LOCATION_ID
-                      _CONTINUE_: "!(attr are present)"
-                      reg:
-                        - ^[0-9a-zA-Z/_-]{1,36}$
-                      attr: $.message.order.fulfillments[*].start.location.id
-                      _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_START_LOCATION_GPS
-                      _CONTINUE_: "!(attr are present)"
-                      reg:
-                        - ^[-+]?([1-8]?\\d|90)\\.\\d{4,},\\s*[-+]?(180|1[0-7]\\d|[1-9]?\\d)\\.\\d{4,}$
-                      attr: $.message.order.fulfillments[*].start.location.gps
-                      _RETURN_: attr are present
-                    - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS
-                      _RETURN_:
-                        - _NAME_: FULFILLMENTS_START_LOCATION_ADDRESS_AREA_CODE
-                          _CONTINUE_: "!(attr are present)"
-                          reg:
-                            - ^[0-9]{6}$
-                          attr: $.message.order.fulfillments[*].start.location.address.area_code
-                          _RETURN_: attr are present
-                - _NAME_: FULFILLMENTS_START_CONTACT
-                  _RETURN_:
-                    - _NAME_: FULFILLMENTS_START_CONTACT_PHONE
-                      _CONTINUE_: "!(attr are present)"
-                      attr: $.message.order.fulfillments[*].start.contact.phone
-                      reg:
-                        - ^[0-9]{10}$
-                      _RETURN_: attr follow regex reg
-                - _NAME_: FULFILLMENTS_START_TIME
-                  _RETURN_:
-                    - _NAME_: FULFILLMENTS_START_TIME_RANGE_START
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].start.time.range.start
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
-                      reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
-                      _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_START_TIME_RANGE_END
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].start.time.range.end
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
-                      reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
-                      _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_START_TIME_TIMESTAMP
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].start.time.timestamp
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
-                      reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
-                      _RETURN_: attr follow regex reg
+              _RETURN_: attr are present
             - _NAME_: FULFILLMENTS_END
               _RETURN_:
-                - _NAME_: FULFILLMENTS_END_CONTACT_PHONE
-                  attr: $.message.order.fulfillments[*].end.contact.phone
-                  reg:
-                    - ^[0-9]{10}$
+                - _NAME_: FULFILLMENTS_END_INSTRUCTIONS_ADDITIONAL_DESC_CONTENT_TYPE
+                  attr: $.message.order.fulfillments[*].end.instructions.additional_desc.content_type
+                  var_enum:
+                    - text/plain
+                    - text/html
                   _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                - _NAME_: FULFILLMENTS_END_LOCATION
+            - _NAME_: FULFILLMENTS_TAGS
+              _RETURN_:
+                - _NAME_: RETURN_REQUEST_ID
+                  _CONTINUE_: "!(attr are present)"
+                  attr: $.message.order.fulfillments[*].tags[*].code
+                  valid:
+                    - return_request
+                    - update_state
+                    - cancel_request
+                    - update_fulfillment_time
+                    - update_agent_details
+                    - update_label
+                    - reverseqc_output
+                    - bnp_receivables_claim
+                    - bnp_diff_weight
+                    - bnp_diff_length
+                    - bnp_diff_breadth
+                    - bnp_diff_height
+                    - update_verification
+                    - update_state
+                    - update_fulfillment_delay
+                    - linked_order_diff
+                    - update_sale_invoice
+                    - linked_order_diff_proof
+                  _RETURN_: attr are present
+                - _NAME_: TAGS_RETURN_REQUEST
                   _RETURN_:
-                    - _NAME_: FULFILLMENTS_END_LOCATION_GPS
-                      attr: $.message.order.fulfillments[*].end.location.gps
-                      reg:
-                        - ^[-+]?([1-8]?\\d|90)\\.\\d{4,},\\s*[-+]?(180|1[0-7]\\d|[1-9]?\\d)\\.\\d{4,}$
+                    - _NAME_: TAGS_RETURN_REQUEST_VALID_TAGS
                       _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[*].code
+                      valid:
+                        - id
+                        - item_id
+                        - parent_item_id
+                        - item_quantity
+                        - reason_id
+                        - reason_desc
+                        - images
+                        - ttl_approval
+                        - ttl_reverseqc
+                        - initiated_by
+                        - replace
+                      _RETURN_: attr all in valid
+                    - _NAME_: RETURN_REQUEST_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_ITEM_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='item_id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_PARENT_ITEM_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='parent_item_id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_ITEM_QUANTITY
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='item_quantity')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_REASON_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='reason_id')].value
+                      reg:
+                        - ^\\d{3}$
                       _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS
-                      _RETURN_:
-                        - _NAME_: FULFILLMENTS_END_LOCATION_ADDRESS_AREA_CODE
-                          attr: $.message.order.fulfillments[*].end.location.address.area_code
-                          reg:
-                            - ^[0-9]{6}$
-                          _CONTINUE_: "!(attr are present)"
-                          _RETURN_: attr follow regex reg
-                - _NAME_: FULFILLMENTS_END_TIME
+                    - _NAME_: RETURN_REQUEST_REASON_DESC
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='reason_desc')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_IMAGES
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='images')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RETURN_REQUEST_TTL_APPROVAL
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='ttl_approval')].value
+                      reg:
+                        - ^PT[0-9]+H$
+                      _RETURN_: attr follow regex reg
+                    - _NAME_: RETURN_REQUEST_TTL_REVERSEQC
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='return_request')].list[?(@.code=='ttl_reverseqc')].value
+                      reg:
+                        - ^P[0-9]+D$
+                      _RETURN_: attr follow regex reg
+                - _NAME_: TAGS_UPDATE_STATE
                   _RETURN_:
-                    - _NAME_: FULFILLMENTS_END_TIME_RANGE_START
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].end.time.range.start
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
+                    - _NAME_: TAGS_UPDATE_STATE_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[*].code
+                      valid:
+                        - state
+                        - reason_id
+                      _RETURN_: attr all in valid
+                    - _NAME_: UPDATE_STATE_STATE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[?(@.code=='state')].value
+                      var_enum:
+                        - Order-picked-up
+                        - Order-delivered
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: UPDATE_STATE_REASON_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[?(@.code=='reason_id')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_CANCEL_REQUEST
+                  _RETURN_:
+                    - _NAME_: TAGS_CANCEL_REQUEST_RETRY_COUNT_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='cancel_request')].list[*].code
+                      valid:
+                        - retry_count
+                        - reason_id
+                        - initiated_by
+                      _RETURN_: attr all in valid
+                    - _NAME_: CANCEL_REQUEST_RETRY_COUNT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='cancel_request')].list[?(@.code=='retry_count')].value
+                      _RETURN_: attr are present
+                    - _NAME_: CANCEL_REQUEST_REASON_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='cancel_request')].list[?(@.code=='reason_id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: CANCEL_REQUEST_INITIATED_BY
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='cancel_request')].list[?(@.code=='initiated_by')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_UPDATE_FULFILLMENT_TIME
+                  _RETURN_:
+                    - _NAME_: TAGS_UPDATE_FULFILLMENT_TIME_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_time')].list[*].code
+                      valid:
+                        - state
+                        - timestamp
+                        - start_time
+                        - end_time
+                      _RETURN_: attr all in valid
+                    - _NAME_: UPDATE_FULFILLMENT_TIME_STATE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_time')].list[?(@.code=='state')].value
+                      var_enum:
+                        - Order-picked-up
+                        - Order-delivered
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: UPDATE_FULFILLMENT_TIME_TIMESTAMP
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_time')].list[?(@.code=='timestamp')].value
                       reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
                       _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_END_TIME_RANGE_END
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].end.time.range.end
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
+                    - _NAME_: UPDATE_FULFILLMENT_TIME_START
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_time')].list[?(@.code=='start_time')].value
                       reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
                       _RETURN_: attr follow regex reg
-                    - _NAME_: FULFILLMENTS_END_TIME_TIMESTAMP
-                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
-                      attr: $.message.order.fulfillments[*].end.time.timestamp
-                      attr_condition: $.message.order.fulfillments[*].type
-                      condition:
-                        - Delivery
+                    - _NAME_: UPDATE_FULFILLMENT_TIME_END
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_time')].list[?(@.code=='end_time')].value
                       reg:
-                        - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
                       _RETURN_: attr follow regex reg
+                - _NAME_: TAGS_UPDATE_AGENT_DETAILS
+                  _RETURN_:
+                    - _NAME_: TAGS_UPDATE_AGENT_DETAILS_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_agent_details')].list[*].code
+                      valid:
+                        - name
+                        - phone
+                        - provider_id
+                        - end_time
+                      _RETURN_: attr all in valid
+                    - _NAME_: AGENT_NAME
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_agent_details')].list[?(@.code=='name')].value
+                      _RETURN_: attr are present
+                    - _NAME_: AGENT_PHONE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_agent_details')].list[?(@.code=='phone')].value
+                      _RETURN_: attr are present
+                    - _NAME_: AGENT_PROVIDER_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_agent_details')].list[?(@.code=='provider_id')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_UPDATE_LABEL
+                  _RETURN_:
+                    - _NAME_: TAGS_UPDATE_LABEL_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_label')].list[*].code
+                      valid:
+                        - type
+                        - url
+                        - shipping
+                      _RETURN_: attr all in valid
+                    - _NAME_: LABEL_TYPE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_label')].list[?(@.code=='type')].value
+                      var_enum:
+                        - webp
+                        - png
+                        - jpeg
+                        - pdf
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: LABEL_URL
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_label')].list[?(@.code=='url')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LABEL_SHIPPING
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_label')].list[?(@.code=='shipping')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_REVERSEQC_OUTPUT
+                  _RETURN_:
+                    - _NAME_: TAGS_REVERSEQC_OUTPUT_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='reverseqc_output')].list[*].code
+                      valid:
+                        - P001
+                        - P003
+                        - Q001
+                      _RETURN_: attr all in valid
+                    - _NAME_: RQC_P001
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='reverseqc_output')].list[?(@.code=='P001')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RQC_P003
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='reverseqc_output')].list[?(@.code=='P003')].value
+                      _RETURN_: attr are present
+                    - _NAME_: RQC_Q001
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='reverseqc_output')].list[?(@.code=='Q001')].value
+                      var_enum:
+                        - yes
+                        - no
+                      _RETURN_: attr all in var_enum
+                - _NAME_: TAGS_BNP_RECEIVABLES_CLAIM
+                  _RETURN_:
+                    - _NAME_: TAGS_BNP_RECIEVABLES_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_receivables_claim')].list[*].code
+                      valid:
+                        - type
+                        - currency
+                        - value
+                      _RETURN_: attr all in valid
+                    - _NAME_: CLAIM_TYPE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_receivables_claim')].list[?(@.code=='type')].value
+                      _RETURN_: attr are present
+                    - _NAME_: CLAIM_CURRENCY
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_receivables_claim')].list[?(@.code=='currency')].value
+                      _RETURN_: attr are present
+                    - _NAME_: CLAIM_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_receivables_claim')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_BNP_DIFF_WEIGHT
+                  _RETURN_:
+                    - _NAME_: TAGS_BNP_DIFF_WEIGHT_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_weight')].list[*].code
+                      valid:
+                        - unit
+                        - value
+                      _RETURN_: attr all in valid
+                    - _NAME_: DIFF_WEIGHT_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_weight')].list[?(@.code=='unit')].value
+                      var_enum:
+                        - unit
+                        - dozen
+                        - gram
+                        - kilogram
+                        - tonne
+                        - litre
+                        - millilitre
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: DIFF_WEIGHT_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_weight')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_BNP_DIFF_LENGTH
+                  _RETURN_:
+                    - _NAME_: TAGS_BNP_DIFF_LENGTH_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_length')].list[*].code
+                      valid:
+                        - unit
+                        - value
+                      _RETURN_: attr all in valid
+                    - _NAME_: DIFF_LENGTH_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_length')].list[?(@.code=='unit')].value
+                      var_enum:
+                        - centimeter
+                        - meter
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: DIFF_LENGTH_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_length')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_BNP_DIFF_BREADTH
+                  _RETURN_:
+                    - _NAME_: TAGS_BNP_DIFF_BREADTH_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_breadth')].list[*].code
+                      valid:
+                        - unit
+                        - value
+                      _RETURN_: attr all in valid
+                    - _NAME_: DIFF_BREADTH_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_breadth')].list[?(@.code=='unit')].value
+                      _RETURN_: attr are present
+                    - _NAME_: DIFF_BREADTH_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_breadth')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_BNP_DIFF_HEIGHT
+                  _RETURN_:
+                    - _NAME_: TAGS_BNP_DIFF_HEIGHT_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_height')].list[*].code
+                      valid:
+                        - unit
+                        - value
+                      _RETURN_: attr all in valid
+                    - _NAME_: DIFF_HEIGHT_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_height')].list[?(@.code=='unit')].value
+                      _RETURN_: attr are present
+                    - _NAME_: DIFF_HEIGHT_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='bnp_diff_height')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_UPDATE_VERIFICATION
+                  _RETURN_:
+                    - _NAME_: VERIFICATION_TYPE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_verification')].list[?(@.code=='type')].value
+                      _RETURN_: attr are present
+                    - _NAME_: VERIFICATION_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_verification')].list[?(@.code=='value')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_UPDATE_STATE_TIMESTAMPS
+                  _RETURN_:
+                    - _NAME_: TAGS_UPDATE_STATE_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[*].code
+                      valid:
+                        - state
+                        - reason_id
+                      _RETURN_: attr all in valid
+                    - _NAME_: STATE_TIMESTAMP
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[?(@.code=='timestamp')].value
+                      reg:
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
+                      _RETURN_: attr follow regex reg
+                    - _NAME_: STATE_START_TIME
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[?(@.code=='start_time')].value
+                      reg:
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
+                      _RETURN_: attr follow regex reg
+                    - _NAME_: STATE_END_TIME
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_state')].list[?(@.code=='end_time')].value
+                      reg:
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
+                      _RETURN_: attr follow regex reg
+                - _NAME_: TAGS_UPDATE_FULFILLMENT_DELAY
+                  _RETURN_:
+                    - _NAME_: TAGS_UPDATE_FULFILLMENT_DELAY_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[*].code
+                      valid:
+                        - state
+                        - start_time
+                        - end_time
+                        - reason_id
+                        - attempt
+                      _RETURN_: attr all in valid
+                    - _NAME_: DELAY_STATE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[?(@.code=='state')].value
+                      var_enum:
+                        - Order-picked-up
+                        - Order-delivered
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: DELAY_REASON_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[?(@.code=='reason_id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: DELAY_START_TIME
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[?(@.code=='start_time')].value
+                      reg:
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
+                      _RETURN_: attr follow regex reg
+                    - _NAME_: DELAY_END_TIME
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[?(@.code=='end_time')].value
+                      reg:
+                        - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$
+                      _RETURN_: attr follow regex reg
+                    - _NAME_: DELAY_ATTEMPT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='update_fulfillment_delay')].list[?(@.code=='attempt')].value
+                      var_enum:
+                        - yes
+                        - no
+                      _RETURN_: attr all in var_enum
+                - _NAME_: TAGS_LINKED_ORDER_DIFF
+                  _RETURN_:
+                    - _NAME_: TAGS_LINKED_ORDER_DIFF_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[*].code
+                      valid:
+                        - id
+                        - weight_unit
+                        - weight_value
+                        - dim_unit
+                        - length
+                        - breadth
+                        - height
+                      _RETURN_: attr all in valid
+                    - _NAME_: LINKED_ORDER_ID
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='id')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_WEIGHT_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='weight_unit')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_WEIGHT_VALUE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='weight_value')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_DIM_UNIT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='dim_unit')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_LENGTH
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='length')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_BREADTH
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='breadth')].value
+                      _RETURN_: attr are present
+                    - _NAME_: LINKED_HEIGHT
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff')].list[?(@.code=='height')].value
+                      _RETURN_: attr are present
+                - _NAME_: TAGS_LINKED_ORDER_DIFF_PROOF
+                  _RETURN_:
+                    - _NAME_: TAGS_LINKED_ORDER_DIFF_PROOF_VALID_TAGS
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff_proof')].list[*].code
+                      valid:
+                        - type
+                        - url
+                      _RETURN_: attr all in valid
+                    - _NAME_: PROOF_TYPE
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff_proof')].list[?(@.code=='type')].value
+                      _RETURN_: attr are present
+                    - _NAME_: PROOF_URL
+                      _CONTINUE_: "!(attr are present)"
+                      attr: $.message.order.fulfillments[*].tags[?(@.code=='linked_order_diff_proof')].list[?(@.code=='url')].value
+                      reg:
+                        - ^https?://.*$
+                      _RETURN_: attr follow regex reg
+                - _NAME_: TAGS_UPDATE_SALE_INVOICE_URL
+                  _CONTINUE_: "!(attr are present)"
+                  attr: $.message.order.fulfillments[*].tags[?(@.code=='update_sale_invoice')].list[?(@.code=='url')].value
+                  reg:
+                    - ^https?://.*$
+                  _RETURN_: attr are present && attr follow regex reg
+        - _NAME_: ORDER_PAYMENT
+          _RETURN_:
+            - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS
+              _RETURN_:
+                - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS_SETTLEMENT_COUNTERPARTY
+                  attr: $.message.order.payment['@ondc/org/settlement_details'][*].settlement_counterparty
+                  _RETURN_: attr are present
+                  _CONTINUE_: "!(attr are present)"
+                - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS_SETTLEMENT_PHASE
+                  attr: $.message.order.payment['@ondc/org/settlement_details'][*].settlement_phase
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr are present
+                - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS_SETTLEMENT_TYPE
+                  attr: $.message.order.payment['@ondc/org/settlement_details'][*].settlement_type
+                  var_enum:
+                    - upi
+                    - neft
+                    - rtgs
+                    - wallet
+                    - netbanking
+                    - paylater
+                    - card
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr all in var_enum
+                - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS_SETTLEMENT_AMOUNT
+                  attr: $.message.order.payment['@ondc/org/settlement_details'][*].settlement_amount
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr are present
+                - _NAME_: PAYMENT_ONDC_ORG_SETTLEMENT_DETAILS_SETTLEMENT_TIMESTAMP
+                  attr: $.message.order.payment['@ondc/org/settlement_details'][*].settlement_timestamp
+                  _CONTINUE_: "!(attr are present)"
+                  _RETURN_: attr are present
   issue:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
