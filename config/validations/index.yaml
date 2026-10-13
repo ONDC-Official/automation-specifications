@@ -111,35 +111,43 @@ _TESTS_:
             - _NAME_: CATEGORY_REQUIRED_ID
               attr: $.message.intent.category.id
               valid:
-                - Fruits and Vegetables
-                - Masala & Seasoning
-                - Oil & Ghee
-                - Eggs, Meat & Fish
-                - Bakery, Cakes & Dairy
-                - Pet Care
-                - Detergents and Dishwash
-                - Dairy and Cheese
-                - Snacks, Dry Fruits, Nuts
-                - Pasta, Soup and Noodles
-                - Cereals and Breakfast
-                - Sauces, Spreads and Dips
-                - Chocolates and Biscuits
-                - Cooking and Baking Needs
-                - Tinned and Processed Food
-                - Atta, Flours and Sooji
-                - Rice and Rice Products
-                - Dals and Pulses
-                - Salt, Sugar and Jaggery
-                - Energy and Soft Drinks
-                - Water
-                - Tea and Coffee
-                - Fruit Juices and Fruit Drinks
-                - Snacks and Namkeen
-                - Ready to Cook and Eat
-                - Pickles and Chutney
-                - Indian Sweets
-                - Frozen Vegetables
-                - Frozen Snacks
+                - Pain Relief
+                - Nutrition and Fitness Supplements
+                - Speciality Care
+                - Covid Essentials
+                - Diabetes Control
+                - Healthcare & Fitness Devices
+                - Ayurvedic
+                - Homeopathy
+                - Unani and Siddha
+                - Elder Care
+                - Baby Care
+                - Orthopaedic Care
+                - Mobility Aids
+                - Medicated Hair Care
+                - Medicated Skin Care
+                - Speciality Face Cleansers
+                - Gastric Care
+                - ENT Care
+                - Eye Care
+                - Cold and Cough
+                - Sexual Wellness
+                - Feminine Care
+                - Maternity Care
+                - Nursing and Feeding
+                - Hand Wash
+                - Sanitizers
+                - Baby Care - Wipes and Buds
+                - Baby Care - Rash Creams
+                - Baby Care - Diapers and Accessories
+                - Health and Safety
+                - Oral Care
+                - Contraceptives
+                - Breathe Easy
+                - Health Foods and Drinks
+                - Wound Care and Dressings
+                - Surgicals
+                - Mental Wellness
                 - Gift Voucher
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in valid
@@ -335,62 +343,76 @@ _TESTS_:
             - _NAME_: TAGS_BAP_PROMOS_CATEGORY
               attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='category')].value
               var_enum_promo_categories:
-                - Fruits and Vegetables
-                - Masala & Seasoning
-                - Oil & Ghee
-                - Eggs, Meat & Fish
-                - Bakery, Cakes & Dairy
-                - Pet Care
-                - Detergents and Dishwash
-                - Dairy and Cheese
-                - Snacks, Dry Fruits, Nuts
-                - Pasta, Soup and Noodles
-                - Cereals and Breakfast
-                - Sauces, Spreads and Dips
-                - Chocolates and Biscuits
-                - Cooking and Baking Needs
-                - Tinned and Processed Food
-                - Atta, Flours and Sooji
-                - Rice and Rice Products
-                - Dals and Pulses
-                - Salt, Sugar and Jaggery
-                - Energy and Soft Drinks
-                - Water
-                - Tea and Coffee
-                - Fruit Juices and Fruit Drinks
-                - Snacks and Namkeen
-                - Ready to Cook and Eat
-                - Pickles and Chutney
-                - Indian Sweets
-                - Frozen Vegetables
-                - Frozen Snacks
+                - Pain Relief
+                - Nutrition and Fitness Supplements
+                - Speciality Care
+                - Covid Essentials
+                - Diabetes Control
+                - Healthcare & Fitness Devices
+                - Ayurvedic
+                - Homeopathy
+                - Unani and Siddha
+                - Elder Care
+                - Baby Care
+                - Orthopaedic Care
+                - Mobility Aids
+                - Medicated Hair Care
+                - Medicated Skin Care
+                - Speciality Face Cleansers
+                - Gastric Care
+                - ENT Care
+                - Eye Care
+                - Cold and Cough
+                - Sexual Wellness
+                - Feminine Care
+                - Maternity Care
+                - Nursing and Feeding
+                - Hand Wash
+                - Sanitizers
+                - Baby Care - Wipes and Buds
+                - Baby Care - Rash Creams
+                - Baby Care - Diapers and Accessories
+                - Health and Safety
+                - Oral Care
+                - Contraceptives
+                - Breathe Easy
+                - Health Foods and Drinks
+                - Wound Care and Dressings
+                - Surgicals
+                - Mental Wellness
                 - Gift Voucher
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in var_enum_promo_categories
-            - _NAME_: TAGS_BAP_PROMOS_FROM
-              attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='from')].value
-              var_datetime_regex:
-                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr follow regex var_datetime_regex
-            - _NAME_: TAGS_BAP_PROMOS_TO
-              attr: $.message.intent.tags[?(@.code=='bap_promos')].list[?(@.code=='to')].value
-              var_datetime_regex:
-                - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}
-              _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr follow regex var_datetime_regex
-        - _NAME_: TAGS_BNP_DEMAND_SIGNAL
+            - _NAME_: PAYMENT_ENUM
+              _RETURN_:
+                - _NAME_: PAYMENT_ENUM_TYPE
+                  attr: $.message.intent.payment['@ondc/org/buyer_app_finder_fee_type']
+                  var_fee_type:
+                    - percent
+                    - amount
+                  _RETURN_: attr all in var_fee_type
+        - _NAME_: FULFILMENT_ENUM
           _RETURN_:
-            - _NAME_: TAGS_BAP_PROMOS_VALID_ENUMS
+            - _NAME_: FULFILMENT_ENUM_TYPE
+              attr: $.message.intent.fulfillment.type
+              var_types:
+                - Delivery
+                - Self-Pickup
+                - Buyer-Delivery
               _CONTINUE_: "!(attr are present)"
-              attr: $.message.intent.tags[?(@.code=='bnp_demand_signal')].list[*].code
-              valid:
-                - search_term
-              _RETURN_: attr all in valid
-            - _NAME_: TAGS_BNP_DEMAND_SIGNAL_SEARCH_TERM
-              attr: $.message.intent.tags[?(@.code=='bnp_demand_signal')].list[?(@.code=='search_term')].value
+              _RETURN_: attr all in var_types
+            - _NAME_: FULFILMENT_REQUIRED_END_LOCATION_GPS
+              attr: $.message.intent.fulfillment.end.location.gps
+              reg:
+                - ^-?\d{1,2}\.\d+,-?\d{1,3}\.\d+$
               _CONTINUE_: "!(attr are present)"
-              _RETURN_: attr are present
+              _RETURN_: attr follow regex reg
+            - _NAME_: FULFILMENT_REQUIRED_END_LOCATION_AREA_CODE
+              attr: $.message.intent.fulfillment.end.location.address.area_code
+              reg:
+                - ^\d{6}$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr follow regex reg
   on_search:
     - _NAME_: ON_SEARCH_CONTEXT
       _DESCRIPTION_: Validate on_search context
@@ -763,218 +785,154 @@ _TESTS_:
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_ADDITIVES_INFO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].additives_info
+                  _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                  category: $.message.catalog['bpp/providers'][*].items[*].category_id
-                  _CONTINUE_: "!(category all in applicable_categories)"
-                  applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_BRAND_OWNER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].brand_owner_FSSAI_license_no
+                  _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                  category: $.message.catalog['bpp/providers'][*].items[*].category_id
-                  _CONTINUE_: "!(category all in applicable_categories)"
-                  applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_IMPORTER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].importer_FSSAI_license_no
+                  _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                  category: $.message.catalog['bpp/providers'][*].items[*].category_id
-                  _CONTINUE_: "!(category all in applicable_categories)"
-                  applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_NUTRITIONAL_INFO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].nutritional_info
+                  _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                  category: $.message.catalog['bpp/providers'][*].items[*].category_id
-                  _CONTINUE_: "!(category all in applicable_categories)"
-                  applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
                 - _NAME_: ITEMS_STATUTORY_REQS_PREPACKAGED_FOOD_OTHER_FSSAI_LICENSE_NO
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_prepackaged_food'].other_FSSAI_license_no
+                  _CONTINUE_: "!(attr are present)"
                   _RETURN_: attr are present
-                  category: $.message.catalog['bpp/providers'][*].items[*].category_id
-                  _CONTINUE_: "!(category all in applicable_categories)"
-                  applicable_categories:
-                    - Fruits and Vegetables
-                    - Bakery, Cakes & Dairy
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Tinned and Processed Food
-                    - Energy and Soft Drinks
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Snacks
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_COMMON_OR_GENERIC_NAME_OF_COMMODITY
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].common_or_generic_name_of_commodity
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MANUFACTURER_OR_PACKER_ADDRESS
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_address
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MANUFACTURER_OR_PACKER_NAME
                   attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_name
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _CONTINUE_: "!(category all in applicable_categories)"
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_STATUTORY_REQS_PACKAGED_COMMODITIES_MONTH_YEAR_OF_MANUFACTURE_PACKING_IMPORT
@@ -982,37 +940,44 @@ _TESTS_:
                   category: $.message.catalog['bpp/providers'][*].items[*].category_id
                   _CONTINUE_: "!(category all in applicable_categories)"
                   applicable_categories:
-                    - Fruits and Vegetables
-                    - Masala & Seasoning
-                    - Oil & Ghee
-                    - Eggs, Meat & Fish
-                    - Cleaning & Household
-                    - Bakery, Cakes & Dairy
-                    - Pet Care
-                    - Stationery
-                    - Detergents and Dishwash
-                    - Dairy and Cheese
-                    - Snacks, Dry Fruits, Nuts
-                    - Pasta, Soup and Noodles
-                    - Cereals and Breakfast
-                    - Sauces, Spreads and Dips
-                    - Chocolates and Biscuits
-                    - Cooking and Baking Needs
-                    - Tinned and Processed Food
-                    - Atta, Flours and Sooji
-                    - Rice and Rice Products
-                    - Dals and Pulses
-                    - Salt, Sugar and Jaggery
-                    - Energy and Soft Drinks
-                    - Water
-                    - Tea and Coffee
-                    - Fruit Juices and Fruit Drinks
-                    - Snacks and Namkeen
-                    - Ready to Cook and Eat
-                    - Pickles and Chutney
-                    - Indian Sweets
-                    - Frozen Vegetables
-                    - Frozen Snacks
+                    - Pain Relief
+                    - Nutrition and Fitness Supplements
+                    - Speciality Care
+                    - Covid Essentials
+                    - Diabetes Control
+                    - Healthcare & Fitness Devices
+                    - Ayurvedic
+                    - Homeopathy
+                    - Unani and Siddha
+                    - Elder Care
+                    - Baby Care
+                    - Orthopaedic Care
+                    - Mobility Aids
+                    - Medicated Hair Care
+                    - Medicated Skin Care
+                    - Speciality Face Cleansers
+                    - Gastric Care
+                    - ENT Care
+                    - Eye Care
+                    - Cold and Cough
+                    - Sexual Wellness
+                    - Feminine Care
+                    - Maternity Care
+                    - Nursing and Feeding
+                    - Hand Wash
+                    - Sanitizers
+                    - Baby Care - Wipes and Buds
+                    - Baby Care - Rash Creams
+                    - Baby Care - Diapers and Accessories
+                    - Health and Safety
+                    - Oral Care
+                    - Contraceptives
+                    - Breathe Easy
+                    - Health Foods and Drinks
+                    - Wound Care and Dressings
+                    - Surgicals
+                    - Mental Wellness
+                    - Gift Voucher
                   _RETURN_: attr are present
                 - _NAME_: ITEMS_TAGS
                   _RETURN_:
@@ -4353,12 +4318,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -4373,8 +4336,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -4390,9 +4352,6 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
-          _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
           _RETURN_: attr are present
     - _NAME_: ISSUE_VALIDATION_VERSION_200
       action:
@@ -4417,7 +4376,7 @@ _TESTS_:
           _RETURN_: attr are present && attr all in enumList
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
         - _NAME_: REQUIRED_MESSAGE_CREATED_AT
           attr: $.message.issue.created_at
@@ -4521,7 +4480,7 @@ _TESTS_:
         - _NAME_: VALID_ENUM_MESSAGE_LEVEL
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
           enumPath: $.message.issue.level
           _CONTINUE_: "!(enumPath are present)"
@@ -4565,76 +4524,79 @@ _TESTS_:
         - _NAME_: ISSUE_VALIDATION_OPEN
           action:
             - issue
-          _SCOPE_: $.message.issue[?(@.status=='OPEN')]
+          usecasepath: $.message.issue.status
+          status: 
+            - OPEN
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
+            # Mandatory fields ONLY for OPEN
             - _NAME_: REQUIRED_ISSUE_ID
               attr: $.message.issue.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_STATUS
               attr: $.message.issue.status
               validValues:
                 - OPEN
                 - CLOSED
-              _RETURN_: attr all in validValues
+              _RETURN_: attr all in validValues    
+
             - _NAME_: REQUIRED_ISSUE_CATEGORY
               attr: $.message.issue.category
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_SUB_CATEGORY
               attr: $.message.issue.sub_category
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_COMPLAINANT_PERSON_NAME
               attr: $.message.issue.complainant_info.person.name
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_COMPLAINANT_CONTACT_PHONE
               attr: $.message.issue.complainant_info.contact.phone
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ORDER_ID
               attr: $.message.issue.order_details.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ORDER_ITEMS
               attr: $.message.issue.order_details.items[*].id
               _RETURN_: attr are present
-            - _NAME_: REQUIRED_ORDER_ITEMS_QUANTITY
-              attr: $.message.issue.order_details.items[*].quantity
-              _RETURN_: attr are present
-            - _NAME_: REQUIRED_FULFILLMENT_ID
-              attr: $.message.issue.order_details.fulfillments[*].id
-              _RETURN_: attr are present
+
             - _NAME_: REQUIRED_PROVIDER_ID
               attr: $.message.issue.order_details.provider_id
               _RETURN_: attr are present
-            - _NAME_: REQUIRED_DESCRIPTION
-              attr:
-                - $.message.issue.description
-              _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_SHORT
-              attr:
-                - $.message.issue.description.short_desc
+              attr: $.message.issue.description.short_desc
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_LONG
-              attr:
-                - $.message.issue.description.long_desc
+              attr: $.message.issue.description.long_desc
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_URL
-              attr:
-                - $.message.issue.description.additional_desc.url
+              attr: $.message.issue.description.additional_desc.url
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_CONTENT_TYPE
-              attr:
-                - $.message.issue.description.additional_desc.content_type
+              attr: $.message.issue.description.additional_desc.content_type
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_IMAGES
-              attr:
-                - $.message.issue.description.images
-              _RETURN_: attr are present
+              attr: $.message.issue.description.images[*]
+              _RETURN_: attr are present  
+
             - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-              attr:
-                - $.message.issue.expected_response_time.duration
+              attr: $.message.issue.expected_response_time.duration
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-              attr:
-                - $.message.issue.expected_resolution_time.duration
+              attr: $.message.issue.expected_resolution_time.duration
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_ACTIONS_OPEN
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
               validValues:
@@ -4642,26 +4604,33 @@ _TESTS_:
                 - CLOSE
                 - ESCALATE
               _RETURN_: attr all in validValues
+
             - _NAME_: REQUIRED_CREATED_AT
               attr: $.message.issue.created_at
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_UPDATED_AT
               attr: $.message.issue.updated_at
               _RETURN_: attr are present
         - _NAME_: ISSUE_VALIDATION_CLOSED
           action:
-            - issue
-          _SCOPE_: $.message.issue[?(@.status=='CLOSED')]
+              - issue
+          usecasepath: $.message.issue.status
+          status: 
+            - CLOSED
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
             - _NAME_: REQUIRED_ISSUE_ID_CLOSED
               attr: $.message.issue.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_STATUS
               attr: $.message.issue.status
               validValues:
                 - OPEN
                 - CLOSED
-              _RETURN_: attr all in validValues
+              _RETURN_: attr all in validValues    
+
             - _NAME_: REQUIRED_ISSUE_ACTIONS_CLOSED
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
               validValues:
@@ -4672,9 +4641,11 @@ _TESTS_:
             - _NAME_: REQUIRED_CREATED_AT_CLOSED
               attr: $.message.issue.created_at
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_UPDATED_AT_CLOSED
               attr: $.message.issue.updated_at
               _RETURN_: attr are present
+  
   on_issue:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
@@ -4682,12 +4653,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -4702,8 +4671,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -4719,15 +4687,12 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
-          _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
     - _NAME_: ON_ISSUE_VALIDATION_VERSION_200
       action:
         - on_issue
       _SCOPE_: $.message.issue.actions
-      _RETURN_:
+      _RETURN_:  
         - _NAME_: REQUIRED_MESSAGE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
@@ -4746,14 +4711,14 @@ _TESTS_:
           _RETURN_: attr are present && attr all in enumList
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
         - _NAME_: REQUIRED_MESSAGE_CREATED_AT
           attr: $.message.issue.created_at
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_UPDATED_AT
           attr: $.message.issue.updated_at
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_REF_ID
           attr: $.message.issue.refs[*].ref_id
           _RETURN_: attr are present
@@ -4773,12 +4738,10 @@ _TESTS_:
             - CUSTOMER
             - AGENT
         - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-          attr:
-            - $.message.issue.expected_response_time.duration
+          attr: $.message.issue.expected_response_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-          attr:
-            - $.message.issue.expected_resolution_time.duration
+          attr: $.message.issue.expected_resolution_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_ID_10
           attr: $.message.issue.actors[*].id
@@ -4796,7 +4759,7 @@ _TESTS_:
             - INTERFACING_NP_GRO
             - COUNTERPARTY_NP_GRO
             - CASCADED_NP_GRO
-            - CONSUMER
+            - CONSUMER  
         - _NAME_: REQUIRED_MESSAGE_NAME_13
           attr: $.message.issue.actors[*].info.person.name
           _RETURN_: attr are present
@@ -4805,7 +4768,7 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_EMAIL
           attr: $.message.issue.actors[*].info.contact.email
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_ID_25
           attr: $.message.issue.actions[*].id
           _RETURN_: attr are present
@@ -4820,12 +4783,12 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_ACTION_BY
           attr: $.message.issue.actions[*].action_by
-          _RETURN_: attr are present
+          _RETURN_: attr are present                
     - _NAME_: ON_ISSUE_VALIDATION_VERSION_100
       action:
         - on_issue
       _SCOPE_: $.message.issue.issue_actions
-      _RETURN_:
+      _RETURN_: 
         - _NAME_: REQUIRED_ISSUE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
@@ -4839,24 +4802,31 @@ _TESTS_:
             - CLOSED
             - INFO_PROVIDED
             - NEED_MORE_INFO
+
         - _NAME_: REQUIRED_RESPONDENT_SHORT_DESC
           attr: $.message.issue.issue_actions.respondent_actions[*].short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_AT
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_PERSON
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.person.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_ORG
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_CREATED_AT
           attr: $.message.issue.created_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_UPDATED_AT
           attr: $.message.issue.updated_at
           _RETURN_: attr are present
+
   on_issue_status:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
@@ -4864,12 +4834,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -4884,8 +4852,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -4902,9 +4869,6 @@ _TESTS_:
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
           _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
-          _RETURN_: attr are present
     - _NAME_: ISSUE_ON_ISSUE_STATUS_VALIDATION
       action:
         - on_issue_status
@@ -4912,6 +4876,7 @@ _TESTS_:
         - _NAME_: REQUIRED_ISSUE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_ACTION
           attr: $.message.issue.issue_actions.respondent_actions[*].respondent_action
           _RETURN_: attr are present && attr all in enumList
@@ -4922,42 +4887,51 @@ _TESTS_:
             - CLOSED
             - INFO_PROVIDED
             - NEED_MORE_INFO
+
         - _NAME_: REQUIRED_RESPONDENT_SHORT_DESC
           attr: $.message.issue.issue_actions.respondent_actions[*].short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_AT
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_PERSON
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.person.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_ORG
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_CREATED_AT
           attr: $.message.issue.created_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_UPDATED_AT
           attr: $.message.issue.updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_SHORT_DESC
-          attr:
-            - $.message.issue.resolution.short_desc
+          attr: $.message.issue.resolution.short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_LONG_DESC
-          attr:
-            - $.message.issue.resolution.long_desc
+          attr: $.message.issue.resolution.long_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_ACTION_TRIGGERED
-          attr:
-            - $.message.issue.resolution.action_triggered
+          attr: $.message.issue.resolution.action_triggered
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_TYPE
           attr: $.message.issue.resolution_provider.respondent_info.type
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_ORG_NAME
           attr: $.message.issue.resolution_provider.respondent_info.organization.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_PERSON_NAME
           attr: $.message.issue.resolution_provider.respondent_info.organization.person.name
           _RETURN_: attr are present
