@@ -397,17 +397,18 @@ steps:
           properties:
             settlement_amount:
               type: number
-              description: Correction settlement amount (INR). Defaults to the diff amount
-                reported in on_receiver_recon (negative when overpaid)
+              description: Optional - calculated automatically from the diff amount reported in on_receiver_recon (negative when overpaid); only enter to override
             settlement_detail_ref_no:
               type: string
-              description: Settlement reference (UTR) of the correction entry in
-                settlement_details. Defaults to the next SREF number
+              description: Settlement reference (UTR) of the correction entry in settlement_details
+              default: SREF2
             settlement_id:
               type: string
-              description: Settlement ID of the correction settlement. Defaults to the
-                previous settlement ID + 1
-          required: []
+              description: Settlement ID of the correction settlement
+              default: '123124'
+          required:
+          - settlement_detail_ref_no
+          - settlement_id
     examples:
       - name: example for receiver_recon
         payload:
@@ -458,7 +459,7 @@ steps:
                         settlement_reference: SREF1
                         settlement_timestamp: 2026-10-13T04:50:31.369Z
                       - settlement_counterparty: seller-app
-                        settlement_amount: 3
+                        settlement_amount: 20
                         settlement_type: neft
                         settlement_bank_account_no: "99679007677676"
                         settlement_ifsc_code: HDFC900008
