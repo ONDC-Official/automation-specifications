@@ -1,0 +1,86 @@
+flows:
+  - type: playground
+    id: Buyer_Initiated_Return_(Full_Order_and_Partial_Order)
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: Buyer initiates a return for an electronics order, covering both full-order and partial-item return scenarios from return request selection through confirmation, status tracking, and final update. The flow exercises the end-to-end operational handling of return authorization, pickup/collection, refund settlement, and closure across the transaction lifecycle.
+    config:
+      $ref: ./ELECTRONICS/Buyer_Initiated_Return__Full_Order_and_Partial_Order_.yaml
+  - type: playground
+    id: Buyer_Side_Order_Cancellation
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: End-to-end buyer-side cancellation flow for an electronics order, covering item selection, order creation, confirmation, and post-confirmation cancellation with the corresponding cancellation acknowledgment.
+    config:
+      $ref: ./ELECTRONICS/Buyer_Side_Order_Cancellation.yaml
+  - type: playground
+    id: Merchant_Side_RTO_and_Part_Order_Cancellation_Flow
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: Merchant-side electronics order lifecycle covering order confirmation, status reconciliation, RTO handling, and partial cancellation of items or quantities, with subsequent updates and cancellation status reporting end to end.
+    config:
+      $ref: ./ELECTRONICS/Merchant_Side_RTO_and_Part_Order_Cancellation_Flow.yaml
+  - type: playground
+    id: Order_to_confirm_to_fulfillment_(Prepaid)
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: Prepaid electronics order lifecycle from product selection and order confirmation through fulfillment, with repeated status updates and tracking until delivery completion.
+    config:
+      $ref: ./ELECTRONICS/Order_to_confirm_to_fulfillment__Prepaid_.yaml
+  - type: playground
+    id: Out_of_Stock(Error_code)
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: An electronics buyer selection flow where the provider accepts the `select` request but responds on `on_select` with an out-of-stock error because the requested item or variant is unavailable for fulfillment.
+    config:
+      $ref: ./ELECTRONICS/Out_of_Stock_Error_code_.yaml
+  - type: playground
+    id: Search_and_Custom_Menu_(Full_Catalog_City)
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: City-wide electronics discovery flow where a buyer searches for products and receives the seller’s full catalog with custom menu and item availability in the `on_search` response. It exercises end-to-end product discovery, assortment visibility, and catalog enrichment for the ELECTRONICS domain.
+    config:
+      $ref: ./ELECTRONICS/Search_and_Custom_Menu__Full_Catalog_City_.yaml
+  - type: playground
+    id: Search_and_Custom_Menu_(Incremental_Push)
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+      - PRAMAAN
+      - MANDATORY
+      - REPORTABLE
+    description: Electronics discovery flow that exercises incremental catalog push during search, where the seller publishes and refreshes a custom menu of products through successive search/on_search exchanges for buyer-side discovery and selection.
+    config:
+      $ref: ./ELECTRONICS/Search_and_Custom_Menu__Incremental_Push_.yaml
+  - type: playground
+    id: Discovery_Flow_incremental_catalog_refresh_pull
+    usecase: ELECTRONICS
+    tags:
+      - WORKBENCH
+    description: An ONDC discovery flow for electronics where a buyer app performs an initial search and then repeats search/on_search to incrementally refresh seller catalog results, capturing newly available products, updated pricing, and availability changes over time.
+    config:
+      $ref: ./ELECTRONICS/Discovery_Flow_incremental_catalog_refresh_pull.yaml

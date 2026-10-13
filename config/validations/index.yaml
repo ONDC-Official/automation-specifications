@@ -114,117 +114,97 @@ _TESTS_:
             - _NAME_: CATEGORY_ID
               attr: $.message.intent.category.id
               var_enum:
-                - Shirts
-                - T Shirts
-                - Sweatshirts
-                - Kurtas & Kurta Sets
-                - Jackets & Coats
-                - Sweaters
-                - Stoles and Scarves
-                - Mufflers
-                - Suits
-                - Sherwanis
-                - Track Shirts
-                - Track Suits
-                - Unstitched Fabrics
-                - Dresses
-                - Tops
-                - Trousers
-                - Capris
-                - Coordinates
-                - Playsuits
-                - Jumpsuits
-                - Shrugs & Blouses
-                - Blazers & Waistcoats
-                - Tights, Leggings & Jeggings
-                - Track Pants
-                - Jeans
-                - Shorts
-                - Joggers
-                - Dhotis & Dhoti Pants
-                - Churidars
-                - Salwars
-                - Dungarees & Jumpsuits
-                - Skirts
-                - Clothing Sets
-                - Belts
-                - Caps & Hats
-                - Kurtis, Tunics
-                - Sarees
-                - Ethnic Wear
-                - Palazzos
-                - Dress Materials
-                - Lehenga Cholis
-                - Dupattas & Shawls
-                - Burqas & Hijabs
-                - Blouses
-                - Blouse Pieces
-                - Briefs
-                - Boxers
-                - Vests
-                - Robes
-                - Night Suits
-                - Thermal Wear
-                - Swim Bottoms
-                - Swimwear
-                - Bra
-                - Shapewear
-                - Sleepwear & Loungewear
-                - Camisoles
-                - Lingerie Sets & Accessories
-                - Bath Robes
-                - Towels
-                - Pyjamas
-                - Party Wear
-                - Innerwear & Sleepwear
-                - Nightwear & Loungewear
-                - Watches
-                - Gloves
-                - Socks
-                - Stockings
-                - Laces
-                - Soles & Charms
-                - Shoe Racks & Organisers
-                - Shoe Care - Accessories
-                - Flip-Flops & Flats
-                - Sandals & Floaters
-                - Backpacks
-                - Handbags
-                - Trolley, Luggage & Suitcases
-                - Formal Shoes
-                - Casual Shoes
-                - Sports Shoes
-                - Outdoor Shoes
-                - Work & Safety Shoes
-                - Ethnic Shoes
-                - Boots
-                - Heels
-                - Contact Lenses
-                - Eye Glasses
-                - Eye Glass Frames
-                - Sunglasses
-                - Contact Lens Cases
-                - Contact Lens Solutions
-                - Contact Lens Tweezers
-                - Eyeglasses Pouches & Cases
-                - Microfiber Wipes
-                - Eyewear Slings
-                - Bracelets
-                - Chains
-                - Mangalsutra
-                - Anklets
-                - Bangles & Bracelets
-                - Necklaces
-                - Earrings
-                - Jewellery Sets
-                - Nosepins & Noserings
-                - Pendants
-                - Rings
-                - Toe Rings
-                - Gold Coins
-                - Brooch
-                - Pouch
-                - Keychain
+                - Mobile Phone
+                - Smart Watch
+                - Headset
+                - Laptop
+                - Desktop
+                - Tablet
+                - Keyboard
+                - Monitor
+                - Mouse
+                - Power Bank
+                - Earphone
+                - True Wireless Stereo (TWS)
+                - Adapter
+                - Cable
+                - Extension Cord
+                - Audio Accessories
+                - Home Audio
+                - Microphone
+                - Speaker
+                - Vehicle Audio
+                - Camcorder
+                - Camera
+                - Camera Bag
+                - Batteries
+                - Charger
+                - Camera Lens
+                - Photo Printer
+                - Tripod
+                - Camera Accessories
+                - UPS
+                - Networking Device
+                - Printer
+                - Printer Accessories
+                - Storage Drive
+                - Pen Drive
+                - Memory Card
+                - Computer Component
+                - Cooling Pad
+                - Docking Station
+                - Keyboard Guard
+                - Laptop Skin
+                - Laptop Stand
+                - Mousepad
+                - Laptop Bag
+                - Screen Protector
+                - Computer Accessories
+                - Computer Software
+                - Ebook Reader
+                - Tablet Accessories
+                - Gaming Controller
+                - Gaming Chair
+                - Gaming Accessories
+                - Gaming Console
+                - Video Games
+                - Mobile Cover
+                - Mobile Mount
+                - Mobile Screen Guard
+                - Selfie Stick
+                - Mobile Skin Sticker
+                - Biometrics
+                - Home Alarm
+                - Home Automation
+                - Smart Switch
+                - Smart Lighting
+                - Home Safe
+                - Intercom
+                - Sensor
+                - Standard TV
+                - TV Mount
+                - Remote
+                - Streaming Device
+                - TV Accessories
+                - Virtual Reality Headset
+                - 3D Glasses
+                - 3D Modulator
+                - Projector
+                - Projector Screen
+                - Projector Mount
+                - Projector Accessories
+                - TV Remote
+                - Set Top Box
+                - TV Stand
+                - Video Player
+                - Digital Photo Frame
+                - Video Player Accessories
+                - Smart Band
+                - Smart Glasses
+                - Watch Strap Band
+                - Wearable Accessories
+                - Smart Ring
+                - Tracker Devices
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr all in var_enum
         - _NAME_: SEARCH_FULFILMENT
@@ -721,15 +701,19 @@ _TESTS_:
                 - _NAME_: ITEMS_ONDC_ORG_STATUTORY_REQS_PACKAGED_COMMODITIES
                   _RETURN_:
                     - _NAME_: MANUFACTURER_OR_PACKER_NAME
+                      _CONTINUE_: "!(attr are present)"
                       attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_name
                       _RETURN_: attr are present
                     - _NAME_: MANUFACTURER_OR_PACKER_ADDRESS
+                      _CONTINUE_: "!(attr are present)"
                       attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].manufacturer_or_packer_address
                       _RETURN_: attr are present
                     - _NAME_: COMMON_OR_GENERIC_NAME_OF_COMMODITY
+                      _CONTINUE_: "!(attr are present)"
                       attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].common_or_generic_name_of_commodity
                       _RETURN_: attr are present
                     - _NAME_: MONTH_YEAR_OF_MANUFACTURE_PACKING_IMPORT
+                      _CONTINUE_: "!(attr are present)"
                       attr: $.message.catalog['bpp/providers'][*].items[*]['@ondc/org/statutory_reqs_packaged_commodities'].month_year_of_manufacture_packing_import
                       reg:
                         - ^\\d{2}/\\d{4}|NA$
@@ -1136,28 +1120,27 @@ _TESTS_:
                       _RETURN_: attr follow regex reg
                 - _NAME_: BREAKUP_ITEM
                   _RETURN_:
-                    - _NAME_: BREAKUP_ITEM_QUANTITY_AVAILABLE_COUNT
+                    - _NAME_: BREAKUP_ITEM_ITEM_QUANTITY_AVAILABLE_COUNT
+                      _CONTINUE_: "!(attr are present)"
                       attr: $.message.order.quote.breakup[*].item.quantity.available.count
-                      _CONTINUE_: "!(attr are present)"
-                      reg:
-                        - ^[0-9]{1,2}$
-                      _RETURN_: attr follow regex reg
-                    - _NAME_: BREAKUP_ITEM_QUANTITY_MAXIMUM_COUNT
-                      attr: $.message.order.quote.breakup[*].item.quantity.maximum.count
-                      _CONTINUE_: "!(attr are present)"
-                      reg:
-                        - ^[0-9]{1,2}$
-                      _RETURN_: attr follow regex reg
-                    - _NAME_: BREAKUP_ITEM_PRICE_CURRENCY
-                      attr: $.message.order.quote.breakup[*].item.price.currency
-                      _CONTINUE_: "!(attr are present)"
-                      _RETURN_: attr are present
-                    - _NAME_: BREAKUP_ITEM_PRICE_VALUE
-                      attr: $.message.order.quote.breakup[*].item.price.value
-                      reg:
-                        - ^[0-9]+(\\.[0-9]{2,})?$
-                      _CONTINUE_: "!(attr are present)"
-                      _RETURN_: attr are present
+                      var_enum:
+                        - "99"
+                        - "0"
+                      _RETURN_: attr all in var_enum
+                    - _NAME_: BREAKUP_ITEM_ITEM_PRICE_CURRENCY
+                      _SCOPE_: $.message.order.quote.breakup[*]
+                      priceCurrency: $.item.price.currency
+                      value: "$['@ondc/org/title_type']"
+                      item: ["item"]
+                      _CONTINUE_: "!(value all in item)"
+                      _RETURN_: priceCurrency are present
+                    - _NAME_: BREAKUP_ITEM_ITEM_PRICE_VALUE
+                      _SCOPE_: $.message.order.quote.breakup[*]
+                      priceValue: $.item.price.value
+                      value: "$['@ondc/org/title_type']"
+                      item: ["item"]
+                      _CONTINUE_: "!(value all in item)"
+                      _RETURN_: priceValue are present
                     - _NAME_: BREAKUP_ITEM_TAGS
                       _RETURN_:
                         - _NAME_: BREAKUP_ITEM_TAGS_QUOTE
@@ -1323,7 +1306,7 @@ _TESTS_:
         - _NAME_: ORDER_FULFILLMENTS
           _RETURN_: *a6
         - _NAME_: ORDER_QUOTE
-          _RETURN_: *a7
+          _RETURN_: *a7  
         - _NAME_: ORDER_PAYMENT
           _RETURN_: &a8
             - _NAME_: PAYMENT_ONDC_ORG_BUYER_APP_FINDER_FEE_TYPE
@@ -2149,7 +2132,7 @@ _TESTS_:
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_START_TIME_RANGE_END
                       _CONTINUE_: "!(attr are present)"
-                      attr: $.message.order.fulfillments[*].start.time.range.end
+                      attr: $.message.order.fulfillments[?(@.type=='Delivery')].start.time.range.end
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
@@ -2187,7 +2170,7 @@ _TESTS_:
                   _RETURN_:
                     - _NAME_: FULFILLMENTS_END_TIME_RANGE_START
                       _CONTINUE_: "!(attr are present)"
-                      attr: $.message.order.fulfillments[*].end.time.range.start
+                      attr: $.message.order.fulfillments[?(@.type=='Delivery')].end.time.range.start
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
@@ -2524,20 +2507,29 @@ _TESTS_:
                 - _NAME_: FULFILLMENTS_START_TIME
                   _RETURN_:
                     - _NAME_: FULFILLMENTS_START_TIME_RANGE_START
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].start.time.range.start
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_START_TIME_RANGE_END
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].start.time.range.end
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_START_TIME_TIMESTAMP
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].start.time.timestamp
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
@@ -2568,20 +2560,29 @@ _TESTS_:
                 - _NAME_: FULFILLMENTS_END_TIME
                   _RETURN_:
                     - _NAME_: FULFILLMENTS_END_TIME_RANGE_START
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].end.time.range.start
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_END_TIME_RANGE_END
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].end.time.range.end
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
                     - _NAME_: FULFILLMENTS_END_TIME_TIMESTAMP
-                      _CONTINUE_: "!(attr are present)"
+                      _CONTINUE_: "!(attr are present) || !(attr_condition all in condition)"
                       attr: $.message.order.fulfillments[*].end.time.timestamp
+                      attr_condition: $.message.order.fulfillments[*].type
+                      condition:
+                        - Delivery
                       reg:
                         - ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$
                       _RETURN_: attr follow regex reg
@@ -2592,12 +2593,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -2612,8 +2611,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -2629,9 +2627,6 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
-          _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
           _RETURN_: attr are present
     - _NAME_: ISSUE_VALIDATION_VERSION_200
       action:
@@ -2656,7 +2651,7 @@ _TESTS_:
           _RETURN_: attr are present && attr all in enumList
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
         - _NAME_: REQUIRED_MESSAGE_CREATED_AT
           attr: $.message.issue.created_at
@@ -2760,7 +2755,7 @@ _TESTS_:
         - _NAME_: VALID_ENUM_MESSAGE_LEVEL
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
           enumPath: $.message.issue.level
           _CONTINUE_: "!(enumPath are present)"
@@ -2804,76 +2799,79 @@ _TESTS_:
         - _NAME_: ISSUE_VALIDATION_OPEN
           action:
             - issue
-          _SCOPE_: $.message.issue[?(@.status=='OPEN')]
+          usecasepath: $.message.issue.status
+          status: 
+            - OPEN
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
+            # Mandatory fields ONLY for OPEN
             - _NAME_: REQUIRED_ISSUE_ID
               attr: $.message.issue.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_STATUS
               attr: $.message.issue.status
               validValues:
                 - OPEN
                 - CLOSED
-              _RETURN_: attr all in validValues
+              _RETURN_: attr all in validValues    
+
             - _NAME_: REQUIRED_ISSUE_CATEGORY
               attr: $.message.issue.category
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_SUB_CATEGORY
               attr: $.message.issue.sub_category
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_COMPLAINANT_PERSON_NAME
               attr: $.message.issue.complainant_info.person.name
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_COMPLAINANT_CONTACT_PHONE
               attr: $.message.issue.complainant_info.contact.phone
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ORDER_ID
               attr: $.message.issue.order_details.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ORDER_ITEMS
               attr: $.message.issue.order_details.items[*].id
               _RETURN_: attr are present
-            - _NAME_: REQUIRED_ORDER_ITEMS_QUANTITY
-              attr: $.message.issue.order_details.items[*].quantity
-              _RETURN_: attr are present
-            - _NAME_: REQUIRED_FULFILLMENT_ID
-              attr: $.message.issue.order_details.fulfillments[*].id
-              _RETURN_: attr are present
+
             - _NAME_: REQUIRED_PROVIDER_ID
               attr: $.message.issue.order_details.provider_id
               _RETURN_: attr are present
-            - _NAME_: REQUIRED_DESCRIPTION
-              attr:
-                - $.message.issue.description
-              _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_SHORT
-              attr:
-                - $.message.issue.description.short_desc
+              attr: $.message.issue.description.short_desc
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_LONG
-              attr:
-                - $.message.issue.description.long_desc
+              attr: $.message.issue.description.long_desc
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_URL
-              attr:
-                - $.message.issue.description.additional_desc.url
+              attr: $.message.issue.description.additional_desc.url
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_CONTENT_TYPE
-              attr:
-                - $.message.issue.description.additional_desc.content_type
+              attr: $.message.issue.description.additional_desc.content_type
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_DESCRIPTION_IMAGES
-              attr:
-                - $.message.issue.description.images
-              _RETURN_: attr are present
+              attr: $.message.issue.description.images[*]
+              _RETURN_: attr are present  
+
             - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-              attr:
-                - $.message.issue.expected_response_time.duration
+              attr: $.message.issue.expected_response_time.duration
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-              attr:
-                - $.message.issue.expected_resolution_time.duration
+              attr: $.message.issue.expected_resolution_time.duration
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_ACTIONS_OPEN
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
               validValues:
@@ -2881,26 +2879,33 @@ _TESTS_:
                 - CLOSE
                 - ESCALATE
               _RETURN_: attr all in validValues
+
             - _NAME_: REQUIRED_CREATED_AT
               attr: $.message.issue.created_at
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_UPDATED_AT
               attr: $.message.issue.updated_at
               _RETURN_: attr are present
         - _NAME_: ISSUE_VALIDATION_CLOSED
           action:
-            - issue
-          _SCOPE_: $.message.issue[?(@.status=='CLOSED')]
+              - issue
+          usecasepath: $.message.issue.status
+          status: 
+            - CLOSED
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
             - _NAME_: REQUIRED_ISSUE_ID_CLOSED
               attr: $.message.issue.id
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_ISSUE_STATUS
               attr: $.message.issue.status
               validValues:
                 - OPEN
                 - CLOSED
-              _RETURN_: attr all in validValues
+              _RETURN_: attr all in validValues    
+
             - _NAME_: REQUIRED_ISSUE_ACTIONS_CLOSED
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
               validValues:
@@ -2911,9 +2916,11 @@ _TESTS_:
             - _NAME_: REQUIRED_CREATED_AT_CLOSED
               attr: $.message.issue.created_at
               _RETURN_: attr are present
+
             - _NAME_: REQUIRED_UPDATED_AT_CLOSED
               attr: $.message.issue.updated_at
               _RETURN_: attr are present
+  
   on_issue:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
@@ -2921,12 +2928,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -2941,8 +2946,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -2958,15 +2962,12 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
-          _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
     - _NAME_: ON_ISSUE_VALIDATION_VERSION_200
       action:
         - on_issue
       _SCOPE_: $.message.issue.actions
-      _RETURN_:
+      _RETURN_:  
         - _NAME_: REQUIRED_MESSAGE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
@@ -2985,14 +2986,14 @@ _TESTS_:
           _RETURN_: attr are present && attr all in enumList
           enumList:
             - ISSUE
-            - GREVIENCE
+            - GRIEVANCE
             - DISPUTE
         - _NAME_: REQUIRED_MESSAGE_CREATED_AT
           attr: $.message.issue.created_at
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_UPDATED_AT
           attr: $.message.issue.updated_at
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_REF_ID
           attr: $.message.issue.refs[*].ref_id
           _RETURN_: attr are present
@@ -3012,12 +3013,10 @@ _TESTS_:
             - CUSTOMER
             - AGENT
         - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-          attr:
-            - $.message.issue.expected_response_time.duration
+          attr: $.message.issue.expected_response_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-          attr:
-            - $.message.issue.expected_resolution_time.duration
+          attr: $.message.issue.expected_resolution_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_ID_10
           attr: $.message.issue.actors[*].id
@@ -3035,7 +3034,7 @@ _TESTS_:
             - INTERFACING_NP_GRO
             - COUNTERPARTY_NP_GRO
             - CASCADED_NP_GRO
-            - CONSUMER
+            - CONSUMER  
         - _NAME_: REQUIRED_MESSAGE_NAME_13
           attr: $.message.issue.actors[*].info.person.name
           _RETURN_: attr are present
@@ -3044,7 +3043,7 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_EMAIL
           attr: $.message.issue.actors[*].info.contact.email
-          _RETURN_: attr are present
+          _RETURN_: attr are present 
         - _NAME_: REQUIRED_MESSAGE_ID_25
           attr: $.message.issue.actions[*].id
           _RETURN_: attr are present
@@ -3059,12 +3058,12 @@ _TESTS_:
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_ACTION_BY
           attr: $.message.issue.actions[*].action_by
-          _RETURN_: attr are present
+          _RETURN_: attr are present                
     - _NAME_: ON_ISSUE_VALIDATION_VERSION_100
       action:
         - on_issue
       _SCOPE_: $.message.issue.issue_actions
-      _RETURN_:
+      _RETURN_: 
         - _NAME_: REQUIRED_ISSUE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
@@ -3078,24 +3077,31 @@ _TESTS_:
             - CLOSED
             - INFO_PROVIDED
             - NEED_MORE_INFO
+
         - _NAME_: REQUIRED_RESPONDENT_SHORT_DESC
           attr: $.message.issue.issue_actions.respondent_actions[*].short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_AT
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_PERSON
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.person.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_ORG
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_CREATED_AT
           attr: $.message.issue.created_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_UPDATED_AT
           attr: $.message.issue.updated_at
           _RETURN_: attr are present
+
   on_issue_status:
     - _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
@@ -3103,12 +3109,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr:
-            - $.context.location.country.code
+          attr: $.context.country
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr:
-            - $.context.location.city.code
+          attr: $.context.city
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -3123,8 +3127,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr:
-            - $.context.version
+          attr: $.context.core_version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -3141,9 +3144,6 @@ _TESTS_:
         - _NAME_: REQUIRED_CONTEXT_TTL
           attr: $.context.ttl
           _RETURN_: attr are present
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.country
-          _RETURN_: attr are present
     - _NAME_: ISSUE_ON_ISSUE_STATUS_VALIDATION
       action:
         - on_issue_status
@@ -3151,6 +3151,7 @@ _TESTS_:
         - _NAME_: REQUIRED_ISSUE_ID
           attr: $.message.issue.id
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_ACTION
           attr: $.message.issue.issue_actions.respondent_actions[*].respondent_action
           _RETURN_: attr are present && attr all in enumList
@@ -3161,42 +3162,51 @@ _TESTS_:
             - CLOSED
             - INFO_PROVIDED
             - NEED_MORE_INFO
+
         - _NAME_: REQUIRED_RESPONDENT_SHORT_DESC
           attr: $.message.issue.issue_actions.respondent_actions[*].short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_AT
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_PERSON
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.person.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESPONDENT_UPDATED_BY_ORG
           attr: $.message.issue.issue_actions.respondent_actions[*].updated_by.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_CREATED_AT
           attr: $.message.issue.created_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_ISSUE_UPDATED_AT
           attr: $.message.issue.updated_at
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_SHORT_DESC
-          attr:
-            - $.message.issue.resolution.short_desc
+          attr: $.message.issue.resolution.short_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_LONG_DESC
-          attr:
-            - $.message.issue.resolution.long_desc
+          attr: $.message.issue.resolution.long_desc
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_ACTION_TRIGGERED
-          attr:
-            - $.message.issue.resolution.action_triggered
+          attr: $.message.issue.resolution.action_triggered
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_TYPE
           attr: $.message.issue.resolution_provider.respondent_info.type
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_ORG_NAME
           attr: $.message.issue.resolution_provider.respondent_info.organization.org.name
           _RETURN_: attr are present
+
         - _NAME_: REQUIRED_RESOLUTION_PROVIDER_PERSON_NAME
           attr: $.message.issue.resolution_provider.respondent_info.organization.person.name
           _RETURN_: attr are present
