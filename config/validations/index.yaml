@@ -426,6 +426,12 @@ _TESTS_:
             - ^[A-Z]{4}[A-Z0-9]{6,7}$
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_PAYER_ACCOUNT_NO
+          attr: $.message.orderbook.orders[*].payerdetails.payer_account_no
+          reg:
+            - ^[0-9]{9,18}$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
         - _NAME_: REGEX_RECEIVER_RECON_WITHHOLDING_AMOUNT
           attr: $.message.orderbook.orders[*].payment['@ondc/org/withholding_amount']
           reg:
