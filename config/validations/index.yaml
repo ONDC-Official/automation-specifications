@@ -95,6 +95,18 @@ _TESTS_:
                 - ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
               _CONTINUE_: "!(attr are present)"
               _RETURN_: attr follow regex reg
+            - _NAME_: REGEX_CONTEXT_BPP_ID
+              attr: $.context.bpp_id
+              reg:
+                - ^(?!.*\b(?:http|https|www)\b)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr follow regex reg
+            - _NAME_: REGEX_CONTEXT_BPP_URI
+              attr: $.context.bpp_uri
+              reg:
+                - ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
+              _CONTINUE_: "!(attr are present)"
+              _RETURN_: attr follow regex reg
             - _NAME_: REGEX_CONTEXT_TTL
               attr: $.context.ttl
               reg:
@@ -229,8 +241,6 @@ _TESTS_:
           attr: $.message.orderbook.orders[*].order_recon_status
           enumList:
             - "01"
-            - "02"
-            - "03"
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr all in enumList
         - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_REASON_CODE
@@ -263,6 +273,115 @@ _TESTS_:
             - "INR"
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_STATE
+          attr: $.message.orderbook.orders[*].state
+          enumList:
+            - "Completed"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_PAYMENT_TYPE
+          attr: $.message.orderbook.orders[*].payment.type
+          enumList:
+            - "ON-ORDER"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_PAYMENT_STATUS
+          attr: $.message.orderbook.orders[*].payment.status
+          enumList:
+            - "PAID"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_PAYMENT_TRANSACTION_STATUS
+          attr: $.message.orderbook.orders[*].payment.params.transaction_status
+          enumList:
+            - "PAID"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_PAYMENT_TL_METHOD
+          attr: $.message.orderbook.orders[*].payment.tl_method
+          enumList:
+            - "http/get"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_COLLECTED_BY_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/collected_by_status']
+          enumList:
+            - "Assert"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_WITHHOLDING_AMOUNT_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/withholding_amount_status']
+          enumList:
+            - "Assert"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_RETURN_WINDOW_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/return_window_status']
+          enumList:
+            - "Assert"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_BASIS_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_basis_status']
+          enumList:
+            - "Assert"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_WINDOW_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_window_status']
+          enumList:
+            - "Assert"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_COUNTERPARTY
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_counterparty
+          enumList:
+            - "buyer-app"
+            - "seller-app"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_PHASE
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_phase
+          enumList:
+            - "sale-amount"
+            - "withholding-amount"
+            - "refund"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_TYPE
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_type
+          enumList:
+            - "upi"
+            - "neft"
+            - "rtgs"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_STATUS
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_status
+          enumList:
+            - "PAID"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_WITHHOLDING_TAX_GST_CURRENCY
+          attr: $.message.orderbook.orders[*].withholding_tax_gst.currency
+          enumList:
+            - "INR"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_WITHHOLDING_TAX_TDS_CURRENCY
+          attr: $.message.orderbook.orders[*].withholding_tax_tds.currency
+          enumList:
+            - "INR"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_RECEIVER_RECON_BUYER_APP_FINDER_FEE_TYPE
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/buyer_app_finder_fee_type']
+          enumList:
+            - "percent"
+            - "amount"
+            - "Percentage"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
     - _NAME_: RECEIVER_RECON_ORDERBOOK_REGEX
       _RETURN_:
         - _NAME_: REGEX_RECEIVER_RECON_CREATED_AT
@@ -283,6 +402,70 @@ _TESTS_:
             - ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_SETTLEMENT_BANK_ACCOUNT_NO
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_bank_account_no
+          reg:
+            - ^[0-9]{9,18}$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_SETTLEMENT_WINDOW
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_window']
+          reg:
+            - ^P(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_RETURN_WINDOW
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/return_window']
+          reg:
+            - ^P(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_SETTLEMENT_IFSC_CODE
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_ifsc_code
+          reg:
+            - ^[A-Z]{4}[A-Z0-9]{6,7}$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_PAYER_ACCOUNT_NO
+          attr: $.message.orderbook.orders[*].payerdetails.payer_account_no
+          reg:
+            - ^[0-9]{9,18}$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+        - _NAME_: REGEX_RECEIVER_RECON_WITHHOLDING_AMOUNT
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/withholding_amount']
+          reg:
+            - ^\d+(\.\d+)?$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+    - _NAME_: RECEIVER_RECON_COLLECTED_BY_BAP_COUNTERPARTY
+      collectedBy: $.message.orderbook.orders[*].payment.collected_by
+      collectorIsBap:
+        - "BAP"
+      _CONTINUE_: "!(collectedBy any in collectorIsBap)"
+      _RETURN_:
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_COUNTERPARTY_FOR_BAP
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_counterparty
+          enumList:
+            - "seller-app"
+          _RETURN_: attr all in enumList
+    - _NAME_: RECEIVER_RECON_COLLECTED_BY_BPP_COUNTERPARTY
+      collectedBy: $.message.orderbook.orders[*].payment.collected_by
+      collectorIsBpp:
+        - "BPP"
+      _CONTINUE_: "!(collectedBy any in collectorIsBpp)"
+      _RETURN_:
+        - _NAME_: VALID_RECEIVER_RECON_SETTLEMENT_COUNTERPARTY_FOR_BPP
+          attr: $.message.orderbook.orders[*].payment['@ondc/org/settlement_details'][*].settlement_counterparty
+          enumList:
+            - "buyer-app"
+          _RETURN_: attr all in enumList
+    - _NAME_: RECEIVER_RECON_ORDER_ID_UNIQUE
+      _RETURN_:
+        - _NAME_: UNIQUE_RECEIVER_RECON_ORDER_ID
+          attr: $.message.orderbook.orders[*].id
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are unique
   on_receiver_recon:
     - _NAME_: ON_RECEIVER_RECON_CONTEXT
       action:
@@ -317,9 +500,7 @@ _TESTS_:
         - _NAME_: VALID_ON_RECEIVER_RECON_ORDER_RECON_STATUS
           attr: $.message.orderbook.orders[*].order_recon_status
           enumList:
-            - "01"
             - "02"
-            - "03"
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr all in enumList
         - _NAME_: VALID_ON_RECEIVER_RECON_COUNTERPARTY_RECON_STATUS
@@ -335,6 +516,36 @@ _TESTS_:
           attr: $.message.orderbook.orders[*].counterparty_diff_amount.currency
           enumList:
             - "INR"
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in enumList
+        - _NAME_: VALID_ON_RECEIVER_RECON_MESSAGE_CODE
+          attr: $.message.orderbook.orders[*].message.code
+          enumList:
+            - "less"
+            - "more"
+            - "missing"
+            - "70000"
+            - "70001"
+            - "70002"
+            - "70003"
+            - "70004"
+            - "70005"
+            - "70006"
+            - "70007"
+            - "70008"
+            - "70009"
+            - "70010"
+            - "70011"
+            - "70012"
+            - "70013"
+            - "70014"
+            - "70015"
+            - "70016"
+            - "70017"
+            - "70018"
+            - "70019"
+            - "70020"
+            - "70021"
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr all in enumList
     - _NAME_: ON_RECEIVER_RECON_COUNTERPARTY_DIFF_AMOUNT_CURRENCY
@@ -365,5 +576,40 @@ _TESTS_:
         - _NAME_: REQUIRED_ON_RECEIVER_RECON_MESSAGE_CODE
           attr: $.message.orderbook.orders[*].message.code
           _RETURN_: attr are present
+    - _NAME_: ON_RECEIVER_RECON_DEVIATION_DIFF_AMOUNT
+      reconStatus: $.message.orderbook.orders[*].counterparty_recon_status
+      amountDeviation:
+        - "02"
+        - "03"
+      _CONTINUE_: "!(reconStatus any in amountDeviation)"
+      _RETURN_:
+        - _NAME_: REQUIRED_ON_RECEIVER_RECON_DEVIATION_DIFF_VALUE
+          attr: $.message.orderbook.orders[*].counterparty_diff_amount.value
+          _RETURN_: attr are present
+    - _NAME_: ON_RECEIVER_RECON_DEVIATION_MESSAGE
+      reconStatus: $.message.orderbook.orders[*].counterparty_recon_status
+      anyDeviation:
+        - "02"
+        - "03"
+        - "04"
+      _CONTINUE_: "!(reconStatus any in anyDeviation)"
+      _RETURN_:
+        - _NAME_: REQUIRED_ON_RECEIVER_RECON_DEVIATION_MESSAGE_CODE
+          attr: $.message.orderbook.orders[*].message.code
+          _RETURN_: attr are present
+    - _NAME_: ON_RECEIVER_RECON_MESSAGE_NAME_FORMAT
+      _RETURN_:
+        - _NAME_: REGEX_ON_RECEIVER_RECON_MESSAGE_NAME
+          attr: $.message.orderbook.orders[*].message.name
+          reg:
+            - ^[a-zA-Z ]*$
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr follow regex reg
+    - _NAME_: ON_RECEIVER_RECON_ORDER_ID_UNIQUE
+      _RETURN_:
+        - _NAME_: UNIQUE_ON_RECEIVER_RECON_ORDER_ID
+          attr: $.message.orderbook.orders[*].id
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr are unique
 _SESSION_DATA_:
   trans: {}
