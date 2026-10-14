@@ -108,10 +108,12 @@ steps:
             type: string
             description: Subscriber ID of the receiver app (BPP)
             default: dev-workbench.ondc.tech
+            pattern: ^(?!.*\b(?:http|https|www)\b)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$
           bpp_uri:
             type: string
             description: Subscriber URL of the receiver app (BPP)
             default: https://dev-workbench.ondc.tech/api-service/ONDC:NTS10/1.0.0/seller
+            pattern: ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
           provider_name:
             type: string
             description: Provider name
@@ -132,14 +134,20 @@ steps:
             type: string
             description: Order amount / payment order value (INR)
             default: '1200'
+            pattern: ^\d+(\.\d{1,2})?$
           buyer_finder_fees_type:
             type: string
             description: Buyer finder fees type
             default: Percentage
+            enum:
+            - percent
+            - amount
+            - Percentage
           buyer_finder_fees_amount:
             type: string
             description: Buyer finder fees amount / value
             default: '5'
+            pattern: ^\d+(\.\d{1,2})?$
           settlement_amount:
             type: number
             description: Settlement amount (INR)
@@ -156,6 +164,7 @@ steps:
             type: string
             description: Amount deducted by the collector (INR)
             default: '100'
+            pattern: ^\d+(\.\d{1,2})?$
           settlement_id:
             type: string
             description: Settlement ID
