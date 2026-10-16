@@ -318,7 +318,7 @@ _TESTS_:
       - _NAME_: SEARCH_TAG_INTENT_GROUP
         code: "$.message.intent.tags[*].code"
         _CONTINUE_: "!(code are present)"
-        var_codes: ["catalog_inc", "bap_terms", "catalog_full", "bnp_features", "bap_features", "bap_promos", "bnp_demand_signal"]
+        var_codes: ["catalog_inc", "bap_terms", "catalog_full", "bnp_features", "bap_features", "bap_promos", "bnp_demand_signal", "retailer_mapping"]
         _RETURN_: code all in var_codes
 
       # BNP_FEATURES
@@ -4431,6 +4431,8 @@ _TESTS_:
       action: ["on_track"]
       _RETURN_: *CONTEXT_COMMON
     - _NAME_: ON_TRACK_TRACKING
+      error_type: "$.error.type"
+      _CONTINUE_: "(error_type are present)"
       _RETURN_:
       - _NAME_: TRACKING_ID
         attr: "$.message.tracking.id"
@@ -4496,6 +4498,8 @@ _TESTS_:
               attr: "$.message.tracking.tags[?(@.code=='path')].list[?(@.code=='sequence')].value"
               var_enum: ["1", "2", "3"]
               _RETURN_: attr are present && attr all in var_enum
+    - _NAME_: ERROR
+      _RETURN_: *ERROR
   cancel:
     - _NAME_: CANCEL_CONTEXT
       _DESCRIPTION_: Validate cancel context
@@ -4904,13 +4908,18 @@ _TESTS_:
         - _NAME_: FULFILLMENTS_ID
           attr: "$.message.order.fulfillments[*].id"
           _RETURN_: attr are present
+        # Optional on /on_update: no contract example (part-cancel or any of the 10
+        # return-lifecycle legs) carries a fulfillment-level time.timestamp — only
+        # start.time.timestamp / end.time.timestamp. Validate the format when a mock
+        # chooses to send it anyway; don't require it.
         - _NAME_: FULFILLMENTS_TIME_TIMESTAMP
           _SCOPE_: "$.message.order.fulfillments[*]"
           fulfillment_type: "$.type"
           var_delivery_type: ["Delivery"]
-          _CONTINUE_: "!(fulfillment_type any in var_delivery_type)"
           attr: "$.time.timestamp"
-          _RETURN_: attr are present
+          pattern: ['^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$']
+          _CONTINUE_: "!(fulfillment_type any in var_delivery_type) || !(attr are present)"
+          _RETURN_: attr follow regex pattern
         - _NAME_: FULFILLMENTS_TYPE
           attr: "$.message.order.fulfillments[*].type"
           _RETURN_: attr are present
