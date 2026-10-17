@@ -122,9 +122,9 @@ steps:
           context:
             domain: ONDC:TRV14
             action: search
-            timestamp: 2026-10-15T10:45:45.364Z
+            timestamp: 2026-10-17T14:53:57.966Z
             transaction_id: 8c6088d0-6091-4583-b471-fd789b06f808
-            message_id: 506922f0-4a98-4ec9-8c38-069e44664c53
+            message_id: e063934b-49c4-49cf-a1da-755e58a78da0
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -428,9 +428,9 @@ steps:
           context:
             domain: ONDC:TRV14
             action: on_search
-            timestamp: 2026-10-15T10:45:45.375Z
+            timestamp: 2026-10-17T14:53:57.992Z
             transaction_id: 8c6088d0-6091-4583-b471-fd789b06f808
-            message_id: 506922f0-4a98-4ec9-8c38-069e44664c53
+            message_id: e063934b-49c4-49cf-a1da-755e58a78da0
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -742,39 +742,38 @@ steps:
                           size_type: md
                     rating: "4"
                 items:
-                  - id: I0
-                    descriptor:
-                      name: Parent Item for Culture & Heritage
-                      code: ABSTRACT
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    location_ids:
-                      - L1
-                    category_ids:
-                      - C2
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    cancellation_terms:
-                      - cancellation_fee:
+                  - cancellation_terms:
+                      - cancel_by:
+                          duration: PT1H30M
+                          label: DURATION
+                        cancellation_eligible: true
+                        cancellation_fee:
                           percentage: "10"
                         fulfillment_state:
                           descriptor:
                             code: CONFIRMED
-                        cancel_by:
-                          label: DURATION
-                          duration: PT1H30M
-                        cancellation_eligible: true
-                      - external_ref:
+                      - cancellation_eligible: true
+                        external_ref:
                           mimetype: text/html
                           url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                        cancellation_eligible: true
+                    category_ids:
+                      - C2
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ABSTRACT
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Parent Item for Culture & Heritage
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I0
+                    location_ids:
+                      - L1
                     replacement_terms:
                       - external_ref:
                           mimetype: text/html
@@ -805,20 +804,47 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I1
-                    descriptor:
-                      name: Adult-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C2
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Adult-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I1
+                    location_ids:
+                      - L1
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0
                     price:
                       currency: INR
                       value: "350"
@@ -827,22 +853,6 @@ steps:
                         count: 6
                       minimum:
                         count: 1
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -878,20 +888,47 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I2
-                    descriptor:
-                      name: Child-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C2
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Child-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I2
+                    location_ids:
+                      - L1
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0
                     price:
                       currency: INR
                       value: "150"
@@ -900,22 +937,6 @@ steps:
                         count: 4
                       minimum:
                         count: 1
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -951,39 +972,41 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I0_1
-                    descriptor:
-                      name: Parent Item for Culture & Heritage
-                      code: ABSTRACT
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    location_ids:
-                      - L1
-                    category_ids:
-                      - C3
                     time:
-                      label: VALIDITY
                       duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    cancellation_terms:
-                      - cancellation_fee:
+                      label: VALIDITY
+                  - cancellation_terms:
+                      - cancel_by:
+                          duration: PT1H30M
+                          label: DURATION
+                        cancellation_eligible: true
+                        cancellation_fee:
                           percentage: "10"
                         fulfillment_state:
                           descriptor:
                             code: CONFIRMED
-                        cancel_by:
-                          label: DURATION
-                          duration: PT1H30M
-                        cancellation_eligible: true
-                      - external_ref:
+                      - cancellation_eligible: true
+                        external_ref:
                           mimetype: text/html
                           url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                        cancellation_eligible: true
+                    category_ids:
+                      - C3
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ABSTRACT
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Parent Item for Culture & Heritage
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I0_1
+                    location_ids:
+                      - L1
                     replacement_terms:
                       - external_ref:
                           mimetype: text/html
@@ -1013,20 +1036,47 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I3
-                    descriptor:
-                      name: Adult-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0_1
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C3
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Adult-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I3
+                    location_ids:
+                      - L1
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0_1
                     price:
                       currency: INR
                       value: "400"
@@ -1035,22 +1085,6 @@ steps:
                         count: 6
                       minimum:
                         count: 1
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -1086,20 +1120,47 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I4
-                    descriptor:
-                      name: Child-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0_1
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C3
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Child-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I4
+                    location_ids:
+                      - L1
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0_1
                     price:
                       currency: INR
                       value: "250"
@@ -1108,22 +1169,6 @@ steps:
                         count: 4
                       minimum:
                         count: 1
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -1159,15 +1204,20 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I5
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - creds:
+                      - type: Provided By KSTDC
                     descriptor:
-                      name: Add on item
                       code: ADD_ON
                       images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      name: Add on item
+                    id: I5
+                    location_ids:
+                      - L1
                     parent_item_id: I0
                     price:
                       currency: INR
@@ -1194,85 +1244,49 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                  - id: I0_2
-                    descriptor:
-                      name: Parent Item for Culture & Heritage
-                      code: ABSTRACT
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C2
-                    time:
-                      label: VALIDITY
-                      duration: P2D
+                    convenience_terms:
+                      - convenience_eligible: true
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Adult-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
                     fulfillment_ids:
                       - F1
                       - F2
-                    cancellation_terms:
-                      - cancellation_fee:
-                          percentage: "10"
-                        fulfillment_state:
-                          descriptor:
-                            code: CONFIRMED
-                        cancel_by:
-                          label: DURATION
-                          duration: PT1H30M
-                        cancellation_eligible: true
-                      - external_ref:
-                          mimetype: text/html
-                          url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                        cancellation_eligible: true
-                    replacement_terms:
-                      - external_ref:
-                          mimetype: text/html
-                          url: https://api.unreserved-entry-pass/beckn/replacement.html
-                    tags:
-                      - descriptor:
-                          code: INCLUSIONS
-                        list:
-                          - value: water
-                      - descriptor:
-                          code: EXCLUSIONS
-                        list:
-                          - value: out side food
-                          - value: photography
-                      - descriptor:
-                          code: INFO
-                          name: Info
-                        display: false
-                        list:
-                          - descriptor:
-                              code: TNC_LINK
-                              name: Terms & Conditions
-                            value: https://api.unreserved-entry-pass/beckn/tnc.html
-                          - descriptor:
-                              name: What to pack
-                            value: Expect the weather to be very cold, so pack winter clothes. Trekking
-                              shoes are a must, without a trekking shoe, you
-                              will not be allowed to participate in the trek.
-                              Also, carry 2 torches per person along with a
-                              spare battery
-                    creds:
-                      - type: Provided By KSTDC
-                  - id: I6
-                    descriptor:
-                      name: Adult-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0_2
+                    id: I6
                     location_ids:
                       - L1
-                    category_ids:
-                      - C2
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0_2
                     price:
                       currency: INR
                       value: "350"
@@ -1281,33 +1295,6 @@ steps:
                         count: 6
                       minimum:
                         count: 1
-                    margin:
-                      maximum:
-                        measure:
-                          value: "10"
-                          unit: PERCENT
-                      minimum:
-                        measure:
-                          value: "8"
-                          unit: PERCENT
-                    convenience_terms:
-                      - convenience_eligible: true
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -1343,22 +1330,49 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                    creds:
-                      - type: Provided By KSTDC
-                  - id: I7
-                    descriptor:
-                      name: Child-Ticket Culture & Heritage Item
-                      code: ENTRY_PASS
-                      short_desc: Ticket for Qutab Minar
-                      long_desc: This ticket grants entry to the Qutab Minar.
-                      images:
-                        - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                          size_type: xs
-                    parent_item_id: I0_2
-                    location_ids:
-                      - L1
+                    time:
+                      duration: P2D
+                      label: VALIDITY
+                  - add_ons:
+                      - descriptor:
+                          name: Audio Assistance
+                        id: A1
+                        price:
+                          currency: INR
+                          value: "100"
+                        quantity:
+                          available:
+                            count: 1
                     category_ids:
                       - C2
+                    convenience_terms:
+                      - convenience_eligible: true
+                    creds:
+                      - type: Provided By KSTDC
+                    descriptor:
+                      code: ENTRY_PASS
+                      images:
+                        - size_type: xs
+                          url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                      long_desc: This ticket grants entry to the Qutab Minar.
+                      name: Child-Ticket Culture & Heritage Item
+                      short_desc: Ticket for Qutab Minar
+                    fulfillment_ids:
+                      - F1
+                      - F2
+                    id: I7
+                    location_ids:
+                      - L1
+                    margin:
+                      maximum:
+                        measure:
+                          unit: PERCENT
+                          value: "10"
+                      minimum:
+                        measure:
+                          unit: PERCENT
+                          value: "8"
+                    parent_item_id: I0_2
                     price:
                       currency: INR
                       value: "150"
@@ -1367,33 +1381,6 @@ steps:
                         count: 4
                       minimum:
                         count: 1
-                    margin:
-                      maximum:
-                        measure:
-                          value: "10"
-                          unit: PERCENT
-                      minimum:
-                        measure:
-                          value: "8"
-                          unit: PERCENT
-                    convenience_terms:
-                      - convenience_eligible: true
-                    time:
-                      label: VALIDITY
-                      duration: P2D
-                    fulfillment_ids:
-                      - F1
-                      - F2
-                    add_ons:
-                      - id: A1
-                        descriptor:
-                          name: Audio Assistance
-                        quantity:
-                          available:
-                            count: 1
-                        price:
-                          value: "100"
-                          currency: INR
                     tags:
                       - descriptor:
                           code: FARE_POLICY
@@ -1429,8 +1416,9 @@ steps:
                               will not be allowed to participate in the trek.
                               Also, carry 2 torches per person along with a
                               spare battery
-                    creds:
-                      - type: Provided By KSTDC
+                    time:
+                      duration: P2D
+                      label: VALIDITY
                 fulfillments:
                   - id: F1
                     type: VISIT
@@ -1580,9 +1568,9 @@ steps:
           context:
             domain: ONDC:TRV14
             action: on_search
-            timestamp: 2026-10-15T10:45:45.411Z
+            timestamp: 2026-10-17T14:53:58.083Z
             transaction_id: 8c6088d0-6091-4583-b471-fd789b06f808
-            message_id: 77a9eb7b-767b-423b-bc6c-3371bb1ea7a3
+            message_id: 0a471f4c-ada3-4bc7-8eb6-4e611bcd4114
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1641,8 +1629,8 @@ steps:
                       id: C8
                   time:
                     range:
-                      start: 2026-10-15T05:30:00.000Z
-                      end: 2026-10-15T23:30:00.000Z
+                      start: 2026-10-17T05:30:00.000Z
+                      end: 2026-10-17T23:30:00.000Z
                   locations:
                     - id: L1
                       gps: 28.524596, 77.185577
@@ -1728,39 +1716,38 @@ steps:
                               - 2026-01-26T00:00:00.000Z
                               - 2026-08-15T00:00:00.000Z
                   items:
-                    - id: I0
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
-                      category_ids:
-                        - C2
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      cancellation_terms:
-                        - cancellation_fee:
+                    - cancellation_terms:
+                        - cancel_by:
+                            duration: PT1H30M
+                            label: DURATION
+                          cancellation_eligible: true
+                          cancellation_fee:
                             percentage: "10"
                           fulfillment_state:
                             descriptor:
                               code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
+                        - cancellation_eligible: true
+                          external_ref:
                             mimetype: text/html
                             url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
+                      category_ids:
+                        - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ABSTRACT
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Parent Item for Culture & Heritage
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I0
+                      location_ids:
+                        - L1
                       replacement_terms:
                         - external_ref:
                             mimetype: text/html
@@ -1791,20 +1778,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I1
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I1
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0
                       price:
                         currency: INR
                         value: "350"
@@ -1813,22 +1827,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -1864,20 +1862,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I2
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I2
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0
                       price:
                         currency: INR
                         value: "150"
@@ -1886,22 +1911,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -1937,39 +1946,41 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I0_1
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
-                      category_ids:
-                        - C3
                       time:
-                        label: VALIDITY
                         duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      cancellation_terms:
-                        - cancellation_fee:
+                        label: VALIDITY
+                    - cancellation_terms:
+                        - cancel_by:
+                            duration: PT1H30M
+                            label: DURATION
+                          cancellation_eligible: true
+                          cancellation_fee:
                             percentage: "10"
                           fulfillment_state:
                             descriptor:
                               code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
+                        - cancellation_eligible: true
+                          external_ref:
                             mimetype: text/html
                             url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
+                      category_ids:
+                        - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ABSTRACT
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Parent Item for Culture & Heritage
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I0_1
+                      location_ids:
+                        - L1
                       replacement_terms:
                         - external_ref:
                             mimetype: text/html
@@ -1999,20 +2010,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I3
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_1
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I3
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_1
                       price:
                         currency: INR
                         value: "400"
@@ -2021,22 +2059,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -2072,20 +2094,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I4
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_1
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I4
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_1
                       price:
                         currency: INR
                         value: "250"
@@ -2094,22 +2143,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -2145,15 +2178,20 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I5
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - creds:
+                        - type: Provided By KSTDC
                       descriptor:
-                        name: Add on item
                         code: ADD_ON
                         images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        name: Add on item
+                      id: I5
+                      location_ids:
+                        - L1
                       parent_item_id: I0
                       price:
                         currency: INR
@@ -2180,85 +2218,49 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                    - id: I0_2
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
-                      time:
-                        label: VALIDITY
-                        duration: P2D
+                      convenience_terms:
+                        - convenience_eligible: true
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
                       fulfillment_ids:
                         - F1
                         - F2
-                      cancellation_terms:
-                        - cancellation_fee:
-                            percentage: "10"
-                          fulfillment_state:
-                            descriptor:
-                              code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
-                            mimetype: text/html
-                            url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
-                      replacement_terms:
-                        - external_ref:
-                            mimetype: text/html
-                            url: https://api.unreserved-entry-pass/beckn/replacement.html
-                      tags:
-                        - descriptor:
-                            code: INCLUSIONS
-                          list:
-                            - value: water
-                        - descriptor:
-                            code: EXCLUSIONS
-                          list:
-                            - value: out side food
-                            - value: photography
-                        - descriptor:
-                            code: INFO
-                            name: Info
-                          display: false
-                          list:
-                            - descriptor:
-                                code: TNC_LINK
-                                name: Terms & Conditions
-                              value: https://api.unreserved-entry-pass/beckn/tnc.html
-                            - descriptor:
-                                name: What to pack
-                              value: Expect the weather to be very cold, so pack winter clothes. Trekking
-                                shoes are a must, without a trekking shoe, you
-                                will not be allowed to participate in the trek.
-                                Also, carry 2 torches per person along with a
-                                spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I6
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_2
+                      id: I6
                       location_ids:
                         - L1
-                      category_ids:
-                        - C2
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_2
                       price:
                         currency: INR
                         value: "350"
@@ -2267,33 +2269,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      margin:
-                        maximum:
-                          measure:
-                            value: "10"
-                            unit: PERCENT
-                        minimum:
-                          measure:
-                            value: "8"
-                            unit: PERCENT
-                      convenience_terms:
-                        - convenience_eligible: true
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -2329,22 +2304,49 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I7
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_2
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      convenience_terms:
+                        - convenience_eligible: true
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I7
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_2
                       price:
                         currency: INR
                         value: "150"
@@ -2353,33 +2355,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      margin:
-                        maximum:
-                          measure:
-                            value: "10"
-                            unit: PERCENT
-                        minimum:
-                          measure:
-                            value: "8"
-                            unit: PERCENT
-                      convenience_terms:
-                        - convenience_eligible: true
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -2415,8 +2390,9 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
+                      time:
+                        duration: P2D
+                        label: VALIDITY
                   fulfillments:
                     - id: F1
                       type: VISIT
@@ -3266,9 +3242,9 @@ steps:
           context:
             domain: ONDC:TRV14
             action: on_search
-            timestamp: 2026-10-15T10:45:45.436Z
+            timestamp: 2026-10-17T14:53:58.149Z
             transaction_id: 8c6088d0-6091-4583-b471-fd789b06f808
-            message_id: 36cce92f-a4e7-44e9-831a-988164df891c
+            message_id: 7fc5bf68-fba2-4960-b8dc-6c9b8d8e4080
             bap_id: bap.example.com
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3327,8 +3303,8 @@ steps:
                       id: C8
                   time:
                     range:
-                      start: 2026-10-15T05:30:00.000Z
-                      end: 2026-10-15T23:30:00.000Z
+                      start: 2026-10-17T05:30:00.000Z
+                      end: 2026-10-17T23:30:00.000Z
                   locations:
                     - id: L1
                       gps: 28.524596, 77.185577
@@ -3414,39 +3390,38 @@ steps:
                               - 2026-01-26T00:00:00.000Z
                               - 2026-08-15T00:00:00.000Z
                   items:
-                    - id: I0
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
-                      category_ids:
-                        - C2
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      cancellation_terms:
-                        - cancellation_fee:
+                    - cancellation_terms:
+                        - cancel_by:
+                            duration: PT1H30M
+                            label: DURATION
+                          cancellation_eligible: true
+                          cancellation_fee:
                             percentage: "10"
                           fulfillment_state:
                             descriptor:
                               code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
+                        - cancellation_eligible: true
+                          external_ref:
                             mimetype: text/html
                             url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
+                      category_ids:
+                        - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ABSTRACT
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Parent Item for Culture & Heritage
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I0
+                      location_ids:
+                        - L1
                       replacement_terms:
                         - external_ref:
                             mimetype: text/html
@@ -3477,22 +3452,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I1
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I1
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0
                       price:
                         currency: INR
                         value: "350"
@@ -3501,22 +3501,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -3552,22 +3536,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I2
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I2
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0
                       price:
                         currency: INR
                         value: "150"
@@ -3576,22 +3585,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -3627,41 +3620,41 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I0_1
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
-                      category_ids:
-                        - C3
                       time:
-                        label: VALIDITY
                         duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      cancellation_terms:
-                        - cancellation_fee:
+                        label: VALIDITY
+                    - cancellation_terms:
+                        - cancel_by:
+                            duration: PT1H30M
+                            label: DURATION
+                          cancellation_eligible: true
+                          cancellation_fee:
                             percentage: "10"
                           fulfillment_state:
                             descriptor:
                               code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
+                        - cancellation_eligible: true
+                          external_ref:
                             mimetype: text/html
                             url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
+                      category_ids:
+                        - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ABSTRACT
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Parent Item for Culture & Heritage
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I0_1
+                      location_ids:
+                        - L1
                       replacement_terms:
                         - external_ref:
                             mimetype: text/html
@@ -3691,22 +3684,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I3
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_1
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I3
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_1
                       price:
                         currency: INR
                         value: "400"
@@ -3715,22 +3733,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -3766,22 +3768,47 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I4
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_1
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C3
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I4
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_1
                       price:
                         currency: INR
                         value: "250"
@@ -3790,22 +3817,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -3841,17 +3852,20 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - creds:
                         - type: Provided By KSTDC
-                    - id: I5
-                      location_ids:
-                        - L1
                       descriptor:
-                        name: Add on item
                         code: ADD_ON
                         images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        name: Add on item
+                      id: I5
+                      location_ids:
+                        - L1
                       parent_item_id: I0
                       price:
                         currency: INR
@@ -3878,87 +3892,49 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I0_2
-                      descriptor:
-                        name: Parent Item for Culture & Heritage
-                        code: ABSTRACT
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
-                      time:
-                        label: VALIDITY
-                        duration: P2D
+                      convenience_terms:
+                        - convenience_eligible: true
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Adult-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
                       fulfillment_ids:
                         - F1
                         - F2
-                      cancellation_terms:
-                        - cancellation_fee:
-                            percentage: "10"
-                          fulfillment_state:
-                            descriptor:
-                              code: CONFIRMED
-                          cancel_by:
-                            label: DURATION
-                            duration: PT1H30M
-                          cancellation_eligible: true
-                        - external_ref:
-                            mimetype: text/html
-                            url: https://api.unreserved-entry-pass.com/beckn/tnc.html
-                          cancellation_eligible: true
-                      replacement_terms:
-                        - external_ref:
-                            mimetype: text/html
-                            url: https://api.unreserved-entry-pass/beckn/replacement.html
-                      tags:
-                        - descriptor:
-                            code: INCLUSIONS
-                          list:
-                            - value: water
-                        - descriptor:
-                            code: EXCLUSIONS
-                          list:
-                            - value: out side food
-                            - value: photography
-                        - descriptor:
-                            code: INFO
-                            name: Info
-                          display: false
-                          list:
-                            - descriptor:
-                                code: TNC_LINK
-                                name: Terms & Conditions
-                              value: https://api.unreserved-entry-pass/beckn/tnc.html
-                            - descriptor:
-                                name: What to pack
-                              value: Expect the weather to be very cold, so pack winter clothes. Trekking
-                                shoes are a must, without a trekking shoe, you
-                                will not be allowed to participate in the trek.
-                                Also, carry 2 torches per person along with a
-                                spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I6
-                      descriptor:
-                        name: Adult-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_2
+                      id: I6
                       location_ids:
                         - L1
-                      category_ids:
-                        - C2
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_2
                       price:
                         currency: INR
                         value: "350"
@@ -3967,33 +3943,6 @@ steps:
                           count: 6
                         minimum:
                           count: 1
-                      margin:
-                        maximum:
-                          measure:
-                            value: "10"
-                            unit: PERCENT
-                        minimum:
-                          measure:
-                            value: "8"
-                            unit: PERCENT
-                      convenience_terms:
-                        - convenience_eligible: true
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -4029,22 +3978,49 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
-                    - id: I7
-                      descriptor:
-                        name: Child-Ticket Culture & Heritage Item
-                        code: ENTRY_PASS
-                        short_desc: Ticket for Qutab Minar
-                        long_desc: This ticket grants entry to the Qutab Minar.
-                        images:
-                          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
-                            size_type: xs
-                      parent_item_id: I0_2
-                      location_ids:
-                        - L1
+                      time:
+                        duration: P2D
+                        label: VALIDITY
+                    - add_ons:
+                        - descriptor:
+                            name: Audio Assistance
+                          id: A1
+                          price:
+                            currency: INR
+                            value: "100"
+                          quantity:
+                            available:
+                              count: 1
                       category_ids:
                         - C2
+                      convenience_terms:
+                        - convenience_eligible: true
+                      creds:
+                        - type: Provided By KSTDC
+                      descriptor:
+                        code: ENTRY_PASS
+                        images:
+                          - size_type: xs
+                            url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+                        long_desc: This ticket grants entry to the Qutab Minar.
+                        name: Child-Ticket Culture & Heritage Item
+                        short_desc: Ticket for Qutab Minar
+                      fulfillment_ids:
+                        - F1
+                        - F2
+                      id: I7
+                      location_ids:
+                        - L1
+                      margin:
+                        maximum:
+                          measure:
+                            unit: PERCENT
+                            value: "10"
+                        minimum:
+                          measure:
+                            unit: PERCENT
+                            value: "8"
+                      parent_item_id: I0_2
                       price:
                         currency: INR
                         value: "150"
@@ -4053,33 +4029,6 @@ steps:
                           count: 4
                         minimum:
                           count: 1
-                      margin:
-                        maximum:
-                          measure:
-                            value: "10"
-                            unit: PERCENT
-                        minimum:
-                          measure:
-                            value: "8"
-                            unit: PERCENT
-                      convenience_terms:
-                        - convenience_eligible: true
-                      time:
-                        label: VALIDITY
-                        duration: P2D
-                      fulfillment_ids:
-                        - F1
-                        - F2
-                      add_ons:
-                        - id: A1
-                          descriptor:
-                            name: Audio Assistance
-                          quantity:
-                            available:
-                              count: 1
-                          price:
-                            value: "100"
-                            currency: INR
                       tags:
                         - descriptor:
                             code: FARE_POLICY
@@ -4115,8 +4064,9 @@ steps:
                                 will not be allowed to participate in the trek.
                                 Also, carry 2 torches per person along with a
                                 spare battery
-                      creds:
-                        - type: Provided By KSTDC
+                      time:
+                        duration: P2D
+                        label: VALIDITY
                   fulfillments:
                     - id: F1
                       type: VISIT
