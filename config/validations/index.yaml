@@ -4320,31 +4320,36 @@ _TESTS_:
 
   catalog_rejection:
     - _NAME_: CATALOG_REJECTION_CONTEXT
-      _DESCRIPTION_: Validate context for catalog_rejection
+      _DESCRIPTION_: Validate catalog rejection context
       action:
         - catalog_rejection
       _RETURN_: *a1
-    - _NAME_: CATALOG_REJECTION_ERRORS
-      _DESCRIPTION_: Validate error objects in catalog_rejection response
+    - _NAME_: CATALOG_REJECTION_MESSAGE
+      _DESCRIPTION_: Validate catalog rejection message errors
       _RETURN_:
-        - _NAME_: ERROR_TYPE_REQUIRED
-          attr: $.errors[*].type
-          var_enum:
-            - ITEM-ERROR
-            - PROVIDER-ERROR
-            - BPP-ERROR
-          _RETURN_: attr are present && attr all in var_enum
-        - _NAME_: ERROR_CODE_REQUIRED
-          attr: $.errors[*].code
-          reg:
-            - ^[0-9]{4,6}$
-          _RETURN_: attr are present && attr follow regex reg
-        - _NAME_: ERROR_PATH_REQUIRED
-          attr: $.errors[*].path
-          _RETURN_: attr are present
-        - _NAME_: ERROR_MESSAGE_REQUIRED
-          attr: $.errors[*].message
-          _RETURN_: attr are present
+        - _NAME_: CATALOG_REJECTION_ERRORS_REQUIRED
+          _RETURN_:
+            - _NAME_: CATALOG_REJECTION_ERRORS_TYPE
+              attr: $.message.errors[*].type
+              _RETURN_: attr are present
+            - _NAME_: CATALOG_REJECTION_ERRORS_CODE
+              attr: $.message.errors[*].code
+              _RETURN_: attr are present
+            - _NAME_: CATALOG_REJECTION_ERRORS_MESSAGE
+              attr: $.message.errors[*].message
+              _RETURN_: attr are present
+            - _NAME_: CATALOG_REJECTION_ERRORS_PATH
+              attr: $.message.errors[*].path
+              _RETURN_: attr are present
+        - _NAME_: CATALOG_REJECTION_ERRORS_ENUM
+          _RETURN_:
+            - _NAME_: CATALOG_REJECTION_ERRORS_TYPE_ENUM
+              attr: $.message.errors[*].type
+              var_error_types:
+                - ITEM-ERROR
+                - PROVIDER-ERROR
+                - CATALOG-ERROR
+              _RETURN_: attr all in var_error_types
   on_update:
     - _NAME_: ON_UPDATE_CONTEXT
       _DESCRIPTION_: Validate on_update context
