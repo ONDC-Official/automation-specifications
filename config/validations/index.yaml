@@ -567,27 +567,6 @@ _TESTS_:
         - _NAME_: REQUIRED_ON_RECEIVER_RECON_MESSAGE_CODE
           attr: $.message.orderbook.orders[*].message.code
           _RETURN_: attr are present
-    - _NAME_: ON_RECEIVER_RECON_DEVIATION_DIFF_AMOUNT
-      reconStatus: $.message.orderbook.orders[*].counterparty_recon_status
-      amountDeviation:
-        - "02"
-        - "03"
-      _CONTINUE_: "!(reconStatus any in amountDeviation)"
-      _RETURN_:
-        - _NAME_: REQUIRED_ON_RECEIVER_RECON_DEVIATION_DIFF_VALUE
-          attr: $.message.orderbook.orders[*].counterparty_diff_amount.value
-          _RETURN_: attr are present
-    - _NAME_: ON_RECEIVER_RECON_DEVIATION_MESSAGE
-      reconStatus: $.message.orderbook.orders[*].counterparty_recon_status
-      anyDeviation:
-        - "02"
-        - "03"
-        - "04"
-      _CONTINUE_: "!(reconStatus any in anyDeviation)"
-      _RETURN_:
-        - _NAME_: REQUIRED_ON_RECEIVER_RECON_DEVIATION_MESSAGE_CODE
-          attr: $.message.orderbook.orders[*].message.code
-          _RETURN_: attr are present
     - _NAME_: ON_RECEIVER_RECON_MESSAGE_NAME_FORMAT
       _RETURN_:
         - _NAME_: REGEX_ON_RECEIVER_RECON_MESSAGE_NAME
