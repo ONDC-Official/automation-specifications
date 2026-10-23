@@ -955,7 +955,7 @@ paths:
                   error:
                     $ref: "#/components/schemas/Error"
                 required:
-                  - message
+                  - message              
 components:
   securitySchemes:
     SubscriberAuth:
@@ -1861,8 +1861,12 @@ components:
             - $ref: '#/components/schemas/Price'
         quantity:
           description: The selling quantity of the item
-          allOf:
-            - $ref: '#/components/schemas/ItemQuantity'
+          # allOf:
+          #   - $ref: "#/components/schemas/ItemQuantity"
+          anyOf:
+            - allOf:
+                - $ref: "#/components/schemas/ItemQuantity"
+            - type: integer
         category_ids:
           description: Categories this item can be listed under
           type: array
@@ -2273,7 +2277,29 @@ components:
           allOf:
             - $ref: '#/components/schemas/City'
         contact:
-          $ref: '#/components/schemas/Contact'
+          # $ref: "#/components/schemas/Contact"
+          anyOf:
+            - $ref: "#/components/schemas/Contact"
+            - type: object
+              additionalProperties: false
+              properties:
+                phone:
+                  type: string
+                email:
+                  type: string
+                  format: email
+        org:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+        person:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
     Payment:
       description: >-
         Describes the terms of settlement between the BAP and the BPP for a
@@ -3076,7 +3102,7 @@ components:
         expected_resolution_time:
           $ref: "#/components/schemas/Time"
         status:
-          description: >
+          description: |
             ### Statues
               1. Open : indicating that the issue is opened and further action is yet to be taken on the issue
               2. CLOSED : indicating that the issue is closed and no further action/update/info/resolution action/status change are expected/accepted on this issue.
@@ -3187,6 +3213,67 @@ components:
             - id
             - created_at
             - updated_at
+        resolution:
+          type: object
+          description: Resolution for the issue
+          properties:
+            short_desc:
+              description: short description of the issue action
+              type: string
+            long_desc:
+              description: detailed description of the issue action
+              type: string
+            action_triggered:
+              description: action triggered for the complaint
+              type: string
+              enum:
+                - REFUND
+                - REPLACEMENT
+                - CANCEL
+                - NO-ACTION
+                - RECONCILED
+                - NOT-RECONCILED
+            refund_amount:
+              description: refund amount to be initiated
+              type: string
+          required:
+            - short_desc
+            - action_triggered
+        description:
+          type: object
+          description: Issue description payload
+          properties:
+            short_desc:
+              type: string
+              description: short description of the issue
+            long_desc:
+              type: string
+              description: detailed description of the issue
+            additional_desc:
+              type: object
+              description: Additional description file
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: URL to additional description
+                content_type:
+                  type: string
+                  description: MIME type of the file
+              required:
+                - url
+                - content_type
+            images:
+              type: array
+              description: array of image URLs
+              items:
+                type: string
+                format: uri
+              required:
+                - short_desc
+                - long_desc
+                - additional_desc
+                - images    
       additionalProperties: false
     IssueSubCategory:
       description: Identifies what is the sub-category of this issue
@@ -3240,14 +3327,14 @@ components:
       properties:
         network_participant_id:
           type: string
-          description: unique identifier of the network participant of the source of this
+          description: >-
+            unique identifier of the network participant of the source of this
             issue. It can be one of buyer-id in the buyer- interfacing app , or
             any of the relevant network provider id based on what causes the
             issue
         type:
-          description: >
+          description: |
             Indicates the source from where the issue is raised. 
-
             ### TYPES
                 1. Consumer : indicating that the Consumer(Buyer) of a product or a service has raised the issue
                 2. Seller : indicating that the Seller of a product or a service has raised the issue
@@ -3279,7 +3366,8 @@ components:
       type: object
       properties:
         id:
-          description: the value of this field will be the combination of
+          description: >-
+            the value of this field will be the combination of
             context.transaction_id and order.id.
           type: string
         state:
@@ -3288,10 +3376,27 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Item"
+        # fulfillments:
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/Fulfillment"
         fulfillments:
           type: array
           items:
-            $ref: "#/components/schemas/Fulfillment"
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - state
+            properties:
+              id:
+                description: >-
+                  the value of this field will be the combination of
+                  context.transaction_id and order.id.
+                type: string
+              state:
+                type: string
+                description: Fulfillment state of the order    
         provider_id:
           type: string
         merchant_order_id:
@@ -3345,13 +3450,16 @@ components:
             - ESCALATE
             - CLOSE
         updated_at:
-          description: timestamp for the capturing the time an issue status was last updated
+          description: >-
+            timestamp for the capturing the time an issue status was last
+            updated
           type: string
           format: date-time
         updated_by:
           $ref: "#/components/schemas/Organization"
         short_desc:
-          description: details of the remarks when the issue status is changed, can be
+          description: >-
+            details of the remarks when the issue status is changed, can be
             captured when the complainant triggers an action
           type: string
     Level:
@@ -3425,17 +3533,21 @@ components:
             - RESOLVED
             - NEED-MORE-INFO
         updated_at:
-          description: timestamp for the capturing the time an issue status was last updated
+          description: >-
+            timestamp for the capturing the time an issue status was last
+            updated
           type: string
           format: date-time
         updated_by:
           $ref: "#/components/schemas/Organization"
         short_desc:
-          description: details of the remarks when the issue status is changed, can be
+          description: >-
+            details of the remarks when the issue status is changed, can be
             captured when the respondent triggers an action
           type: string
         cascaded_level:
-          description: the default value will be 1, whenever the issue will be cascaded to
+          description: >-
+            the default value will be 1, whenever the issue will be cascaded to
             the next level the value of this field should be incremented by 1 it
             will upgrade it indicates to the next sub-level.
           type: integer
@@ -3502,7 +3614,7 @@ components:
             - CANCEL
             - NO-ACTION
         action:
-          description: >
+          description: |
             Indicactes the action taken while addressing the issue.
              ### Actions
               1. resolve : indicating the issue being resolved. 
@@ -3519,8 +3631,7 @@ components:
         proposed_by:
           type: string
         updated_at:
-          description: timestamp for the capturing the time an issue resolution was last
-            updated
+          description: timestamp for the capturing the time an issue resolution was last updated
           type: string
           format: date-time
         descriptor:
@@ -3588,17 +3699,19 @@ components:
           type: string
           format: uri
         tags:
-          description: A list of tags containing any additional information sent along
-            with the Acknowledgement.
+          description: >-
+            A list of tags containing any additional information sent along with
+            the Acknowledgement.
           type: array
           items:
             $ref: "#/components/schemas/TagGroup"
       additionalProperties: false
     ImageIgm:
-      description: "Image of an object. <br/><br/> A url based image will look like
+      description: >-
+        Image of an object. <br/><br/> A url based image will look like
         <br/><br/>```uri:http://path/to/image``` <br/><br/> An image can also be
         sent as a data string. For example : <br/><br/>
-        ```data:js87y34ilhriuho84r3i4```"
+        ```data:js87y34ilhriuho84r3i4```
       type: object
       properties:
         url:
@@ -3608,13 +3721,15 @@ components:
           type: string
       additionalProperties: false
     ResolutionProvider:
-      description: Describes the details of the entity that provides the resolution
-        for the issue
+      description: >-
+        Describes the details of the entity that provides the resolution for the
+        issue
       type: object
       properties:
         respondent_info:
-          description: the respondent represents the details of the entity identfied by
-            the resolution provider or the complainant himself (when he has to
+          description: >-
+            the respondent represents the details of the entity identfied by the
+            resolution provider or the complainant himself (when he has to
             select the ODRs)
           type: object
           properties:
@@ -3664,14 +3779,16 @@ components:
       type: object
       properties:
         chat_link:
-          description: chatbot link for the respondent for complainant to interact with
-            the respondent
+          description: >-
+            chatbot link for the respondent for complainant to interact with the
+            respondent
           type: string
         contact:
           $ref: "#/components/schemas/Contact"
         faqs:
-          description: frequently asked questions for the respondent for complainant to
-            get information as required
+          description: >-
+            frequently asked questions for the respondent for complainant to get
+            information as required
           type: array
           items:
             $ref: "#/components/schemas/Faq"
@@ -3735,6 +3852,10 @@ components:
             name:
               description: Describes id of the actor
               type: string
+        # tags:
+        #   type: array
+        #   items:
+        #     $ref: '#/components/schemas/TagGroup'
         tags:
           type: array
           description: List of tag objects
@@ -3763,6 +3884,7 @@ components:
                           description: Descriptor code of the individual tag
                       required:
                         - code
+
                     value:
                       type: string
                       description: Value of the tag
@@ -3828,4 +3950,4 @@ components:
           $ref: "#/components/schemas/SupplementaryInformation"
         info_provided:
           type: object
-          $ref: "#/components/schemas/SupplementaryInformation"
+          $ref: "#/components/schemas/SupplementaryInformation"      
