@@ -115,9 +115,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: select
-            timestamp: 2026-09-01T03:28:29.202Z
+            timestamp: 2026-10-27T14:12:07.407Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: e6929a06-db4e-49dd-8656-01e713e4c980
+            message_id: 66ae79ca-0271-4863-8136-dacec1064826
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -132,7 +132,11 @@ steps:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  quantity:
+                    count: 1
+                  location_id: L1
               fulfillments:
                 - end:
                     location:
@@ -242,9 +246,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_select
-            timestamp: 2026-09-01T03:28:29.242Z
+            timestamp: 2026-10-27T14:12:07.534Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: e6929a06-db4e-49dd-8656-01e713e4c980
+            message_id: 66ae79ca-0271-4863-8136-dacec1064826
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -271,6 +275,23 @@ steps:
                       code: Serviceable
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      quantity:
+                        available:
+                          count: "99"
+                        maximum:
+                          count: "99"
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -285,9 +306,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
         type: request
         description: The BPP responds to the on_select request from the BAP by providing
           the final quote, fulfillment details, and turnaround time for the
@@ -382,9 +405,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: init
-            timestamp: 2026-09-01T03:28:29.302Z
+            timestamp: 2026-10-27T14:12:07.664Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 5b4a1c67-ea9e-4b8e-af4b-9e2fbe0bd4d6
+            message_id: f14f4d62-8cbb-4947-9d06-f8a8bb0d098a
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -399,7 +422,12 @@ steps:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -412,8 +440,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -574,9 +602,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_init
-            timestamp: 2026-09-01T03:28:29.359Z
+            timestamp: 2026-10-27T14:12:07.796Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 5b4a1c67-ea9e-4b8e-af4b-9e2fbe0bd4d6
+            message_id: f14f4d62-8cbb-4947-9d06-f8a8bb0d098a
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -591,7 +619,12 @@ steps:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -604,8 +637,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -626,6 +659,18 @@ steps:
                   tracking: true
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -640,7 +685,7 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 "@ondc/org/buyer_app_finder_fee_type": percent
@@ -834,9 +879,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: confirm
-            timestamp: 2026-09-01T03:28:29.407Z
+            timestamp: 2026-10-27T14:12:07.920Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 6eb03773-840e-4650-a32b-5f4a2ffe71f8
+            message_id: c766c017-82d4-4dd5-b8ee-5cd4f495cde2
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -847,7 +892,7 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Created
               billing:
                 address:
@@ -861,9 +906,14 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
-              items: []
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               provider:
                 id: P1
                 locations:
@@ -892,7 +942,7 @@ steps:
                   "@ondc/org/TAT": P2D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -914,6 +964,18 @@ steps:
                     branch_name: xxxx
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -928,7 +990,7 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               tags:
                 - code: bpp_terms
@@ -940,8 +1002,8 @@ steps:
                       value: https://github.com/ONDC-Official/NP-Static-Terms/buyerNP_BNP/1.0/tc.pdf
                     - code: tax_number
                       value: 00ABCCH7409R1ZZ
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.408Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:07.924Z
         type: request
         description: The BAP sends a confirm request to the BPP to officially initiate
           the return process for the selected grocery items.
@@ -1134,9 +1196,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_confirm
-            timestamp: 2026-09-01T03:28:29.450Z
+            timestamp: 2026-10-27T14:12:08.062Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 6eb03773-840e-4650-a32b-5f4a2ffe71f8
+            message_id: c766c017-82d4-4dd5-b8ee-5cd4f495cde2
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1147,13 +1209,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Created
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -1166,8 +1233,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -1210,6 +1277,18 @@ steps:
                         name: mock-house-name
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -1224,11 +1303,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -1265,8 +1344,8 @@ steps:
                       value: https://github.com/ONDC-Official/protocol-network-extension/discussions/79
                     - code: tax_number
                       value: 00ABCCH7409R1ZZ
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.451Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.065Z
         type: request
         description: The BPP confirms the return request and provides the final order
           state and fulfillment details to the BAP.
@@ -1456,9 +1535,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.497Z
+            timestamp: 2026-10-27T14:12:08.222Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: e5982df1-25c2-4410-adf2-d23ea8ff37e4
+            message_id: 63921035-8a39-43ee-87a4-cb2d25906136
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1469,13 +1548,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Accepted
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -1488,8 +1572,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -1516,8 +1600,8 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -1536,8 +1620,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
                   tags:
                     - code: routing
                       list:
@@ -1553,6 +1637,18 @@ steps:
                           value: https://sellerNP.com/ondc/tracking_url
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -1567,11 +1663,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -1591,8 +1687,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.499Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.229Z
         type: request
         description: The BPP sends an unsolicited on_status update to the BAP to
           communicate the current state and update timestamp of the return
@@ -1783,9 +1879,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.544Z
+            timestamp: 2026-10-27T14:12:08.356Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: cbfae4ee-036b-45d3-b72f-505879a63694
+            message_id: 6517c336-e06d-4b9a-abef-9ccd31814100
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -1796,13 +1892,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: In-progress
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -1815,8 +1916,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -1843,8 +1944,8 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -1863,8 +1964,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
                   tags:
                     - code: routing
                       list:
@@ -1880,6 +1981,18 @@ steps:
                           value: https://sellerNP.com/ondc/tracking_url
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -1894,11 +2007,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -1918,8 +2031,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.546Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.361Z
         type: request
         description: The BPP sends an unsolicited status update to the BAP to notify
           them of the current state and fulfillment progress of the return
@@ -2111,9 +2224,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.594Z
+            timestamp: 2026-10-27T14:12:08.510Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: b16e8788-a68f-4ada-aae4-b7cd663b34b6
+            message_id: a3a50ac3-4036-47bd-a198-57a249e02e3f
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2124,13 +2237,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: In-progress
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -2143,8 +2261,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -2171,8 +2289,8 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -2191,8 +2309,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
                   tags:
                     - code: routing
                       list:
@@ -2211,6 +2329,18 @@ steps:
                     phone: "9886098860"
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -2225,11 +2355,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -2249,8 +2379,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.596Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.517Z
         type: request
         description: The BPP sends an unsolicited status update to the BAP to
           communicate the current state and fulfillment progress of the return
@@ -2446,9 +2576,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.646Z
+            timestamp: 2026-10-27T14:12:08.676Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: c128b7e9-4fd3-408c-8e21-135b244a2c1d
+            message_id: 0512cea3-5016-4f58-ae02-84e677b7af31
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2459,13 +2589,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: In-progress
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -2478,8 +2613,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -2506,9 +2641,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -2527,8 +2662,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
                   tags:
                     - code: routing
                       list:
@@ -2547,6 +2682,18 @@ steps:
                     phone: "9886098860"
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -2561,11 +2708,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -2588,8 +2735,8 @@ steps:
               documents:
                 - url: https://invoice_url
                   label: Invoice
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.648Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.682Z
         type: request
         description: The BPP sends an unsolicited status update to the BAP to notify
           them of the current state and fulfillment progress of the return
@@ -2785,9 +2932,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.706Z
+            timestamp: 2026-10-27T14:12:08.834Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 30eeced7-3d90-421b-8dd4-43eb99b7c403
+            message_id: c42a8ecf-b44b-491b-b550-67a939376ac7
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -2798,13 +2945,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: In-progress
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -2817,8 +2969,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -2845,9 +2997,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -2866,8 +3018,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
                   tags:
                     - code: routing
                       list:
@@ -2886,6 +3038,18 @@ steps:
                     phone: "9886098860"
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -2900,11 +3064,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -2927,8 +3091,8 @@ steps:
               documents:
                 - url: https://invoice_url
                   label: Invoice
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.708Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.838Z
         type: request
         description: The BPP sends an unsolicited status update to the BAP to notify
           them of a change in the order state and fulfillment status within the
@@ -3125,9 +3289,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_status
-            timestamp: 2026-09-01T03:28:29.758Z
+            timestamp: 2026-10-27T14:12:08.991Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 6e0db55d-5e0a-44df-9c68-4bb9bd0044fd
+            message_id: 2910a630-1f95-404b-841b-83d0df579437
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3138,13 +3302,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Completed
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -3157,8 +3326,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -3185,9 +3354,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -3206,9 +3375,9 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
-                      timestamp: 2026-09-01T03:28:29.760Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
+                      timestamp: 2026-10-27T14:12:08.994Z
                   tags:
                     - code: routing
                       list:
@@ -3227,6 +3396,18 @@ steps:
                     phone: "9886098860"
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -3241,11 +3422,11 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -3268,8 +3449,8 @@ steps:
               documents:
                 - url: https://invoice_url
                   label: Invoice
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.760Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:08.994Z
         type: request
         description: The BPP sends an unsolicited status update to the BAP to notify
           them of changes in the return order state and fulfillment details.
@@ -3342,9 +3523,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: update
-            timestamp: 2026-09-01T03:28:29.816Z
+            timestamp: 2026-10-27T14:12:09.148Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 1208f225-15fd-475a-b529-405173fae3f5
+            message_id: db56fad8-a24c-4602-b661-377c05ad1629
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3356,10 +3537,28 @@ steps:
           message:
             update_target: item
             order:
-              id: "730818"
+              id: "513959"
               fulfillments:
                 - type: Return
-                  tags: []
+                  tags:
+                    - code: return_request
+                      list:
+                        - code: id
+                          value: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                        - code: item_id
+                          value: I1
+                        - code: item_quantity
+                          value: "1"
+                        - code: reason_id
+                          value: "001"
+                        - code: reason_desc
+                          value: the product is damaged
+                        - code: images
+                          value: https://reference-buyer-app-assets.s3-ap-south-1.amazonaws.com/public-assets/2025-02-10-293522/9d13d0d3-6b21-405e-bfc0-b014485adaa2.png
+                        - code: ttl_approval
+                          value: PT24H
+                        - code: ttl_reverseqc
+                          value: P3D
         type: request
         description: The BAP sends an update request to the BPP to modify the order
           details, specifically updating the fulfillments and payment settlement
@@ -3603,9 +3802,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_update
-            timestamp: 2026-09-01T03:28:29.881Z
+            timestamp: 2026-10-27T14:12:09.266Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 1208f225-15fd-475a-b529-405173fae3f5
+            message_id: db56fad8-a24c-4602-b661-377c05ad1629
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -3616,15 +3815,32 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Completed
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -3639,7 +3855,7 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               billing:
                 address:
@@ -3653,8 +3869,8 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               fulfillments:
                 - id: F1
                   type: Delivery
@@ -3681,9 +3897,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -3702,9 +3918,9 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
-                      timestamp: 2026-09-01T03:28:29.760Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
+                      timestamp: 2026-10-27T14:12:08.994Z
                   tags:
                     - code: routing
                       list:
@@ -3722,13 +3938,32 @@ steps:
                     name: mock-agent
                     phone: "9886098860"
                 - type: Return
-                  tags: []
+                  tags:
+                    - code: return_request
+                      list:
+                        - code: id
+                          value: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                        - code: item_id
+                          value: I1
+                        - code: item_quantity
+                          value: "1"
+                        - code: reason_id
+                          value: "001"
+                        - code: reason_desc
+                          value: the product is damaged
+                        - code: images
+                          value: https://reference-buyer-app-assets.s3-ap-south-1.amazonaws.com/public-assets/2025-02-10-293522/9d13d0d3-6b21-405e-bfc0-b014485adaa2.png
+                        - code: ttl_approval
+                          value: PT24H
+                        - code: ttl_reverseqc
+                          value: P3D
+                  id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
                   state:
                     descriptor:
                       code: Return_Initiated
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -3748,8 +3983,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.882Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:09.267Z
         type: request
         description: The BPP provides an update response to the BAP to communicate the
           current state of the return request, including updated order items and
@@ -3994,9 +4229,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_update
-            timestamp: 2026-09-01T03:28:29.975Z
+            timestamp: 2026-10-27T14:12:09.393Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 2fdf3de3-1632-43ad-b6b7-8e1280676eda
+            message_id: 200be77b-4b11-4943-b8ed-2c5ab2ec8334
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4007,13 +4242,18 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Completed
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 1
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -4026,10 +4266,22 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 1
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "200.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -4044,7 +4296,7 @@ steps:
                       value: "00.00"
                 price:
                   currency: INR
-                  value: "0.00"
+                  value: "200.00"
                 ttl: P1D
               fulfillments:
                 - id: F1
@@ -4072,9 +4324,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -4093,9 +4345,9 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
-                      timestamp: 2026-09-01T03:28:29.760Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
+                      timestamp: 2026-10-27T14:12:08.994Z
                   tags:
                     - code: routing
                       list:
@@ -4113,7 +4365,26 @@ steps:
                     name: mock-agent
                     phone: "9886098860"
                 - type: Return
-                  tags: []
+                  tags:
+                    - code: return_request
+                      list:
+                        - code: id
+                          value: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                        - code: item_id
+                          value: I1
+                        - code: item_quantity
+                          value: "1"
+                        - code: reason_id
+                          value: "001"
+                        - code: reason_desc
+                          value: the product is damaged
+                        - code: images
+                          value: https://reference-buyer-app-assets.s3-ap-south-1.amazonaws.com/public-assets/2025-02-10-293522/9d13d0d3-6b21-405e-bfc0-b014485adaa2.png
+                        - code: ttl_approval
+                          value: PT24H
+                        - code: ttl_reverseqc
+                          value: P3D
+                  id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
                   state:
                     descriptor:
                       code: Return_Approved
@@ -4131,8 +4402,8 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:28:29.976Z
-                        end: 2026-09-02T03:28:29.976Z
+                        start: 2026-10-27T14:12:09.395Z
+                        end: 2026-10-28T14:12:09.395Z
                   end:
                     location:
                       id: L1
@@ -4147,11 +4418,11 @@ steps:
                         area_code: "400053"
                     time:
                       range:
-                        start: 2026-09-02T03:28:29.976Z
-                        end: 2026-09-03T03:28:29.976Z
+                        start: 2026-10-28T14:12:09.395Z
+                        end: 2026-10-29T14:12:09.395Z
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -4171,8 +4442,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:29.976Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:09.395Z
         type: request
         description: The BPP sends an unsolicited update notification to the BAP to
           convey the current state of the return order, including updated items,
@@ -4418,9 +4689,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_update
-            timestamp: 2026-09-01T03:28:30.031Z
+            timestamp: 2026-10-27T14:12:09.531Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: e407dafc-871d-4845-9e50-4a3a286a18c1
+            message_id: d7f81536-ebda-4bf6-9d8f-d116e7bf586c
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4431,13 +4702,22 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Completed
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  quantity:
+                    count: 1
+                  fulfillment_id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 0
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -4450,10 +4730,22 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 0
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "0.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -4496,9 +4788,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -4517,9 +4809,9 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
-                      timestamp: 2026-09-01T03:28:29.760Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
+                      timestamp: 2026-10-27T14:12:08.994Z
                   tags:
                     - code: routing
                       list:
@@ -4537,7 +4829,36 @@ steps:
                     name: mock-agent
                     phone: "9886098860"
                 - type: Return
-                  tags: []
+                  tags:
+                    - code: return_request
+                      list:
+                        - code: id
+                          value: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                        - code: item_id
+                          value: I1
+                        - code: item_quantity
+                          value: "1"
+                        - code: reason_id
+                          value: "001"
+                        - code: reason_desc
+                          value: the product is damaged
+                        - code: images
+                          value: https://reference-buyer-app-assets.s3-ap-south-1.amazonaws.com/public-assets/2025-02-10-293522/9d13d0d3-6b21-405e-bfc0-b014485adaa2.png
+                        - code: ttl_approval
+                          value: PT24H
+                        - code: ttl_reverseqc
+                          value: P3D
+                    - code: quote_trail
+                      list:
+                        - code: type
+                          value: item
+                        - code: id
+                          value: I1
+                        - code: currency
+                          value: INR
+                        - code: value
+                          value: "-200"
+                  id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
                   state:
                     descriptor:
                       code: Return_Picked
@@ -4555,9 +4876,9 @@ steps:
                         area_code: "560002"
                     time:
                       range:
-                        start: 2026-09-01T03:28:29.976Z
-                        end: 2026-09-02T03:28:29.976Z
-                      timeStamp: 2026-09-01T03:28:30.033Z
+                        start: 2026-10-27T14:12:09.395Z
+                        end: 2026-10-28T14:12:09.395Z
+                      timeStamp: 2026-10-27T14:12:09.533Z
                   end:
                     location:
                       id: L1
@@ -4572,11 +4893,11 @@ steps:
                         area_code: "400053"
                     time:
                       range:
-                        start: 2026-09-02T03:28:29.976Z
-                        end: 2026-09-03T03:28:29.976Z
+                        start: 2026-10-28T14:12:09.395Z
+                        end: 2026-10-29T14:12:09.395Z
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -4596,8 +4917,8 @@ steps:
                     settlement_ifsc_code: xxxx
                     bank_name: xxxx
                     branch_name: xxxx
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:30.033Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:09.533Z
         type: request
         description: The BPP sends an unsolicited on_update notification to the BAP to
           provide the latest order status, including updated fulfillment and
@@ -4660,9 +4981,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: update
-            timestamp: 2026-09-01T03:28:30.092Z
+            timestamp: 2026-10-27T14:12:09.662Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: ef14c151-0f0c-4b41-8820-341dd54472cf
+            message_id: a0b0dc74-18a5-419e-b4e3-b6744bb25bbf
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4674,16 +4995,18 @@ steps:
           message:
             update_target: payment
             order:
-              id: "730818"
-              fulfillments: []
+              id: "513959"
+              fulfillments:
+                - id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                  type: Return
               payment:
                 "@ondc/org/settlement_details":
                   - settlement_counterparty: buyer
                     settlement_phase: refund
                     settlement_type: upi
                     upi_address: gft@oksbi
-                    settlement_amount: "0"
-                    settlement_timestamp: 2026-09-01T03:28:30.093Z
+                    settlement_amount: "200"
+                    settlement_timestamp: 2026-10-27T14:12:09.664Z
         type: request
         description: The BAP sends an update request to the BPP to modify the details of
           a return order, specifically updating payment settlement and
@@ -4697,7 +5020,7 @@ steps:
       provide the latest state of the return order, including updated item
       details, fulfillments, and quote.
     mock:
-      generate: Cgphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZSgKCWV4aXN0aW5nUGF5bG9hZCwKCXNlc3Npb25EYXRhCikgewogICAgZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQuYnBwX2lkID0gc2Vzc2lvbkRhdGE/LmJwcElkWzBdOwoJZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQuY2l0eSA9IHNlc3Npb25EYXRhLnBheWxvYWRfY2l0eVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF07CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wcm92aWRlciA9IHNlc3Npb25EYXRhLnByb3ZpZGVyWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YS5pdGVtczsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmJpbGxpbmcgPSBzZXNzaW9uRGF0YS5iaWxsaW5nWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudCA9IHNlc3Npb25EYXRhLnBheW1lbnRbMF07CglpZiAoc2Vzc2lvbkRhdGEudXBkYXRlX3BheW1lbnQpIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50WyJAb25kYy9vcmcvc2V0dGxlbWVudF9kZXRhaWxzIl0ucHVzaCgKCQlzZXNzaW9uRGF0YS51cGRhdGVfcGF5bWVudFswXVswXQoJCSk7CgkJc2Vzc2lvbkRhdGEudXBkYXRlX3BheW1lbnQgPSBudWxsCgl9CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gc2Vzc2lvbkRhdGEub3JkZXJfY3JlYXRlZF9hdFswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQgPSBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCk7CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5xdW90ZSA9IHNlc3Npb25EYXRhLnF1b3RlWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzID0gc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRzLm1hcCgKCQkoZikgPT4gewoJCQlpZiAoZi50eXBlID09ICJSZXR1cm4iKSB7CgkJCQlyZXR1cm4gewoJCQkJCS4uLmYsCgkJCQkJc3RhdGU6IHsKCQkJCQkJZGVzY3JpcHRvcjogewoJCQkJCQkJY29kZTogIlJldHVybl9EZWxpdmVyZWQiLAoJCQkJCQl9LAoJCQkJCX0sCgkJCQkJZW5kOiB7CgkJCQkJCS4uLmYuZW5kLAoJCQkJCQl0aW1lOiB7CgkJCQkJCQkuLi5mLmVuZD8udGltZSwKCQkJCQkJCXRpbWVTdGFtcDogbmV3IERhdGUoKS50b0lTT1N0cmluZygpLAoJCQkJCQl9LAoJCQkJCX0sCgkJCQl9OwoJCQl9CgkJCXJldHVybiBmOwoJCX0KCSk7CglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9Cg==
+      generate: Cgphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZSgKCWV4aXN0aW5nUGF5bG9hZCwKCXNlc3Npb25EYXRhCikgewoJaWYgKHNlc3Npb25EYXRhLmJwcElkWzBdKXsKICAgICAgZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQuYnBwX2lkID0gc2Vzc2lvbkRhdGE/LmJwcElkWzBdOwoJfSBlbHNlIHsKCSAgIGV4aXN0aW5nUGF5bG9hZC5jb250ZXh0LmJwcF9pZCA9ICJzYW1wbGVfYnBwX2lkIjsKCX0KICAgIAoJZXhpc3RpbmdQYXlsb2FkLmNvbnRleHQuY2l0eSA9IHNlc3Npb25EYXRhLnBheWxvYWRfY2l0eVswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmlkID0gc2Vzc2lvbkRhdGEub3JkZXJfaWRbMF07CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wcm92aWRlciA9IHNlc3Npb25EYXRhLnByb3ZpZGVyWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuaXRlbXMgPSBzZXNzaW9uRGF0YS5pdGVtczsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLmJpbGxpbmcgPSBzZXNzaW9uRGF0YS5iaWxsaW5nWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIucGF5bWVudCA9IHNlc3Npb25EYXRhLnBheW1lbnRbMF07CglpZiAoc2Vzc2lvbkRhdGEudXBkYXRlX3BheW1lbnQpIHsKCQlleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5wYXltZW50WyJAb25kYy9vcmcvc2V0dGxlbWVudF9kZXRhaWxzIl0ucHVzaCgKCQlzZXNzaW9uRGF0YS51cGRhdGVfcGF5bWVudFswXVswXQoJCSk7CgkJc2Vzc2lvbkRhdGEudXBkYXRlX3BheW1lbnQgPSBudWxsCgl9CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5jcmVhdGVkX2F0ID0gc2Vzc2lvbkRhdGEub3JkZXJfY3JlYXRlZF9hdFswXTsKCWV4aXN0aW5nUGF5bG9hZC5tZXNzYWdlLm9yZGVyLnVwZGF0ZWRfYXQgPSBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCk7CglleGlzdGluZ1BheWxvYWQubWVzc2FnZS5vcmRlci5xdW90ZSA9IHNlc3Npb25EYXRhLnF1b3RlWzBdOwoJZXhpc3RpbmdQYXlsb2FkLm1lc3NhZ2Uub3JkZXIuZnVsZmlsbG1lbnRzID0gc2Vzc2lvbkRhdGEuZnVsZmlsbG1lbnRzLm1hcCgKCQkoZikgPT4gewoJCQlpZiAoZi50eXBlID09ICJSZXR1cm4iKSB7CgkJCQlyZXR1cm4gewoJCQkJCS4uLmYsCgkJCQkJc3RhdGU6IHsKCQkJCQkJZGVzY3JpcHRvcjogewoJCQkJCQkJY29kZTogIlJldHVybl9EZWxpdmVyZWQiLAoJCQkJCQl9LAoJCQkJCX0sCgkJCQkJZW5kOiB7CgkJCQkJCS4uLmYuZW5kLAoJCQkJCQl0aW1lOiB7CgkJCQkJCQkuLi5mLmVuZD8udGltZSwKCQkJCQkJCXRpbWVTdGFtcDogbmV3IERhdGUoKS50b0lTT1N0cmluZygpLAoJCQkJCQl9LAoJCQkJCX0sCgkJCQl9OwoJCQl9CgkJCXJldHVybiBmOwoJCX0KCSk7CglyZXR1cm4gZXhpc3RpbmdQYXlsb2FkOwp9Cg==
       validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSB0YXJnZXRQYXlsb2FkIC0gVGhlIGluY29taW5nIHJlcXVlc3QgcGF5bG9hZCB0byB2YWxpZGF0ZS4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQ==
       requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqIAogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiAKICogQHJldHVybnMge09iamVjdH0geyB2YWxpZDogYm9vbGVhbiwgY29kZTogbnVtYmVyLCBkZXNjcmlwdGlvbjogc3RyaW5nIH0KICovCmZ1bmN0aW9uIG1lZXRzUmVxdWlyZW1lbnRzKHNlc3Npb25EYXRhKSB7CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9
       defaultPayload:
@@ -4936,9 +5259,9 @@ steps:
           context:
             domain: ONDC:RET10
             action: on_update
-            timestamp: 2026-09-01T03:28:30.158Z
+            timestamp: 2026-10-27T14:12:09.783Z
             transaction_id: 63145d80-a1c1-4a4a-bba0-c6097c43f696
-            message_id: 57aa1f27-5f50-4c00-ba62-cea17933d203
+            message_id: fd17435d-b9e0-4fb4-a3b9-ee005e806070
             bap_id: sample-bap-id
             bap_uri: https://bap.example.com
             ttl: PT30S
@@ -4949,13 +5272,22 @@ steps:
             core_version: 1.2.0
           message:
             order:
-              id: "730818"
+              id: "513959"
               state: Completed
               provider:
                 id: P1
                 locations:
                   - id: L1
-              items: []
+              items:
+                - id: I1
+                  quantity:
+                    count: 1
+                  fulfillment_id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                - id: I1
+                  fulfillment_id: F1
+                  quantity:
+                    count: 0
+                  location_id: L1
               billing:
                 address:
                   building: my building name or house
@@ -4968,10 +5300,22 @@ steps:
                 phone: "9898989898"
                 name: ONDC buyer
                 email: nobody@nomail.com
-                created_at: 2026-09-01T03:28:24.304Z
-                updated_at: 2026-09-01T03:28:24.304Z
+                created_at: 2026-10-27T14:12:02.667Z
+                updated_at: 2026-10-27T14:12:02.667Z
               quote:
                 breakup:
+                  - "@ondc/org/item_id": I1
+                    "@ondc/org/item_quantity":
+                      count: 0
+                    title: Plain Atta
+                    "@ondc/org/title_type": item
+                    price:
+                      currency: INR
+                      value: "0.00"
+                    item:
+                      price:
+                        currency: INR
+                        value: "200.00"
                   - "@ondc/org/item_id": F1
                     title: Delivery charges
                     "@ondc/org/title_type": delivery
@@ -5014,9 +5358,9 @@ steps:
                       email: nobody@nomail.com
                     time:
                       range:
-                        start: 2026-09-01T03:38:29.499Z
-                        end: 2026-09-01T03:48:29.499Z
-                      timestamp: 2026-09-01T03:28:29.648Z
+                        start: 2026-10-27T14:22:08.229Z
+                        end: 2026-10-27T14:32:08.229Z
+                      timestamp: 2026-10-27T14:12:08.682Z
                   end:
                     contact:
                       email: nobody@nomail.com
@@ -5035,9 +5379,9 @@ steps:
                         name: mock-house-name
                     time:
                       range:
-                        start: 2026-09-01T03:48:29.499Z
-                        end: 2026-09-03T03:38:29.499Z
-                      timestamp: 2026-09-01T03:28:29.760Z
+                        start: 2026-10-27T14:32:08.229Z
+                        end: 2026-10-29T14:22:08.229Z
+                      timestamp: 2026-10-27T14:12:08.994Z
                   tags:
                     - code: routing
                       list:
@@ -5055,7 +5399,36 @@ steps:
                     name: mock-agent
                     phone: "9886098860"
                 - type: Return
-                  tags: []
+                  tags:
+                    - code: return_request
+                      list:
+                        - code: id
+                          value: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
+                        - code: item_id
+                          value: I1
+                        - code: item_quantity
+                          value: "1"
+                        - code: reason_id
+                          value: "001"
+                        - code: reason_desc
+                          value: the product is damaged
+                        - code: images
+                          value: https://reference-buyer-app-assets.s3-ap-south-1.amazonaws.com/public-assets/2025-02-10-293522/9d13d0d3-6b21-405e-bfc0-b014485adaa2.png
+                        - code: ttl_approval
+                          value: PT24H
+                        - code: ttl_reverseqc
+                          value: P3D
+                    - code: quote_trail
+                      list:
+                        - code: type
+                          value: item
+                        - code: id
+                          value: I1
+                        - code: currency
+                          value: INR
+                        - code: value
+                          value: "-200"
+                  id: 61d43fb2-b9a1-41d9-97a3-0b3f0bacc61f
                   state:
                     descriptor:
                       code: Return_Delivered
@@ -5073,9 +5446,9 @@ steps:
                         area_code: "560002"
                     time:
                       range:
-                        start: 2026-09-01T03:28:29.976Z
-                        end: 2026-09-02T03:28:29.976Z
-                      timeStamp: 2026-09-01T03:28:30.033Z
+                        start: 2026-10-27T14:12:09.395Z
+                        end: 2026-10-28T14:12:09.395Z
+                      timeStamp: 2026-10-27T14:12:09.533Z
                   end:
                     location:
                       id: L1
@@ -5090,12 +5463,12 @@ steps:
                         area_code: "400053"
                     time:
                       range:
-                        start: 2026-09-02T03:28:29.976Z
-                        end: 2026-09-03T03:28:29.976Z
-                      timeStamp: 2026-09-01T03:28:30.159Z
+                        start: 2026-10-28T14:12:09.395Z
+                        end: 2026-10-29T14:12:09.395Z
+                      timeStamp: 2026-10-27T14:12:09.785Z
               payment:
                 params:
-                  amount: "0.00"
+                  amount: "200.00"
                   currency: INR
                   transaction_id: mock_payment_id_123
                 status: PAID
@@ -5119,10 +5492,10 @@ steps:
                     settlement_phase: refund
                     settlement_type: upi
                     upi_address: gft@oksbi
-                    settlement_amount: "0"
-                    settlement_timestamp: 2026-09-01T03:28:30.093Z
-              created_at: 2026-09-01T03:28:29.408Z
-              updated_at: 2026-09-01T03:28:30.159Z
+                    settlement_amount: "200"
+                    settlement_timestamp: 2026-10-27T14:12:09.664Z
+              created_at: 2026-10-27T14:12:07.924Z
+              updated_at: 2026-10-27T14:12:09.785Z
         type: request
         description: The BPP sends an unsolicited on_update notification to the BAP to
           provide the latest state of the return order, including updated item
