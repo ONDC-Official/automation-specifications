@@ -994,9 +994,12 @@ _TESTS_:
         - _NAME_: VALID_FULFILLMENT_TYPE_ENUM
           attr: $.message.order.fulfillments[*].type
           enumList:
-            - BAP
             - BPP_ONLINE_EMAIL_SMS
-          _RETURN_: attr any in enumList
+            - BPP_ONLINE_EMAIL
+            - BPP_ONLINE_SMS
+            - BPP_OFFLINE
+            - BAP
+          _RETURN_: attr all in enumList
         - _NAME_: VALID_FULFILLMENT_STATE_ENUM
           attr: $.message.order.fulfillments[*].state.descriptor.code
           enumList:
@@ -1166,7 +1169,7 @@ _TESTS_:
             - BPP_ONLINE_SMS
             - BPP_OFFLINE
             - BAP
-          _RETURN_: attr any in enumList
+          _RETURN_: attr all in enumList
         - _NAME_: REQUIRED_FULFILLMENT_STATE
           attr: $.message.order.fulfillments[*].state.descriptor.code
           enumList:
@@ -1416,6 +1419,10 @@ _TESTS_:
           attr: $.message.order.fulfillments[*].type
           enumList:
             - BPP_ONLINE_EMAIL_SMS
+            - BPP_ONLINE_EMAIL
+            - BPP_ONLINE_SMS
+            - BPP_OFFLINE
+            - BAP
           _RETURN_: attr all in enumList
         - _NAME_: REQUIRED_FULFILLMENT_STATE
           attr: $.message.order.fulfillments[*].state.descriptor.code
