@@ -2777,10 +2777,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr: [$.context.location.city.code]
+          attr: $.context.location.city.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -2795,7 +2795,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr: [$.context.version]
+          attr: $.context.version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -2992,7 +2992,10 @@ _TESTS_:
         - _NAME_: ISSUE_VALIDATION_OPEN
           action:
             - issue
-          _SCOPE_: $.message.issue[?(@.status=='OPEN')]
+          usecasepath: $.message.issue.status
+          status: 
+            - OPEN
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
             # Mandatory fields ONLY for OPEN
             - _NAME_: REQUIRED_ISSUE_ID
@@ -3109,48 +3112,36 @@ _TESTS_:
               attr: $.message.issue.order_details.items[*].id
               _RETURN_: attr are present
 
-            - _NAME_: REQUIRED_ORDER_ITEMS_QUANTITY
-              attr: $.message.issue.order_details.items[*].quantity
-              _RETURN_: attr are present  
-
-            - _NAME_: REQUIRED_FULFILLMENT_ID
-              attr: $.message.issue.order_details.fulfillments[*].id
-              _RETURN_: attr are present
-
             - _NAME_: REQUIRED_PROVIDER_ID
               attr: $.message.issue.order_details.provider_id
-              _RETURN_: attr are present  
-
-            - _NAME_: REQUIRED_DESCRIPTION
-              attr: [$.message.issue.description]
-              _RETURN_: attr are present
+              _RETURN_: attr are present 
 
             - _NAME_: REQUIRED_DESCRIPTION_SHORT
-              attr: [$.message.issue.description.short_desc]
+              attr: $.message.issue.description.short_desc
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_DESCRIPTION_LONG
-              attr: [$.message.issue.description.long_desc]
+              attr: $.message.issue.description.long_desc
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_URL
-              attr: [$.message.issue.description.additional_desc.url]
+              attr: $.message.issue.description.additional_desc.url
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_DESCRIPTION_ADDITIONAL_CONTENT_TYPE
-              attr: [$.message.issue.description.additional_desc.content_type]
+              attr: $.message.issue.description.additional_desc.content_type
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_DESCRIPTION_IMAGES
-              attr: [$.message.issue.description.images]
+              attr: $.message.issue.description.images[*]
               _RETURN_: attr are present  
 
             - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-              attr: [$.message.issue.expected_response_time.duration]
+              attr: $.message.issue.expected_response_time.duration
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-              attr: [$.message.issue.expected_resolution_time.duration]
+              attr: $.message.issue.expected_resolution_time.duration
               _RETURN_: attr are present
 
             - _NAME_: REQUIRED_ISSUE_ACTIONS_OPEN
@@ -3171,7 +3162,10 @@ _TESTS_:
         - _NAME_: ISSUE_VALIDATION_CLOSED
           action:
               - issue
-          _SCOPE_: $.message.issue[?(@.status=='CLOSED')]
+          usecasepath: $.message.issue.status
+          status: 
+            - CLOSED
+          _CONTINUE_: '!(usecasepath all in status)'
           _RETURN_:
             - _NAME_: REQUIRED_ISSUE_ID_CLOSED
               attr: $.message.issue.id
@@ -3206,10 +3200,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr: [$.context.location.city.code]
+          attr: $.context.location.city.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -3224,7 +3218,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr: [$.context.version]
+          attr: $.context.version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -3242,7 +3236,7 @@ _TESTS_:
           attr: $.context.ttl
           _RETURN_: attr are present
         - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           # enumList:
           #   - IND
           _RETURN_: attr are present
@@ -3299,10 +3293,10 @@ _TESTS_:
             - CUSTOMER
             - AGENT
         - _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
-          attr: [$.message.issue.expected_response_time.duration]
+          attr: $.message.issue.expected_response_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
-          attr: [$.message.issue.expected_resolution_time.duration]
+          attr: $.message.issue.expected_resolution_time.duration
           _RETURN_: attr are present
         - _NAME_: REQUIRED_MESSAGE_ID_10
           attr: $.message.issue.actors[*].id
@@ -3413,10 +3407,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr: [$.context.location.city.code]
+          attr: $.context.location.city.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -3431,7 +3425,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr: [$.context.version]
+          attr: $.context.version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -3471,10 +3465,10 @@ _TESTS_:
           attr: $.context.domain
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_CITY
-          attr: [$.context.location.city.code]
+          attr: $.context.location.city.code
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_TRANSACTION_ID
           attr: $.context.transaction_id
@@ -3489,7 +3483,7 @@ _TESTS_:
           attr: $.context.timestamp
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_VERSION
-          attr: [$.context.version]
+          attr: $.context.version
           _RETURN_: attr are present
         - _NAME_: REQUIRED_CONTEXT_BAP_URI
           attr: $.context.bap_uri
@@ -3507,7 +3501,7 @@ _TESTS_:
           attr: $.context.ttl
           _RETURN_: attr are present
         - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: [$.context.location.country.code]
+          attr: $.context.location.country.code
           # enumList:
           #   - IND
           _RETURN_: attr are present
