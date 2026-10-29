@@ -19,10 +19,24 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Checkout pinned tooling
+        uses: actions/checkout@v4
+        with:
+          repository: ONDC-Official/automation-specifications
+          ref: main
+          path: .pwb-tooling
+          sparse-checkout: tooling
+
+      - name: Install pinned tools
+        run: |
+          # Versions are pinned in tooling/versions.env and tooling/package.json on main.
+          cp .pwb-tooling/tooling/package.json .pwb-tooling/tooling/package-lock.json .
+          npm ci --no-audit --no-fund
+
       - name: Parse config
         id: parse
         run: |
-          npx -y @ondc/build-tools@latest parse -i config -o build.yaml
+          ./node_modules/.bin/ondc-tools parse -i config -o build.yaml
 
       - name: Upload parsed build.yaml artifact
         uses: actions/upload-artifact@v4
@@ -33,11 +47,11 @@ jobs:
 
       - name: Validate build.yaml
         run: |
-          npx -y @ondc/build-tools@latest validate -i build.yaml
+          ./node_modules/.bin/ondc-tools validate -i build.yaml
 
       - name: Generate RAG Table
         run: |
-          npx -y @ondc/build-tools@latest gen-rag-table -i build.yaml -o generated
+          ./node_modules/.bin/ondc-tools gen-rag-table -i build.yaml -o generated
 
       - name: Push to DB
         # Only deploy/push on pushes to main or manual dispatch, not on PRs (optional precaution)
@@ -46,4 +60,4 @@ jobs:
           API_KEY: \${{ secrets.DB_API_KEY }}
           API_BASE_URL: \${{ secrets.DB_BASE_URL_DEV || 'https://api.example.com' }}
         run: |
-          npx -y @ondc/build-tools@latest push-to-db -f build.yaml -t generated/raw_table.json -u "$API_BASE_URL" -k "$API_KEY"
+          ./node_modules/.bin/ondc-tools push-to-db -f build.yaml -t generated/raw_table.json -u "$API_BASE_URL" -k "$API_KEY"
