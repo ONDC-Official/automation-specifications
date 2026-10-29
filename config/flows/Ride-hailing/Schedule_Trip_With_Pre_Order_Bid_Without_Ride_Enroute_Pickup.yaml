@@ -19,7 +19,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP initiates a search request for ride services by specifying
+    description:
+      The BAP initiates a search request for ride services by specifying
       the geographic scope, transaction context, and trip intent with pickup
       location, intermediate stops, and destination along with payment
       preferences. This establishes the transaction foundation and communicates
@@ -269,7 +270,8 @@ steps:
               payment:
                 collected_by: BPP
         type: request
-        description: The BAP initiates a search request for ride services by specifying
+        description:
+          The BAP initiates a search request for ride services by specifying
           the geographic scope, transaction context, and trip intent with pickup
           location, intermediate stops, and destination along with payment
           preferences. This establishes the transaction foundation and
@@ -280,7 +282,8 @@ steps:
     owner: BPP
     responseFor: search_schedule_trip
     unsolicited: false
-    description: The BPP delivers a catalog of available scheduled trip offerings
+    description:
+      The BPP delivers a catalog of available scheduled trip offerings
       with provider information and fulfillment options in response to the BAP's
       trip search request.
     mock:
@@ -753,7 +756,8 @@ steps:
                         code: STATIC_TERMS
                       value: https://example-test-bpp.com/static-terms.txt
         type: request
-        description: The BPP delivers a catalog of available scheduled trip offerings
+        description:
+          The BPP delivers a catalog of available scheduled trip offerings
           with provider information and fulfillment options in response to the
           BAP's trip search request.
   - api: select
@@ -761,7 +765,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP selects a specific ride service from the available search
+    description:
+      The BAP selects a specific ride service from the available search
       results and communicates the selected item details, including quantity and
       add-ons, to the BPP to enable order confirmation and trip initiation.
     mock:
@@ -851,7 +856,8 @@ steps:
               provider:
                 id: P1
         type: request
-        description: The BAP selects a specific ride service from the available search
+        description:
+          The BAP selects a specific ride service from the available search
           results and communicates the selected item details, including quantity
           and add-ons, to the BPP to enable order confirmation and trip
           initiation.
@@ -1081,7 +1087,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -1110,14 +1117,16 @@ steps:
                   value: "180"
                 ttl: PT200S
         type: request
-        description: The BPP confirms service availability for the selected trip and
+        description:
+          The BPP confirms service availability for the selected trip and
           returns the final pricing quote and estimated time of arrival.
   - api: init
     action_id: init_pre_bid_trip
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP initiates an order by confirming terms and conditions with
+    description:
+      The BAP initiates an order by confirming terms and conditions with
       the BPP, establishing transaction details including pickup location,
       destination, fulfillment preferences, and payment arrangement for the
       ride. This init request formalizes the buyer's intent to proceed with the
@@ -1334,7 +1343,8 @@ steps:
               provider:
                 id: P1
         type: request
-        description: The BAP initiates an order by confirming terms and conditions with
+        description:
+          The BAP initiates an order by confirming terms and conditions with
           the BPP, establishing transaction details including pickup location,
           destination, fulfillment preferences, and payment arrangement for the
           ride. This init request formalizes the buyer's intent to proceed with
@@ -1344,7 +1354,8 @@ steps:
     owner: BPP
     responseFor: init_pre_bid_trip
     unsolicited: false
-    description: The BPP sends the initialized order with pricing quote, fulfillment
+    description:
+      The BPP sends the initialized order with pricing quote, fulfillment
       options, and cancellation terms, establishing the transaction framework
       and agreed-upon conditions before buyer confirmation.
     mock:
@@ -1479,7 +1490,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -1660,7 +1672,8 @@ steps:
                         code: SETTLEMENT_AMOUNT
                       value: "1.80"
         type: request
-        description: The BPP sends the initialized order with pricing quote, fulfillment
+        description:
+          The BPP sends the initialized order with pricing quote, fulfillment
           options, and cancellation terms, establishing the transaction
           framework and agreed-upon conditions before buyer confirmation.
   - api: confirm
@@ -1668,7 +1681,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP confirms the ride booking by submitting the finalized order
+    description:
+      The BAP confirms the ride booking by submitting the finalized order
       to the BPP, establishing the committed agreement on service terms and
       pickup/dropoff locations. This confirmation authorizes the BPP to proceed
       with driver assignment and ride fulfillment.
@@ -1879,7 +1893,8 @@ steps:
                         code: SETTLEMENT_AMOUNT
                       value: "1.80"
         type: request
-        description: The BAP confirms the ride booking by submitting the finalized order
+        description:
+          The BAP confirms the ride booking by submitting the finalized order
           to the BPP, establishing the committed agreement on service terms and
           pickup/dropoff locations. This confirmation authorizes the BPP to
           proceed with driver assignment and ride fulfillment.
@@ -1977,7 +1992,8 @@ steps:
                       - descriptor:
                           code: WAYPOINTS
                           name: Waypoints
-                        value: '[{ "gps": "12.909992,77.611622" },{ "gps": "12.910189,77.611909" },{
+                        value:
+                          '[{ "gps": "12.909992,77.611622" },{ "gps": "12.910189,77.611909" },{
                           "gps": "12.909821,77.611728" },{ "gps":
                           "12.909977,77.611882" }]'
                 type: DELIVERY
@@ -2264,7 +2280,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -2464,7 +2481,8 @@ steps:
                         code: SETTLEMENT_AMOUNT
                       value: "1.80"
         type: request
-        description: The BPP responds to the BAP's trip confirmation request with
+        description:
+          The BPP responds to the BAP's trip confirmation request with
           acceptance, deferral, or rejection, completing the order confirmation
           phase.
   - api: on_update
@@ -2648,7 +2666,8 @@ steps:
                       - descriptor:
                           code: WAYPOINTS
                           name: Waypoints
-                        value: '[{ "gps": "12.910128,77.611665" },{ "gps": "12.909776,77.611857" },{
+                        value:
+                          '[{ "gps": "12.910128,77.611665" },{ "gps": "12.909776,77.611857" },{
                           "gps": "12.910005,77.611953" },{ "gps":
                           "12.909858,77.611712" }]'
                 type: DELIVERY
@@ -2972,7 +2991,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -3099,14 +3119,16 @@ steps:
               created_at: 2026-09-23T13:44:22.006Z
               updated_at: 2026-09-23T13:44:22.170Z
         type: request
-        description: The BPP sends an unsolicited update to the BAP confirming the
+        description:
+          The BPP sends an unsolicited update to the BAP confirming the
           scheduled trip order with its fulfillment details and current status.
   - api: track
     action_id: track
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP sends a track request to the BPP to monitor the real-time
+    description:
+      The BAP sends a track request to the BPP to monitor the real-time
       fulfillment status and location of the scheduled ride.
     mock:
       generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgZGVmYXVsdFBheWxvYWQuY29udGV4dC5sb2NhdGlvbi5jaXR5LmNvZGUgPSBzZXNzaW9uRGF0YT8uY2l0eV9jb2RlPy5bMF07CgogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UgPSB7CiAgICBvcmRlcl9pZDogc2Vzc2lvbkRhdGE/Lm9yZGVyX2lkPy5bMF0sCiAgfTsKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
@@ -3166,14 +3188,16 @@ steps:
           message:
             order_id: l52oed5q42
         type: request
-        description: The BAP sends a track request to the BPP to monitor the real-time
+        description:
+          The BAP sends a track request to the BPP to monitor the real-time
           fulfillment status and location of the scheduled ride.
   - api: on_track
     action_id: on_track
     owner: BPP
     responseFor: track
     unsolicited: false
-    description: The BPP delivers real-time tracking updates to the BAP in response
+    description:
+      The BPP delivers real-time tracking updates to the BAP in response
       to a track request, providing current fulfillment status for the scheduled
       trip. The response confirms both parties' identities, endpoints, and
       location context to enable the buyer to monitor trip progress.
@@ -3238,7 +3262,8 @@ steps:
                 gps: 12.453522,77.928328
                 updated_at: 2026-09-23T13:44:25.011Z
         type: request
-        description: The BPP delivers real-time tracking updates to the BAP in response
+        description:
+          The BPP delivers real-time tracking updates to the BAP in response
           to a track request, providing current fulfillment status for the
           scheduled trip. The response confirms both parties' identities,
           endpoints, and location context to enable the buyer to monitor trip
@@ -3248,7 +3273,8 @@ steps:
     owner: BPP
     responseFor: null
     unsolicited: true
-    description: The BPP proactively sends an unsolicited status update to the BAP
+    description:
+      The BPP proactively sends an unsolicited status update to the BAP
       communicating trip order progress, including driver assignment, passenger
       pickup, and drop-off confirmation.
     mock:
@@ -3485,7 +3511,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -3612,7 +3639,8 @@ steps:
               created_at: 2026-09-23T13:44:22.006Z
               updated_at: 2026-09-23T13:44:25.241Z
         type: request
-        description: The BPP proactively sends an unsolicited status update to the BAP
+        description:
+          The BPP proactively sends an unsolicited status update to the BAP
           communicating trip order progress, including driver assignment,
           passenger pickup, and drop-off confirmation.
   - api: on_status
@@ -3620,7 +3648,8 @@ steps:
     owner: BPP
     responseFor: null
     unsolicited: true
-    description: The BPP proactively sends updated order status to the BAP as the
+    description:
+      The BPP proactively sends updated order status to the BAP as the
       trip progresses, including driver information and fulfillment details.
     mock:
       generate: Y29uc3QgUklERV9TVEFURSA9ICJSSURFX1NUQVJURUQiOwpjb25zdCBDTEFJTUVEX1NUQVRFUyA9IFsiUklERV9TVEFSVEVEIiwgIlJJREVfRU5ERUQiLCAiUklERV9DT01QTEVURUQiXTsKCmFzeW5jIGZ1bmN0aW9uIGFwcGx5Um91dGVJbmZvKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHRyeSB7CiAgICBjb25zdCB1bndyYXAgPSAodmFsdWUpID0+IChBcnJheS5pc0FycmF5KHZhbHVlKSA/IHZhbHVlWzBdIDogdmFsdWUpOwogICAgY29uc3QgZW5jb2RlZFBvbHlsaW5lID0gdW53cmFwKHNlc3Npb25EYXRhPy5yb3V0ZV9lbmNvZGVkX3BvbHlsaW5lKTsKICAgIGNvbnN0IHdheXBvaW50cyA9IHVud3JhcChzZXNzaW9uRGF0YT8ucm91dGVfd2F5cG9pbnRzKTsKICAgIGlmICh0eXBlb2YgZW5jb2RlZFBvbHlsaW5lICE9PSAic3RyaW5nIiB8fCAhZW5jb2RlZFBvbHlsaW5lKSByZXR1cm47CiAgICBpZiAodHlwZW9mIHdheXBvaW50cyAhPT0gInN0cmluZyIgfHwgIXdheXBvaW50cykgcmV0dXJuOwogICAgY29uc3QgZnVsZmlsbG1lbnRzID0gZGVmYXVsdFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5mdWxmaWxsbWVudHM7CiAgICBpZiAoIUFycmF5LmlzQXJyYXkoZnVsZmlsbG1lbnRzKSkgcmV0dXJuOwogICAgZm9yIChjb25zdCBmdWxmaWxsbWVudCBvZiBmdWxmaWxsbWVudHMpIHsKICAgICAgaWYgKCFBcnJheS5pc0FycmF5KGZ1bGZpbGxtZW50LnRhZ3MpKSBjb250aW51ZTsKICAgICAgY29uc3Qgcm91dGVUYWcgPSBmdWxmaWxsbWVudC50YWdzLmZpbmQoCiAgICAgICAgKHRhZykgPT4gdGFnPy5kZXNjcmlwdG9yPy5jb2RlID09PSAiUk9VVEVfSU5GTyIgJiYgQXJyYXkuaXNBcnJheSh0YWcubGlzdCkKICAgICAgKTsKICAgICAgaWYgKCFyb3V0ZVRhZykgY29udGludWU7CiAgICAgIGZvciAoY29uc3QgZW50cnkgb2Ygcm91dGVUYWcubGlzdCkgewogICAgICAgIGlmIChlbnRyeT8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkVOQ09ERURfUE9MWUxJTkUiKSBlbnRyeS52YWx1ZSA9IGVuY29kZWRQb2x5bGluZTsKICAgICAgICBpZiAoZW50cnk/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJXQVlQT0lOVFMiKSBlbnRyeS52YWx1ZSA9IHdheXBvaW50czsKICAgICAgfQogICAgfQogIH0gY2F0Y2ggKGVycm9yKSB7CiAgICByZXR1cm47CiAgfQp9Cgphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IHNlc3Npb25EYXRhPy5jaXR5X2NvZGU/LlswXTsKCiAgY29uc3QgY29uZmlybU9yZGVyID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YT8uY29uZmlybV9vcmRlcikKICAgID8gc2Vzc2lvbkRhdGEuY29uZmlybV9vcmRlclswXQogICAgOiBzZXNzaW9uRGF0YT8uY29uZmlybV9vcmRlcjsKICBjb25zdCBvcmRlciA9IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkoY29uZmlybU9yZGVyKSk7CgogIGNvbnN0IGNsYWltZWQgPSBDTEFJTUVEX1NUQVRFUy5pbmNsdWRlcyhSSURFX1NUQVRFKTsKICAob3JkZXIuZnVsZmlsbG1lbnRzID8/IFtdKS5mb3JFYWNoKChmdWxmaWxsbWVudCkgPT4gewogICAgaWYgKGZ1bGZpbGxtZW50LnN0YXRlPy5kZXNjcmlwdG9yKSBmdWxmaWxsbWVudC5zdGF0ZS5kZXNjcmlwdG9yLmNvZGUgPSBSSURFX1NUQVRFOwogICAgaWYgKGNsYWltZWQpIHsKICAgICAgKGZ1bGZpbGxtZW50LnN0b3BzID8/IFtdKS5mb3JFYWNoKChzdG9wKSA9PiB7CiAgICAgICAgaWYgKHN0b3AudHlwZSA9PT0gIlNUQVJUIiAmJiBzdG9wLmF1dGhvcml6YXRpb24pIHN0b3AuYXV0aG9yaXphdGlvbi5zdGF0dXMgPSAiQ0xBSU1FRCI7CiAgICAgIH0pOwogICAgfQogIH0pOwoKICBvcmRlci5zdGF0dXMgPSBSSURFX1NUQVRFID09PSAiUklERV9DT01QTEVURUQiID8gIkNPTVBMRVRFIiA6ICJBQ1RJVkUiOwoKICBvcmRlci51cGRhdGVkX2F0ID0gZGVmYXVsdFBheWxvYWQuY29udGV4dC50aW1lc3RhbXA7CgogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UgPSB7IG9yZGVyIH07CgogIGF3YWl0IGFwcGx5Um91dGVJbmZvKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSk7CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
@@ -3856,7 +3885,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -3983,7 +4013,8 @@ steps:
               created_at: 2026-09-23T13:44:22.006Z
               updated_at: 2026-09-23T13:44:25.410Z
         type: request
-        description: The BPP proactively sends updated order status to the BAP as the
+        description:
+          The BPP proactively sends updated order status to the BAP as the
           trip progresses, including driver information and fulfillment details.
   - api: on_update
     action_id: on_update_ride_ended
@@ -4221,7 +4252,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -4415,7 +4447,8 @@ steps:
           message:
             order_id: l52oed5q42
         type: request
-        description: The BAP requests the current status of the scheduled trip order
+        description:
+          The BAP requests the current status of the scheduled trip order
           from the BPP. This status inquiry allows the buyer to track their ride
           booking and monitor the fulfillment progression.
   - api: on_status
@@ -4423,7 +4456,8 @@ steps:
     owner: BPP
     responseFor: status
     unsolicited: false
-    description: The BPP provides the current trip status and fulfillment updates to
+    description:
+      The BPP provides the current trip status and fulfillment updates to
       the BAP, conveying information about trip progression such as driver
       assignment and order state throughout the fulfillment lifecycle.
     mock:
@@ -4660,7 +4694,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -4798,7 +4833,8 @@ steps:
                   mime_type: application/pdf
                   url: https://example-bpp.com/prod/seller/invoices/O1.pdf
         type: request
-        description: The BPP provides the current trip status and fulfillment updates to
+        description:
+          The BPP provides the current trip status and fulfillment updates to
           the BAP, conveying information about trip progression such as driver
           assignment and order state throughout the fulfillment lifecycle.
   - api: rating
@@ -4905,7 +4941,8 @@ extra_steps:
       owner: BPP
       responseFor: null
       unsolicited: true
-      description: Repeatable driver location push for the ride map (side-channel via
+      description:
+        Repeatable driver location push for the ride map (side-channel via
         trigger_extra).
       repeatCount: null
       mock:
