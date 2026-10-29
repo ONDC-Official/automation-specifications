@@ -99,6 +99,8 @@ jobs:
           cp .pwb-tooling/tooling/package.json .pwb-tooling/tooling/package-lock.json .
           npm ci --no-audit --no-fund
           cat .pwb-tooling/tooling/versions.env
+          # The generator clones the plugins at PLUGINS_REF; FD images build on ONIX_IMAGE.
+          grep -E '^(PLUGINS_REF|ONIX_IMAGE)=' .pwb-tooling/tooling/versions.env >> "$GITHUB_ENV"
 
       - name: Parse spec config
         run: |
@@ -296,7 +298,7 @@ jobs:
           IMAGE_TAG="${{ steps.meta.outputs.image_tag }}"
 
           cd build-output
-          docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .
+          docker build ${ONIX_IMAGE:+--build-arg ONIX_IMAGE="$ONIX_IMAGE"} -t "${IMAGE_NAME}:${IMAGE_TAG}" .
           docker push "${IMAGE_NAME}:${IMAGE_TAG}"
 
           echo "Pushed image: ${IMAGE_NAME}:${IMAGE_TAG}"
@@ -412,6 +414,8 @@ jobs:
           cp .pwb-tooling/tooling/package.json .pwb-tooling/tooling/package-lock.json .
           npm ci --no-audit --no-fund
           cat .pwb-tooling/tooling/versions.env
+          # The generator clones the plugins at PLUGINS_REF; FD images build on ONIX_IMAGE.
+          grep -E '^(PLUGINS_REF|ONIX_IMAGE)=' .pwb-tooling/tooling/versions.env >> "$GITHUB_ENV"
 
       - name: Parse spec config
         run: |
@@ -611,7 +615,7 @@ jobs:
           IMAGE_TAG="${{ steps.meta.outputs.image_tag }}"
 
           cd build-output
-          docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .
+          docker build ${ONIX_IMAGE:+--build-arg ONIX_IMAGE="$ONIX_IMAGE"} -t "${IMAGE_NAME}:${IMAGE_TAG}" .
           docker push "${IMAGE_NAME}:${IMAGE_TAG}"
 
           echo "Pushed image: ${IMAGE_NAME}:${IMAGE_TAG}"
