@@ -96,8 +96,21 @@ cmd_build() {
   mkdir -p "$out"
   out="$(cd "$out" && pwd)"
 
+  # The code generator pipes every generated Go file through gofmt, which has been seen to hang
+  # on large domains. Formatting does not change what is compared, so by default a stub gofmt
+  # that fails is put first on PATH; the generator then keeps its unformatted code, as it does
+  # when gofmt is missing. GOLDEN_GOFMT=1 keeps the real gofmt.
+  if [ "${GOLDEN_GOFMT:-0}" != "1" ]; then
+    local stub
+    stub="$(mktemp -d)"
+    printf '#!/bin/sh\nexit 1\n' >"$stub/gofmt"
+    chmod +x "$stub/gofmt"
+    export PATH="$stub:$PATH"
+  fi
+
   {
     echo "tooling=$tooling"
+    echo "gofmt=${GOLDEN_GOFMT:-0}"
     (cd "$tooling" && npm ls --depth=0 2>/dev/null || true)
   } >"$out/MANIFEST.txt"
 
