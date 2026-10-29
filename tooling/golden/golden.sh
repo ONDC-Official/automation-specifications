@@ -11,7 +11,8 @@
 #
 # Environment:
 #   GOLDEN_JOBS   parallel builds (default 4)
-#   GOLDEN_ONLY   regex; build only branches whose name matches
+#   GOLDEN_ONLY   extended regex matched against branches.lock lines ("<branch> <sha>"); build
+#                 only those, e.g. GOLDEN_ONLY='^release-eks-LOG11-1\.2\.5 '
 #
 # What is compared, per branch: build.yaml, the RAG table, the generated API-service config,
 # schemas, L1 validation code, Dockerfile and compose files, the step exit codes, and the
