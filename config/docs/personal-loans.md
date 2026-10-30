@@ -1,32 +1,6 @@
 # Personal Loans 
 
 
-- [Overview](#overview)
-- [Participants](#participants)
-- [The User Journey](#the-user-journey)
-  - [1. Loan Application and Discovery](#1-loan-application-and-discovery)
-  - [2. Loan Offers](#2-loan-offers)
-  - [3. Offer Selection](#3-offer-selection)
-  - [4. Lender Onboarding and Verification](#4-lender-onboarding-and-verification)
-  - [5. Final Underwriting and Loan Offer](#5-final-underwriting-and-loan-offer)
-  - [6. Application Status and Processing](#6-application-status-and-processing)
-  - [7. Offline Processing](#7-offline-processing)
-  - [8. Loan Confirmation and Disbursement](#8-loan-confirmation-and-disbursement)
-- [Additional Scenarios](#additional-scenarios)
-  - [1. Loan Servicing and Repayment](#1-loan-servicing-and-repayment)
-  - [2. Missed EMI Payment](#2-missed-emi-payment)
-  - [3. Part-Prepayment](#3-part-prepayment)
-  - [4. Loan Foreclosure](#4-loan-foreclosure)
-  - [5. Loan Status After Repayment](#5-loan-status-after-repayment)
-- [Issue and Grievance Management](#issue-and-grievance-management)
-- [Detailed Protocol Flows](#detailed-protocol-flows)
-  - [Flow 1: Personal Loan – Single Redirection Journey](#flow-1-personal-loan--single-redirection-journey)
-  - [Flow 2: Personal Loan – Offline Journey](#flow-2-personal-loan--offline-journey)
-  - [Flow 3: Personal Loan – Dedupe Check](#flow-3-personal-loan--dedupe-check)
-  - [Flow 4: Personal Loan – Loan Foreclosure (Full Repayment)](#flow-4-personal-loan--loan-foreclosure-full-repayment)
-  - [Flow 5: Personal Loan – Pre-Part Payment](#flow-5-personal-loan--pre-part-payment)
-  - [Flow 6: Personal Loan – Missed EMI Payment (Late Payment)](#flow-6-personal-loan--missed-emi-payment-late-payment)
-
 ---
 
 ## Overview
@@ -52,30 +26,41 @@ This guide explains the personal loan use case and end-to-end journey from a bus
 
 ## The User Journey
 
-The personal loan journey enables a borrower to discover loan offers, select a lender, complete the lender's onboarding and verification process, and receive the loan. The journey consists of the following stages:
+The personal loan journey enables a borrower to discover loan offers, select a lender, complete the lender's underwriting and loan processing steps, and receive the loan. The journey consists of the following stages:
 
 ### 1. Loan Application and Discovery
 
-The borrower provides their basic information through the Lending App (LSP), including:
+Through the Lending App (LSP), the borrower provides the details lenders need for underwriting and loan processing:
 
-- PAN
-- Mobile number
-- Name
-- Pincode
-- Date of birth
-- Employment type — salaried or self-employed
-- Income
-- Employer name
-- UDYAM number, where applicable for self-employed borrowers
-- Bureau consent
+| Category | Field | Key | Mandatory | Type / Values |
+|---|---|---|---|---|
+| Identity | Name as per PAN | `panName` | Yes | Text |
+| | PAN | `pan` | Yes | Text |
+| | Date of birth | `dob` | Yes | Date |
+| | Gender | `gender` | Yes | ENUM |
+| Contact | Contact number | `contactNumber` | Yes | Text |
+| | Personal email | `personalemail` | No | Text |
+| | Official email | `officialemail` | No | Text |
+| Employment and income | Employment type | `employmentType` | Yes | ENUM |
+| | Annual income | `income` | Yes | Number (₹, annual) |
+| | Company name | `companyName` | Conditional: mandatory when `employmentType` is salaried | Text |
+| | UDYAM number | `udyamNumber` | No | Text; applies to self-employed borrowers |
+| Address | Address line 1 | `addressL1` | No | Text |
+| | Address line 2 | `addressL2` | No | Text |
+| | City | `city` | No | Text |
+| | State | `state` | No | Text |
+| | Pincode | `pincode` | No | Text |
+| Loan purpose | End use | `endUse` | Yes | ENUM |
+| Consent and data | Bureau consent | `bureauConsent` | Yes | Checkbox |
+| | Derived data | `derivedData` | No | JSON file with alternate data that supports lender underwriting, such as data from salary slips, bureau reports, or bank statements |
 
-The LSP verifies the borrower's mobile number through OTP and obtains the required consent to share the information with participating lenders and allow lenders to access the borrower's credit bureau information.
+The LSP verifies the borrower's contact number through OTP. It also gets the borrower's consent for two things: sharing these details with participating lenders, and letting lenders access the borrower's credit bureau information for underwriting.
 
 The LSP then sends the loan search request to participating lenders through the network.
 
 **Network interaction:**
 
-- **`/search`**: The LSP sends the borrower's loan requirements, including the requested loan amount, tenure, and personal loan category.
+- **`/search`**: The LSP does a search on the network gateway to discover lenders providing the personal loan product. The ONDC gateway broadcasts this call to all lenders registered on the ONDC Registry.
 - **`/on_search`**: Participating lenders respond with their available loan products and relevant parameters such as loan amount range, tenure, interest rate, processing fees, and applicable product attributes.
 
 ### 2. Loan Offers
@@ -98,7 +83,8 @@ The borrower selects a loan offer through the LSP.
 - **`/select`**: The LSP sends the selected loan product.
 - **`/on_select`**: The lender responds with the applicable loan quote, including APR, processing fees, EMI details, and other applicable charges or terms and the link to continue the loan processing journey.
 
-### 4. Lender Onboarding and Verification
+### 4. Lender Onboarding and Verification**`/select`**: The LSP sends the selected loan product.
+- **`/on_select`**: The lender responds with the applicable loan quote, including APR, processing fees, EMI details, and other applicable charges or terms and the link to continue the loan processing journey.
 
 After the borrower selects an offer, the borrower proceeds to the lender's onboarding journey, which is rendered within the LSP experience (app-in-app experience).
 
@@ -355,3 +341,9 @@ The Missed EMI Payment Flow allows borrowers to manually repay overdue EMIs when
 - **`/update` (BAP -> BPP)**: The BAP initiates a retrieval request for a past-due loan account. It passes a servicing payload with transaction tags set specifically to `LATE_PAYMENT` to request the outstanding overdue balance.
 - **`/on_update` / `/on_status` (BPP -> BAP)**: The lender's billing systems calculate the total outstanding balance. The response returns an explicit cost breakdown containing the original missed EMI amount, any late payment penalties, and account bounce fees. This includes an active payment gateway link, allowing the BAP to show the full breakdown before routing the user to complete the payment.
 - **`/on_status` [Remittance Resolution] (BPP -> BAP)**: Fired immediately after the payment clears through the designated gateway. The lender updates its internal ledgers, marks the past-due balance as settled, resets the account status to current, and returns the updated payment confirmation reference to the parent app.
+
+---
+
+## Figma
+
+[View Figma Board](https://www.figma.com/board/TS8ghV1vPnZ9iod3ApVIKp/Credit?node-id=0-1&p=f)
