@@ -3,6 +3,8 @@
 # Edit a block here and every place that uses it changes. The code generator reads only _TESTS_ and _SESSION_DATA_.
 _COMMON_:
   constants:
+    DOMAIN: &DOMAIN
+      - ONDC:FIS12
     LIST_FULFILLMENT: &LIST_FULFILLMENT
       - fulfillment
     LIST_IND: &LIST_IND
@@ -11,12 +13,12 @@ _COMMON_:
       - INR
     LIST_LOAN: &LIST_LOAN
       - LOAN
-    LIST_ONDC_FIS12: &LIST_ONDC_FIS12
-      - ONDC:FIS12
     LIST_PERSONAL_LOAN: &LIST_PERSONAL_LOAN
       - PERSONAL_LOAN
     LIST_SEARCH: &LIST_SEARCH
       - search
+    VERSION: &VERSION
+      - 2.0.3
 
   tags:
     ENUM_CHECKLISTS_CODE: &ENUM_CHECKLISTS_CODE
@@ -111,26 +113,23 @@ _COMMON_:
       _NAME_: REQUIRED_BAP_TERMS_STATIC_TERMS
       attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
       _RETURN_: attr are present
-    REQUIRED_BPP_TERMS_OFFLINE_CONTRACT: &REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
-      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
-      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-      _RETURN_: attr are present
-    REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2: &REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2
-      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
-      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-      _RETURN_: attr are present
-    REQUIRED_BPP_TERMS_STATIC_TERMS: &REQUIRED_BPP_TERMS_STATIC_TERMS
-      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
-      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-      _RETURN_: attr are present
-    REQUIRED_BPP_TERMS_STATIC_TERMS_2: &REQUIRED_BPP_TERMS_STATIC_TERMS_2
-      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
-      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-      _RETURN_: attr are present
     REQUIRED_BUYER_FINDER_FEES_TAG: &REQUIRED_BUYER_FINDER_FEES_TAG
       _NAME_: REQUIRED_BUYER_FINDER_FEES_TAG
       validTags: *TAGS_ON_ORDER_CODE
       tagPath: $.message.order.payments[?(@.type=='ON_ORDER')].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_CATALOG_BPP_TERMS_OFFLINE_CONTRACT: &REQUIRED_CATALOG_BPP_TERMS_OFFLINE_CONTRACT
+      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_CATALOG_BPP_TERMS_STATIC_TERMS: &REQUIRED_CATALOG_BPP_TERMS_STATIC_TERMS
+      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
+      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    REQUIRED_CATALOG_LSP_INFO_TAG_GROUP: &REQUIRED_CATALOG_LSP_INFO_TAG_GROUP
+      _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
+      validTags: *LIST_LSP_INFO
+      tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
       _RETURN_: tagPath any in validTags
     REQUIRED_CATALOG_PROVIDERS_CODE: &REQUIRED_CATALOG_PROVIDERS_CODE
       _NAME_: REQUIRED_CONTACT_INFO_TAG_GROUP
@@ -228,20 +227,23 @@ _COMMON_:
       validValues: *ENUM_LSP_INFO_CODE
       _CONTINUE_: "!(subTags are present)"
       _RETURN_: subTags all in validValues
-    REQUIRED_LSP_INFO_TAG_GROUP: &REQUIRED_LSP_INFO_TAG_GROUP
-      _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
-      validTags: *LIST_LSP_INFO
-      tagPath: $.message.order.provider.tags[*].descriptor.code
-      _RETURN_: tagPath any in validTags
-    REQUIRED_LSP_INFO_TAG_GROUP_2: &REQUIRED_LSP_INFO_TAG_GROUP_2
-      _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
-      validTags: *LIST_LSP_INFO
-      tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
-      _RETURN_: tagPath any in validTags
     REQUIRED_OFFLINE_CONTRACT_VALUE: &REQUIRED_OFFLINE_CONTRACT_VALUE
       _NAME_: REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
       attr: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
       _RETURN_: attr are present
+    REQUIRED_ORDER_BPP_TERMS_OFFLINE_CONTRACT: &REQUIRED_ORDER_BPP_TERMS_OFFLINE_CONTRACT
+      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_ORDER_BPP_TERMS_STATIC_TERMS: &REQUIRED_ORDER_BPP_TERMS_STATIC_TERMS
+      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
+      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    REQUIRED_ORDER_LSP_INFO_TAG_GROUP: &REQUIRED_ORDER_LSP_INFO_TAG_GROUP
+      _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
+      validTags: *LIST_LSP_INFO
+      tagPath: $.message.order.provider.tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
     REQUIRED_ORDER_PROVIDER_CODE: &REQUIRED_ORDER_PROVIDER_CODE
       _NAME_: REQUIRED_CONTACT_INFO_TAG_GROUP
       validTags: *LIST_CONTACT_INFO
@@ -287,7 +289,7 @@ _COMMON_:
       _NAME_: ON_SEARCH_PROVIDER_CONTACT_INFO
       _RETURN_: *ON_SEARCH_PROVIDER_CONTACT_INFO_CHECKS
     ON_SEARCH_PROVIDER_LSP_INFO_CHECKS: &ON_SEARCH_PROVIDER_LSP_INFO_CHECKS
-      - *REQUIRED_LSP_INFO_TAG_GROUP_2
+      - *REQUIRED_CATALOG_LSP_INFO_TAG_GROUP
       - *REQUIRED_LSP_INFO_CODE
     ON_SEARCH_PROVIDER_LSP_INFO: &ON_SEARCH_PROVIDER_LSP_INFO
       _NAME_: ON_SEARCH_PROVIDER_LSP_INFO
@@ -302,34 +304,47 @@ _COMMON_:
     ON_SELECT_PROVIDER_TAGS_CHECKS: &ON_SELECT_PROVIDER_TAGS_CHECKS
       - *REQUIRED_ORDER_PROVIDER_CODE
       - *REQUIRED_CONTACT_INFO_LIST
-      - *REQUIRED_LSP_INFO_TAG_GROUP
+      - *REQUIRED_ORDER_LSP_INFO_TAG_GROUP
       - *REQUIRED_LSP_INFO_LIST
     ON_SELECT_PROVIDER_TAGS: &ON_SELECT_PROVIDER_TAGS
       _NAME_: ON_SELECT_PROVIDER_TAGS
       tagPath: $.message.order.provider.tags[*].descriptor.code
       _CONTINUE_: "!(tagPath are present)"
       _RETURN_: *ON_SELECT_PROVIDER_TAGS_CHECKS
-    REQUIRED_BAP_TERMS_CHECKS: &REQUIRED_BAP_TERMS_CHECKS
-      - *REQUIRED_BAP_TERMS_STATIC_TERMS
-      - *REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
-    REQUIRED_BAP_TERMS_ORDER: &REQUIRED_BAP_TERMS_ORDER
-      _NAME_: REQUIRED_BAP_TERMS
-      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
-      _RETURN_: *REQUIRED_BAP_TERMS_CHECKS
-    REQUIRED_BAP_TERMS_CHECKS_2: &REQUIRED_BAP_TERMS_CHECKS_2
+    REQUIRED_CATALOG_BPP_TERMS_CHECKS: &REQUIRED_CATALOG_BPP_TERMS_CHECKS
+      - *REQUIRED_CATALOG_BPP_TERMS_STATIC_TERMS
+      - *REQUIRED_CATALOG_BPP_TERMS_OFFLINE_CONTRACT
+    REQUIRED_BPP_TERMS_CATALOG: &REQUIRED_BPP_TERMS_CATALOG
+      _NAME_: REQUIRED_BPP_TERMS
+      _SCOPE_: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')]
+      _RETURN_: *REQUIRED_CATALOG_BPP_TERMS_CHECKS
+    ON_SEARCH_TAGS_CHECKS: &ON_SEARCH_TAGS_CHECKS
+      - *REQUIRED_CATALOG_TAGS
+      - *REQUIRED_BPP_TERMS_CATALOG
+    ON_SEARCH_TAGS: &ON_SEARCH_TAGS
+      _NAME_: ON_SEARCH_TAGS
+      _RETURN_: *ON_SEARCH_TAGS_CHECKS
+    REQUIRED_INTENT_BAP_TERMS_CHECKS: &REQUIRED_INTENT_BAP_TERMS_CHECKS
       - *REQUIRED_STATIC_TERMS_VALUE
       - *REQUIRED_OFFLINE_CONTRACT_VALUE
     REQUIRED_BAP_TERMS_INTENT: &REQUIRED_BAP_TERMS_INTENT
       _NAME_: REQUIRED_BAP_TERMS
       _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')]
-      _RETURN_: *REQUIRED_BAP_TERMS_CHECKS_2
-    REQUIRED_BPP_TERMS_CHECKS: &REQUIRED_BPP_TERMS_CHECKS
-      - *REQUIRED_BPP_TERMS_STATIC_TERMS
-      - *REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      _RETURN_: *REQUIRED_INTENT_BAP_TERMS_CHECKS
+    REQUIRED_ORDER_BAP_TERMS_CHECKS: &REQUIRED_ORDER_BAP_TERMS_CHECKS
+      - *REQUIRED_BAP_TERMS_STATIC_TERMS
+      - *REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
+    REQUIRED_BAP_TERMS_ORDER: &REQUIRED_BAP_TERMS_ORDER
+      _NAME_: REQUIRED_BAP_TERMS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
+      _RETURN_: *REQUIRED_ORDER_BAP_TERMS_CHECKS
+    REQUIRED_ORDER_BPP_TERMS_CHECKS: &REQUIRED_ORDER_BPP_TERMS_CHECKS
+      - *REQUIRED_ORDER_BPP_TERMS_STATIC_TERMS
+      - *REQUIRED_ORDER_BPP_TERMS_OFFLINE_CONTRACT
     REQUIRED_BPP_TERMS_ORDER: &REQUIRED_BPP_TERMS_ORDER
       _NAME_: REQUIRED_BPP_TERMS
       _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
-      _RETURN_: *REQUIRED_BPP_TERMS_CHECKS
+      _RETURN_: *REQUIRED_ORDER_BPP_TERMS_CHECKS
     CONFIRM_TAGS_CHECKS: &CONFIRM_TAGS_CHECKS
       - *REQUIRED_ORDER_TAGS
       - *REQUIRED_BAP_TERMS_ORDER
@@ -340,19 +355,6 @@ _COMMON_:
     ON_CONFIRM_TAGS: &ON_CONFIRM_TAGS
       _NAME_: ON_CONFIRM_TAGS
       _RETURN_: *CONFIRM_TAGS_CHECKS
-    REQUIRED_BPP_TERMS_CHECKS_2: &REQUIRED_BPP_TERMS_CHECKS_2
-      - *REQUIRED_BPP_TERMS_STATIC_TERMS_2
-      - *REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2
-    REQUIRED_BPP_TERMS_CATALOG: &REQUIRED_BPP_TERMS_CATALOG
-      _NAME_: REQUIRED_BPP_TERMS
-      _SCOPE_: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')]
-      _RETURN_: *REQUIRED_BPP_TERMS_CHECKS_2
-    ON_SEARCH_TAGS_CHECKS: &ON_SEARCH_TAGS_CHECKS
-      - *REQUIRED_CATALOG_TAGS
-      - *REQUIRED_BPP_TERMS_CATALOG
-    ON_SEARCH_TAGS: &ON_SEARCH_TAGS
-      _NAME_: ON_SEARCH_TAGS
-      _RETURN_: *ON_SEARCH_TAGS_CHECKS
     REQUIRED_PAYMENT_TAGS_CHECKS: &REQUIRED_PAYMENT_TAGS_CHECKS
       - *REQUIRED_BUYER_FINDER_FEES_TAG
       - *REQUIRED_SETTLEMENT_TERMS_TAG
@@ -361,7 +363,7 @@ _COMMON_:
       _RETURN_: *REQUIRED_PAYMENT_TAGS_CHECKS
     REQUIRED_PROVIDER_TAGS_CHECKS: &REQUIRED_PROVIDER_TAGS_CHECKS
       - *REQUIRED_ORDER_PROVIDER_CODE
-      - *REQUIRED_LSP_INFO_TAG_GROUP
+      - *REQUIRED_ORDER_LSP_INFO_TAG_GROUP
     REQUIRED_PROVIDER_TAGS: &REQUIRED_PROVIDER_TAGS
       _NAME_: REQUIRED_PROVIDER_TAGS
       _RETURN_: *REQUIRED_PROVIDER_TAGS_CHECKS
@@ -442,9 +444,6 @@ _COMMON_:
           attr: $.context.bpp_id
           _RETURN_: attr are present
         - *REQUIRED_CONTEXT_TTL
-        # - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-        #   attr: $.context.country
-        #   _RETURN_: attr are present
     CONTEXT_CHECKS: &CONTEXT_CHECKS
       - _NAME_: CONTEXT_REQUIRED
         _RETURN_:
@@ -481,7 +480,7 @@ _COMMON_:
             _RETURN_: attr any in enumList
           - _NAME_: VALID_CONTEXT_DOMAIN
             attr: $.context.domain
-            enumList: *LIST_ONDC_FIS12
+            enumList: *DOMAIN
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr all in enumList
       - _NAME_: CONTEXT_REGEX
@@ -538,7 +537,7 @@ _COMMON_:
       - TRAVEL_CARDS
       - REWARDS_CARDS
       - LIFESTYLE_CARDS
-    ENUM_CATALOG_PROVIDERS_CATEGORIES_PARENT_CATEGORY_ID: &ENUM_CATALOG_PROVIDERS_CATEGORIES_PARENT_CATEGORY_ID
+    ENUM_CATEGORIES_PARENT_ID: &ENUM_CATEGORIES_PARENT_ID
       - BUREAU_LOAN
       - AA_LOAN
       - PERSONAL_LOAN
@@ -711,7 +710,7 @@ _COMMON_:
         - COMPLETED
         - EXPIRED
         - OFFLINE_PENDING
-      ENUM_XINPUT_FORM_RESPONSE_STATUS_2: &ENUM_XINPUT_FORM_RESPONSE_STATUS_2
+      ENUM_XINPUT_FORM_RESPONSE_STATUS_PENDING_SUCCESS: &ENUM_XINPUT_FORM_RESPONSE_STATUS_PENDING_SUCCESS
         - PENDING
         - SUCCESS
       REQUIRED_XINPUT_FORM_RESPONSE: &REQUIRED_XINPUT_FORM_RESPONSE
@@ -741,7 +740,7 @@ _COMMON_:
       VALID_XINPUT_FORM_RESPONSE_STATUS: &VALID_XINPUT_FORM_RESPONSE_STATUS
         _NAME_: VALID_XINPUT_FORM_RESPONSE_STATUS
         attr: $.message.order.items[*].xinput.form_response.status
-        enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS_2
+        enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS_PENDING_SUCCESS
         _RETURN_: attr all in enumList
     REQUIRED_ITEMS_XINPUT_REQUIRED: &REQUIRED_ITEMS_XINPUT_REQUIRED
       _NAME_: REQUIRED_XINPUT
@@ -930,11 +929,11 @@ _COMMON_:
       _RETURN_: attr are present
 
   issue:
-    ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTIONS_COMPLAINANT_ACTION: &ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTIONS_COMPLAINANT_ACTION
+    ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTION: &ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTION
       - OPEN
       - CLOSE
       - ESCALATE
-    ENUM_ISSUE_ACTIONS_RESPONDENT_ACTIONS_RESPONDENT_ACTION: &ENUM_ISSUE_ACTIONS_RESPONDENT_ACTIONS_RESPONDENT_ACTION
+    ENUM_ISSUE_ACTIONS_RESPONDENT_ACTION: &ENUM_ISSUE_ACTIONS_RESPONDENT_ACTION
       - OPEN
       - PROCESSING
       - RESOLVED
@@ -979,7 +978,7 @@ _COMMON_:
       - RESOLVED
       - NEED_MORE_INFO
       - INFO_PROVIDED
-    ENUM_ISSUE_STATUS_2: &ENUM_ISSUE_STATUS_2
+    ENUM_ISSUE_STATUS_OPEN_CLOSED: &ENUM_ISSUE_STATUS_OPEN_CLOSED
       - OPEN
       - CLOSED
     ENUM_ISSUE_SUB_CATEGORY: &ENUM_ISSUE_SUB_CATEGORY
@@ -1052,7 +1051,7 @@ _COMMON_:
     REQUIRED_ISSUE_STATUS: &REQUIRED_ISSUE_STATUS
       _NAME_: REQUIRED_ISSUE_STATUS
       attr: $.message.issue.status
-      validValues: *ENUM_ISSUE_STATUS_2
+      validValues: *ENUM_ISSUE_STATUS_OPEN_CLOSED
       _RETURN_: attr all in validValues
     REQUIRED_MESSAGE_ACTION_BY: &REQUIRED_MESSAGE_ACTION_BY
       _NAME_: REQUIRED_MESSAGE_ACTION_BY
@@ -1107,7 +1106,7 @@ _COMMON_:
       - _NAME_: REQUIRED_RESPONDENT_ACTION
         attr: $.message.issue.issue_actions.respondent_actions[*].respondent_action
         _RETURN_: attr are present && attr all in enumList
-        enumList: *ENUM_ISSUE_ACTIONS_RESPONDENT_ACTIONS_RESPONDENT_ACTION
+        enumList: *ENUM_ISSUE_ACTIONS_RESPONDENT_ACTION
 
       - _NAME_: REQUIRED_RESPONDENT_SHORT_DESC
         attr: $.message.issue.issue_actions.respondent_actions[*].short_desc
@@ -1137,10 +1136,8 @@ _TESTS_:
     - _NAME_: SEARCH_CONTEXT
       action:
         - search
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: SEARCH_CATEGORY_CODE
       action:
@@ -1174,10 +1171,8 @@ _TESTS_:
     - _NAME_: ON_SEARCH_CONTEXT
       action:
         - on_search
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_SEARCH_CATALOG_NAME
       attr: $.message.catalog.descriptor.name
@@ -1195,7 +1190,7 @@ _TESTS_:
         - _NAME_: REQUIRED_CATEGORIES_PARENT_ID
           attr: $.message.catalog.providers[*].categories[*].parent_category_id
           category_code_path: $.message.catalog.providers[*].categories[*].descriptor.code
-          var_category_code: *ENUM_CATALOG_PROVIDERS_CATEGORIES_PARENT_CATEGORY_ID
+          var_category_code: *ENUM_CATEGORIES_PARENT_ID
           _CONTINUE_: (var_category_code any in category_code_path)
           _RETURN_: attr are present
     - _NAME_: ON_SEARCH_ITEMS_PL
@@ -1251,10 +1246,8 @@ _TESTS_:
     - _NAME_: SELECT_CONTEXT
       action:
         - select
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: SELECT_PROVIDER_ID
       attr: $.message.order.provider.id
@@ -1272,10 +1265,8 @@ _TESTS_:
     - _NAME_: ON_SELECT_CONTEXT
       action:
         - on_select
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_SELECT_PROVIDER
       _RETURN_:
@@ -1393,10 +1384,8 @@ _TESTS_:
     - _NAME_: INIT_CONTEXT
       action:
         - init
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: INIT_PROVIDER_ID
       attr: $.message.order.provider.id
@@ -1414,10 +1403,8 @@ _TESTS_:
     - _NAME_: ON_INIT_CONTEXT
       action:
         - on_init
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_INIT_PROVIDER
       _RETURN_: *PROVIDER_CHECKS
@@ -1479,10 +1466,8 @@ _TESTS_:
     - _NAME_: CONFIRM_CONTEXT
       action:
         - confirm
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: CONFIRM_PROVIDER_ID
       attr: $.message.order.provider.id
@@ -1508,10 +1493,8 @@ _TESTS_:
     - _NAME_: ON_CONFIRM_CONTEXT
       action:
         - on_confirm
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_CONFIRM_PROVIDER
       _RETURN_: *PROVIDER_CHECKS
@@ -1589,10 +1572,8 @@ _TESTS_:
     - _NAME_: UPDATE_CONTEXT
       action:
         - update
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: UPDATE_ORDER_ID
       attr: $.message.order.id
@@ -1640,10 +1621,8 @@ _TESTS_:
     - _NAME_: ON_UPDATE_CONTEXT
       action:
         - on_update
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_UPDATE_ORDER
       _RETURN_:
@@ -1681,10 +1660,8 @@ _TESTS_:
     - _NAME_: STATUS_CONTEXT
       action:
         - status
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: STATUS_ORDER_ID_PERSONAL_LOAN
       orderidpath: $.message.order_id
@@ -1704,10 +1681,8 @@ _TESTS_:
     - _NAME_: ON_STATUS_CONTEXT
       action:
         - on_status
-      domain:
-        - ONDC:FIS12
-      version:
-        - 2.0.3
+      domain: *DOMAIN
+      version: *VERSION
       _RETURN_: *CONTEXT_CHECKS
     - _NAME_: ON_STATUS_ORDER
       _RETURN_:
@@ -1829,52 +1804,6 @@ _TESTS_:
               validValues: *ENUM_ISSUE_CATEGORY
               _RETURN_: attr all in validValues
 
-            # - _NAME_: VALID_FULFILLMENT_SUB_CATEGORY
-            #   _SCOPE_: $.message.issue[?(@.category=='FULFILLMENT')]
-            #   subCategory: $.sub_category
-            #   validValues:
-            #     - FLM0190
-            #     - FLM02
-            #     - FLM202
-            #     - FLM203
-            #     - FLM204
-            #     - FLM205
-            #     - FLM206
-            #     - FLM207
-            #     - FLM208
-            #     - FLM209
-            #     - FLM210
-            #     - FLM211
-            #     - FLM212
-            #   _RETURN_: subCategory any in validValues
-
-            # - _NAME_: VALID_PAYMENT_SUB_CATEGORY
-            #   _SCOPE_: $.message.issue[?(@.category=='PAYMENT')]
-            #   subCategory: $.sub_category
-            #   validValues:
-            #     - PMT01
-            #     - PMT02
-            #     - PMT03
-            #     - PMT04
-            #     - PMT05
-            #     - PMT06
-            #     - PMT07
-            #     - PMT08
-            #     - PMT09
-            #     - PTM09
-            #     - PTM10
-            #   _RETURN_: subCategory any in validValues
-
-            # - _NAME_: VALID_ORDER_SUB_CATEGORY
-            #   _SCOPE_: $.message.issue[?(@.category=='ORDER')]
-            #   subCategory: $.sub_category
-            #   validValues:
-            #     - ORD01
-            #     - ORD02
-            #     - ORD03
-            #     - ORD04
-            #   _RETURN_: subCategory any in validValues    
-
             - _NAME_: REQUIRED_ISSUE_SUB_CATEGORY
               attr: $.message.issue.sub_category
               validValues: *ENUM_ISSUE_SUB_CATEGORY
@@ -1887,10 +1816,6 @@ _TESTS_:
             - _NAME_: REQUIRED_COMPLAINANT_CONTACT_PHONE
               attr: $.message.issue.complainant_info.contact.phone
               _RETURN_: attr are present
-
-            # - _NAME_: REQUIRED_ORDER_ID
-            #   attr: $.message.issue.order_details.id
-            #   _RETURN_: attr are present
 
             - _NAME_: REQUIRED_ORDER_ITEMS
               attr: $.message.issue.order_details.items[*].id
@@ -1936,7 +1861,7 @@ _TESTS_:
 
             - _NAME_: REQUIRED_ISSUE_ACTIONS_OPEN
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
-              validValues: *ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTIONS_COMPLAINANT_ACTION
+              validValues: *ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTION
               _RETURN_: attr all in validValues
 
             - _NAME_: REQUIRED_CREATED_AT
@@ -1958,7 +1883,7 @@ _TESTS_:
 
             - _NAME_: REQUIRED_ISSUE_ACTIONS_CLOSED
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
-              validValues: *ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTIONS_COMPLAINANT_ACTION
+              validValues: *ENUM_ISSUE_ACTIONS_COMPLAINANT_ACTION
               _RETURN_: attr all in validValues
             - _NAME_: REQUIRED_CREATED_AT_CLOSED
               attr: $.message.issue.created_at
