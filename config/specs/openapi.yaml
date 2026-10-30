@@ -402,16 +402,43 @@ paths:
                       type: string
                     ttl:
                       type: string
-                    location:
-                      type: object
-                      properties:
-                        country: *country
+                    version:
+                      type: string
+                    location: *location
                 message:
                   type: object
                   properties:
                     issue:
                       type: object
                       properties:
+                        description:
+                          type: object
+                          properties:
+                            short_desc:
+                              type: string
+                            long_desc:
+                              type: string
+                            additional_desc:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                content_type:
+                                  type: string
+                            images:
+                              type: array
+                              items:
+                                type: string
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_resolution_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
                         id:
                           type: string
                         status:
@@ -899,12 +926,25 @@ paths:
                       type: string
                     ttl:
                       type: string
+                    version:
+                      type: string
+                    location: *location
                 message:
                   type: object
                   properties:
                     issue:
                       type: object
                       properties:
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_resolution_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
                         id:
                           type: string
                         status:
@@ -1502,10 +1542,9 @@ paths:
                       type: string
                     ttl:
                       type: string
-                    location:
-                      type: object
-                      properties:
-                        country: *country
+                    version:
+                      type: string
+                    location: *location
                 message:
                   type: object
                   properties:

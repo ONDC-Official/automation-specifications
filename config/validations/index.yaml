@@ -5,10 +5,14 @@ _COMMON_:
   constants:
     LIST_FULFILLMENT: &LIST_FULFILLMENT
       - fulfillment
+    LIST_IND: &LIST_IND
+      - IND
     LIST_INR: &LIST_INR
       - INR
     LIST_LOAN: &LIST_LOAN
       - LOAN
+    LIST_ONDC_FIS12: &LIST_ONDC_FIS12
+      - ONDC:FIS12
     LIST_PERSONAL_LOAN: &LIST_PERSONAL_LOAN
       - PERSONAL_LOAN
     LIST_SEARCH: &LIST_SEARCH
@@ -73,10 +77,24 @@ _COMMON_:
     ENUM_ORDER_CODE: &ENUM_ORDER_CODE
       - BAP_TERMS
       - BPP_TERMS
+    LIST_BAP_TERMS: &LIST_BAP_TERMS
+      - BAP_TERMS
+    LIST_BPP_TERMS: &LIST_BPP_TERMS
+      - BPP_TERMS
+    LIST_CONSENT_HANDLER: &LIST_CONSENT_HANDLER
+      - CONSENT_HANDLER
+    LIST_CONSENT_INFO: &LIST_CONSENT_INFO
+      - CONSENT_INFO
     LIST_CONTACT_INFO: &LIST_CONTACT_INFO
       - CONTACT_INFO
+    LIST_GENERAL_INFO: &LIST_GENERAL_INFO
+      - GENERAL_INFO
     LIST_LSP_INFO: &LIST_LSP_INFO
       - LSP_INFO
+    LIST_LTV_RATIO: &LIST_LTV_RATIO
+      - LTV_RATIO
+    LIST_SETTLEMENT_TERMS: &LIST_SETTLEMENT_TERMS
+      - SETTLEMENT_TERMS
     TAGS_ON_ORDER_CODE: &TAGS_ON_ORDER_CODE
       - BUYER_FINDER_FEES
       - SETTLEMENT_TERMS
@@ -85,60 +103,286 @@ _COMMON_:
       - CONTACT_INFO
       - LSP_INFO
       - GENERAL_INFO
-    REQUIRED_CONTACT_INFO_TAG_GROUP: &REQUIRED_CONTACT_INFO_TAG_GROUP
+    REQUIRED_BAP_TERMS_OFFLINE_CONTRACT: &REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
+      _NAME_: REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_BAP_TERMS_STATIC_TERMS: &REQUIRED_BAP_TERMS_STATIC_TERMS
+      _NAME_: REQUIRED_BAP_TERMS_STATIC_TERMS
+      attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    REQUIRED_BPP_TERMS_OFFLINE_CONTRACT: &REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2: &REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2
+      _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_BPP_TERMS_STATIC_TERMS: &REQUIRED_BPP_TERMS_STATIC_TERMS
+      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
+      attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    REQUIRED_BPP_TERMS_STATIC_TERMS_2: &REQUIRED_BPP_TERMS_STATIC_TERMS_2
+      _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
+      attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    REQUIRED_BUYER_FINDER_FEES_TAG: &REQUIRED_BUYER_FINDER_FEES_TAG
+      _NAME_: REQUIRED_BUYER_FINDER_FEES_TAG
+      validTags: *TAGS_ON_ORDER_CODE
+      tagPath: $.message.order.payments[?(@.type=='ON_ORDER')].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_CATALOG_PROVIDERS_CODE: &REQUIRED_CATALOG_PROVIDERS_CODE
       _NAME_: REQUIRED_CONTACT_INFO_TAG_GROUP
       validTags: *LIST_CONTACT_INFO
-      tagPath: $.message.order.provider.tags[*].descriptor.code
+      tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
       _RETURN_: tagPath any in validTags
+    REQUIRED_CATALOG_TAGS: &REQUIRED_CATALOG_TAGS
+      _NAME_: REQUIRED_CATALOG_TAGS
+      attr: $.message.catalog.tags[*].descriptor.code
+      enumList: *LIST_BPP_TERMS
+      _RETURN_: attr are present && attr all in enumList
+    REQUIRED_CONSENT_HANDLER: &REQUIRED_CONSENT_HANDLER
+      _NAME_: REQUIRED_CONSENT_HANDLER
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='CONSENT_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *LIST_CONSENT_HANDLER
+      _RETURN_: subTags any in validValues
+    REQUIRED_CONSENT_INFO_TAG: &REQUIRED_CONSENT_INFO_TAG
+      _NAME_: REQUIRED_CONSENT_INFO_TAG
+      validTags: *LIST_CONSENT_INFO
+      tagPath: $.message.order.items[*].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_CONTACT_INFO_CODE: &REQUIRED_CONTACT_INFO_CODE
+      _NAME_: REQUIRED_CONTACT_INFO_LIST
+      _SCOPE_: $.message.catalog.providers[*].tags[?(@.descriptor.code=='CONTACT_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_CONTACT_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
+    REQUIRED_CONTACT_INFO_LIST: &REQUIRED_CONTACT_INFO_LIST
+      _NAME_: REQUIRED_CONTACT_INFO_LIST
+      _SCOPE_: $.message.order.provider.tags[?(@.descriptor.code=='CONTACT_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_CONTACT_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
+    REQUIRED_GENERAL_INFO_LIST: &REQUIRED_GENERAL_INFO_LIST
+      _NAME_: REQUIRED_GENERAL_INFO_LIST
+      _SCOPE_: $.message.catalog.providers[*].items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_GENERAL_INFO_LIST
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
+    REQUIRED_GENERAL_INFO_LIST_CC: &REQUIRED_GENERAL_INFO_LIST_CC
+      _NAME_: REQUIRED_GENERAL_INFO_LIST_CC
+      _SCOPE_: $.message.catalog.providers[*].items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_GENERAL_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
     REQUIRED_GENERAL_INFO_TAG_GROUP: &REQUIRED_GENERAL_INFO_TAG_GROUP
       _NAME_: REQUIRED_GENERAL_INFO_TAG_GROUP
-      validTags:
-        - GENERAL_INFO
+      validTags: *LIST_GENERAL_INFO
       tagPath: $.message.catalog.providers[*].items[*].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_INTENT_TAGS: &REQUIRED_INTENT_TAGS
+      _NAME_: REQUIRED_INTENT_TAGS
+      attr: $.message.intent.tags[*].descriptor.code
+      enumList: *LIST_BAP_TERMS
+      _RETURN_: attr are present && attr all in enumList
+    REQUIRED_LOAN_INFO_LIST_COMMON: &REQUIRED_LOAN_INFO_LIST_COMMON
+      _NAME_: REQUIRED_LOAN_INFO_LIST_COMMON
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='LOAN_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_LOAN_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags any in validValues
+    REQUIRED_LOAN_INFO_LTV_RATIO_GOLD: &REQUIRED_LOAN_INFO_LTV_RATIO_GOLD
+      _NAME_: REQUIRED_LOAN_INFO_LTV_RATIO_GOLD
+      _SCOPE_: $.message.order.items[?(@.descriptor.code=='LOAN')].tags[?(@.descriptor.code=='LOAN_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *LIST_LTV_RATIO
+      _RETURN_: subTags any in validValues
+    REQUIRED_LOAN_INFO_TAG: &REQUIRED_LOAN_INFO_TAG
+      _NAME_: REQUIRED_LOAN_INFO_TAG
+      validTags: *TAGS_ORDER_ITEMS_CODE
+      tagPath: $.message.order.items[*].tags[*].descriptor.code
       _RETURN_: tagPath any in validTags
     REQUIRED_LOAN_INFO_TAG_GROUP: &REQUIRED_LOAN_INFO_TAG_GROUP
       _NAME_: REQUIRED_LOAN_INFO_TAG_GROUP
       validTags: *TAGS_ORDER_ITEMS_CODE
       tagPath: $.message.order.items[*].tags[*].descriptor.code
       _RETURN_: tagPath any in validTags
+    REQUIRED_LSP_INFO_CODE: &REQUIRED_LSP_INFO_CODE
+      _NAME_: REQUIRED_LSP_INFO_LIST
+      _SCOPE_: $.message.catalog.providers[*].tags[?(@.descriptor.code=='LSP_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_LSP_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
+    REQUIRED_LSP_INFO_LIST: &REQUIRED_LSP_INFO_LIST
+      _NAME_: REQUIRED_LSP_INFO_LIST
+      _SCOPE_: $.message.order.provider.tags[?(@.descriptor.code=='LSP_INFO')]
+      subTags: $.list[*].descriptor.code
+      validValues: *ENUM_LSP_INFO_CODE
+      _CONTINUE_: "!(subTags are present)"
+      _RETURN_: subTags all in validValues
     REQUIRED_LSP_INFO_TAG_GROUP: &REQUIRED_LSP_INFO_TAG_GROUP
       _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
       validTags: *LIST_LSP_INFO
       tagPath: $.message.order.provider.tags[*].descriptor.code
       _RETURN_: tagPath any in validTags
-    TAGS_CHECKS: &TAGS_CHECKS
-      - _NAME_: REQUIRED_ORDER_TAGS
-        attr: $.message.order.tags[*].descriptor.code
-        enumList: *ENUM_ORDER_CODE
-        _RETURN_: attr are present && attr all in enumList
-
-      - _NAME_: REQUIRED_BAP_TERMS
-        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
-        _RETURN_:
-          - _NAME_: REQUIRED_BAP_TERMS_STATIC_TERMS
-            attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
-            attr: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-            _RETURN_: attr are present
-
-      - _NAME_: REQUIRED_BPP_TERMS
-        _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
-        _RETURN_:
-          - _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
-            attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-            _RETURN_: attr are present
-
-          - _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
-            attr: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-            _RETURN_: attr are present
+    REQUIRED_LSP_INFO_TAG_GROUP_2: &REQUIRED_LSP_INFO_TAG_GROUP_2
+      _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
+      validTags: *LIST_LSP_INFO
+      tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_OFFLINE_CONTRACT_VALUE: &REQUIRED_OFFLINE_CONTRACT_VALUE
+      _NAME_: REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
+      attr: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
+      _RETURN_: attr are present
+    REQUIRED_ORDER_PROVIDER_CODE: &REQUIRED_ORDER_PROVIDER_CODE
+      _NAME_: REQUIRED_CONTACT_INFO_TAG_GROUP
+      validTags: *LIST_CONTACT_INFO
+      tagPath: $.message.order.provider.tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_ORDER_TAGS: &REQUIRED_ORDER_TAGS
+      _NAME_: REQUIRED_ORDER_TAGS
+      attr: $.message.order.tags[*].descriptor.code
+      enumList: *ENUM_ORDER_CODE
+      _RETURN_: attr are present && attr all in enumList
+    REQUIRED_PAYMENT_REF_ID: &REQUIRED_PAYMENT_REF_ID
+      _NAME_: REQUIRED_PAYMENT_REF_ID
+      attr: $.message.order.payments[*].tags[?(@.descriptor.code=='LOAN_REPAYMENT')].list[?(@.descriptor.code=='ref_id')].value
+      _RETURN_: attr are present
+    REQUIRED_SETTLEMENT_TERMS_TAG: &REQUIRED_SETTLEMENT_TERMS_TAG
+      _NAME_: REQUIRED_SETTLEMENT_TERMS_TAG
+      validTags: *LIST_SETTLEMENT_TERMS
+      tagPath: $.message.order.payments[?(@.type=='ON_ORDER')].tags[*].descriptor.code
+      _RETURN_: tagPath any in validTags
+    REQUIRED_STATIC_TERMS_VALUE: &REQUIRED_STATIC_TERMS_VALUE
+      _NAME_: REQUIRED_BAP_TERMS_STATIC_TERMS
+      attr: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
+      _RETURN_: attr are present
+    VALID_CHECKLIST_CODES_ENUM: &VALID_CHECKLIST_CODES_ENUM
+      _NAME_: VALID_CHECKLIST_CODES_ENUM
+      attr: $.message.order.fulfillments[*].tags[?(@.descriptor.code=='CHECKLISTS')].list[*].descriptor.code
+      enumList: *ENUM_CHECKLISTS_CODE
+      _RETURN_: attr all in enumList
+    ON_STATUS_CHECKLIST_CODES: &ON_STATUS_CHECKLIST_CODES
+      _NAME_: ON_STATUS_CHECKLIST_CODES
+      checklistpath: $.message.order.fulfillments[*].tags[?(@.descriptor.code=='CHECKLISTS')].list[*].descriptor.code
+      _CONTINUE_: "!(checklistpath are present)"
+      _RETURN_:
+        - *VALID_CHECKLIST_CODES_ENUM
+    OFFER_LOAN_INFO_CHECKS: &OFFER_LOAN_INFO_CHECKS
+      - *REQUIRED_LOAN_INFO_TAG_GROUP
+      - *REQUIRED_LOAN_INFO_LIST_COMMON
+      - *REQUIRED_LOAN_INFO_LTV_RATIO_GOLD
+    ON_SEARCH_PROVIDER_CONTACT_INFO_CHECKS: &ON_SEARCH_PROVIDER_CONTACT_INFO_CHECKS
+      - *REQUIRED_CATALOG_PROVIDERS_CODE
+      - *REQUIRED_CONTACT_INFO_CODE
+    ON_SEARCH_PROVIDER_CONTACT_INFO: &ON_SEARCH_PROVIDER_CONTACT_INFO
+      _NAME_: ON_SEARCH_PROVIDER_CONTACT_INFO
+      _RETURN_: *ON_SEARCH_PROVIDER_CONTACT_INFO_CHECKS
+    ON_SEARCH_PROVIDER_LSP_INFO_CHECKS: &ON_SEARCH_PROVIDER_LSP_INFO_CHECKS
+      - *REQUIRED_LSP_INFO_TAG_GROUP_2
+      - *REQUIRED_LSP_INFO_CODE
+    ON_SEARCH_PROVIDER_LSP_INFO: &ON_SEARCH_PROVIDER_LSP_INFO
+      _NAME_: ON_SEARCH_PROVIDER_LSP_INFO
+      _RETURN_: *ON_SEARCH_PROVIDER_LSP_INFO_CHECKS
+    ON_SELECT_1_AA_CONSENT_ITEMS_CHECKS: &ON_SELECT_1_AA_CONSENT_ITEMS_CHECKS
+      - *REQUIRED_CONSENT_INFO_TAG
+      - *REQUIRED_CONSENT_HANDLER
+    ON_SELECT_1_AA_CONSENT_ITEMS: &ON_SELECT_1_AA_CONSENT_ITEMS
+      _NAME_: ON_SELECT_1_AA_CONSENT_ITEMS
+      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='PERSONAL_LOAN')]
+      _RETURN_: *ON_SELECT_1_AA_CONSENT_ITEMS_CHECKS
+    ON_SELECT_PROVIDER_TAGS_CHECKS: &ON_SELECT_PROVIDER_TAGS_CHECKS
+      - *REQUIRED_ORDER_PROVIDER_CODE
+      - *REQUIRED_CONTACT_INFO_LIST
+      - *REQUIRED_LSP_INFO_TAG_GROUP
+      - *REQUIRED_LSP_INFO_LIST
+    ON_SELECT_PROVIDER_TAGS: &ON_SELECT_PROVIDER_TAGS
+      _NAME_: ON_SELECT_PROVIDER_TAGS
+      tagPath: $.message.order.provider.tags[*].descriptor.code
+      _CONTINUE_: "!(tagPath are present)"
+      _RETURN_: *ON_SELECT_PROVIDER_TAGS_CHECKS
+    REQUIRED_BAP_TERMS_CHECKS: &REQUIRED_BAP_TERMS_CHECKS
+      - *REQUIRED_BAP_TERMS_STATIC_TERMS
+      - *REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
+    REQUIRED_BAP_TERMS_ORDER: &REQUIRED_BAP_TERMS_ORDER
+      _NAME_: REQUIRED_BAP_TERMS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BAP_TERMS')]
+      _RETURN_: *REQUIRED_BAP_TERMS_CHECKS
+    REQUIRED_BAP_TERMS_CHECKS_2: &REQUIRED_BAP_TERMS_CHECKS_2
+      - *REQUIRED_STATIC_TERMS_VALUE
+      - *REQUIRED_OFFLINE_CONTRACT_VALUE
+    REQUIRED_BAP_TERMS_INTENT: &REQUIRED_BAP_TERMS_INTENT
+      _NAME_: REQUIRED_BAP_TERMS
+      _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')]
+      _RETURN_: *REQUIRED_BAP_TERMS_CHECKS_2
+    REQUIRED_BPP_TERMS_CHECKS: &REQUIRED_BPP_TERMS_CHECKS
+      - *REQUIRED_BPP_TERMS_STATIC_TERMS
+      - *REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
+    REQUIRED_BPP_TERMS_ORDER: &REQUIRED_BPP_TERMS_ORDER
+      _NAME_: REQUIRED_BPP_TERMS
+      _SCOPE_: $.message.order.tags[?(@.descriptor.code=='BPP_TERMS')]
+      _RETURN_: *REQUIRED_BPP_TERMS_CHECKS
+    CONFIRM_TAGS_CHECKS: &CONFIRM_TAGS_CHECKS
+      - *REQUIRED_ORDER_TAGS
+      - *REQUIRED_BAP_TERMS_ORDER
+      - *REQUIRED_BPP_TERMS_ORDER
+    CONFIRM_TAGS: &CONFIRM_TAGS
+      _NAME_: CONFIRM_TAGS
+      _RETURN_: *CONFIRM_TAGS_CHECKS
+    ON_CONFIRM_TAGS: &ON_CONFIRM_TAGS
+      _NAME_: ON_CONFIRM_TAGS
+      _RETURN_: *CONFIRM_TAGS_CHECKS
+    REQUIRED_BPP_TERMS_CHECKS_2: &REQUIRED_BPP_TERMS_CHECKS_2
+      - *REQUIRED_BPP_TERMS_STATIC_TERMS_2
+      - *REQUIRED_BPP_TERMS_OFFLINE_CONTRACT_2
+    REQUIRED_BPP_TERMS_CATALOG: &REQUIRED_BPP_TERMS_CATALOG
+      _NAME_: REQUIRED_BPP_TERMS
+      _SCOPE_: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')]
+      _RETURN_: *REQUIRED_BPP_TERMS_CHECKS_2
+    ON_SEARCH_TAGS_CHECKS: &ON_SEARCH_TAGS_CHECKS
+      - *REQUIRED_CATALOG_TAGS
+      - *REQUIRED_BPP_TERMS_CATALOG
+    ON_SEARCH_TAGS: &ON_SEARCH_TAGS
+      _NAME_: ON_SEARCH_TAGS
+      _RETURN_: *ON_SEARCH_TAGS_CHECKS
+    REQUIRED_PAYMENT_TAGS_CHECKS: &REQUIRED_PAYMENT_TAGS_CHECKS
+      - *REQUIRED_BUYER_FINDER_FEES_TAG
+      - *REQUIRED_SETTLEMENT_TERMS_TAG
+    REQUIRED_PAYMENT_TAGS: &REQUIRED_PAYMENT_TAGS
+      _NAME_: REQUIRED_PAYMENT_TAGS
+      _RETURN_: *REQUIRED_PAYMENT_TAGS_CHECKS
+    REQUIRED_PROVIDER_TAGS_CHECKS: &REQUIRED_PROVIDER_TAGS_CHECKS
+      - *REQUIRED_ORDER_PROVIDER_CODE
+      - *REQUIRED_LSP_INFO_TAG_GROUP
+    REQUIRED_PROVIDER_TAGS: &REQUIRED_PROVIDER_TAGS
+      _NAME_: REQUIRED_PROVIDER_TAGS
+      _RETURN_: *REQUIRED_PROVIDER_TAGS_CHECKS
+    SEARCH_TAGS_CHECKS: &SEARCH_TAGS_CHECKS
+      - *REQUIRED_INTENT_TAGS
+      - *REQUIRED_BAP_TERMS_INTENT
+    SEARCH_TAGS: &SEARCH_TAGS
+      _NAME_: SEARCH_TAGS
+      _RETURN_: *SEARCH_TAGS_CHECKS
 
   context:
-    REQUIRED_CONTEXT_ACTION: &REQUIRED_CONTEXT_ACTION
-      _NAME_: REQUIRED_CONTEXT_ACTION
-      attr: $.context.action
-      _RETURN_: attr are present
+    REGEX_CONTEXT_BAP_ID: &REGEX_CONTEXT_BAP_ID
+      - ^(?!.*\b(?:http|https|www)\b)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$
+    REGEX_CONTEXT_BAP_URI: &REGEX_CONTEXT_BAP_URI
+      - ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
+    REGEX_CONTEXT_TIMESTAMP: &REGEX_CONTEXT_TIMESTAMP
+      - ^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$
+    REGEX_CONTEXT_TTL: &REGEX_CONTEXT_TTL
+      - ^P(?=\\d|T\\d)(\\d+Y)?(\\d+M)?(\\d+D)?(T(\\d+H)?(\\d+M)?(\\d+S)?)?$
+    REGEX_LOCATION_CITY_CODE: &REGEX_LOCATION_CITY_CODE
+      - ^\*$
     REQUIRED_CONTEXT_BAP_ID: &REQUIRED_CONTEXT_BAP_ID
       _NAME_: REQUIRED_CONTEXT_BAP_ID
       attr: $.context.bap_id
@@ -147,17 +391,9 @@ _COMMON_:
       _NAME_: REQUIRED_CONTEXT_BAP_URI
       attr: $.context.bap_uri
       _RETURN_: attr are present
-    REQUIRED_CONTEXT_BPP_ID: &REQUIRED_CONTEXT_BPP_ID
-      _NAME_: REQUIRED_CONTEXT_BPP_ID
-      attr: $.context.bpp_id
-      _RETURN_: attr are present
-    REQUIRED_CONTEXT_BPP_URI: &REQUIRED_CONTEXT_BPP_URI
-      _NAME_: REQUIRED_CONTEXT_BPP_URI
-      attr: $.context.bpp_uri
-      _RETURN_: attr are present
-    REQUIRED_CONTEXT_CITY: &REQUIRED_CONTEXT_CITY
-      _NAME_: REQUIRED_CONTEXT_CITY
-      attr: [$.context.location.city.code]
+    REQUIRED_CONTEXT_COUNTRY: &REQUIRED_CONTEXT_COUNTRY
+      _NAME_: REQUIRED_CONTEXT_COUNTRY
+      attr: $.context.location.country.code
       _RETURN_: attr are present
     REQUIRED_CONTEXT_DOMAIN: &REQUIRED_CONTEXT_DOMAIN
       _NAME_: REQUIRED_CONTEXT_DOMAIN
@@ -181,57 +417,31 @@ _COMMON_:
       _RETURN_: attr are present
     REQUIRED_CONTEXT_VERSION: &REQUIRED_CONTEXT_VERSION
       _NAME_: REQUIRED_CONTEXT_VERSION
-      attr: [$.context.version]
+      attr: $.context.version
       _RETURN_: attr are present
     REQUIRED_CONTEXT_FIELDS: &REQUIRED_CONTEXT_FIELDS
       _NAME_: REQUIRED_CONTEXT_FIELDS
       _RETURN_:
         - *REQUIRED_CONTEXT_DOMAIN
-        - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: [$.context.location.country.code]
+        - _NAME_: REQUIRED_CONTEXT_CITY
+          attr: $.context.location.city.code
           _RETURN_: attr are present
-        - *REQUIRED_CONTEXT_CITY
         - *REQUIRED_CONTEXT_TRANSACTION_ID
         - *REQUIRED_CONTEXT_MESSAGE_ID
-        - *REQUIRED_CONTEXT_ACTION
+        - _NAME_: REQUIRED_CONTEXT_ACTION
+          attr: $.context.action
+          _RETURN_: attr are present
         - *REQUIRED_CONTEXT_TIMESTAMP
         - *REQUIRED_CONTEXT_VERSION
         - *REQUIRED_CONTEXT_BAP_URI
         - *REQUIRED_CONTEXT_BAP_ID
-        - *REQUIRED_CONTEXT_BPP_URI
-        - *REQUIRED_CONTEXT_BPP_ID
+        - _NAME_: REQUIRED_CONTEXT_BPP_URI
+          attr: $.context.bpp_uri
+          _RETURN_: attr are present
+        - _NAME_: REQUIRED_CONTEXT_BPP_ID
+          attr: $.context.bpp_id
+          _RETURN_: attr are present
         - *REQUIRED_CONTEXT_TTL
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: [$.context.location.country.code]
-          # enumList:
-          #   - IND
-          _RETURN_: attr are present
-        # - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-        #   attr: $.context.country
-        #   _RETURN_: attr are present  
-    REQUIRED_CONTEXT_FIELDS_ISSUE: &REQUIRED_CONTEXT_FIELDS_ISSUE
-      _NAME_: REQUIRED_CONTEXT_FIELDS
-      _RETURN_:
-        - *REQUIRED_CONTEXT_DOMAIN
-        - _NAME_: REQUIRED_CONTEXT_COUNTRY
-          attr: $.context.location.country.code
-          _RETURN_: attr are present
-        - *REQUIRED_CONTEXT_CITY
-        - *REQUIRED_CONTEXT_TRANSACTION_ID
-        - *REQUIRED_CONTEXT_MESSAGE_ID
-        - *REQUIRED_CONTEXT_ACTION
-        - *REQUIRED_CONTEXT_TIMESTAMP
-        - *REQUIRED_CONTEXT_VERSION
-        - *REQUIRED_CONTEXT_BAP_URI
-        - *REQUIRED_CONTEXT_BAP_ID
-        - *REQUIRED_CONTEXT_BPP_URI
-        - *REQUIRED_CONTEXT_BPP_ID
-        - *REQUIRED_CONTEXT_TTL
-        - _NAME_: VALID_CONTEXT_COUNTRY_CODE
-          attr: $.context.location.country.code
-          # enumList:
-          #   - IND
-          _RETURN_: attr are present
         # - _NAME_: VALID_CONTEXT_COUNTRY_CODE
         #   attr: $.context.country
         #   _RETURN_: attr are present
@@ -260,54 +470,45 @@ _COMMON_:
             _RETURN_: attr are present
           - *REQUIRED_CONTEXT_TRANSACTION_ID
           - *REQUIRED_CONTEXT_MESSAGE_ID
-          - _NAME_: REQUIRED_CONTEXT_VERSION
-            attr: $.context.version
-            _RETURN_: attr are present
+          - *REQUIRED_CONTEXT_VERSION
           - *REQUIRED_CONTEXT_TTL
       - _NAME_: CONTEXT_ENUM
         _RETURN_:
           - _NAME_: VALID_CONTEXT_LOCATION_COUNTRY_CODE
             attr: $.context.location.country.code
             _CONTINUE_: "!(attr are present)"
-            enumList:
-              - IND
+            enumList: *LIST_IND
             _RETURN_: attr any in enumList
           - _NAME_: VALID_CONTEXT_DOMAIN
             attr: $.context.domain
-            enumList:
-              - ONDC:FIS12
+            enumList: *LIST_ONDC_FIS12
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr all in enumList
       - _NAME_: CONTEXT_REGEX
         _RETURN_:
           - _NAME_: REGEX_CONTEXT_LOCATION_CITY_CODE
             attr: $.context.location.city.code
-            reg:
-              - ^\*$
+            reg: *REGEX_LOCATION_CITY_CODE
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr follow regex reg
           - _NAME_: REGEX_CONTEXT_TIMESTAMP
             attr: $.context.timestamp
-            reg:
-              - ^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$
+            reg: *REGEX_CONTEXT_TIMESTAMP
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr follow regex reg
           - _NAME_: REGEX_CONTEXT_BAP_ID
             attr: $.context.bap_id
-            reg:
-              - ^(?!.*\b(?:http|https|www)\b)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$
+            reg: *REGEX_CONTEXT_BAP_ID
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr follow regex reg
           - _NAME_: REGEX_CONTEXT_BAP_URI
             attr: $.context.bap_uri
-            reg:
-              - ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
+            reg: *REGEX_CONTEXT_BAP_URI
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr follow regex reg
           - _NAME_: REGEX_CONTEXT_TTL
             attr: $.context.ttl
-            reg:
-              - ^P(?=\\d|T\\d)(\\d+Y)?(\\d+M)?(\\d+D)?(T(\\d+H)?(\\d+M)?(\\d+S)?)?$
+            reg: *REGEX_CONTEXT_TTL
             _CONTINUE_: "!(attr are present)"
             _RETURN_: attr follow regex reg
 
@@ -327,10 +528,7 @@ _COMMON_:
     PROVIDER_CHECKS: &PROVIDER_CHECKS
       - *REQUIRED_PROVIDER_ID
       - *REQUIRED_PROVIDER_NAME
-      - _NAME_: REQUIRED_PROVIDER_TAGS
-        _RETURN_:
-          - *REQUIRED_CONTACT_INFO_TAG_GROUP
-          - *REQUIRED_LSP_INFO_TAG_GROUP
+      - *REQUIRED_PROVIDER_TAGS
 
   category:
     ENUM_CATALOG_PROVIDERS_CATEGORIES_CODE: &ENUM_CATALOG_PROVIDERS_CATEGORIES_CODE
@@ -440,27 +638,60 @@ _COMMON_:
         - Loan Agreement
         - PERSONAL_INFORMATION
         - Loan Details
+      REQUIRED_XINPUT_HEAD_DESCRIPTOR_NAME: &REQUIRED_XINPUT_HEAD_DESCRIPTOR_NAME
+        _NAME_: REQUIRED_XINPUT_HEAD_DESCRIPTOR_NAME
+        attr: $.message.order.items[*].xinput.head.descriptor.name
+        _RETURN_: attr are present
+      REQUIRED_XINPUT_HEAD_HEADINGS: &REQUIRED_XINPUT_HEAD_HEADINGS
+        _NAME_: REQUIRED_XINPUT_HEAD_HEADINGS
+        attr: $.message.order.items[*].xinput.head.headings[*]
+        _RETURN_: attr are present
+      REQUIRED_XINPUT_HEAD_INDEX_CUR: &REQUIRED_XINPUT_HEAD_INDEX_CUR
+        _NAME_: REQUIRED_XINPUT_HEAD_INDEX_CUR
+        attr: $.message.order.items[*].xinput.head.index.cur
+        _RETURN_: attr are present
+      REQUIRED_XINPUT_HEAD_INDEX_MAX: &REQUIRED_XINPUT_HEAD_INDEX_MAX
+        _NAME_: REQUIRED_XINPUT_HEAD_INDEX_MAX
+        attr: $.message.order.items[*].xinput.head.index.max
+        _RETURN_: attr are present
+      REQUIRED_XINPUT_HEAD_INDEX_MIN: &REQUIRED_XINPUT_HEAD_INDEX_MIN
+        _NAME_: REQUIRED_XINPUT_HEAD_INDEX_MIN
+        attr: $.message.order.items[*].xinput.head.index.min
+        _RETURN_: attr are present
+      VALID_PERSONAL_LOAN_HEADINGS: &VALID_PERSONAL_LOAN_HEADINGS
+        _NAME_: VALID_XINPUT_HEADINGS_ENUM
+        attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.head.headings[*]
+        enumList: *ENUM_PERSONAL_LOAN_HEADINGS
+        _RETURN_: attr any in enumList
+      VALID_XINPUT_HEAD_HEADINGS: &VALID_XINPUT_HEAD_HEADINGS
+        _NAME_: VALID_XINPUT_HEADINGS_ENUM
+        attr: $.message.catalog.providers[*].items[*].xinput.head.headings[*]
+        enumList: *ENUM_XINPUT_HEAD_HEADINGS
+        _RETURN_: attr all in enumList
+      REQUIRED_XINPUT_HEAD_INDEX_CHECKS: &REQUIRED_XINPUT_HEAD_INDEX_CHECKS
+        - *REQUIRED_XINPUT_HEAD_INDEX_MIN
+        - *REQUIRED_XINPUT_HEAD_INDEX_CUR
+        - *REQUIRED_XINPUT_HEAD_INDEX_MAX
       REQUIRED_XINPUT_HEAD_INDEX: &REQUIRED_XINPUT_HEAD_INDEX
         _NAME_: REQUIRED_XINPUT_HEAD_INDEX
-        _RETURN_:
-          - _NAME_: REQUIRED_XINPUT_HEAD_INDEX_MIN
-            attr: $.message.order.items[*].xinput.head.index.min
-            _RETURN_: attr are present
-          - _NAME_: REQUIRED_XINPUT_HEAD_INDEX_CUR
-            attr: $.message.order.items[*].xinput.head.index.cur
-            _RETURN_: attr are present
-          - _NAME_: REQUIRED_XINPUT_HEAD_INDEX_MAX
-            attr: $.message.order.items[*].xinput.head.index.max
-            _RETURN_: attr are present
+        _RETURN_: *REQUIRED_XINPUT_HEAD_INDEX_CHECKS
       OFFER_XINPUT_PERSONAL_LOAN_CHECKS: &OFFER_XINPUT_PERSONAL_LOAN_CHECKS
         - *REQUIRED_XINPUT_HEAD_INDEX
-        - _NAME_: REQUIRED_XINPUT_HEAD_DESCRIPTOR_NAME
-          attr: $.message.order.items[*].xinput.head.descriptor.name
-          _RETURN_: attr are present
-        - _NAME_: REQUIRED_XINPUT_HEAD_HEADINGS
-          attr: $.message.order.items[*].xinput.head.headings[*]
-          _RETURN_: attr are present
+        - *REQUIRED_XINPUT_HEAD_DESCRIPTOR_NAME
+        - *REQUIRED_XINPUT_HEAD_HEADINGS
     form:
+      REQUIRED_ITEMS_XINPUT_FORM_URL: &REQUIRED_ITEMS_XINPUT_FORM_URL
+        _NAME_: REQUIRED_XINPUT_FORM_URL
+        attr: $.message.catalog.providers[*].items[*].xinput.form.url
+        _RETURN_: attr are present
+      REQUIRED_ORDER_ITEMS_XINPUT_FORM_URL: &REQUIRED_ORDER_ITEMS_XINPUT_FORM_URL
+        _NAME_: REQUIRED_XINPUT_FORM_URL
+        attr: $.message.order.items[*].xinput.form.url
+        _RETURN_: attr are present
+      REQUIRED_PERSONAL_LOAN_URL: &REQUIRED_PERSONAL_LOAN_URL
+        _NAME_: REQUIRED_XINPUT_FORM_URL
+        attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.form.url
+        _RETURN_: attr are present
       REQUIRED_XINPUT_FORM: &REQUIRED_XINPUT_FORM
         _NAME_: REQUIRED_XINPUT_FORM
         attr: $.message.order.items[*].xinput.form.id
@@ -480,13 +711,68 @@ _COMMON_:
         - COMPLETED
         - EXPIRED
         - OFFLINE_PENDING
-      ENUM_XINPUT_FORM_RESPONSE_STATUS_ON_SELECT: &ENUM_XINPUT_FORM_RESPONSE_STATUS_ON_SELECT
+      ENUM_XINPUT_FORM_RESPONSE_STATUS_2: &ENUM_XINPUT_FORM_RESPONSE_STATUS_2
         - PENDING
         - SUCCESS
+      REQUIRED_XINPUT_FORM_RESPONSE: &REQUIRED_XINPUT_FORM_RESPONSE
+        _NAME_: REQUIRED_XINPUT_FORM_RESPONSE
+        attr: $.message.order.items[*].xinput.form_response.status
+        _RETURN_: attr are present
+      REQUIRED_XINPUT_FORM_RESPONSE_STATUS: &REQUIRED_XINPUT_FORM_RESPONSE_STATUS
+        _NAME_: REQUIRED_XINPUT_FORM_RESPONSE_STATUS
+        attr: $.message.order.items[*].xinput.form_response.status
+        enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS
+        _RETURN_: attr are present && attr all in enumList
       REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID: &REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
         _NAME_: REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
         attr: $.message.order.items[*].xinput.form_response.submission_id
         _RETURN_: attr are present
+      VALID_ITEMS_XINPUT_FORM_RESPONSE_STATUS: &VALID_ITEMS_XINPUT_FORM_RESPONSE_STATUS
+        _NAME_: VALID_ITEMS_XINPUT_FORM_RESPONSE_STATUS
+        attr: $.message.order.items[*].xinput.form_response.status
+        enumList: *ENUM_ITEMS_XINPUT_FORM_RESPONSE_STATUS
+        _RETURN_: attr all in enumList
+      ON_STATUS_XINPUT_FORM_RESPONSE_STATUS_NOT_REJECTED: &ON_STATUS_XINPUT_FORM_RESPONSE_STATUS_NOT_REJECTED
+        _NAME_: ON_STATUS_XINPUT_FORM_RESPONSE_STATUS_NOT_REJECTED
+        statuspath: $.message.order.items[*].xinput.form_response.status
+        _CONTINUE_: "!(statuspath are present)"
+        _RETURN_:
+          - *VALID_ITEMS_XINPUT_FORM_RESPONSE_STATUS
+      VALID_XINPUT_FORM_RESPONSE_STATUS: &VALID_XINPUT_FORM_RESPONSE_STATUS
+        _NAME_: VALID_XINPUT_FORM_RESPONSE_STATUS
+        attr: $.message.order.items[*].xinput.form_response.status
+        enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS_2
+        _RETURN_: attr all in enumList
+    REQUIRED_ITEMS_XINPUT_REQUIRED: &REQUIRED_ITEMS_XINPUT_REQUIRED
+      _NAME_: REQUIRED_XINPUT
+      attr: $.message.catalog.providers[*].items[*].xinput.required
+      _RETURN_: attr are present
+    REQUIRED_PERSONAL_LOAN_REQUIRED: &REQUIRED_PERSONAL_LOAN_REQUIRED
+      _NAME_: REQUIRED_XINPUT
+      attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.required
+      _RETURN_: attr are present
+    REQUIRED_XINPUT_REQUIRED: &REQUIRED_XINPUT_REQUIRED
+      _NAME_: REQUIRED_XINPUT_REQUIRED
+      attr: $.message.order.items[*].xinput.required
+      _RETURN_: attr are present
+    AA_CONSENT_XINPUT_CHECKS: &AA_CONSENT_XINPUT_CHECKS
+      - *REQUIRED_XINPUT_FORM
+      - *REQUIRED_XINPUT_FORM_RESPONSE
+      - *VALID_XINPUT_FORM_RESPONSE_STATUS
+      - *REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
+    CONFIRM_XINPUT_CHECKS: &CONFIRM_XINPUT_CHECKS
+      - *REQUIRED_XINPUT_FORM_ID
+      - *REQUIRED_XINPUT_FORM_RESPONSE_STATUS
+      - *REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
+    CONFIRM_XINPUT: &CONFIRM_XINPUT
+      _NAME_: CONFIRM_XINPUT
+      usecasepath: $.message.order.items[*].xinput.form.id
+      _CONTINUE_: "!(usecasepath are present)"
+      _RETURN_: *CONFIRM_XINPUT_CHECKS
+    OFFER_XINPUT_COMMON_CHECKS: &OFFER_XINPUT_COMMON_CHECKS
+      - *REQUIRED_XINPUT_REQUIRED
+      - *REQUIRED_XINPUT_FORM_ID
+      - *REQUIRED_ORDER_ITEMS_XINPUT_FORM_URL
 
   fulfillment:
     ENUM_FULFILLMENTS_STATE_CODE: &ENUM_FULFILLMENTS_STATE_CODE
@@ -586,6 +872,8 @@ _COMMON_:
       - INSURANCE_TOTAL_FEE
       - INSURANCE_PRODUCT_FEE
       - TAX
+    REGEX_ORDER_QUOTE_TTL: &REGEX_ORDER_QUOTE_TTL
+      - ^P(?:(\\d+Y)?(\\d+M)?(\\d+D)?(T(\\d+H)?(\\d+M)?(\\d+S)?)?|T\\d+D)$
     REQUIRED_QUOTE_BREAKUP: &REQUIRED_QUOTE_BREAKUP
       _NAME_: REQUIRED_QUOTE_BREAKUP
       attr: $.message.order.quote.breakup[*].title
@@ -729,15 +1017,11 @@ _COMMON_:
       - PROCESSING
       - RESOLVED
       - INFO_PROVIDED
-    REQUIRED_ACTORS_INFO_PERSON_NAME: &REQUIRED_ACTORS_INFO_PERSON_NAME
-      _NAME_: REQUIRED_ACTORS_INFO_PERSON_NAME
-      attr: $.message.issue.actors[*].info.person.name
-      _RETURN_: attr are present
-    REQUIRED_EXPECTED_RESOLUTION_TIME: &REQUIRED_EXPECTED_RESOLUTION_TIME
+    REQUIRED_EXPECTED_RESOLUTION_TIME_NO_SCHEMA: &REQUIRED_EXPECTED_RESOLUTION_TIME_NO_SCHEMA
       _NAME_: REQUIRED_EXPECTED_RESOLUTION_TIME
       attr: [$.message.issue.expected_resolution_time.duration]
       _RETURN_: attr are present
-    REQUIRED_EXPECTED_RESPONSE_TIME: &REQUIRED_EXPECTED_RESPONSE_TIME
+    REQUIRED_EXPECTED_RESPONSE_TIME_NO_SCHEMA: &REQUIRED_EXPECTED_RESPONSE_TIME_NO_SCHEMA
       _NAME_: REQUIRED_EXPECTED_RESPONSE_TIME
       attr: [$.message.issue.expected_response_time.duration]
       _RETURN_: attr are present
@@ -885,24 +1169,7 @@ _TESTS_:
           enumList: *ENUM_INTENT_PAYMENT_COLLECTED_BY
           _CONTINUE_: "!(attr are present)"
           _RETURN_: attr any in enumList
-    - _NAME_: SEARCH_TAGS
-      _RETURN_:
-        - _NAME_: REQUIRED_INTENT_TAGS
-          attr: $.message.intent.tags[*].descriptor.code
-          enumList:
-            - BAP_TERMS
-          _RETURN_: attr are present && attr all in enumList
-
-        - _NAME_: REQUIRED_BAP_TERMS
-          _SCOPE_: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')]
-          _RETURN_:
-            - _NAME_: REQUIRED_BAP_TERMS_STATIC_TERMS
-              attr: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-              _RETURN_: attr are present
-
-            - _NAME_: REQUIRED_BAP_TERMS_OFFLINE_CONTRACT
-              attr: $.message.intent.tags[?(@.descriptor.code=='BAP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-              _RETURN_: attr are present
+    - *SEARCH_TAGS
   on_search:
     - _NAME_: ON_SEARCH_CONTEXT
       action:
@@ -938,22 +1205,10 @@ _TESTS_:
         - *REQUIRED_ITEM_CATEGORY_IDS
         - *REQUIRED_ITEM_DESCRIPTOR_NAME
         - *REQUIRED_GENERAL_INFO_TAG_GROUP
-        - _NAME_: REQUIRED_GENERAL_INFO_LIST
-          _SCOPE_: $.message.catalog.providers[*].items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_GENERAL_INFO_LIST
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
-        - _NAME_: REQUIRED_XINPUT
-          attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.required
-          _RETURN_: attr are present
-        - _NAME_: REQUIRED_XINPUT_FORM_URL
-          attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.form.url
-          _RETURN_: attr are present
-        - _NAME_: VALID_XINPUT_HEADINGS_ENUM
-          attr: $.message.catalog.providers[*].items[?(@.descriptor.code=='PERSONAL_LOAN')].xinput.head.headings[*]
-          enumList: *ENUM_PERSONAL_LOAN_HEADINGS
-          _RETURN_: attr any in enumList
+        - *REQUIRED_GENERAL_INFO_LIST
+        - *REQUIRED_PERSONAL_LOAN_REQUIRED
+        - *REQUIRED_PERSONAL_LOAN_URL
+        - *VALID_PERSONAL_LOAN_HEADINGS
     - _NAME_: ON_SEARCH_CATEGORIES_CC
       _SCOPE_: $.message.catalog.providers[*].categories[?(@.descriptor.code=='CREDIT_CARD')]
       _RETURN_:
@@ -971,22 +1226,10 @@ _TESTS_:
         - *REQUIRED_ITEM_CATEGORY_IDS
         - *REQUIRED_ITEM_DESCRIPTOR_NAME
         - *REQUIRED_GENERAL_INFO_TAG_GROUP
-        - _NAME_: REQUIRED_GENERAL_INFO_LIST_CC
-          _SCOPE_: $.message.catalog.providers[*].items[*].tags[?(@.descriptor.code=='GENERAL_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_GENERAL_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
-        - _NAME_: REQUIRED_XINPUT
-          attr: $.message.catalog.providers[*].items[*].xinput.required
-          _RETURN_: attr are present
-        - _NAME_: REQUIRED_XINPUT_FORM_URL
-          attr: $.message.catalog.providers[*].items[*].xinput.form.url
-          _RETURN_: attr are present
-        - _NAME_: VALID_XINPUT_HEADINGS_ENUM
-          attr: $.message.catalog.providers[*].items[*].xinput.head.headings[*]
-          enumList: *ENUM_XINPUT_HEAD_HEADINGS
-          _RETURN_: attr all in enumList
+        - *REQUIRED_GENERAL_INFO_LIST_CC
+        - *REQUIRED_ITEMS_XINPUT_REQUIRED
+        - *REQUIRED_ITEMS_XINPUT_FORM_URL
+        - *VALID_XINPUT_HEAD_HEADINGS
     - _NAME_: ON_SEARCH_PROVIDER
       _RETURN_:
         - _NAME_: REQUIRED_PROVIDER_ID
@@ -1001,48 +1244,9 @@ _TESTS_:
         - _NAME_: REQUIRED_PROVIDER_IMAGES_SIZE_TYPE
           attr: $.message.catalog.providers[*].descriptor.images[*].size_type
           _RETURN_: attr are present
-    - _NAME_: ON_SEARCH_PROVIDER_CONTACT_INFO
-      _RETURN_:
-        - _NAME_: REQUIRED_CONTACT_INFO_TAG_GROUP
-          validTags: *LIST_CONTACT_INFO
-          tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
-          _RETURN_: tagPath any in validTags
-        - _NAME_: REQUIRED_CONTACT_INFO_LIST
-          _SCOPE_: $.message.catalog.providers[*].tags[?(@.descriptor.code=='CONTACT_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_CONTACT_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
-    - _NAME_: ON_SEARCH_PROVIDER_LSP_INFO
-      _RETURN_:
-        - _NAME_: REQUIRED_LSP_INFO_TAG_GROUP
-          validTags: *LIST_LSP_INFO
-          tagPath: $.message.catalog.providers[*].tags[*].descriptor.code
-          _RETURN_: tagPath any in validTags
-        - _NAME_: REQUIRED_LSP_INFO_LIST
-          _SCOPE_: $.message.catalog.providers[*].tags[?(@.descriptor.code=='LSP_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_LSP_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
-    - _NAME_: ON_SEARCH_TAGS
-      _RETURN_:
-        - _NAME_: REQUIRED_CATALOG_TAGS
-          attr: $.message.catalog.tags[*].descriptor.code
-          enumList:
-            - BPP_TERMS
-          _RETURN_: attr are present && attr all in enumList
-
-        - _NAME_: REQUIRED_BPP_TERMS
-          _SCOPE_: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')]
-          _RETURN_:
-            - _NAME_: REQUIRED_BPP_TERMS_STATIC_TERMS
-              attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='STATIC_TERMS')].value
-              _RETURN_: attr are present
-
-            - _NAME_: REQUIRED_BPP_TERMS_OFFLINE_CONTRACT
-              attr: $.message.catalog.tags[?(@.descriptor.code=='BPP_TERMS')].list[?(@.descriptor.code=='OFFLINE_CONTRACT')].value
-              _RETURN_: attr are present
+    - *ON_SEARCH_PROVIDER_CONTACT_INFO
+    - *ON_SEARCH_PROVIDER_LSP_INFO
+    - *ON_SEARCH_TAGS
   select:
     - _NAME_: SELECT_CONTEXT
       action:
@@ -1092,24 +1296,7 @@ _TESTS_:
         - _NAME_: REQUIRED_PROVIDER_LOCATION_ADDRESS
           attr: $.message.order.provider.locations[*].address
           _RETURN_: attr are present
-    - _NAME_: ON_SELECT_PROVIDER_TAGS
-      tagPath: $.message.order.provider.tags[*].descriptor.code
-      _CONTINUE_: "!(tagPath are present)"
-      _RETURN_:
-        - *REQUIRED_CONTACT_INFO_TAG_GROUP
-        - _NAME_: REQUIRED_CONTACT_INFO_LIST
-          _SCOPE_: $.message.order.provider.tags[?(@.descriptor.code=='CONTACT_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_CONTACT_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
-        - *REQUIRED_LSP_INFO_TAG_GROUP
-        - _NAME_: REQUIRED_LSP_INFO_LIST
-          _SCOPE_: $.message.order.provider.tags[?(@.descriptor.code=='LSP_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_LSP_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags all in validValues
+    - *ON_SELECT_PROVIDER_TAGS
     - _NAME_: ON_SELECT_ITEMS_BASIC
       _RETURN_:
         - *REQUIRED_ORDER_ITEMS_ID
@@ -1123,32 +1310,10 @@ _TESTS_:
         - _NAME_: REQUIRED_ITEM_DESCRIPTOR_NAME
           attr: $.message.order.items[*].descriptor.name
           _RETURN_: attr are present
-    - _NAME_: ON_SELECT_1_AA_CONSENT_ITEMS
-      _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='PERSONAL_LOAN')]
-      _RETURN_:
-        - _NAME_: REQUIRED_CONSENT_INFO_TAG
-          validTags:
-            - CONSENT_INFO
-          tagPath: $.message.order.items[*].tags[*].descriptor.code
-          _RETURN_: tagPath any in validTags
-        - _NAME_: REQUIRED_CONSENT_HANDLER
-          _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='CONSENT_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues:
-            - CONSENT_HANDLER
-          _RETURN_: subTags any in validValues
+    - *ON_SELECT_1_AA_CONSENT_ITEMS
     - _NAME_: ON_SELECT_1_AA_CONSENT_XINPUT
       _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='PERSONAL_LOAN')]
-      _RETURN_:
-        - *REQUIRED_XINPUT_FORM
-        - _NAME_: REQUIRED_XINPUT_FORM_RESPONSE
-          attr: $.message.order.items[*].xinput.form_response.status
-          _RETURN_: attr are present
-        - _NAME_: VALID_XINPUT_FORM_RESPONSE_STATUS
-          attr: $.message.order.items[*].xinput.form_response.status
-          enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS_ON_SELECT
-          _RETURN_: attr all in enumList
-        - *REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
+      _RETURN_: *AA_CONSENT_XINPUT_CHECKS
     - _NAME_: ON_SELECT_CONSENT_XINPUT_CC
       _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='PERSONAL_LOAN')]
       _RETURN_:
@@ -1165,20 +1330,7 @@ _TESTS_:
     - _NAME_: ON_SELECT_2_OFFER_LOAN_INFO
       usecasepath: $.message.order.items[*].price.value
       _CONTINUE_: "!(usecasepath are present)"
-      _RETURN_:
-        - *REQUIRED_LOAN_INFO_TAG_GROUP
-        - _NAME_: REQUIRED_LOAN_INFO_LIST_COMMON
-          _SCOPE_: $.message.order.items[*].tags[?(@.descriptor.code=='LOAN_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues: *ENUM_LOAN_INFO_CODE
-          _CONTINUE_: "!(subTags are present)"
-          _RETURN_: subTags any in validValues
-        - _NAME_: REQUIRED_LOAN_INFO_LTV_RATIO_GOLD
-          _SCOPE_: $.message.order.items[?(@.descriptor.code=='LOAN')].tags[?(@.descriptor.code=='LOAN_INFO')]
-          subTags: $.list[*].descriptor.code
-          validValues:
-            - LTV_RATIO
-          _RETURN_: subTags any in validValues
+      _RETURN_: *OFFER_LOAN_INFO_CHECKS
     - _NAME_: ON_SELECT_2_OFFER_QUOTE
       usecasepath: $.message.order.items[*].price.value
       _CONTINUE_: "!(usecasepath are present)"
@@ -1222,14 +1374,7 @@ _TESTS_:
       xinputpath: $.message.order.items[*].xinput.form.id
       usecasepath: $.message.order.items[*].price.value
       _CONTINUE_: "!(usecasepath are present) || !(xinputpath are present)"
-      _RETURN_:
-        - _NAME_: REQUIRED_XINPUT_REQUIRED
-          attr: $.message.order.items[*].xinput.required
-          _RETURN_: attr are present
-        - *REQUIRED_XINPUT_FORM_ID
-        - _NAME_: REQUIRED_XINPUT_FORM_URL
-          attr: $.message.order.items[*].xinput.form.url
-          _RETURN_: attr are present
+      _RETURN_: *OFFER_XINPUT_COMMON_CHECKS
     - _NAME_: ON_SELECT_2_OFFER_XINPUT_PERSONAL_LOAN
       item_code: $.message.order.items[*].descriptor.code
       loan_type_match: *LIST_PERSONAL_LOAN
@@ -1299,8 +1444,7 @@ _TESTS_:
         - *REQUIRED_QUOTE_TTL
         - _NAME_: VALID_QUOTE_TTL_REGEX
           attr: $.message.order.quote.ttl
-          reg:
-            - ^P(?:(\\d+Y)?(\\d+M)?(\\d+D)?(T(\\d+H)?(\\d+M)?(\\d+S)?)?|T\\d+D)$
+          reg: *REGEX_ORDER_QUOTE_TTL
           _RETURN_: attr follow regex reg
         - *REQUIRED_QUOTE_BREAKUP
     - _NAME_: ON_INIT_PAYMENTS
@@ -1317,17 +1461,7 @@ _TESTS_:
         - _NAME_: REQUIRED_PAYMENT_COLLECTED_BY
           attr: $.message.order.payments[?(@.type=='ON_ORDER')].collected_by
           _RETURN_: attr are present
-        - _NAME_: REQUIRED_PAYMENT_TAGS
-          _RETURN_:
-            - _NAME_: REQUIRED_BUYER_FINDER_FEES_TAG
-              validTags: *TAGS_ON_ORDER_CODE
-              tagPath: $.message.order.payments[?(@.type=='ON_ORDER')].tags[*].descriptor.code
-              _RETURN_: tagPath any in validTags
-            - _NAME_: REQUIRED_SETTLEMENT_TERMS_TAG
-              validTags:
-                - SETTLEMENT_TERMS
-              tagPath: $.message.order.payments[?(@.type=='ON_ORDER')].tags[*].descriptor.code
-              _RETURN_: tagPath any in validTags
+        - *REQUIRED_PAYMENT_TAGS
     - _NAME_: ON_INIT_FULFILLMENTS
       _RETURN_:
         - *REQUIRED_FULFILLMENT_TYPE
@@ -1356,16 +1490,7 @@ _TESTS_:
     - _NAME_: CONFIRM_ITEMS
       _RETURN_:
         - *REQUIRED_ORDER_ITEMS_ID
-    - _NAME_: CONFIRM_XINPUT
-      usecasepath: $.message.order.items[*].xinput.form.id
-      _CONTINUE_: "!(usecasepath are present)"
-      _RETURN_:
-        - *REQUIRED_XINPUT_FORM_ID
-        - _NAME_: REQUIRED_XINPUT_FORM_RESPONSE_STATUS
-          attr: $.message.order.items[*].xinput.form_response.status
-          enumList: *ENUM_XINPUT_FORM_RESPONSE_STATUS
-          _RETURN_: attr are present && attr all in enumList
-        - *REQUIRED_XINPUT_FORM_RESPONSE_SUBMISSION_ID
+    - *CONFIRM_XINPUT
     - _NAME_: CONFIRM_PAYMENTS
       _SCOPE_: $.message.order.payments[?(@.type=='ON_ORDER')]
       _RETURN_:
@@ -1378,8 +1503,7 @@ _TESTS_:
         - _NAME_: REQUIRED_PAYMENT_PARAMS_VPA
           attr: $.message.order.payments[*].params.virtual_payment_address
           _RETURN_: attr are present
-    - _NAME_: CONFIRM_TAGS
-      _RETURN_: *TAGS_CHECKS
+    - *CONFIRM_TAGS
   on_confirm:
     - _NAME_: ON_CONFIRM_CONTEXT
       action:
@@ -1397,10 +1521,7 @@ _TESTS_:
         - *REQUIRED_ORDER_ITEMS_ID
         - *REQUIRED_ITEM_DESCRIPTOR_CODE
         - *REQUIRED_ITEM_PRICE
-        - _NAME_: REQUIRED_LOAN_INFO_TAG
-          validTags: *TAGS_ORDER_ITEMS_CODE
-          tagPath: $.message.order.items[*].tags[*].descriptor.code
-          _RETURN_: tagPath any in validTags
+        - *REQUIRED_LOAN_INFO_TAG
     - _NAME_: ON_CONFIRM_QUOTE
       _SCOPE_: $.message.order.items[?(@.descriptor.code=='PERSONAL_LOAN')]
       _RETURN_:
@@ -1458,8 +1579,7 @@ _TESTS_:
       enumList: *ENUM_CANCELLATION_TERMS_FULFILLMENT_STATE_CODE
       _CONTINUE_: "!(attr are present)"
       _RETURN_: attr all in enumList
-    - _NAME_: ON_CONFIRM_TAGS
-      _RETURN_: *TAGS_CHECKS
+    - *ON_CONFIRM_TAGS
     - *REQUIRED_ORDER_CREATED_AT
     - *REQUIRED_ORDER_UPDATED_AT
     - *REQUIRED_ORDER_ID
@@ -1505,16 +1625,14 @@ _TESTS_:
       payment_types: $.message.order.payments[*].type
       _CONTINUE_: "!(item_code any in loan_type_match) || (update_target any in target_match_fulfillment) || !(payment_types are present)"
       _RETURN_:
-        - _NAME_: REQUIRED_PAYMENT_REF_ID
-          attr: $.message.order.payments[*].tags[?(@.descriptor.code=='LOAN_REPAYMENT')].list[?(@.descriptor.code=='ref_id')].value
-          _RETURN_: attr are present
+        - *REQUIRED_PAYMENT_REF_ID
     - _NAME_: UPDATE_FULFILLMENT_TARGET
       update_target: $.message.update_target
       target_match: *LIST_FULFILLMENT
       _CONTINUE_: "!(update_target any in target_match)"
       _RETURN_:
         - *REQUIRED_FULFILLMENT_STATE_CODE
-        - _NAME_: If_Validation_Result_is_REJECTED_flow_cant_move_forward
+        - _NAME_: VALID_ORDER_FULFILLMENTS_STATE_CODE
           attr: $.message.order.fulfillments[*].state.descriptor.code
           enumList: *ENUM_FULFILLMENTS_STATE_CODE
           _RETURN_: attr all in enumList
@@ -1606,14 +1724,7 @@ _TESTS_:
           attr: $.message.order.fulfillments[*].state.descriptor.code
           enumList: *ENUM_FULFILLMENTS_STATE_CODE
           _RETURN_: attr any in enumList
-    - _NAME_: ON_STATUS_XINPUT_FORM_RESPONSE_STATUS_NOT_REJECTED
-      statuspath: $.message.order.items[*].xinput.form_response.status
-      _CONTINUE_: "!(statuspath are present)"
-      _RETURN_:
-        - _NAME_: If_Validation_Result_is_REJECTED_flow_cant_move_forward
-          attr: $.message.order.items[*].xinput.form_response.status
-          enumList: *ENUM_ITEMS_XINPUT_FORM_RESPONSE_STATUS
-          _RETURN_: attr all in enumList
+    - *ON_STATUS_XINPUT_FORM_RESPONSE_STATUS_NOT_REJECTED
     - _NAME_: ON_STATUS_PAYMENTS
       paymentspath: $.message.order.payments[*].type
       _CONTINUE_: "!(paymentspath are present)"
@@ -1628,17 +1739,11 @@ _TESTS_:
       enumList: *ENUM_QUOTE_BREAKUP_TITLE
       _CONTINUE_: "!(attr are present)"
       _RETURN_: attr any in enumList
-    - _NAME_: ON_STATUS_CHECKLIST_CODES
-      checklistpath: $.message.order.fulfillments[*].tags[?(@.descriptor.code=='CHECKLISTS')].list[*].descriptor.code
-      _CONTINUE_: "!(checklistpath are present)"
-      _RETURN_:
-        - _NAME_: VALID_CHECKLIST_CODES_ENUM
-          attr: $.message.order.fulfillments[*].tags[?(@.descriptor.code=='CHECKLISTS')].list[*].descriptor.code
-          enumList: *ENUM_CHECKLISTS_CODE
-          _RETURN_: attr all in enumList
+    - *ON_STATUS_CHECKLIST_CODES
 
   issue:
-    - *REQUIRED_CONTEXT_FIELDS_ISSUE
+    - *REQUIRED_CONTEXT_FIELDS
+    - *REQUIRED_CONTEXT_COUNTRY
     - _NAME_: ISSUE_VALIDATION_VERSION_200
       action:
         - issue
@@ -1656,7 +1761,6 @@ _TESTS_:
         - _NAME_: REQUIRED_MESSAGE_NAME
           attr: $.message.issue.actors[*].info.person.name
           _RETURN_: attr are present
-        - *REQUIRED_ACTORS_INFO_PERSON_NAME
         - *REQUIRED_MESSAGE_PHONE
         - *REQUIRED_MESSAGE_EMAIL
         - _NAME_: REQUIRED_MESSAGE_SOURCE_ID
@@ -1827,8 +1931,8 @@ _TESTS_:
             - _NAME_: REQUIRED_DESCRIPTION_IMAGES
               attr: [$.message.issue.description.images]
               _RETURN_: attr are present
-            - *REQUIRED_EXPECTED_RESPONSE_TIME
-            - *REQUIRED_EXPECTED_RESOLUTION_TIME
+            - *REQUIRED_EXPECTED_RESPONSE_TIME_NO_SCHEMA
+            - *REQUIRED_EXPECTED_RESOLUTION_TIME_NO_SCHEMA
 
             - _NAME_: REQUIRED_ISSUE_ACTIONS_OPEN
               attr: $.message.issue.issue_actions.complainant_actions[*].complainant_action
@@ -1866,6 +1970,7 @@ _TESTS_:
 
   on_issue:
     - *REQUIRED_CONTEXT_FIELDS
+    - *REQUIRED_CONTEXT_COUNTRY
     - _NAME_: ON_ISSUE_VALIDATION_VERSION_200
       action:
         - on_issue
@@ -1878,11 +1983,13 @@ _TESTS_:
         - *REQUIRED_MESSAGE_UPDATED_AT
         - *REQUIRED_MESSAGE_REF_ID
         - *REQUIRED_MESSAGE_REF_TYPE
-        - *REQUIRED_EXPECTED_RESPONSE_TIME
-        - *REQUIRED_EXPECTED_RESOLUTION_TIME
+        - *REQUIRED_EXPECTED_RESPONSE_TIME_NO_SCHEMA
+        - *REQUIRED_EXPECTED_RESOLUTION_TIME_NO_SCHEMA
         - *REQUIRED_ISSUE_ACTORS_ID
         - *REQUIRED_MESSAGE_TYPE
-        - *REQUIRED_ACTORS_INFO_PERSON_NAME
+        - _NAME_: REQUIRED_ACTORS_INFO_PERSON_NAME
+          attr: $.message.issue.actors[*].info.person.name
+          _RETURN_: attr are present
         - *REQUIRED_MESSAGE_PHONE
         - *REQUIRED_MESSAGE_EMAIL
         - *REQUIRED_ISSUE_ACTIONS_ID
@@ -1897,7 +2004,8 @@ _TESTS_:
       _RETURN_: *VALIDATION_VERSION_100_CHECKS
 
   issue_status:
-    - *REQUIRED_CONTEXT_FIELDS_ISSUE
+    - *REQUIRED_CONTEXT_FIELDS
+    - *REQUIRED_CONTEXT_COUNTRY
     - _NAME_: ISSUE_STATUS_VALIDATION
       action:
         - issue_status
@@ -1908,6 +2016,7 @@ _TESTS_:
 
   on_issue_status:
     - *REQUIRED_CONTEXT_FIELDS
+    - *REQUIRED_CONTEXT_COUNTRY
     - _NAME_: ISSUE_ON_ISSUE_STATUS_VALIDATION
       action:
         - on_issue_status
