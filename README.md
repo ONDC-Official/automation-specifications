@@ -1,7 +1,7 @@
-# ONDC:RET10 — version 1.2.0
+# ONDC:AGR10 — version 1.2.0
 
-**Branch:** `draft-RET10-1.2.0`  
-**Use Cases:** GROCERY
+**Branch:** `draft-AGR10-1.2.0`  
+**Use Cases:** AGRICULTURE
 
 ---
 
@@ -40,7 +40,7 @@ Top-level manifest that mimics the build.yaml structure but replaces inline cont
 |-------|------|-------------|
 | `openapi` | string | OpenAPI version — matches `/^3\.\d+\.\d+$/` |
 | `info.title` | string? | Human-readable title |
-| `info.domain` | string | ONDC domain identifier (e.g. `ONDC:RET10`) |
+| `info.domain` | string | ONDC domain identifier (e.g. `ONDC:AGR10`) |
 | `info.description` | string? | Domain description |
 | `info.version` | string | Spec version (e.g. `1.2.0`) |
 | `info.x-usecases` | string[] | List of supported use case IDs |
@@ -156,4 +156,4 @@ Supported actions and API orchestration properties:
 
 ## Use Cases in this version
 
-  - GROCERY
+  - AGRICULTURE
