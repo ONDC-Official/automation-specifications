@@ -621,7 +621,7 @@ paths:
             schema:
               type: object
               properties:
-                context: &context_2
+                context: &context_22
                   type: object
                   properties:
                     domain:
@@ -646,6 +646,10 @@ paths:
                       type: string
                     country:
                       type: string
+                    city:
+                      type: string 
+                    core_version:
+                      type: string 
                 message:
                   type: object
                   properties:
@@ -703,6 +707,34 @@ paths:
                                   type: string
                                 content_type:
                                   type: string
+                        expected_resolution_time: 
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string         
+                        description:
+                          type: object
+                          properties:
+                            additional_desc:
+                              type: object
+                              properties:
+                                content_type:
+                                  type: string
+                                url:
+                                  type: string
+                            images:
+                              type: array
+                              items:
+                                type: string
+                            long_desc:
+                              type: string
+                            short_desc:
+                              type: string          
                         last_action_id:
                           type: string
                         actions: &actions
@@ -1254,7 +1286,7 @@ paths:
             schema:
               type: object
               properties:
-                context: *context_2
+                context: *context_22
                 message:
                   type: object
                   properties:
@@ -1274,6 +1306,16 @@ paths:
                         refs: *refs
                         actors: *actors
                         actions: *actions
+                        expected_resolution_time: 
+                          type: object
+                          properties:
+                            duration:
+                              type: string
+                        expected_response_time:
+                          type: object
+                          properties:
+                            duration:
+                              type: string
                         issue_actions: &issue_actions
                           type: object
                           properties:
@@ -1304,7 +1346,7 @@ paths:
             schema:
               type: object
               properties:
-                context: *context_2
+                context: *context_22
                 message:
                   type: object
                   properties:
@@ -1314,6 +1356,17 @@ paths:
                         id:
                           type: string
                         issue_actions: *issue_actions
+                        resolution:
+                          type: object
+                          properties:
+                            action_triggered:
+                              type: string
+                            long_desc:
+                              type: string
+                            refund_amount:
+                              type: string
+                            short_desc:
+                              type: string
                         created_at:
                           type: string
                         updated_at:
