@@ -611,6 +611,68 @@ _TESTS_:
 
 
 
+    # ===== P2P MAPPING RESPONSE (Retailer Mapping / feature 031) =====
+    # Fires on any /on_search that carries retailer_mapping blocks at
+    # bpp/descriptor.tags, i.e. the answer to a mapping lookup. Such a response
+    # carries no catalogue, so the strict ON_SEARCH_CATALOG block excludes it.
+    - _NAME_: ON_SEARCH_P2P_CATALOG
+      _DESCRIPTION_: Validate the P2P mapping response - retailer_mapping blocks at bpp/descriptor.tags, no catalogue
+      action: ["on_search"]
+      mapping_present: "$.message.catalog['bpp/descriptor'].tags[?(@.code=='retailer_mapping')].list[*].code"
+      _CONTINUE_: "!(mapping_present are present)"
+      _RETURN_:
+
+        - _NAME_: P2P_MAPPING_CONTEXT
+          _RETURN_:
+
+            - _NAME_: P2P_MAPPING_CONTEXT_BPP_ID
+              attr: "$.context.bpp_id"
+              _RETURN_: attr are present
+
+            - _NAME_: P2P_MAPPING_CONTEXT_BPP_URI
+              attr: "$.context.bpp_uri"
+              _RETURN_: attr are present
+
+        - _NAME_: P2P_MAPPING_BLOCKS
+          _RETURN_:
+
+            # One block per retailer per serving distributor. Scoped so every
+            # block is checked on its own: an unscoped path would pass as long
+            # as a single block carried the code.
+            - _NAME_: MAPPING_PROVIDER_ID
+              _SCOPE_: "$.message.catalog['bpp/descriptor'].tags[?(@.code=='retailer_mapping')]"
+              attr: "$.list[?(@.code=='provider_id')].value"
+              _RETURN_: attr are present
+
+            - _NAME_: MAPPING_CUSTOMER_ID
+              _SCOPE_: "$.message.catalog['bpp/descriptor'].tags[?(@.code=='retailer_mapping')]"
+              attr: "$.list[?(@.code=='customer_id')].value"
+              _RETURN_: attr are present
+
+            - _NAME_: MAPPING_CODES_ENUM
+              _SCOPE_: "$.message.catalog['bpp/descriptor'].tags[?(@.code=='retailer_mapping')]"
+              attr: "$.list[*].code"
+              var_codes: ["customer_id", "phone_number", "GSTIN", "PAN", "provider_id"]
+              _RETURN_: attr all in var_codes
+
+        - _NAME_: P2P_MAPPING_NO_CATALOGUE
+          _RETURN_:
+
+            - _NAME_: MAPPING_NO_ITEMS
+              attr: "$.message.catalog['bpp/providers'][*].items[*].id"
+              _RETURN_: "!(attr are present)"
+
+            - _NAME_: MAPPING_NO_OFFERS
+              attr: "$.message.catalog['bpp/providers'][*].offers[*].id"
+              _RETURN_: "!(attr are present)"
+
+        - _NAME_: P2P_MAPPING_ERROR_CODE
+          attr: "$.error.code"
+          var_codes: ["50009", "50010", "50011", "50012", "50017", "31001"]
+          _CONTINUE_: "!(attr are present)"
+          _RETURN_: attr all in var_codes
+
+
     - _NAME_: ON_SEARCH_INCREMENTAL_CATALOG
       attr_city: "$.context.city"
       star_value: ["*"]
@@ -1415,7 +1477,8 @@ _TESTS_:
       attr_city: "$.context.city"
       star_value: ["*"]
       poc_present: "$.message.catalog['bpp/providers'][*].tags[?(@.code=='poc')].code"
-      _CONTINUE_: "(poc_present are present) || (attr_city all in star_value)"
+      mapping_present: "$.message.catalog['bpp/descriptor'].tags[?(@.code=='retailer_mapping')].list[*].code"
+      _CONTINUE_: "(poc_present are present) || (attr_city all in star_value) || (mapping_present are present)"
       _RETURN_:
 
       - _NAME_: CATALOG_BPP_DESCRIPTOR
