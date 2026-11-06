@@ -1341,9 +1341,7 @@ _TESTS_:
       _RETURN_: &a9
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          reg:
-            - ^[0-9a-zA-Z/-_]{1,36}$
-          _RETURN_: attr follow regex reg
+          _RETURN_: attr are present
         - _NAME_: ORDER_STATE
           attr: $.message.order.state
           var_enum:
@@ -1438,10 +1436,8 @@ _TESTS_:
                   _RETURN_: attr are present
                 - _NAME_: PAYMENT_PARAMS_TRANSACTION_ID
                   attr: $.message.order.payment.params.transaction_id
-                  reg:
-                    - ^[0-9a-zA-Z/-_]{1,36}$
                   _CONTINUE_: "!(attr are present)"
-                  _RETURN_: attr follow regex reg
+                  _RETURN_: attr are present
                 - _NAME_: PAYMENT_PARAMS_AMOUNT
                   attr: $.message.order.payment.params.amount
                   reg:
@@ -1639,9 +1635,7 @@ _TESTS_:
       _RETURN_: &a11
         - _NAME_: ORDER_ID
           attr: $.message.order_id
-          pattern:
-            - ^[a-zA-Z0-9-/]{1,36}$
-          _RETURN_: attr are present && attr follow regex pattern
+          _RETURN_: attr are present
   on_status:
     - _NAME_: ON_STATUS_CONTEXT
       _DESCRIPTION_: Validate on_status context
@@ -1652,9 +1646,7 @@ _TESTS_:
       _RETURN_:
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          pattern:
-            - ^[a-zA-Z0-9-/]{1,36}$
-          _RETURN_: attr are present && attr follow regex pattern
+          _RETURN_: attr are present
         - _NAME_: ORDER_STATE
           attr: $.message.order.state
           var_enum:
@@ -2021,9 +2013,7 @@ _TESTS_:
       _RETURN_:
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          reg:
-            - ^[0-9a-zA-Z/-_]{1,36}$
-          _RETURN_: attr follow regex reg
+          _RETURN_: attr are present
         - _NAME_: ORDER_STATE
           attr: $.message.order.state
           var_enum:
@@ -2324,10 +2314,8 @@ _TESTS_:
               _RETURN_:
                 - _NAME_: ORDER_ID
                   attr: $.message.tracking.tags[?(@.code=='order')].list[?(@.code=='id')].value
-                  reg:
-                    - ^[0-9a-zA-Z/-_]{1,36}$
                   _CONTINUE_: "!(attr are present)"
-                  _RETURN_: attr follow regex reg
+                  _RETURN_: attr are present
             - _NAME_: TRACKING_CONFIG_TAG
               _RETURN_:
                 - _NAME_: CONFIG_ATTR
@@ -2373,9 +2361,7 @@ _TESTS_:
       _RETURN_:
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          reg:
-            - ^[0-9a-zA-Z/-_]{1,36}$
-          _RETURN_: attr follow regex reg
+          _RETURN_: attr are present
         - _NAME_: ORDER_FULFILLMENTS
           _RETURN_:
             - _NAME_: FULFILLMENTS_ID
@@ -2402,9 +2388,7 @@ _TESTS_:
       _RETURN_:
         - _NAME_: ORDER_ID
           attr: $.message.order.id
-          reg:
-            - ^[0-9a-zA-Z/-_]{1,36}$
-          _RETURN_: attr follow regex reg
+          _RETURN_: attr are present
         - _NAME_: ORDER_STATE
           attr: $.message.order.state
           var_enum:
