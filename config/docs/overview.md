@@ -28,23 +28,28 @@ Three Tunnel capabilities are live for BL:
 | **Schema validation** | Every request and response is checked against the network specification before it is routed. A non-conforming message is rejected back to its sender and never reaches the counterparty. | Errors discovered late, inside the counterparty's system or mid-journey. |
 | **Real-time network observability dashboard** | Tunnel logs every message it routes and shows BL transaction health across the network in real time. | Participants sharing operational logs separately with Network Observability; visibility limited to each participant's own connections. |
 
+#### Tunnel checks every BL call before a counterparty sees it
+
 ```mermaid
 flowchart LR
-    LSP([LSP sends a BL call]) --> Schema{Schema valid?}
-    subgraph Tunnel["ONDC Tunnel — logs every message to the real-time observability dashboard"]
+    LSP["<b>LSP</b><br/><span style='font-weight:400;color:#42526e'>sends a BL call</span>"] --> Schema{Schema valid?}
+    subgraph Tunnel["<b>ONDC Tunnel</b><br/><span style='font-weight:400;color:#42526e'>Logs every message to the real-time observability dashboard</span>"]
         Schema
-        Decl{Declarations allow the pair?}
+        Decl{Pair allowed?}
     end
     Schema -- yes --> Decl
-    Schema -- no --> Rejected([Rejected to sender — counterparty never sees it])
-    Decl -- yes --> Lender([Lender receives it])
-    Decl -- no --> NotRouted([Not routed — lender never sees it])
+    Schema -- no --> Rejected["<b>Rejected to sender</b><br/><span style='font-weight:400;color:#42526e'>counterparty never sees it</span>"]
+    Decl -- yes --> Lender["<b>Lender</b><br/><span style='font-weight:400'>receives it</span>"]
+    Decl -- no --> NotRouted["<b>Not routed</b><br/><span style='font-weight:400;color:#42526e'>lender never sees it</span>"]
+
+    classDef success fill:#e6f4fc,stroke:#0081cc,stroke-width:1.5px,color:#172b4d
+    class Lender success
 ```
 *BL call path through Tunnel · 2 checks*
 
 A call that fails either check stops at Tunnel. Lender responses, including unsolicited status and servicing pushes, pass the same schema check on the way back to the LSP.
 
-Schema validation confirms that a message is well-formed and spec-conformant. It does not check business rules such as offer validity windows, mandate and eSign completion, or KYC outcomes — those stay with the LSP and the lender, as the journey stages below note.
+Schema validation confirms that a message is well-formed and spec-conformant. It does not check business rules such as offer validity windows — those stay with the LSP and the lender.
 
 Running BL on Tunnel is a configuration exercise, not a rebuild. Each participant needs to:
 
@@ -70,7 +75,7 @@ Running BL on Tunnel is a configuration exercise, not a rebuild. Each participan
 
 ## The User Journey
 
-The BL journey enables a borrower to discover lenders, get evaluated by multiple lenders simultaneously, select an offer, complete KYC and sanction, and receive the loan. Every network interaction below passes through ONDC Tunnel. Steps inside the lender's environment (KYC, PD/FV, mandate, eSign) happen outside the network, so Tunnel sees them only through the status updates the lender sends. The journey consists of the following stages:
+The BL journey enables a borrower to discover lenders, get evaluated by multiple lenders simultaneously, and select an offer. Every network interaction below passes through ONDC Tunnel. The journey consists of the following stages:
 
 ### 1. Product Discovery
 
@@ -134,25 +139,6 @@ The borrower selects exactly one offer.
 Once an offer is selected, the other lenders' offers on that application are implicitly declined — they should be notified so they can close out the application on their side rather than holding it open.
 
 > **On Tunnel**: `/select` and `/on_select` are schema-validated, but validation does not catch selection of an expired offer. Expiry tracking stays with the LSP and lender.
-
-### 6. KYC, Verification & Loan Finalisation
-
-For term loans, KYC runs inside the `/init` / `/on_init` cycle, ahead of mandate setup and eSign. It covers the entity itself, its directors, and any co-applicants — in online or offline mode as required — plus Personal Discussion (PD) or Field Verification (FV) where the lender's policy requires it.
-
-With KYC and verification cleared, the LSP collects the borrower's disbursement account details, facilitates eNACH/standing-instruction mandate creation, and presents the loan agreement for eSign — all rendered within the LSP experience via the lender's forms.
-
-**Network interaction:**
-
-- **`/init`**: The LSP submits the forms the lender requests: KYC first, then mandate setup.
-- **`/on_init`**: The lender returns the next form required (KYC, then the e-mandate/payment link details, then the loan-agreement form), with `/on_status` pushes marking completion of each sub-step in between.
-- **`/confirm`**: The LSP submits the signed agreement and confirms.
-- **`/on_confirm`**: The lender confirms the booking and disburses funds to the borrower's account.
-
-PD/FV can introduce multi-day latency, so the LSP's status messaging should reflect "in verification" as distinct from "under review." KYC failure at the director or co-applicant level should be surfaced with enough specificity that the borrower knows what to remedy.
-
-Mandate and eSign completion are hard gates — disbursal shouldn't proceed on an incomplete mandate or unsigned agreement, even under pressure to move faster.
-
-> **On Tunnel**: `/init`, `/on_init`, `/confirm`, `/on_confirm`, and every `/on_status` pass through Tunnel; KYC, PD/FV, mandate, and eSign themselves happen in the lender's environment, outside the network. During multi-day PD/FV, the network observability dashboard shows only what the lender reports, so lenders should push `/on_status` at each completed step. Tunnel checks that `/confirm` is well-formed, not that the mandate is live or the agreement signed — those hard gates stay with the lender.
 
 ---
 
