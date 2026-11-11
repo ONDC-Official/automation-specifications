@@ -17,3 +17,12 @@ flows:
     description: "Reconciliation where the receiver cannot match the order: the collector sends recon and the receiver responds with on_recon carrying error 70030 (Invalid Order Id)."
     config:
       $ref: ./RSF/ERROR_on_recon.yaml
+  - type: playground
+    id: RECON_seller_initiated
+    usecase: RSF
+    tags:
+      - WORKBENCH
+      - REPORTABLE
+    description: "Seller-initiated reconciliation: the seller sends recon, the buyer responds with on_recon expressing disagreement (recon_accord false) with the difference per unsettled settlement, the seller sends recon again agreeing to the buyer's values, and the buyer responds with on_recon agreeing (recon_accord true)."
+    config:
+      $ref: ./RSF/RECON_seller_initiated.yaml
