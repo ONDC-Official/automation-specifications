@@ -1,28 +1,19 @@
 flows:
   - type: playground
-    id: Settlement_Paid_In_Full
+    id: RECON
     usecase: RSF
     tags:
       - WORKBENCH
       - REPORTABLE
-    description: "Reconciliation where the collector has settled the order amount correctly, the collector sends receiver_recon with the order book and settlement details, and the receiver confirms the order as paid with on_receiver_recon."
+    description: "Reconciliation through recon and on_recon: the collector sends recon, the receiver responds with on_recon expressing disagreement (recon_accord false) with the difference per unsettled settlement, the collector sends recon again agreeing to the counterparty values, and the receiver responds with on_recon agreeing (recon_accord true)."
     config:
-      $ref: ./RSF/Settlement_Paid_In_Full.yaml
+      $ref: ./RSF/RECON.yaml
   - type: playground
-    id: Settlement_Underpaid_Or_Overpaid
+    id: ERROR_on_recon
     usecase: RSF
     tags:
       - WORKBENCH
       - REPORTABLE
-    description: "Reconciliation where the settled amount deviates from the expected amount: the receiver reports an underpaid or overpaid order in on_receiver_recon, the collector settles the difference and sends receiver_recon with multiple settlement_details, and the receiver confirms with on_receiver_recon."
+    description: "Reconciliation where the receiver cannot match the order: the collector sends recon and the receiver responds with on_recon carrying error 70030 (Invalid Order Id)."
     config:
-      $ref: ./RSF/Settlement_Underpaid_Or_Overpaid.yaml
-  - type: playground
-    id: Settlement_Payment_Not_Received
-    usecase: RSF
-    tags:
-      - WORKBENCH
-      - REPORTABLE
-    description: "Reconciliation initiated by the receiver for an order that was not paid: the receiver sends an unsolicited on_receiver_recon flagging the missing settlement, the collector settles it and sends receiver_recon, and the receiver confirms with on_receiver_recon."
-    config:
-      $ref: ./RSF/Settlement_Payment_Not_Received.yaml
+      $ref: ./RSF/ERROR_on_recon.yaml
