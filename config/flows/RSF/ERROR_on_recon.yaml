@@ -1,0 +1,650 @@
+meta:
+  domain: ONDC:NTS10
+  version: 2.1.0
+  flowId: ERROR_on_recon
+  flowName: ERROR (on_recon)
+  config_version: 0.0.0001
+  description: 'Reconciliation where the receiver cannot match the order: the collector sends /recon with the order and settlement details, and the receiver responds with on_recon carrying an error (70030 - Invalid Order Id).'
+  use_case_id: RSF
+transaction_data:
+  transaction_id: bd73a366-aebb-4144-9314-808dda82c7e6
+  latest_timestamp: '1970-01-01T00:00:00.000Z'
+  bap_id: collector-app.com
+  bap_uri: https://collector-app.com/ondc/1.0/
+  bpp_id: receiver-app.com
+  bpp_uri: https://receiver-app.com/ondc/
+steps:
+- api: recon
+  action_id: recon_1
+  owner: BAP
+  responseFor: null
+  unsolicited: false
+  description: The collector (BAP) sends /recon to the receiver (BPP) with the order, its quote breakup and the settlements it holds, to understand the discrepancy in the settlement instructions.
+  mock:
+    generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICoKICogQHBhcmFtIHtPYmplY3R9IGRlZmF1bHRQYXlsb2FkIC0gVGhlIGJhc2UgcGF5bG9hZCBvYmplY3Qgd2l0aCBjb250ZXh0IGFscmVhZHkgcG9wdWxhdGVkLgogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiBAcmV0dXJucyB7T2JqZWN0fSBUaGUgZ2VuZXJhdGVkIHBheWxvYWQgb2JqZWN0IHRvIGJlIHNlbnQgaW4gdGhlIEFQSSByZXF1ZXN0LgogKi8KYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgdHJ5IHsKICAgIGNvbnN0IGkgPSBzZXNzaW9uRGF0YS51c2VyX2lucHV0cyB8fCB7fTsKICAgIGNvbnN0IG5vdyA9IGN1cnJlbnRUaW1lc3RhbXAoKTsKICAgIGNvbnN0IGN0eCA9IGRlZmF1bHRQYXlsb2FkLmNvbnRleHQ7CiAgICBjdHgudGltZXN0YW1wID0gbm93OwogICAgY3R4Lm1lc3NhZ2VfaWQgPSB1dWlkdjQoKTsKICAgIGN0eC5icHBfaWQgPSBpLmJwcF9pZCA/PyBjdHguYnBwX2lkOwogICAgY3R4LmJwcF91cmkgPSBpLmJwcF91cmkgPz8gY3R4LmJwcF91cmk7CiAgICBjdHgudHRsID0gaS50dGwgPz8gY3R4LnR0bDsKCiAgICBjb25zdCBvcmRlciA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXJzWzBdOwogICAgY29uc3QgY3VycmVuY3kgPSBpLmN1cnJlbmN5ID8/IG9yZGVyLnF1b3RlLnByaWNlLmN1cnJlbmN5OwogICAgY29uc3QgbW9uZXkgPSAodmFsdWUpID0+ICh7IGN1cnJlbmN5LCB2YWx1ZTogU3RyaW5nKHZhbHVlKSB9KTsKICAgIGNvbnN0IGhhcyA9ICh2KSA9PiB2ICE9PSB1bmRlZmluZWQgJiYgdiAhPT0gbnVsbCAmJiB2ICE9PSAiIjsKCiAgICBjb25zdCB0b0JyZWFrdXAgPSAoYikgPT4gewogICAgICBjb25zdCBsaW5lID0geyAiQG9uZGMvb3JnL2l0ZW1faWQiOiBiLml0ZW1faWQgfTsKICAgICAgaWYgKGhhcyhiLnF1YW50aXR5X2NvdW50KSkgbGluZVsiQG9uZGMvb3JnL2l0ZW1fcXVhbnRpdHkiXSA9IHsgY291bnQ6IE51bWJlcihiLnF1YW50aXR5X2NvdW50KSB9OwogICAgICBsaW5lLnRpdGxlID0gYi50aXRsZTsKICAgICAgbGluZVsiQG9uZGMvb3JnL3RpdGxlX3R5cGUiXSA9IGIudGl0bGVfdHlwZTsKICAgICAgbGluZS5wcmljZSA9IG1vbmV5KGIucHJpY2UpOwogICAgICBjb25zdCBpdGVtID0ge307CiAgICAgIGlmIChoYXMoYi5hdmFpbGFibGVfY291bnQpIHx8IGhhcyhiLm1heGltdW1fY291bnQpKSB7CiAgICAgICAgaXRlbS5xdWFudGl0eSA9IHt9OwogICAgICAgIGlmIChoYXMoYi5hdmFpbGFibGVfY291bnQpKSBpdGVtLnF1YW50aXR5LmF2YWlsYWJsZSA9IHsgY291bnQ6IFN0cmluZyhiLmF2YWlsYWJsZV9jb3VudCkgfTsKICAgICAgICBpZiAoaGFzKGIubWF4aW11bV9jb3VudCkpIGl0ZW0ucXVhbnRpdHkubWF4aW11bSA9IHsgY291bnQ6IFN0cmluZyhiLm1heGltdW1fY291bnQpIH07CiAgICAgIH0KICAgICAgaWYgKGhhcyhiLml0ZW1fcHJpY2UpKSBpdGVtLnByaWNlID0gbW9uZXkoYi5pdGVtX3ByaWNlKTsKICAgICAgaWYgKGhhcyhiLnF1b3RlX3R5cGVfdGFnKSkgaXRlbS50YWdzID0gW3sgY29kZTogInF1b3RlIiwgbGlzdDogW3sgY29kZTogInR5cGUiLCB2YWx1ZTogYi5xdW90ZV90eXBlX3RhZyB9XSB9XTsKICAgICAgaWYgKE9iamVjdC5rZXlzKGl0ZW0pLmxlbmd0aCkgbGluZS5pdGVtID0gaXRlbTsKICAgICAgcmV0dXJuIGxpbmU7CiAgICB9OwoKICAgIGNvbnN0IHRvU2V0dGxlbWVudCA9IChzKSA9PiB7CiAgICAgIGNvbnN0IG91dCA9IHsKICAgICAgICBpZDogcy5zZXR0bGVtZW50X2lkLAogICAgICAgIGNvdW50ZXJwYXJ0eV9pZDogcy5jb3VudGVycGFydHlfaWQgPz8gY3R4LmJwcF9pZCwKICAgICAgICBwYXltZW50X2lkOiBzLnBheW1lbnRfaWQsCiAgICAgICAgc3RhdHVzOiBzLnN0YXR1cywKICAgICAgICB0eXBlOiBzLnR5cGUgPz8gIiIsCiAgICAgICAgYW1vdW50OiBtb25leShzLmFtb3VudCksCiAgICAgIH07CiAgICAgIGZvciAoY29uc3Qga2V5IG9mIFsiY29tbWlzc2lvbiIsICJ3aXRoaG9sZGluZ19hbW91bnQiLCAidGNzIiwgInRkcyIsICJkZWxheV9hbW91bnQiXSkgewogICAgICAgIGlmIChoYXMoc1trZXldKSkgb3V0W2tleV0gPSBtb25leShzW2tleV0pOwogICAgICB9CiAgICAgIGlmIChoYXMocy5zZXR0bGVtZW50X3JlZl9ubykpIG91dC5zZXR0bGVtZW50X3JlZl9ubyA9IHMuc2V0dGxlbWVudF9yZWZfbm87CiAgICAgIG91dC51cGRhdGVkX2F0ID0gcy51cGRhdGVkX2F0ID8/IG5vdzsKICAgICAgcmV0dXJuIG91dDsKICAgIH07CgogICAgb3JkZXIuaWQgPSBpLm9yZGVyX2lkID8/IG9yZGVyLmlkOwogICAgb3JkZXIuc3RhdHVzID0gaS5vcmRlcl9zdGF0dXMgPz8gb3JkZXIuc3RhdHVzOwogICAgb3JkZXIucXVvdGUgPSB7CiAgICAgIHByaWNlOiBtb25leShpLnF1b3RlX3ZhbHVlID8/IG9yZGVyLnF1b3RlLnByaWNlLnZhbHVlKSwKICAgICAgYnJlYWt1cDogaS5xdW90ZV9icmVha3VwID8gaS5xdW90ZV9icmVha3VwLm1hcCh0b0JyZWFrdXApIDogb3JkZXIucXVvdGUuYnJlYWt1cCwKICAgICAgdHRsOiBpLnF1b3RlX3R0bCA/PyBvcmRlci5xdW90ZS50dGwsCiAgICB9OwogICAgb3JkZXIuc2V0dGxlbWVudHMgPSBpLnNldHRsZW1lbnRzID8gaS5zZXR0bGVtZW50cy5tYXAodG9TZXR0bGVtZW50KSA6IG9yZGVyLnNldHRsZW1lbnRzOwogICAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwogIH0gY2F0Y2ggKGVycm9yKSB7CiAgICBjb25zb2xlLmVycm9yKCJyZWNvbiBnZW5lcmF0ZSBmYWlsZWQ6IiwgZXJyb3IpOwogICAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwogIH0KfQo=
+    validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGFnYWluc3QgZGF0YSBzYXZlZCBmcm9tIHByZXZpb3VzIHN0ZXBzLgogKgogKiBAcGFyYW0ge09iamVjdH0gdGFyZ2V0UGF5bG9hZCAtIFRoZSBpbmNvbWluZyByZXF1ZXN0IHBheWxvYWQgdG8gdmFsaWRhdGUuCiAqIEBwYXJhbSB7T2JqZWN0fSBzZXNzaW9uRGF0YSAtIERhdGEgY29sbGVjdGVkIGZyb20gcHJldmlvdXMgdHJhbnNhY3Rpb24gc3RlcHMuCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiVmFsaWQgcmVxdWVzdCIgfTsKfQo=
+    requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqCiAqIEBwYXJhbSB7T2JqZWN0fSBzZXNzaW9uRGF0YSAtIERhdGEgY29sbGVjdGVkIGZyb20gcHJldmlvdXMgdHJhbnNhY3Rpb24gc3RlcHMuCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiBtZWV0c1JlcXVpcmVtZW50cyhzZXNzaW9uRGF0YSkgewogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQo=
+    defaultPayload:
+      context:
+        domain: ONDC:NTS10
+        location:
+          country:
+            code: IND
+          city:
+            code: '*'
+        version: 2.1.0
+        action: recon
+        bap_id: collector-app.com
+        bap_uri: https://collector-app.com/ondc/1.0/
+        bpp_id: receiver-app.com
+        bpp_uri: https://receiver-app.com/ondc/
+        transaction_id: bd73a366-aebb-4144-9314-808dda82c7e6
+        message_id: 941ef6d7-d74d-4411-ac06-a05469c0f9ac
+        timestamp: '2024-05-07T06:36:50.897Z'
+        ttl: P1D
+      message:
+        orders:
+        - id: order-1234
+          status: COMPLETED
+          quote:
+            price:
+              currency: INR
+              value: '300.00'
+            breakup:
+            - '@ondc/org/item_id': I1
+              '@ondc/org/item_quantity':
+                count: 1
+              title: Atta
+              '@ondc/org/title_type': item
+              price:
+                currency: INR
+                value: '206.00'
+              item:
+                quantity:
+                  available:
+                    count: '99'
+                  maximum:
+                    count: '99'
+                price:
+                  currency: INR
+                  value: '206.00'
+            - '@ondc/org/item_id': F1
+              title: Delivery charges
+              '@ondc/org/title_type': delivery
+              price:
+                currency: INR
+                value: '50.00'
+            - '@ondc/org/item_id': F1
+              title: Tax
+              '@ondc/org/title_type': tax
+              price:
+                currency: INR
+                value: '9.00'
+              item:
+                tags:
+                - code: quote
+                  list:
+                  - code: type
+                    value: fulfillment
+            - '@ondc/org/item_id': F1
+              title: Packing charges
+              '@ondc/org/title_type': packing
+              price:
+                currency: INR
+                value: '25.00'
+            - '@ondc/org/item_id': I1
+              title: Tax
+              '@ondc/org/title_type': tax
+              price:
+                currency: INR
+                value: '0.00'
+            - '@ondc/org/item_id': F1
+              title: Convenience Fee
+              '@ondc/org/title_type': misc
+              price:
+                currency: INR
+                value: '10.00'
+            ttl: P1D
+          settlements:
+          - id: settlement-id-456
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-1
+            status: PENDING
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            updated_at: '2024-05-07T07:36:50.897Z'
+          - id: settlement-id-789
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-2
+            status: SETTLED
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            settlement_ref_no: utr-1234
+            updated_at: '2024-05-07T06:36:50.897Z'
+          - id: settlement-id-112
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-3
+            status: TO_BE_INITIATED
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            updated_at: '2024-05-07T06:36:50.897Z'
+    saveData:
+      transactionId: $.context.transaction_id
+      latestMessage_id: $.context.message_id
+      latestTimestamp: $.context.timestamp
+      bapId: $.context.bap_id
+      bapUri: $.context.bap_uri
+      bppId: $.context.bpp_id
+      bppUri: $.context.bpp_uri
+      recon_order: $.message.orders[*]
+    inputs:
+      id: rsf_recon_input
+      jsonSchema:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          bpp_id:
+            type: string
+            description: Subscriber ID of the receiver app (BPP)
+            default: receiver-app.com
+            pattern: ^(?!.*\b(?:http|https|www)\b)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$
+          bpp_uri:
+            type: string
+            description: Subscriber URL of the receiver app (BPP)
+            default: https://receiver-app.com/ondc/
+            pattern: ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
+          ttl:
+            type: string
+            description: Context ttl (ISO 8601 duration)
+            default: P1D
+          order_id:
+            type: string
+            description: Order ID
+            default: order-1234
+          order_status:
+            type: string
+            description: Order status
+            default: COMPLETED
+            enum:
+            - COMPLETED
+          currency:
+            type: string
+            description: Currency
+            default: INR
+            enum:
+            - INR
+          quote_value:
+            type: string
+            description: Order quote total
+            default: '300.00'
+            pattern: ^\d+(\.\d{1,2})?$
+          quote_ttl:
+            type: string
+            description: Quote ttl (ISO 8601 duration)
+            default: P1D
+          quote_breakup:
+            type: array
+            description: Quote breakup lines (use Add item for more)
+            default:
+            - item_id: I1
+              title: Atta
+              title_type: item
+              price: '206.00'
+              quantity_count: '1'
+              available_count: '99'
+              maximum_count: '99'
+              item_price: '206.00'
+            - item_id: F1
+              title: Delivery charges
+              title_type: delivery
+              price: '50.00'
+            - item_id: F1
+              title: Tax
+              title_type: tax
+              price: '9.00'
+              quote_type_tag: fulfillment
+            - item_id: F1
+              title: Packing charges
+              title_type: packing
+              price: '25.00'
+            - item_id: I1
+              title: Tax
+              title_type: tax
+              price: '0.00'
+            - item_id: F1
+              title: Convenience Fee
+              title_type: misc
+              price: '10.00'
+            items:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                  title: Item / fulfillment ID
+                title:
+                  type: string
+                  title: Title
+                title_type:
+                  type: string
+                  title: Title type
+                  enum:
+                  - item
+                  - delivery
+                  - tax
+                  - packing
+                  - misc
+                  - discount
+                  - outofstock
+                  - tax_discount
+                price:
+                  type: string
+                  title: Price
+                  pattern: ^\d+(\.\d{1,2})?$
+                quantity_count:
+                  type: string
+                  title: Item quantity count (optional)
+                  pattern: ^\d+$
+                available_count:
+                  type: string
+                  title: Available count (optional)
+                  pattern: ^\d+$
+                maximum_count:
+                  type: string
+                  title: Maximum count (optional)
+                  pattern: ^\d+$
+                item_price:
+                  type: string
+                  title: Item price (optional)
+                  pattern: ^\d+(\.\d{1,2})?$
+                quote_type_tag:
+                  type: string
+                  title: Quote type tag value (optional, e.g. fulfillment)
+              required:
+              - item_id
+              - title
+              - title_type
+              - price
+          settlements:
+            type: array
+            description: Settlements held by the collector (use Add item for more)
+            default:
+            - settlement_id: settlement-id-456
+              counterparty_id: receiver-app.com
+              payment_id: pymnt-1
+              status: PENDING
+              type: ''
+              amount: '100.00'
+              commission: '10.00'
+              withholding_amount: '10.00'
+              tcs: '10.00'
+              tds: '10.00'
+              updated_at: '2024-05-07T07:36:50.897Z'
+            - settlement_id: settlement-id-789
+              counterparty_id: receiver-app.com
+              payment_id: pymnt-2
+              status: SETTLED
+              type: ''
+              amount: '100.00'
+              commission: '10.00'
+              withholding_amount: '10.00'
+              tcs: '10.00'
+              tds: '10.00'
+              settlement_ref_no: utr-1234
+              updated_at: '2024-05-07T06:36:50.897Z'
+            - settlement_id: settlement-id-112
+              counterparty_id: receiver-app.com
+              payment_id: pymnt-3
+              status: TO_BE_INITIATED
+              type: ''
+              amount: '100.00'
+              commission: '10.00'
+              withholding_amount: '10.00'
+              tcs: '10.00'
+              tds: '10.00'
+              updated_at: '2024-05-07T06:36:50.897Z'
+            items:
+              type: object
+              properties:
+                settlement_id:
+                  type: string
+                  title: Settlement ID
+                counterparty_id:
+                  type: string
+                  title: Counterparty ID (defaults to receiver BPP ID)
+                payment_id:
+                  type: string
+                  title: Payment ID
+                status:
+                  type: string
+                  title: Status
+                  enum:
+                  - TO_BE_INITIATED
+                  - SETTLED
+                  - PENDING
+                  default: PENDING
+                type:
+                  type: string
+                  title: Type
+                  default: ''
+                amount:
+                  type: string
+                  title: Amount
+                  pattern: ^\d+(\.\d{1,2})?$
+                commission:
+                  type: string
+                  title: Commission
+                  pattern: ^\d+(\.\d{1,2})?$
+                withholding_amount:
+                  type: string
+                  title: Withholding amount
+                  pattern: ^\d+(\.\d{1,2})?$
+                tcs:
+                  type: string
+                  title: TCS
+                  pattern: ^\d+(\.\d{1,2})?$
+                tds:
+                  type: string
+                  title: TDS
+                  pattern: ^\d+(\.\d{1,2})?$
+                delay_amount:
+                  type: string
+                  title: Delay amount (optional)
+                  pattern: ^\d+(\.\d{1,2})?$
+                settlement_ref_no:
+                  type: string
+                  title: Settlement reference / UTR (for SETTLED)
+                updated_at:
+                  type: string
+                  title: Updated at
+                  format: date-time
+              required:
+              - settlement_id
+              - payment_id
+              - status
+              - amount
+              - updated_at
+        required:
+        - bpp_id
+        - bpp_uri
+        - order_id
+        - order_status
+        - quote_value
+        - quote_breakup
+        - settlements
+  examples:
+  - name: example for recon
+    type: request
+    description: Reconciliation call to understand the discrepancy in the settlement instructions
+    payload:
+      context:
+        domain: ONDC:NTS10
+        location:
+          country:
+            code: IND
+          city:
+            code: '*'
+        version: 2.1.0
+        action: recon
+        bap_id: collector-app.com
+        bap_uri: https://collector-app.com/ondc/1.0/
+        bpp_id: receiver-app.com
+        bpp_uri: https://receiver-app.com/ondc/
+        transaction_id: bd73a366-aebb-4144-9314-808dda82c7e6
+        message_id: 941ef6d7-d74d-4411-ac06-a05469c0f9ac
+        timestamp: '2024-05-07T06:36:50.897Z'
+        ttl: P1D
+      message:
+        orders:
+        - id: order-1234
+          status: COMPLETED
+          quote:
+            price:
+              currency: INR
+              value: '300.00'
+            breakup:
+            - '@ondc/org/item_id': I1
+              '@ondc/org/item_quantity':
+                count: 1
+              title: Atta
+              '@ondc/org/title_type': item
+              price:
+                currency: INR
+                value: '206.00'
+              item:
+                quantity:
+                  available:
+                    count: '99'
+                  maximum:
+                    count: '99'
+                price:
+                  currency: INR
+                  value: '206.00'
+            - '@ondc/org/item_id': F1
+              title: Delivery charges
+              '@ondc/org/title_type': delivery
+              price:
+                currency: INR
+                value: '50.00'
+            - '@ondc/org/item_id': F1
+              title: Tax
+              '@ondc/org/title_type': tax
+              price:
+                currency: INR
+                value: '9.00'
+              item:
+                tags:
+                - code: quote
+                  list:
+                  - code: type
+                    value: fulfillment
+            - '@ondc/org/item_id': F1
+              title: Packing charges
+              '@ondc/org/title_type': packing
+              price:
+                currency: INR
+                value: '25.00'
+            - '@ondc/org/item_id': I1
+              title: Tax
+              '@ondc/org/title_type': tax
+              price:
+                currency: INR
+                value: '0.00'
+            - '@ondc/org/item_id': F1
+              title: Convenience Fee
+              '@ondc/org/title_type': misc
+              price:
+                currency: INR
+                value: '10.00'
+            ttl: P1D
+          settlements:
+          - id: settlement-id-456
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-1
+            status: PENDING
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            updated_at: '2024-05-07T07:36:50.897Z'
+          - id: settlement-id-789
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-2
+            status: SETTLED
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            settlement_ref_no: utr-1234
+            updated_at: '2024-05-07T06:36:50.897Z'
+          - id: settlement-id-112
+            counterparty_id: receiver-app.com
+            payment_id: pymnt-3
+            status: TO_BE_INITIATED
+            type: ''
+            amount:
+              currency: INR
+              value: '100.00'
+            commission:
+              currency: INR
+              value: '10.00'
+            withholding_amount:
+              currency: INR
+              value: '10.00'
+            tds:
+              currency: INR
+              value: '10.00'
+            tcs:
+              currency: INR
+              value: '10.00'
+            updated_at: '2024-05-07T06:36:50.897Z'
+- api: on_recon
+  action_id: on_recon_1
+  owner: BPP
+  responseFor: recon_1
+  unsolicited: false
+  description: The receiver (BPP) responds to /recon with an error (70030 - Invalid Order Id) because the order id could not be matched.
+  mock:
+    generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICoKICogQHBhcmFtIHtPYmplY3R9IGRlZmF1bHRQYXlsb2FkIC0gVGhlIGJhc2UgcGF5bG9hZCBvYmplY3Qgd2l0aCBjb250ZXh0IGFscmVhZHkgcG9wdWxhdGVkLgogKiBAcGFyYW0ge09iamVjdH0gc2Vzc2lvbkRhdGEgLSBEYXRhIGNvbGxlY3RlZCBmcm9tIHByZXZpb3VzIHRyYW5zYWN0aW9uIHN0ZXBzLgogKiBAcmV0dXJucyB7T2JqZWN0fSBUaGUgZ2VuZXJhdGVkIHBheWxvYWQgb2JqZWN0IHRvIGJlIHNlbnQgaW4gdGhlIEFQSSByZXF1ZXN0LgogKi8KYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgdHJ5IHsKICAgIGNvbnN0IGkgPSBzZXNzaW9uRGF0YS51c2VyX2lucHV0cyB8fCB7fTsKICAgIGNvbnN0IHBsdXMgPSAodHMsIG1zKSA9PiBuZXcgRGF0ZShEYXRlLnBhcnNlKHRzKSArIG1zKS50b0lTT1N0cmluZygpOwogICAgY29uc3QgcmVxdWVzdFRzID0gc2Vzc2lvbkRhdGEubGF0ZXN0VGltZXN0YW1wPy5bMF0gPz8gY3VycmVudFRpbWVzdGFtcCgpOwogICAgZGVmYXVsdFBheWxvYWQuY29udGV4dC5tZXNzYWdlX2lkID0gc2Vzc2lvbkRhdGEubGF0ZXN0TWVzc2FnZV9pZFswXTsKICAgIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQudGltZXN0YW1wID0gcGx1cyhyZXF1ZXN0VHMsIDEwMDApOwogICAgZGVmYXVsdFBheWxvYWQuZXJyb3IgPSB7CiAgICAgIGNvZGU6IGkuZXJyb3JfY29kZSA/PyBkZWZhdWx0UGF5bG9hZC5lcnJvci5jb2RlLAogICAgICBtZXNzYWdlOiBpLmVycm9yX21lc3NhZ2UgPz8gZGVmYXVsdFBheWxvYWQuZXJyb3IubWVzc2FnZSwKICAgIH07CiAgICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7CiAgfSBjYXRjaCAoZXJyb3IpIHsKICAgIGNvbnNvbGUuZXJyb3IoIm9uX3JlY29uIChlcnJvcikgZ2VuZXJhdGUgZmFpbGVkOiIsIGVycm9yKTsKICAgIHJldHVybiBkZWZhdWx0UGF5bG9hZDsKICB9Cn0K
+    validate: LyoqCiAqIFZhbGlkYXRlcyB0aGUgaW5jb21pbmcgcmVxdWVzdCBwYXlsb2FkIGFnYWluc3QgZGF0YSBzYXZlZCBmcm9tIHByZXZpb3VzIHN0ZXBzLgogKgogKiBAcGFyYW0ge09iamVjdH0gdGFyZ2V0UGF5bG9hZCAtIFRoZSBpbmNvbWluZyByZXF1ZXN0IHBheWxvYWQgdG8gdmFsaWRhdGUuCiAqIEBwYXJhbSB7T2JqZWN0fSBzZXNzaW9uRGF0YSAtIERhdGEgY29sbGVjdGVkIGZyb20gcHJldmlvdXMgdHJhbnNhY3Rpb24gc3RlcHMuCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiB2YWxpZGF0ZSh0YXJnZXRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIC8vIENyb3NzLXN0ZXAgdmVyaWZpY2F0aW9uIChza2lwcGVkIHdoZW4gdGhlIHBheWxvYWQgYmVsb25ncyB0byBhbm90aGVyIHRyYW5zYWN0aW9uKQogIGNvbnN0IGFjdGl2ZVR4SWQgPSBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkPy5bMF07CiAgY29uc3Qgc2tpcENyb3NzU3RlcCA9IEJvb2xlYW4oYWN0aXZlVHhJZCkgJiYgdGFyZ2V0UGF5bG9hZD8uY29udGV4dD8udHJhbnNhY3Rpb25faWQgIT09IGFjdGl2ZVR4SWQ7CgogIGlmICghc2tpcENyb3NzU3RlcCkgewogICAgY29uc3QgZXhwZWN0ZWRNc2dJZCA9IHNlc3Npb25EYXRhLmxhdGVzdE1lc3NhZ2VfaWQ/LlswXTsKICAgIGlmIChleHBlY3RlZE1zZ0lkICYmIHRhcmdldFBheWxvYWQ/LmNvbnRleHQ/Lm1lc3NhZ2VfaWQgIT09IGV4cGVjdGVkTXNnSWQpIHsKICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiY29udGV4dC5tZXNzYWdlX2lkIGRvZXMgbm90IG1hdGNoIHRoZSByZWNvbiBpdCByZXNwb25kcyB0byIgfTsKICAgIH0KICAgIGNvbnN0IHJlcXVlc3RUcyA9IERhdGUucGFyc2Uoc2Vzc2lvbkRhdGEubGF0ZXN0VGltZXN0YW1wPy5bMF0pOwogICAgY29uc3QgcmVzcG9uc2VUcyA9IERhdGUucGFyc2UodGFyZ2V0UGF5bG9hZD8uY29udGV4dD8udGltZXN0YW1wKTsKICAgIGlmICghTnVtYmVyLmlzTmFOKHJlcXVlc3RUcykgJiYgIU51bWJlci5pc05hTihyZXNwb25zZVRzKSAmJiByZXNwb25zZVRzIDw9IHJlcXVlc3RUcykgewogICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJjb250ZXh0LnRpbWVzdGFtcCBtdXN0IGJlIGxhdGVyIHRoYW4gdGhlIHJlY29uIGl0IHJlc3BvbmRzIHRvIiB9OwogICAgfQogIH0KCiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJWYWxpZCByZXF1ZXN0IiB9Owp9Cg==
+    requirements: LyoqCiAqIENoZWNrcyBpZiB0aGUgcmVxdWlyZW1lbnRzIGZvciBwcm9jZWVkaW5nIHdpdGggdGhlIEFQSSBjYWxsIGFyZSBtZXQuCiAqCiAqIEBwYXJhbSB7T2JqZWN0fSBzZXNzaW9uRGF0YSAtIERhdGEgY29sbGVjdGVkIGZyb20gcHJldmlvdXMgdHJhbnNhY3Rpb24gc3RlcHMuCiAqIEByZXR1cm5zIHtPYmplY3R9IHsgdmFsaWQ6IGJvb2xlYW4sIGNvZGU6IG51bWJlciwgZGVzY3JpcHRpb246IHN0cmluZyB9CiAqLwpmdW5jdGlvbiBtZWV0c1JlcXVpcmVtZW50cyhzZXNzaW9uRGF0YSkgewogIGlmICghc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZD8ubGVuZ3RoKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHRyYW5zYWN0aW9uIElEIGluIHNlc3Npb24iIH07CiAgfQogIGlmICghc2Vzc2lvbkRhdGEubGF0ZXN0TWVzc2FnZV9pZD8ubGVuZ3RoKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGxhdGVzdE1lc3NhZ2VfaWQgaW4gc2Vzc2lvbiDigJQgcmVjb25fMSBoYXMgbm90IGNvbXBsZXRlZCIgfTsKICB9CiAgaWYgKCFzZXNzaW9uRGF0YS5sYXRlc3RUaW1lc3RhbXA/Lmxlbmd0aCkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBsYXRlc3RUaW1lc3RhbXAgaW4gc2Vzc2lvbiDigJQgcmVjb25fMSBoYXMgbm90IGNvbXBsZXRlZCIgfTsKICB9CiAgcmV0dXJuIHsgdmFsaWQ6IHRydWUsIGNvZGU6IDIwMCwgZGVzY3JpcHRpb246ICJSZXF1aXJlbWVudHMgbWV0IiB9Owp9Cg==
+    defaultPayload:
+      context:
+        domain: ONDC:NTS10
+        location:
+          country:
+            code: IND
+          city:
+            code: '*'
+        version: 2.1.0
+        action: on_recon
+        bap_id: collector-app.com
+        bap_uri: https://collector-app.com/ondc/1.0/
+        bpp_id: receiver-app.com
+        bpp_uri: https://receiver-app.com/ondc/
+        transaction_id: bd73a366-aebb-4144-9314-808dda82c7e6
+        message_id: 941ef6d7-d74d-4411-ac06-a05469c0f9ac
+        timestamp: '2024-05-07T06:36:51.897Z'
+        ttl: P1D
+      error:
+        code: '70030'
+        message: Invalid Order Id
+    saveData:
+      transactionId: $.context.transaction_id
+      latestMessage_id: $.context.message_id
+      latestTimestamp: $.context.timestamp
+      bapId: $.context.bap_id
+      bapUri: $.context.bap_uri
+      bppId: $.context.bpp_id
+      bppUri: $.context.bpp_uri
+    inputs:
+      id: rsf_on_recon_error_input
+      jsonSchema:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          error_code:
+            type: string
+            description: Error code
+            default: '70030'
+            pattern: ^\d{5}$
+          error_message:
+            type: string
+            description: Error message
+            default: Invalid Order Id
+        required:
+        - error_code
+        - error_message
+  examples:
+  - name: example for on_recon (error)
+    type: request
+    description: Response to the reconciliation call with an error
+    payload:
+      context:
+        domain: ONDC:NTS10
+        location:
+          country:
+            code: IND
+          city:
+            code: '*'
+        version: 2.1.0
+        action: on_recon
+        bap_id: collector-app.com
+        bap_uri: https://collector-app.com/ondc/1.0/
+        bpp_id: receiver-app.com
+        bpp_uri: https://receiver-app.com/ondc/
+        transaction_id: bd73a366-aebb-4144-9314-808dda82c7e6
+        message_id: 941ef6d7-d74d-4411-ac06-a05469c0f9ac
+        timestamp: '2024-05-07T06:36:51.897Z'
+        ttl: P1D
+      error:
+        code: '70030'
+        message: Invalid Order Id
+transaction_history: []
+validationLib: ''
+helperLib: LyoKCUN1c3RvbSBoZWxwZXIgZnVuY3Rpb25zIGF2YWlsYWJsZSBpbiBhbGwgbW9jayBnZW5lcmF0aW9uIGZ1bmN0aW9ucy4KCXRoZXNlIGFyZSBhcHBlbmRlZCBiZWxvdyB0aGUgZ2VuZXJhdGUgZnVuY3Rpb24gZm9yIGVhY2ggc3RlcC4KKi8KCi8vIEdlbmVyYXRlcyBhIFVVSUQgdjQKZnVuY3Rpb24gdXVpZHY0KCkgewoJcmV0dXJuICd4eHh4eHh4eC14eHh4LTR4eHgteXh4eC14eHh4eHh4eHh4eHgnLnJlcGxhY2UoL1t4eV0vZywgZnVuY3Rpb24gKGMpIHsKCSAgY29uc3QgciA9IE1hdGgucmFuZG9tKCkgKiAxNiB8IDA7CgkgIGNvbnN0IHYgPSBjID09PSAneCcgPyByIDogKHIgJiAweDMgfCAweDgpOwoJICByZXR1cm4gdi50b1N0cmluZygxNik7Cgl9KTsKfQoKLy8gR2VuZXJhdGUgYSA2IGRpZ2l0IHN0cmluZyBJRApmdW5jdGlvbiBnZW5lcmF0ZTZEaWdpdElkKCkgewoJcmV0dXJuIE1hdGguZmxvb3IoMTAwMDAwICsgTWF0aC5yYW5kb20oKSAqIDkwMDAwMCkudG9TdHJpbmcoKTsKfQoKLy8gUmV0dXJucyB0aGUgY3VycmVudCBJU08gdGltZXN0YW1wCmZ1bmN0aW9uIGN1cnJlbnRUaW1lc3RhbXAoKSB7CglyZXR1cm4gbmV3IERhdGUoKS50b0lTT1N0cmluZygpOwp9Cg==
