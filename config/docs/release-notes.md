@@ -1,3 +1,3 @@
-# ONDC:NTS10 1.0.0 — Release Notes
+# ONDC:NTS10 2.1.0 — Release Notes
 
-- Initial release: `receiver_recon` and `on_receiver_recon` with three flows (paid appropriately, underpaid / overpaid, unsolicited on_receiver_recon).
+- RSF 2.1.0: `recon` and `on_recon` with two flows (RECON and ERROR (on_recon)). Replaces the RSF 1.0 `receiver_recon` / `on_receiver_recon` APIs.

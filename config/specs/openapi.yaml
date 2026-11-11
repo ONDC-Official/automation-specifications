@@ -2,12 +2,12 @@ openapi: 3.1.0
 info:
   title: ONDC Specification
   description: ONDC Specification
-  version: 1.0.0
+  version: 2.1.0
   domain: ONDC:NTS10
 paths:
-  /receiver_recon:
+  /recon:
     post:
-      operationId: receiver_recon
+      operationId: recon
       requestBody:
         required: true
         content:
@@ -20,13 +20,22 @@ paths:
                   properties:
                     domain:
                       type: string
-                    country:
-                      type: string
-                    city:
+                    location:
+                      type: object
+                      properties:
+                        country:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                        city:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                    version:
                       type: string
                     action:
-                      type: string
-                    core_version:
                       type: string
                     bap_id:
                       type: string
@@ -47,167 +56,154 @@ paths:
                 message:
                   type: object
                   properties:
-                    orderbook:
-                      type: object
-                      properties:
-                        orders:
-                          type: array
-                          items:
+                    orders:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          status:
+                            type: string
+                          quote:
                             type: object
                             properties:
-                              id:
-                                type: string
-                              invoice_no:
-                                type: string
-                              collector_app_id:
-                                type: string
-                              receiver_app_id:
-                                type: string
-                              state:
-                                type: string
-                              provider:
+                              price:
                                 type: object
                                 properties:
-                                  name:
-                                    type: object
-                                    properties:
-                                      name:
-                                        type: string
-                                      code:
-                                        type: string
-                                  address:
+                                  currency:
                                     type: string
-                              payment:
-                                type: object
-                                properties:
-                                  uri:
+                                  value:
                                     type: string
-                                  tl_method:
-                                    type: string
-                                  params:
-                                    type: object
-                                    properties:
-                                      transaction_id:
-                                        type: string
-                                      transaction_status:
-                                        type: string
-                                      amount:
-                                        type: string
-                                      currency:
-                                        type: string
-                                  type:
-                                    type: string
-                                  status:
-                                    type: string
-                                  collected_by:
-                                    type: string
-                                  "@ondc/org/collected_by_status":
-                                    type: string
-                                  "@ondc/org/buyer_app_finder_fee_type":
-                                    type: string
-                                  "@ondc/org/buyer_app_finder_fee_amount":
-                                    type: string
-                                  "@ondc/org/withholding_amount":
-                                    type: string
-                                  "@ondc/org/withholding_amount_status":
-                                    type: string
-                                  "@ondc/org/return_window":
-                                    type: string
-                                  "@ondc/org/return_window_status":
-                                    type: string
-                                  "@ondc/org/settlement_basis":
-                                    type: string
-                                  "@ondc/org/settlement_basis_status":
-                                    type: string
-                                  "@ondc/org/settlement_window":
-                                    type: string
-                                  "@ondc/org/settlement_window_status":
-                                    type: string
-                                  "@ondc/org/settlement_details":
-                                    type: array
-                                    items:
+                              breakup:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    '@ondc/org/item_id':
+                                      type: string
+                                    '@ondc/org/item_quantity':
                                       type: object
                                       properties:
-                                        settlement_counterparty:
+                                        count:
+                                          type: integer
+                                    title:
+                                      type: string
+                                    '@ondc/org/title_type':
+                                      type: string
+                                    price:
+                                      type: object
+                                      properties:
+                                        currency:
                                           type: string
-                                        settlement_phase:
+                                        value:
                                           type: string
-                                        settlement_amount:
-                                          type: number
-                                        settlement_type:
-                                          type: string
-                                        settlement_bank_account_no:
-                                          type: string
-                                        settlement_ifsc_code:
-                                          type: string
-                                        upi_address:
-                                          type: string
-                                        bank_name:
-                                          type: string
-                                        branch_name:
-                                          type: string
-                                        beneficiary_address:
-                                          type: string
-                                        beneficiary_name:
-                                          type: string
-                                        settlement_status:
-                                          type: string
-                                        settlement_reference:
-                                          type: string
-                                        settlement_timestamp:
-                                          type: string
-                              withholding_tax_gst:
-                                type: object
-                                properties:
-                                  currency:
-                                    type: string
-                                  value:
-                                    type: string
-                              withholding_tax_tds:
-                                type: object
-                                properties:
-                                  currency:
-                                    type: string
-                                  value:
-                                    type: string
-                              deduction_by_collector:
-                                type: object
-                                properties:
-                                  currency:
-                                    type: string
-                                  value:
-                                    type: string
-                              payerdetails:
-                                type: object
-                                properties:
-                                  payer_name:
-                                    type: string
-                                  payer_address:
-                                    type: string
-                                  payer_account_no:
-                                    type: number
-                                  payer_bank_code:
-                                    type: string
-                                  payer_virtual_payment_address:
-                                    type: string
-                              settlement_reason_code:
+                                    item:
+                                      type: object
+                                      properties:
+                                        quantity:
+                                          type: object
+                                          properties:
+                                            available:
+                                              type: object
+                                              properties:
+                                                count:
+                                                  type: string
+                                            maximum:
+                                              type: object
+                                              properties:
+                                                count:
+                                                  type: string
+                                        price:
+                                          type: object
+                                          properties:
+                                            currency:
+                                              type: string
+                                            value:
+                                              type: string
+                                        tags:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              code:
+                                                type: string
+                                              list:
+                                                type: array
+                                                items:
+                                                  type: object
+                                                  properties:
+                                                    code:
+                                                      type: string
+                                                    value:
+                                                      type: string
+                              ttl:
                                 type: string
-                              transaction_id:
-                                type: string
-                              settlement_id:
-                                type: string
-                              settlement_reference_no:
-                                type: string
-                              recon_status:
-                                type: string
-                              order_recon_status:
-                                type: string
-                              created_at:
-                                type: string
-                              updated_at:
-                                type: string
+                          settlements:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                counterparty_id:
+                                  type: string
+                                payment_id:
+                                  type: string
+                                status:
+                                  type: string
+                                due_date:
+                                  type: string
+                                type:
+                                  type: string
+                                amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                commission:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                withholding_amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                tcs:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                tds:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                delay_amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                settlement_ref_no:
+                                  type: string
+                                updated_at:
+                                  type: string
       responses:
-        "200":
+        '200':
           description: Synchronous ACK/NACK response
           content:
             application/json:
@@ -221,8 +217,8 @@ paths:
                         properties:
                           status:
                             enum:
-                              - ACK
-                              - NACK
+                            - ACK
+                            - NACK
                   error:
                     type: object
                     properties:
@@ -232,9 +228,9 @@ paths:
                         type: string
                       message:
                         type: string
-  /on_receiver_recon:
+  /on_recon:
     post:
-      operationId: on_receiver_recon
+      operationId: on_recon
       requestBody:
         required: true
         content:
@@ -247,13 +243,22 @@ paths:
                   properties:
                     domain:
                       type: string
-                    country:
-                      type: string
-                    city:
+                    location:
+                      type: object
+                      properties:
+                        country:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                        city:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                    version:
                       type: string
                     action:
-                      type: string
-                    core_version:
                       type: string
                     bap_id:
                       type: string
@@ -274,48 +279,175 @@ paths:
                 message:
                   type: object
                   properties:
-                    orderbook:
-                      type: object
-                      properties:
-                        orders:
-                          type: array
-                          items:
+                    orders:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          status:
+                            type: string
+                          quote:
                             type: object
                             properties:
-                              id:
-                                type: string
-                              invoice_no:
-                                type: string
-                              collector_app_id:
-                                type: string
-                              receiver_app_id:
-                                type: string
-                              order_recon_status:
-                                type: string
-                              transaction_id:
-                                type: string
-                              settlement_id:
-                                type: string
-                              settlement_reference_no:
-                                type: string
-                              counterparty_recon_status:
-                                type: string
-                              counterparty_diff_amount:
+                              price:
                                 type: object
                                 properties:
                                   currency:
                                     type: string
                                   value:
                                     type: string
-                              message:
-                                type: object
-                                properties:
-                                  name:
-                                    type: string
-                                  code:
-                                    type: string
+                              breakup:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    '@ondc/org/item_id':
+                                      type: string
+                                    '@ondc/org/item_quantity':
+                                      type: object
+                                      properties:
+                                        count:
+                                          type: integer
+                                    title:
+                                      type: string
+                                    '@ondc/org/title_type':
+                                      type: string
+                                    price:
+                                      type: object
+                                      properties:
+                                        currency:
+                                          type: string
+                                        value:
+                                          type: string
+                                    item:
+                                      type: object
+                                      properties:
+                                        quantity:
+                                          type: object
+                                          properties:
+                                            available:
+                                              type: object
+                                              properties:
+                                                count:
+                                                  type: string
+                                            maximum:
+                                              type: object
+                                              properties:
+                                                count:
+                                                  type: string
+                                        price:
+                                          type: object
+                                          properties:
+                                            currency:
+                                              type: string
+                                            value:
+                                              type: string
+                                        tags:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              code:
+                                                type: string
+                                              list:
+                                                type: array
+                                                items:
+                                                  type: object
+                                                  properties:
+                                                    code:
+                                                      type: string
+                                                    value:
+                                                      type: string
+                              ttl:
+                                type: string
+                          recon_accord:
+                            type: boolean
+                          settlements:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                counterparty_id:
+                                  type: string
+                                payment_id:
+                                  type: string
+                                status:
+                                  type: string
+                                due_date:
+                                  type: string
+                                type:
+                                  type: string
+                                amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                commission:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                withholding_amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                tcs:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                tds:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                delay_amount:
+                                  type: object
+                                  properties:
+                                    currency:
+                                      type: string
+                                    value:
+                                      type: string
+                                    diff_value:
+                                      type: string
+                                settlement_ref_no:
+                                  type: string
+                                updated_at:
+                                  type: string
+                error:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                    message:
+                      type: string
       responses:
-        "200":
+        '200':
           description: Synchronous ACK/NACK response
           content:
             application/json:
@@ -329,8 +461,8 @@ paths:
                         properties:
                           status:
                             enum:
-                              - ACK
-                              - NACK
+                            - ACK
+                            - NACK
                   error:
                     type: object
                     properties:
