@@ -1,588 +1,622 @@
-# Retail Grocery (ONDC:RET10 — Version 1.2.5)
-
-- [Overview](#overview)
-- [Key Advancements in v1.2.5](#key-advancements-in-v125)
-- [Participants](#participants)
-- [The User Journey](#the-user-journey)
-  - [1. Discovery and Catalog Search](#1-discovery-and-catalog-search)
-  - [2. Multi-Fulfillment and Slotted Item Selection](#2-multi-fulfillment-and-slotted-item-selection)
-  - [3. Order Initialization, Delivery Configuration, and Commercials](#3-order-initialization-delivery-configuration-and-commercials)
-  - [4. Order Confirmation and Payment Options (Prepaid & COD)](#4-order-confirmation-and-payment-options-prepaid--cod)
-  - [5. Order Processing, Dynamic Instructions, and Packing](#5-order-processing-dynamic-instructions-and-packing)
-  - [6. Logistics, Delivery Assignment, and Real-Time Tracking](#6-logistics-delivery-assignment-and-real-time-tracking)
-  - [7. Order Handover, OTP Verification, and Delivery](#7-order-handover-otp-verification-and-delivery)
-  - [8. Financial Settlement, Commercial Fees, and Reconciliation](#8-financial-settlement-commercial-fees-and-reconciliation)
-- [Additional Scenarios in v1.2.5](#additional-scenarios-in-v125)
-  - [1. Cash on Delivery (COD) Checkout](#1-cash-on-delivery-cod-checkout)
-  - [2. Slotted & Scheduled Deliveries](#2-slotted--scheduled-deliveries)
-  - [3. Multi-Option Fulfillment Selection](#3-multi-option-fulfillment-selection)
-  - [4. In-Store Self-Pickup (Click & Collect)](#4-in-store-self-pickup-click--collect)
-  - [5. In-Flight Buyer Instructions and Address Updates](#5-in-flight-buyer-instructions-and-address-updates)
-  - [6. Item Replacement and Reverse Quality Check (QC)](#6-item-replacement-and-reverse-quality-check-qc)
-  - [7. Forced and System Cancellations](#7-forced-and-system-cancellations)
-  - [8. Merchant Part-Cancellation and Return to Origin (RTO)](#8-merchant-part-cancellation-and-return-to-origin-rto)
-  - [9. Buyer-Initiated Return and Refund](#9-buyer-initiated-return-and-refund)
-  - [10. Out of Stock Handling (Cart Recovery & Immediate Error Code)](#10-out-of-stock-handling-cart-recovery--immediate-error-code)
-  - [11. Commercial Settlement Model (BNP / SNP Fees)](#11-commercial-settlement-model-bnp--snp-fees)
-  - [12. Incremental Catalog Sync (Push and Pull)](#12-incremental-catalog-sync-push-and-pull)
-  - [13. Statutory Compliance and Catalog Rejection](#13-statutory-compliance-and-catalog-rejection)
-- [Issue and Grievance Management](#issue-and-grievance-management)
-  - [1. IGM 1.0.0 Architecture](#1-igm-100-architecture)
-  - [2. IGM 2.0.0 Architecture](#2-igm-200-architecture)
-- [Detailed Protocol Flows](#detailed-protocol-flows)
-  - [Flow 1: Delivery Flow (Standard Prepaid Home Delivery)](#flow-1-delivery-flow-standard-prepaid-home-delivery)
-  - [Flow 2: Buyer Delivery Flow (Buyer-Managed Logistics)](#flow-2-buyer-delivery-flow-buyer-managed-logistics)
-  - [Flow 3: Buyer Instructions and Delivery Update Flow](#flow-3-buyer-instructions-and-delivery-update-flow)
-  - [Flow 4: Cancellation Flow (Buyer-Side Order Cancellation)](#flow-4-cancellation-flow-buyer-side-order-cancellation)
-  - [Flow 5: Cash on Delivery Flow (COD Fulfillment)](#flow-5-cash-on-delivery-flow-cod-fulfillment)
-  - [Flow 6: Commercial Model for BNP and SNP Flow](#flow-6-commercial-model-for-bnp-and-snp-flow)
-  - [Flow 7: Slotted Delivery Flow (Time Slot Scheduling)](#flow-7-slotted-delivery-flow-time-slot-scheduling)
-  - [Flow 8: Multi-Option Fulfillment Flow (Express / Standard / Same Day)](#flow-8-multi-option-fulfillment-flow-express--standard--same-day)
-  - [Flow 9: Self-Pickup Flow (Click & Collect)](#flow-9-self-pickup-flow-click--collect)
-  - [Flow 10: Replacement Flow (Reverse QC & Item Replacement)](#flow-10-replacement-flow-reverse-qc--item-replacement)
-  - [Flow 11: Return Flow (Customer-Initiated Return & Refund)](#flow-11-return-flow-customer-initiated-return--refund)
-  - [Flow 12: RTO and Part-Cancellation Flow](#flow-12-rto-and-part-cancellation-flow)
-  - [Flow 13: Forced Cancellation Flow](#flow-13-forced-cancellation-flow)
-  - [Flow 14: Out of Stock Flow (Cart Rebalancing & Recovery)](#flow-14-out-of-stock-flow-cart-rebalancing--recovery)
-  - [Flow 15: Out of Stock Flow (Error Code Rejection)](#flow-15-out-of-stock-flow-error-code-rejection)
-  - [Flow 16: Discovery Flow – Full Catalog City Discovery](#flow-16-discovery-flow--full-catalog-city-discovery)
-  - [Flow 17: Discovery Flow – Incremental Catalog Push](#flow-17-discovery-flow--incremental-catalog-push)
-  - [Flow 18: Discovery Flow – Incremental Catalog Refresh Pull](#flow-18-discovery-flow--incremental-catalog-refresh-pull)
-  - [Flow 19: Catalog Rejection Flow (Statutory Non-Compliance)](#flow-19-catalog-rejection-flow-statutory-non-compliance)
-  - [Flow 20: Delivery Flow with IGM 1.0.0 Resolution](#flow-20-delivery-flow-with-igm-100-resolution)
-  - [Flow 21: Delivery Flow with IGM 2.0.0 – Evidence Exchange & Replacement](#flow-21-delivery-flow-with-igm-200--evidence-exchange--replacement)
-  - [Flow 22: Delivery Flow with IGM 2.0.0 – Resolution Accepted (No Action)](#flow-22-delivery-flow-with-igm-200--resolution-accepted-no-action)
-  - [Flow 23: Delivery Flow with IGM 2.0.0 – Dispute Escalation & Mandated Return](#flow-23-delivery-flow-with-igm-200--dispute-escalation--mandated-return)
-
----
+# Retail Grocery (ONDC:RET10 1.2.5)
 
 ## Overview
 
-The Retail Grocery domain (**ONDC:RET10**), standardized under core specification version **1.2.5**, governs digital commerce transactions for packaged commodities, fresh staples, dairy, fruits and vegetables, and daily household essentials across the Open Network for Digital Commerce (ONDC).
+Retail Grocery (`ONDC:RET10`) covers the online sale of everyday household goods: packaged foods, staples such as atta, rice and pulses, fruits and vegetables, dairy, and other daily essentials.
 
-Grocery retail is distinguished by high transaction frequency, hyperlocal geographic radii, perishable inventories with dynamic price and stock swings, stringent statutory labelling mandates (FSSAI licenses and the Legal Metrology / Packaged Commodities Rules 2011), and a wide spectrum of fulfillment modalities. 
+Grocery orders are frequent, local and time-sensitive. Stores usually serve a small delivery radius, stock and prices change often, many items are perishable, and packaged items must carry statutory details under the Legal Metrology (Packaged Commodities) Rules and FSSAI requirements.
 
-ONDC decouples consumer-facing applications (**Buyer Applications / BAPs**) from store operators and catalog aggregators (**Seller Applications / BPPs**). A buyer uses their preferred consumer interface to discover multiple grocery providers within their delivery locality, evaluate real-time inventory and delivery turnaround times (TAT), build composite baskets, configure fulfillment preferences, and monitor fulfillment live. Sellers manage their inventory, pricing, batch packaging, and dispatch policies independently while connecting to the open network.
+ONDC lets buyer apps and seller apps connect through a common, open protocol instead of building separate integrations with each other. A buyer app integrates once with the network and can show catalogs from many sellers. A seller app integrates once and can reach buyers on every participating buyer app.
+
+The seller remains responsible for its catalog, prices, stock, packing, delivery and after-sales service. ONDC standardizes the network messages used to discover products, place orders, track delivery, and handle cancellations, returns and grievances.
+
+This guide explains the groceries journey from a business point of view first, and then covers the API flows defined in this specification (version 1.2.5).
 
 ---
 
-## Key Advancements in v1.2.5
+## What's New in 1.2.5
 
-The **v1.2.5** retail grocery specification expands upon previous minor releases by introducing critical commercial and operational capabilities required for production-scale commerce:
+Compared with version 1.2.0, the Retail Grocery 1.2.5 specification adds:
 
-1. **Flexible Fulfillment Modalities**:
-   - **Multi-Option Fulfillment**: Empowers sellers to present tiered delivery tiers (e.g., Express Delivery, Standard Home Delivery, Same-Day) within the same quote.
-   - **Slotted Deliveries**: Enables consumers to select specific calendar dates and time windows (e.g. 10:00 AM – 12:00 PM) for parcel arrival.
-   - **Self-Pickup (Click & Collect)**: Explicit zero-delivery-fee flows where the consumer personally collects packed parcels from merchant premises.
-2. **Dynamic In-Flight Order Modifications**:
-   - Allows buyers to send real-time delivery instructions (e.g. "Leave with guard", "Do not ring doorbell") and update destination addresses post-confirmation before parcel dispatch.
-   - Introduces secure delivery authentication mechanisms (`on_update_delivery_auth` OTP tokens).
-3. **Enhanced Commercial and Settlement Architecture**:
-   - Establishes standardized commercial fee models for Buyer Network Participants (BNP finder fees) and Seller Network Participants (SNP platform fees), with support for TDS/TCS statutory withholdings and credit terms.
-   - Formalizes Pay-on-Delivery / **Cash on Delivery (COD)** checkout and post-delivery cash collection reconciliation.
-4. **End-to-End Reverse QC and Item Replacements**:
-   - Introduces dedicated reverse logistics lifecycles incorporating doorstep quality check (QC), item pickup authorization, and forward dispatch of replacement grocery goods.
-5. **Robust Exception Handling & Cancellation Controls**:
-   - Distinguishes standard buyer cancellations from emergency merchant/system **Forced Cancellations** triggered by sudden logistical or inventory failure.
-   - Standardizes Return to Origin (RTO) execution with automated reverse settlement deductions.
-6. **Dual IGM Framework Support**:
-   - Standardizes both **IGM 1.0.0** (linear ticket resolution) and **IGM 2.0.0** (multi-party evidence exchange, dispute escalation to Level 2 grievance officers, and automated fulfillment linkages).
+| Area | What it adds |
+|---|---|
+| **Fulfillment choices** | Slotted delivery (buyer picks a date and time window), multiple delivery options in one quote, self-pickup from the store. |
+| **Changes after the order** | Buyer instructions and delivery address change after confirmation, and a delivery OTP sent by the seller for handover. |
+| **Payments and commercials** | Cash on Delivery, a standard commercial model for BNP/SNP fees. |
+| **Reverse flows** | Replacement with reverse QC, forced cancellation. |
 
 ---
 
 ## Participants
 
-| Participant | Role & Network Function |
+| Participant | What This Means |
 |---|---|
-| **Buyer Application (BAP)** | The consumer-facing application (e.g. consumer e-commerce apps, UPI apps, chat apps, telco apps) where consumers browse grocery catalogs, configure delivery addresses, build shopping carts, pay for orders, track delivery riders, and raise grievances. |
-| **Seller Application (BPP)** | An application representing grocery retailers, supermarkets, kirana stores, or Direct-to-Consumer (D2C) brands. The BPP publishes item catalogs, validates delivery serviceability, computes tax/delivery quotes, manages order confirmation, coordinates warehouse/store picking and packing, and handles returns or cancellations. |
-| **Logistics Service Provider (LSP)** | A delivery network participant providing hyperlocal or intercity fulfillment. In Seller-managed logistics, the BPP coordinates with the LSP; in Buyer-managed delivery (`Buyer_Delivery_Flow`), the BAP coordinates logistics and transmits delivery tracking updates back to the BPP. |
-| **Gateway** | The ONDC routing infrastructure that multicasts broadcast discovery requests (`/search`) from BAPs to active seller applications (BPPs) based on domain code, geolocation, or city code. |
+| **Buyer App (BAP)** | The consumer-facing application where the buyer searches for groceries, builds a cart, pays, tracks the order and raises complaints. It can be a shopping app, payments app, or any app that offers groceries to its users. |
+| **Seller App (BPP)** | The application representing sellers such as supermarkets, kirana stores and D2C grocery brands. It publishes the catalog, checks stock and serviceability, prices the order, confirms it, manages packing and delivery, and handles cancellations, returns and replacements. |
+| **Logistics Provider** | The delivery partner that picks up and delivers the order. Usually the seller arranges delivery. In the buyer-managed delivery flow, the buyer app arranges the courier and reports the delivery progress back to the seller. |
+| **Gateway** | Network infrastructure that forwards a buyer app's `/search` to all relevant seller apps based on domain and city. |
 
 ---
 
 ## The User Journey
 
-The standard grocery ordering journey enables a consumer to discover local grocery stores, evaluate delivery estimates and item prices, configure delivery coordinates, make payment, and receive goods with real-time tracking.
+A buyer discovers sellers, builds a cart, pays, and receives the order with status updates along the way. The journey has the following stages.
 
-### 1. Discovery and Catalog Search
+### 1. Discovery and Catalog
 
-The buyer initiates discovery on the BAP by searching for grocery items, stores, or categories (e.g. "Atta", "Fruits and Vegetables", "Dairy"):
+The buyer searches for an item, a category (for example "Atta" or "Fruits and Vegetables") or a seller. The buyer app sends the search with the buyer's location.
 
-- **Intent Broadcast**: The BAP transmits a `/search` request specifying the domain category (`ONDC:RET10`), buyer location (GPS coordinates and pincode/area code), and fulfillment type (`Delivery` or `Self-Pickup`).
-- **Catalog Delivery**: Active BPPs within the serviceable area respond via asynchronous `/on_search` payloads containing their store catalog (`bpp/providers[]`). This includes items, images, MRP, selling price, unitized measure (e.g., 1 kg, 500 g), stock availability, serviceability tags, and statutory packaged commodity details (manufacturer name, address, packaging date, consumer care details).
+Seller apps that serve that location reply with their catalog, which can include:
 
-### 2. Multi-Fulfillment and Slotted Item Selection
+- Store name, location, timings and serviceable area
+- Categories and items, with images and descriptions
+- MRP, selling price, unit and pack size (for example 1 kg, 500 g)
+- Stock availability
+- Statutory details for packaged items, such as manufacturer name and address, month and year of packing, and consumer care contact
 
-The buyer selects items from a specific grocery provider and adds them to their cart:
+**Network interaction:**
 
-- **Network interaction:**
-  - **`/select` (BAP -> BPP)**: The BAP transmits the selected items (`order.items[]`), quantities, provider location ID (`location_id`), and destination GPS coordinates (`fulfillments[0].end.location.gps` and `address.area_code`).
-  - **`/on_select` (BPP -> BAP)**: The seller validates real-time inventory and delivery serviceability. The seller returns an itemized price quote (`quote.breakup[]`) breaking down item costs, delivery charges, packaging fees, applicable taxes (CGST/SGST), and estimated turnaround time (`@ondc/org/TAT`). In slotted or multi-option flows, available fulfillment IDs and schedule windows are presented.
+- **`/search`**: The buyer app sends the buyer's search intent and location to the network.
+- **`/on_search`**: Each seller app returns its catalog for the buyer's location.
 
-### 3. Order Initialization, Delivery Configuration, and Commercials
+### 2. Item Selection and Quote
 
-The buyer provides finalized delivery and billing details:
+The buyer adds items from one seller to the cart. The seller checks stock and whether it can deliver to the buyer's location, and returns a price quote.
 
-- **Network interaction:**
-  - **`/init` (BAP -> BPP)**: The BAP sends the buyer's full street address, contact details (phone, email), billing address, and selected payment method preferences.
-  - **`/on_init` (BPP -> BAP)**: The seller freezes the order quote, specifies static/dynamic terms (cancellation terms, return windows, credit terms), sets payment collection rules (e.g., BAP-collected prepaid payment or Pay-on-Delivery), and returns settlement fee details.
+**Network interaction:**
 
-### 4. Order Confirmation and Payment Options (Prepaid & COD)
+- **`/select`**: The buyer app sends the selected items, quantities, seller location and delivery location.
+- **`/on_select`**: The seller returns the quote, broken down into item prices, delivery charges, packing charges and taxes, along with the expected delivery time.
 
-The buyer completes digital payment (or selects Cash on Delivery):
+### 3. Order Initialization
 
-- **Network interaction:**
-  - **`/confirm` (BAP -> BPP)**: The BAP captures payment (or registers COD intent), generates the formal order record (`order.id`), and transmits payment confirmation parameters (`payment.status = "PAID"` or `"NOT-PAID"` for COD).
-  - **`/on_confirm` (BPP -> BAP)**: The seller validates payment, records the order in its Point of Sale / Order Management System (POS/OMS), marks `order.state = "Created"`, and sets initial fulfillment state to `"Pending"`.
+The buyer enters the delivery address, contact details and billing details.
 
-### 5. Order Processing, Dynamic Instructions, and Packing
+**Network interaction:**
 
-The seller's store or warehouse team picks the ordered grocery items from shelves and packs them:
+- **`/init`**: The buyer app sends the full delivery address, contact details and billing details.
+- **`/on_init`**: The seller fixes the final quote and shares the order terms, such as cancellation and return terms, payment collection details and settlement details.
 
-- **`on_status (Accepted)` (BPP -> BAP)**: An unsolicited status update indicating the merchant has reviewed and accepted the grocery order (`order.state = "Accepted"`).
-- **In-Flight Customization**: In flows supporting buyer updates, the buyer transmits specialized handling instructions or revised addresses via `/update`, which the merchant confirms via `/on_update`.
-- **`on_status (Packed)` (BPP -> BAP)**: An unsolicited status update confirming all grocery items have been picked, weighed, verified, and bagged into parcels ready for pickup (`fulfillment.state = "Packed"`, `order.state = "In-progress"`).
+### 4. Order Confirmation and Payment
 
-### 6. Logistics, Delivery Assignment, and Real-Time Tracking
+The buyer pays online, or chooses Cash on Delivery where the seller supports it.
 
-A delivery partner or store rider is assigned to the fulfillment:
+**Network interaction:**
 
-- **`on_status (Agent-assigned)` (BPP -> BAP)**: The seller sends an unsolicited update once a delivery executive accepts the trip. Under v1.2.5 contracts, rider credentials (`fulfillments[0].agent.name`, `agent.phone`) are mandatory.
-- **`on_status (Order-picked-up)` (BPP -> BAP)**: The seller notifies the BAP that the parcel has left the merchant premises (`fulfillment.state = "Order-picked-up"`), recording `fulfillments[0].start.time.timestamp`.
-- **`/track` & `/on_track` (BAP $\leftrightarrow$ BPP)**: The BAP polls for live GPS telemetry of the delivery executive, receiving active tracking URLs and location coordinates.
+- **`/confirm`**: The buyer app places the order with the payment status (`PAID` for prepaid, `NOT-PAID` for Cash on Delivery).
+- **`/on_confirm`**: The seller confirms the order. The order is `Created` and its fulfillment is `Pending`.
 
-### 7. Order Handover, OTP Verification, and Delivery
+### 5. Order Processing and Packing
 
-The delivery executive collects the packed groceries from the store and transports them to the buyer's address:
+The seller processes the order and packs it. The seller keeps the buyer app updated through unsolicited `/on_status` messages.
 
-- **`on_status (Out-for-delivery)` (BPP -> BAP)**: Triggered when the rider enters the destination neighborhood.
-- **`on_update (Delivery Auth)` (BPP -> BAP)**: The seller issues a secure OTP delivery authentication token.
-- **`on_status (Order-delivered)` (BPP -> BAP)**: Sent upon successful physical handover of grocery items at the buyer's door (`fulfillment.state = "Order-delivered"`, `order.state = "Completed"`), recording `fulfillments[0].end.time.timestamp` and electronic proof of delivery (ePOD / delivery OTP verification).
+| Status update | What it means |
+|---|---|
+| **Accepted** | The seller has accepted the order. |
+| **Packed** | Items are packed and ready for pickup. |
 
-### 8. Financial Settlement, Commercial Fees, and Reconciliation
+### 6. Delivery Assignment and Tracking
 
-Post-delivery, the network transaction proceeds to financial reconciliation. The BAP releases funds to the seller according to the agreed settlement window (T+1 / T+2), withholding agreed buyer finder fees and routing statutory tax deductions (TCS/TDS) where applicable.
+A delivery agent is assigned and collects the order.
+
+| Status update | What it means |
+|---|---|
+| **Agent-assigned** | A delivery agent is assigned. The agent's name and phone number are shared. |
+| **Order-picked-up** | The agent has collected the order from the seller. |
+| **Out-for-delivery** | The agent is on the way to the buyer. |
+
+The buyer app can request live tracking at any point.
+
+**Network interaction:**
+
+- **`/track`**: The buyer app asks for tracking details.
+- **`/on_track`**: The seller returns the tracking link or the agent's current location.
+
+### 7. Delivery and Order Completion
+
+The agent hands over the order to the buyer. The seller sends **`Order-delivered`** through `/on_status`, with the delivery time. The order is now `Completed`.
+
+### 8. Settlement
+
+After delivery, the buyer app settles the order amount with the seller as per the settlement terms agreed in `/on_init`, after deducting the agreed buyer app fee and any applicable taxes such as TCS or TDS.
 
 ---
 
-## Additional Scenarios in v1.2.5
+## Additional Scenarios
 
-The v1.2.5 specification expands coverage across operational, fulfillment, and commercial edge cases:
+Beyond the standard delivery journey, this specification supports the following scenarios.
 
-### 1. Cash on Delivery (COD) Checkout
-In `Cash_On_Delivery_Flow`, the consumer selects Cash on Delivery. The order is initiated with `payment.type = "ON-FULFILLMENT"` and confirmed with `payment.status = "NOT-PAID"`. Upon arrival, the delivery executive collects cash at the doorstep and issues `on_status (order_delivered_cod)` setting `payment.status = "PAID"`.
+### 1. Cash on Delivery
 
-### 2. Slotted & Scheduled Deliveries
-In `Slotted_Delivery_Flow`, the merchant presents specific calendar fulfillment windows during `/on_select`. The buyer selects a target slot (`fulfillment.time.range`), which is preserved across `/init`, `/confirm`, and fulfillment scheduling.
+The buyer chooses to pay at delivery. The order is placed with payment type `ON-FULFILLMENT` and payment status `NOT-PAID`. When the agent collects cash at the door, the seller sends the delivered status with the payment marked `PAID`.
 
-### 3. Multi-Option Fulfillment Selection
-In `Multi_Option_Fulfillment_Flow`, the seller provides multiple delivery speeds (e.g. Standard 2-day delivery vs 45-minute hyperlocal express) with distinct pricing and TATs. The buyer binds their choice during `/select`.
+### 2. Slotted Delivery
 
-### 4. In-Store Self-Pickup (Click & Collect)
-In `Self_Pickup_Flow`, zero logistics fees are billed. The merchant transitions the order to `self_pick_packed`, after which the consumer presents proof of purchase at the retail counter, culminating in `self_pick_picked`.
+The seller offers delivery slots (a date and time window) in `/on_select`. The buyer picks a slot, which is carried through `/init` and `/confirm`, and the seller delivers within that slot.
 
-### 5. In-Flight Buyer Instructions and Address Updates
-In `Buyer_Instructions_And_Delivery_Update_Flow`, buyers submit post-confirmation instructions (`update_buyer_instructions`) and correct delivery destination addresses (`update_delivery_address`) prior to parcel dispatch, followed by delivery authentication OTP dispatch (`on_update_delivery_auth`).
+### 3. Multi-Option Fulfillment
 
-### 6. Item Replacement and Reverse Quality Check (QC)
-In `Replacement_Flow`, customers request replacement for damaged/spoiled items. The seller executes an on-doorstep Reverse QC, picks up the defective unit, inspects it at the warehouse (`on_update_return_delivered_rep`), and dispatches a fresh replacement parcel (`on_status_packed_rep` through `order_delivered_rep`).
+The seller offers more than one delivery option in the same quote, for example express or standard delivery, each with its own charge and delivery time. The buyer chooses one before placing the order.
 
-### 7. Forced and System Cancellations
-In `Forced_Cancellation_Flow`, unforeseen merchant stock collapse or courier failure after rider dispatch triggers an unrecoverable cancellation sequence (`cancel_no`, `cancel_yes`, `on_cancel_force`), immediately followed by `/update (update_settlement_cancel)` to refund the consumer.
+### 4. Self-Pickup
 
-### 8. Merchant Part-Cancellation and Return to Origin (RTO)
-In `RTO_And_Part_Cancellation_Flow`, out-of-stock items are cancelled pre-dispatch via `on_update_part_cancel`. Subsequently, when the customer is unreachable at delivery, the merchant issues an unsolicited `on_cancel_rto` (reason code `013`), updates the settlement trail, and confirms store return via `on_status_rto_delivered`.
+The buyer collects the order from the store, so no delivery charge applies. The seller tells the buyer app when the order is ready for pickup, and again when the buyer has collected it.
 
-### 9. Buyer-Initiated Return and Refund
-In `Return_Flow`, buyers initiate returns for eligible returnable grocery items. Merchants review, approve reverse logistics, pick up the goods, and execute full/partial financial refunds via `update_settlement_trail`.
+### 5. Buyer Delivery
 
-### 10. Out of Stock Handling (Cart Recovery & Immediate Error Code)
-- **Cart Recovery (`Out_Of_Stock_Flow`)**: The seller flags out-of-stock items in `/on_select`. The buyer adjusts quantities and re-submits `/select`, successfully proceeding to checkout.
-- **Immediate Rejection (`Out_Of_Stock_Flow_Error-code`)**: The seller immediately rejects `/select` with ONDC error code `40002` (Out of Stock) or `30009`.
+The buyer app arranges delivery instead of the seller. The seller packs the order and hands it over, and the buyer app keeps the seller informed of the delivery progress through `/update`.
 
-### 11. Commercial Settlement Model (BNP / SNP Fees)
-In `Commercial_Model_For_BNP_SNP_Flow`, explicit settlement rules, Buyer Network Participant finder fees, commission deductions, and statutory withholdings are agreed upon during `/on_select` and `/on_init` and committed at `/confirm`.
+### 6. Buyer Instructions and Delivery Update
 
-### 12. Incremental Catalog Sync (Push and Pull)
-- **Incremental Push (`Discovery_Flow_incremental_catalog`)**: Sellers push live differential price/stock updates and store open/close events via unsolicited `/on_search`.
-- **Incremental Refresh Pull (`Discovery_Flow_incremental_catalog_refresh_pull`)**: Buyer apps poll for items modified after a specific `last_updated_at` timestamp.
+After the order is confirmed and before dispatch, the buyer can send delivery instructions (for example "call on arrival") and correct the delivery address. The seller acknowledges each change through `/on_update`, and sends a delivery OTP through `/on_update` before handover.
 
-### 13. Statutory Compliance and Catalog Rejection
-In `Catalog_Rejection_Flow`, catalogs omitting mandatory statutory declarations (Packaged Commodities rules, manufacturer name, net weight, ingredients, or FSSAI license numbers) are rejected via `catalog_rejection`.
+### 7. Commercial Model for BNP/SNP
+
+The buyer network participant (BNP) and seller network participant (SNP) agree on fees, commissions, tax deductions and settlement terms during `/on_select` and `/on_init`, and these are fixed when the order is confirmed.
+
+### 8. Out of Stock
+
+If an item is not available when the buyer selects it, the seller can handle it in two ways:
+
+- **Cart correction**: The seller marks the unavailable item in `/on_select`. The buyer changes the cart, selects again, and continues with the order.
+- **Error response**: The seller rejects the selection in `/on_select` with an out-of-stock error code (for example `40002`).
+
+### 9. Buyer Cancellation
+
+The buyer cancels the order before it is shipped, with a cancellation reason. The seller checks its cancellation terms, cancels the order, and shares any cancellation charges and the refund amount.
+
+### 10. Forced Cancellation
+
+Once an order is out for delivery, a normal cancellation request can be refused. The buyer app can then raise a forced cancellation, the seller cancels the order, and the buyer app updates the settlement for the refund.
+
+### 11. RTO and Part-Cancellation
+
+If some items are not available after confirmation, the seller cancels only those items through an unsolicited `/on_update`, and the buyer app updates the settlement for the partial refund. If delivery then fails (for example the buyer cannot be reached), the seller cancels the order as Return to Origin (RTO) through an unsolicited `/on_cancel`, the buyer app updates the settlement, and the seller confirms when the order is back.
+
+### 12. Return
+
+After delivery, the buyer can return eligible items (the full order or some items) within the return window. The seller approves the return, the items are picked up, and the refund is settled once the seller receives them.
+
+### 13. Replacement
+
+The buyer asks for a replacement of a damaged or wrong item. The seller approves it, a reverse quality check (QC) is done at pickup, the item goes back to the seller, and a replacement is packed and delivered.
+
+### 14. Incremental Catalog Updates
+
+Sellers do not need to resend the full catalog for every change:
+
+- **Push**: The seller sends unsolicited `/on_search` updates for changes such as price or stock, and when a store closes or reopens.
+- **Pull**: The buyer app asks for only the items changed after a given time, and the seller returns just those items.
+
+### 15. Catalog Rejection
+
+If a seller's catalog has errors (for example a selling price above the MRP, or missing statutory details), the buyer app sends `catalog_rejection` to the seller app with an error type, code and the path of each problem. The seller can then correct the catalog.
 
 ---
 
 ## Issue and Grievance Management
 
-The grocery domain supports robust complaint handling across both ONDC Issue and Grievance Management (IGM) framework versions.
+A buyer can raise a complaint through the buyer app about an order, an item or the delivery. The buyer app sends it to the seller app, which investigates and resolves it.
 
-### 1. IGM 1.0.0 Architecture
+The grievance process includes:
 
-In IGM 1.0.0, grievances follow a linear status progression:
-1. **`issue (open)` (BAP -> BPP)**: The buyer files an issue against an order or item (e.g., "Item spoiled or leaking"), categorizing it as `ISSUE`, providing descriptions, photos, and complainant details.
-2. **`on_issue (processing)` (BPP -> BAP)**: The seller acknowledges receipt of the complaint, providing a grievance ticket ID, respondent details, and expected Resolution Time (TAT).
-3. **`on_issue_status (resolved)` (BPP -> BAP)**: The seller investigates and publishes a formal resolution (e.g. `REFUND`, `REPLACEMENT`, or `NO_ACTION`) with resolution remarks.
-4. **`issue (close)` (BAP -> BPP)**: The buyer reviews the resolution and closes the grievance ticket.
+- **Registration**: The buyer raises the issue, with a description and photos where relevant.
+- **Acknowledgement**: The seller confirms receipt and starts processing the issue.
+- **Information exchange** (IGM 2.0.0): The seller can ask for more information, and the buyer can provide it.
+- **Resolution**: The seller proposes a resolution, such as a refund, a replacement, or an explanation with no further action.
+- **Acceptance, rejection or escalation** (IGM 2.0.0): The buyer can accept or reject the resolution, and can escalate an unresolved issue to the next level.
+- **Closure**: The buyer app closes the issue once it is resolved.
 
-### 2. IGM 2.0.0 Architecture
+This specification supports both IGM versions:
 
-IGM 2.0.0 introduces multi-party interactions, evidence exchange, dispute escalation, and automated settlement linkages:
-- **Clarification & Information Exchange**: The seller can request additional evidence (`on_issue_need_more_info`), and the buyer can respond with supplementary photos or explanations (`issue_info_provided`).
-- **Resolution Acceptance & Rejection**: The complainant can formally accept or reject proposed resolutions.
-- **Dispute Escalation**: If dissatisfied, the buyer can escalate the issue from Level 1 (Inter-party Grievance) to Level 2 (Grievance Redressal Officer / ODR Platform).
-- **Downstream Actions**: Upon resolution approval, the seller automatically issues corrective fulfillment actions, such as an item replacement (`on_update_igm_replacement`) or refund return (`on_update_igm_return`).
+| Version | How it works |
+|---|---|
+| **IGM 1.0.0** | A simple sequence: the buyer opens an issue, the seller acknowledges it, sends the resolution through `/on_issue_status`, and the buyer closes it. |
+| **IGM 2.0.0** | Adds information requests, resolution acceptance or rejection, and escalation. An accepted resolution can trigger a follow-up action on the order, such as a replacement or a return, through `/on_update`. |
+
+---
+
+## Flow Summary
+
+| # | Flow | Requirement | What it covers |
+|---|---|---|---|
+| 1 | Delivery Flow | Mandatory | The standard order: the buyer selects items, gets a quote, pays online, and receives the order through seller-managed delivery |
+| 2 | Cash on Delivery Flow | Optional | Same as the Delivery Flow, except the buyer pays in cash at the door instead of paying online |
+| 3 | Slotted Delivery Flow | Optional | The buyer books a delivery date and time slot, and the seller delivers within it |
+| 4 | Multi-Option Fulfillment Flow | Optional | The seller offers more than one delivery option (for example express or standard), each with its own charge and delivery time, and the buyer picks one |
+| 5 | Self-Pickup Flow | Optional | The buyer orders online and collects the order from the store |
+| 6 | Buyer Delivery Flow | Optional | The buyer app arranges delivery |
+| 7 | Buyer Instructions and Delivery Update Flow | Optional | After confirming the order, the buyer adds delivery instructions and changes the delivery address before dispatch |
+| 8 | Commercial Model for BNP/SNP Flow | Optional | Shows how the buyer network participant (BNP) and seller network participant (SNP) agree on fees, commissions, tax deductions and settlement terms as part of placing an order |
+| 9 | Out of Stock Flow | Mandatory | An item turns out to be out of stock when the buyer selects it |
+| 10 | Out of Stock Flow (Error Code) | Mandatory | The seller rejects the selection straight away because an item is out of stock |
+| 11 | Buyer Cancellation Flow | Mandatory | The buyer cancels a confirmed order before it is shipped |
+| 12 | Forced Cancellation Flow | Mandatory | The order is already out for delivery when the buyer wants to cancel |
+| 13 | RTO and Part-Cancellation Flow | Mandatory | The seller cancels some items it cannot supply, then delivery of the rest fails and the order returns to the seller (Return to Origin) |
+| 14 | Return Flow | Mandatory | After delivery, the buyer returns an item |
+| 15 | Replacement Flow | Optional | After delivery, the buyer asks for a replacement |
+| 16 | Discovery Flow – Full Catalog | Mandatory | The buyer app searches a city and the seller returns its full catalog |
+| 17 | Discovery Flow – Incremental Catalog (Push) | Mandatory | After the first search, the seller pushes catalog changes as they happen, without resending the whole catalog |
+| 18 | Discovery Flow – Incremental Catalog Refresh (Pull) | Optional | The buyer app asks the seller for only the items that changed after a given time |
+| 19 | Catalog Rejection Flow | Mandatory | The buyer app finds errors in a seller's catalog and rejects it, telling the seller what is wrong |
+| 20 | Delivery Flow with IGM 1.0.0 | Mandatory | A delivered order followed by a complaint handled under IGM 1.0.0 |
+| 21 | Delivery Flow with IGM 2.0.0 – No Action | Mandatory | A complaint under IGM 2.0.0 that the seller resolves with an explanation and no further action, which the buyer accepts |
+| 22 | Delivery Flow with IGM 2.0.0 – Rejection and Escalation | Mandatory | The buyer rejects the seller's resolution and escalates the complaint |
+| 23 | Delivery Flow with IGM 2.0.0 | Mandatory | A complaint under IGM 2.0.0 where the seller asks for more information, proposes a replacement, and the buyer accepts |
+
+In the flows below, **[unsolicited]** marks a message the sender pushes on its own, not as a reply to a request.
 
 ---
 
 ## Detailed Protocol Flows
 
-### Flow 1: Delivery Flow (Standard Prepaid Home Delivery)
+### Flow 1: Delivery Flow
 
 #### 1. Short Description
-The standard forward-fulfillment prepaid grocery purchase journey. A buyer selects grocery items, receives an itemized quote with delivery fees and taxes, provides shipping addresses, pays upfront, and receives the goods through seller-managed delivery with live rider tracking and delivery verification.
+The standard order: the buyer selects items, gets a quote, pays online, and receives the order through seller-managed delivery. Most other order flows build on these steps.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` (BAP -> BPP)**: The BAP transmits selected item IDs, quantities, store location (`location_id: "L1"`), and delivery coordinates (`fulfillments[0].end.location.gps` and `address.area_code = "560001"`).
-- **`/on_select` (BPP -> BAP)**: The BPP validates store inventory and delivery radius. It returns an itemized price quote (`quote.breakup[]`) with base prices, delivery fees (`@ondc/org/title_type="delivery"`), packaging charges, and delivery turnaround time (`@ondc/org/TAT = "PT45M"`).
-- **`/init` (BAP -> BPP)**: The buyer confirms the cart and inputs their full shipping destination (building, street, city, pin code) and billing details.
-- **`/on_init` (BPP -> BAP)**: The BPP freezes the order quote, publishes settlement terms, and provides payment collection instructions.
-- **`/confirm` (BAP -> BPP)**: The BAP collects payment digitally, binds the transaction with `payment.status = "PAID"`, and sends the final order commitment.
-- **`/on_confirm` (BPP -> BAP)**: The BPP confirms order acceptance, assigning an official `order.id` with state `Created` and fulfillment state `Pending`.
-- **`on_status (on_status_accepted)` [Unsolicited] (BPP -> BAP)**: Merchant marks order as accepted for fulfillment (`order.state = "Accepted"`).
-- **`on_status (on_status_packed)` [Unsolicited] (BPP -> BAP)**: Merchant picks and packs items into bags ready for courier dispatch (`fulfillment.state = "Packed"`, `order.state = "In-progress"`).
-- **`on_status (on_status_agent_assigned)` [Unsolicited] (BPP -> BAP)**: Delivery executive assigned; payload includes rider name and mobile number.
-- **`on_status (on_status_picked)` [Unsolicited] (BPP -> BAP)**: Rider picks up package from store (`fulfillment.state = "Order-picked-up"`, with pickup timestamp).
-- **`/track` & `/on_track` (BAP $\leftrightarrow$ BPP)**: BAP requests live tracking URL / websocket endpoint for real-time rider map display.
-- **`on_status (on_status_out_for_delivery)` [Unsolicited] (BPP -> BAP)**: Rider is approaching buyer's premises (`fulfillment.state = "Out-for-delivery"`).
-- **`on_status (on_status_order_delivered)` [Unsolicited] (BPP -> BAP)**: Package successfully delivered with delivery timestamp and electronic proof of delivery (`fulfillment.state = "Order-delivered"`, `order.state = "Completed"`).
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote (`quote.breakup`) with item prices, delivery and packing charges, taxes, and the expected delivery time (`@ondc/org/TAT`).
+- **`/init` (BAP -> BPP)**: Sends the delivery address, contact details and billing details.
+- **`/on_init` (BPP -> BAP)**: Returns the final quote, order terms, and payment and settlement details.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
+- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
 
 ---
 
-### Flow 2: Buyer Delivery Flow (Buyer-Managed Logistics)
+### Flow 2: Cash on Delivery Flow
 
 #### 1. Short Description
-Used when the Buyer Application or a 3PL logistics provider contracted by the buyer manages shipping. The merchant prepares and packs the items, after which the buyer application updates pickup progress and signals delivery handover to the merchant.
+Same as the Delivery Flow, except the buyer pays in cash at the door instead of paying online.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` -> `/on_select (on_select_buyer_delivery)`**: Selection establishing buyer-managed logistics (zero seller shipping fee).
-- **`/init (init_buyer_delivery)` -> `/on_init (on_init_buyer_delivery)`**: Order initialized with buyer pickup intent.
-- **`/confirm` -> `/on_confirm`**: Order booked in merchant system.
-- **`on_status (on_status_accepted)` [Unsolicited] (BPP -> BAP)**: Merchant accepts order.
-- **`on_status (on_status_packed)` [Unsolicited] (BPP -> BAP)**: Groceries packed.
-- **`on_status (on_status_ready_to_ship)` [Unsolicited] (BPP -> BAP)**: Merchant notifies BAP that parcels are staged at the store dispatch counter.
-- **`/update (update_picked_up)` [Unsolicited] (BAP -> BPP)**: BAP notifies seller that buyer-contracted courier has retrieved the package.
-- **`/update (update_delivered)` [Unsolicited] (BAP -> BPP)**: BAP notifies seller that the package has been delivered to the consumer, completing the transaction.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote (`quote.breakup`) with item prices, delivery and packing charges, taxes, and the expected delivery time (`@ondc/org/TAT`).
+- **`/init` (BAP -> BPP)**: Sends the order details with payment type `ON-FULFILLMENT` (Cash on Delivery).
+- **`/on_init` (BPP -> BAP)**: Confirms that Cash on Delivery is available and returns the final quote.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `NOT-PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the Cash on Delivery order.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
+- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered` (cash collected, payment `PAID`).
 
 ---
 
-### Flow 3: Buyer Instructions and Delivery Update Flow
+### Flow 3: Slotted Delivery Flow
 
 #### 1. Short Description
-Demonstrates in-flight adjustments to an active order. Post-confirmation, the consumer sends specific doorstep handling instructions and modifies their delivery address before dispatch, concluding with delivery authentication OTP handover.
+The buyer books a delivery date and time slot, and the seller delivers within it.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` through `/on_confirm`**: Standard ordering sequence.
-- **`on_status (on_status_accepted)` [Unsolicited] (BPP -> BAP)**: Merchant accepts order.
-- **`/update (update_buyer_instructions)` (BAP -> BPP)**: Buyer submits specific handling notes (e.g. "Do not ring bell, call on arrival").
-- **`/on_update (on_update_buyer_instructions)` (BPP -> BAP)**: Merchant acknowledges and stores instructions.
-- **`/update (update_delivery_address)` (BAP -> BPP)**: Buyer submits updated apartment/flat number or landmark coordinates.
-- **`/on_update (on_update_delivery_address)` (BPP -> BAP)**: Merchant re-validates serviceability and updates rider waypoint.
-- **`on_status` sequence**: Packed -> Agent-assigned -> Picked -> Out-for-delivery.
-- **`on_update (on_update_delivery_auth)` [Unsolicited] (BPP -> BAP)**: Merchant generates secure delivery OTP authentication code.
-- **`on_status (on_status_order_delivered)` [Unsolicited] (BPP -> BAP)**: Handover completed upon OTP verification.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote with the available delivery slots and their charges.
+- **`/init` (BAP -> BPP)**: Sends the delivery slot chosen by the buyer.
+- **`/on_init` (BPP -> BAP)**: Confirms the chosen slot in the final quote.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
+- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
 
 ---
 
-### Flow 4: Cancellation Flow (Buyer-Side Order Cancellation)
+### Flow 4: Multi-Option Fulfillment Flow
 
 #### 1. Short Description
-Standard buyer-initiated order cancellation prior to order packing and dispatch, validating merchant cancellation policies, fee calculations, and refund processing.
+The seller offers more than one delivery option (for example express or standard), each with its own charge and delivery time, and the buyer picks one.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` through `/on_confirm`**: Buyer places order.
-- **`/cancel` (BAP -> BPP)**: Buyer triggers cancellation specifying reason code (e.g. `001` - Buyer change of mind).
-- **`/on_cancel` (BPP -> BAP)**: Seller validates cancellation terms (`@ondc/org/cancellable = true`), updates `order.state = "Cancelled"`, recalculates cancellation fee deductions, and confirms refund instructions.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns several fulfillment options, each with its own ID, charge and delivery time.
+- **`/init` (BAP -> BPP)**: Sends the fulfillment option chosen by the buyer.
+- **`/on_init` (BPP -> BAP)**: Fixes the quote for the chosen option.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
+- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
 
 ---
 
-### Flow 5: Cash on Delivery Flow (COD Fulfillment)
+### Flow 5: Self-Pickup Flow
 
 #### 1. Short Description
-Encompasses the entire order lifecycle when Cash on Delivery is chosen. The order is initiated and confirmed without upfront digital payment; the delivery executive collects cash at the doorstep and marks the payment as settled.
+The buyer orders online and collects the order from the store. There is no delivery charge and no delivery agent.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` -> `/on_select`**: Item and fulfillment selection.
-- **`/init (init_cod)` (BAP -> BPP)**: Buyer selects Pay-on-Delivery (`payment.type = "ON-FULFILLMENT"`).
-- **`/on_init (on_init_cod)` (BPP -> BAP)**: Merchant confirms COD availability and terms.
-- **`/confirm (confirm_cod)` (BAP -> BPP)**: Order confirmed with `payment.status = "NOT-PAID"`.
-- **`/on_confirm (on_confirm_cod)` (BPP -> BAP)**: Order booked.
-- **Milestones**: Accepted -> Packed -> Agent-assigned -> Picked -> Track -> Out-for-delivery.
-- **`on_status (on_status_order_delivered_cod)` [Unsolicited] (BPP -> BAP)**: Delivery executive receives cash payment, marks `payment.status = "PAID"`, records `Order-delivered`, and closes the order.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote with fulfillment type `Self-Pickup` and no delivery charge.
+- **`/init` (BAP -> BPP)**: Sends the order details for store pickup.
+- **`/on_init` (BPP -> BAP)**: Returns the final quote with the store pickup details.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` (ready for pickup) -> `Order-picked-up` (by buyer).
 
 ---
 
-### Flow 6: Commercial Model for BNP and SNP Flow
+### Flow 6: Buyer Delivery Flow
 
 #### 1. Short Description
-Exercises the commercial fee architecture between Buyer Network Participants (BNP) and Seller Network Participants (SNP), validating finder fees, commission withholding, TCS/TDS statutory tax handling, and settlement terms.
+The buyer app arranges delivery. The seller packs the order and hands it over, and the buyer app reports the delivery progress back to the seller.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` -> `/on_select (on_select_commercial_model)`**: Quote returned with itemized commercial commission structures and buyer finder fee rates.
-- **`/init (init_commercial_model)` -> `/on_init (on_init_commercial_model)`**: Formal terms defined for settlement windows, TDS deductions, and payer/payee bank account specifications.
-- **`/confirm (confirm_commercial_model)` -> `/on_confirm (on_confirm_commercial_model)`**: Final order commitment binding the commercial settlement agreement.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote for buyer-managed delivery.
+- **`/init` (BAP -> BPP)**: Sends the order details for buyer-managed delivery.
+- **`/on_init` (BPP -> BAP)**: Returns the final quote for buyer-managed delivery.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Ready-to-ship`.
+- **`/update` [unsolicited] (BAP -> BPP)**: Tells the seller that the buyer app's courier has picked up the order.
+- **`/update` [unsolicited] (BAP -> BPP)**: Tells the seller that the order has been delivered.
 
 ---
 
-### Flow 7: Slotted Delivery Flow (Time Slot Scheduling)
+### Flow 7: Buyer Instructions and Delivery Update Flow
 
 #### 1. Short Description
-A scheduled fulfillment flow where the consumer books a specific date and time slot for grocery delivery (e.g. morning vs evening slot).
+After confirming the order, the buyer adds delivery instructions and changes the delivery address before dispatch. The seller sends a delivery OTP before handover.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` (BAP -> BPP)**: Buyer queries store availability with delivery preferences.
-- **`/on_select (on_select_slotted_delivery)` (BPP -> BAP)**: Merchant returns available calendar time slots (`fulfillment.time.range.start` and `end`) with slot IDs and fees.
-- **`/init (init_slotted_delivery)` (BAP -> BPP)**: Buyer selects preferred time slot.
-- **`/on_init (on_init_slotted_delivery)` (BPP -> BAP)**: Merchant locks the slot in its dispatch calendar.
-- **`/confirm` -> `/on_confirm`**: Order confirmed with selected slot.
-- **Fulfillment**: Merchant holds dispatch until scheduled window, triggering `Packed` -> `Agent-assigned` -> `Picked` -> `Track` -> `Out-for-delivery` -> `Order-delivered` within the reserved slot.
+- **`/select` to `Accepted`**: As in Flow 1.
+- **`/update` (BAP -> BPP)**: Sends the buyer's delivery instructions.
+- **`/on_update` (BPP -> BAP)**: Acknowledges the instructions.
+- **`/update` (BAP -> BPP)**: Sends the new delivery address.
+- **`/on_update` (BPP -> BAP)**: Confirms the new address.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Packed` -> `Agent-assigned` -> `Order-picked-up` -> `Out-for-delivery`.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Sends the delivery OTP used to verify the handover.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Order-delivered`.
 
 ---
 
-### Flow 8: Multi-Option Fulfillment Flow (Express / Standard / Same Day)
+### Flow 8: Commercial Model for BNP/SNP Flow
 
 #### 1. Short Description
-Demonstrates multi-option fulfillment where a merchant presents several shipping tiers (e.g. 45-minute Hyperlocal Express vs Standard Next-Day Delivery) with distinct charges and TATs, allowing the consumer to choose.
+Shows how the buyer network participant (BNP) and seller network participant (SNP) agree on fees, commissions, tax deductions and settlement terms as part of placing an order.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` -> `/on_select (on_select_multi_fulfillment)`**: Merchant returns multiple fulfillment options (`fulfillments[]`), each with a unique ID, service tier code, fee breakup, and TAT estimate.
-- **`/init (init_multi_fulfillment)` (BAP -> BPP)**: Buyer binds their cart to the chosen fulfillment ID.
-- **`/on_init (on_init_multi_fulfillment)` (BPP -> BAP)**: Quote frozen based on chosen speed tier.
-- **`/confirm` -> `/on_confirm`**: Order finalized.
-- **Fulfillment**: Standard milestone tracking through to delivery.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote with the commercial terms, such as the buyer app's fee.
+- **`/init` (BAP -> BPP)**: Sends the settlement details for the commercial model.
+- **`/on_init` (BPP -> BAP)**: Confirms the settlement window, tax deductions and bank details.
+- **`/confirm` (BAP -> BPP)**: Places the order with the agreed commercial terms.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order and fixes the commercial terms.
 
 ---
 
-### Flow 9: Self-Pickup Flow (Click & Collect)
+### Flow 9: Out of Stock Flow
 
 #### 1. Short Description
-A fulfillment flow where the consumer orders groceries online and collects them in person at the local supermarket counter, eliminating delivery charges and rider dispatch.
+An item turns out to be out of stock when the buyer selects it. The buyer corrects the cart and completes the order.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` -> `/on_select (on_select_self_pickup)`**: Cart configured with `fulfillment.type = "Self-Pickup"` (zero delivery fee).
-- **`/init (init_self_pickup)` -> `/on_init (on_init_self_pickup)`**: Store counter location and collection window specified.
-- **`/confirm` -> `/on_confirm`**: Order booked.
-- **`on_status (on_status_accepted)` [Unsolicited] (BPP -> BAP)**: Merchant accepts order.
-- **`on_status (on_status_self_pick_packed)` [Unsolicited] (BPP -> BAP)**: Store staff packs groceries into customer-ready bags and generates pickup OTP/barcode.
-- **`on_status (on_status_self_pick_picked)` [Unsolicited] (BPP -> BAP)**: Customer arrives at store, presents pickup verification, collects parcel, and transaction closes.
+- **`/select` (BAP -> BPP)**: Sends the original cart.
+- **`/on_select` (BPP -> BAP)**: Reports the unavailable item with an out-of-stock error (for example `40002`).
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Returns the quote (`quote.breakup`) with item prices, delivery and packing charges, taxes, and the expected delivery time (`@ondc/org/TAT`).
+- **`/init` (BAP -> BPP)**: Sends the delivery address, contact details and billing details.
+- **`/on_init` (BPP -> BAP)**: Returns the final quote, order terms, and payment and settlement details.
+- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
+- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
+- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
 
 ---
 
-### Flow 10: Replacement Flow (Reverse QC & Item Replacement)
+### Flow 10: Out of Stock Flow (Error Code)
 
 #### 1. Short Description
-A complete replacement lifecycle for defective, damaged, or wrong items. The merchant conducts an on-doorstep Reverse QC, picks up the defective item, inspects it at the warehouse, and dispatches a replacement parcel.
+The seller rejects the selection straight away because an item is out of stock.
 
 #### 2. API Breakdown & Technical Actions
-- **Forward Order**: Order delivered via normal steps (1–12).
-- **`/update (update_reverse_qc_rep)` (BAP -> BPP)**: Buyer submits replacement request with item ID, reason code, and photos.
-- **`/on_update (on_update_interim_reverseQc)` (BPP -> BAP)**: Merchant logs replacement request in `Replacement_Initiated`.
-- **`on_update (on_update_return_approved)` [Unsolicited] (BPP -> BAP)**: Merchant approves reverse pickup.
-- **`on_update (on_update_return_picked_rep)` [Unsolicited] (BPP -> BAP)**: Courier performs doorstep QC and collects defective goods.
-- **`on_update (on_update_return_delivered_rep)` [Unsolicited] (BPP -> BAP)**: Defective item arrives at merchant warehouse and is validated.
-- **`on_status (on_status_packed_rep)` [Unsolicited] (BPP -> BAP)**: Fresh replacement item packed.
-- **`on_status (on_status_picked_rep)` [Unsolicited] (BPP -> BAP)**: Replacement picked up by rider.
-- **`on_status (on_status_out_for_delivery_rep)` [Unsolicited] (BPP -> BAP)**: Replacement en route.
-- **`on_status (on_status_order_delivered_rep)` [Unsolicited] (BPP -> BAP)**: Replacement successfully delivered to customer.
+- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
+- **`/on_select` (BPP -> BAP)**: Reports the unavailable item with an out-of-stock error (for example `40002`).
 
 ---
 
-### Flow 11: Return Flow (Customer-Initiated Return & Refund)
+### Flow 11: Buyer Cancellation Flow
 
 #### 1. Short Description
-The post-delivery return lifecycle for eligible returnable grocery items. Buyer initiates return within window, merchant approves, reverse pickup is executed, and refund settlement is concluded.
+The buyer cancels a confirmed order before it is shipped.
 
 #### 2. API Breakdown & Technical Actions
-- **Forward Order**: Order delivered (steps 1–12).
-- **`/update (update_return)` (BAP -> BPP)**: Buyer requests return specifying item, return reason code (e.g. `001` - Defective/Expired), and evidence photos.
-- **`/on_update (on_update_return_init)` (BPP -> BAP)**: Merchant logs return request.
-- **`on_update (on_update_return_approved)` [Unsolicited] (BPP -> BAP)**: Return authorized.
-- **`on_update (on_update_return_picked)` [Unsolicited] (BPP -> BAP)**: Reverse logistics agent collects items.
-- **`/update (update_settlement_trail)` (BAP -> BPP)**: Buyer app supplies bank/UPI refund routing instructions.
-- **`on_update (on_update_return_delivered)` [Unsolicited] (BPP -> BAP)**: Merchant confirms receipt and releases refund.
+- **`/select` to `/on_confirm`**: As in Flow 1.
+- **`/cancel` (BAP -> BPP)**: Sends the order ID and the cancellation reason code.
+- **`/on_cancel` (BPP -> BAP)**: Cancels the order (`Cancelled`) and returns any cancellation charges and the refund amount.
 
 ---
 
-### Flow 12: RTO and Part-Cancellation Flow
+### Flow 12: Forced Cancellation Flow
 
 #### 1. Short Description
-A complex exception flow combining merchant-side part-cancellation during store picking (due to stock shortage) with an unsuccessful delivery attempt where the buyer is unreachable, leading to Return to Origin (RTO).
+The order is already out for delivery when the buyer wants to cancel. The buyer app forces the cancellation and the refund is settled.
 
 #### 2. API Breakdown & Technical Actions
-- **Forward Order**: Order placed and confirmed.
-- **`on_update (on_update_part_cancel)` [Unsolicited] (BPP -> BAP)**: Merchant cancels unavailable line items pre-dispatch.
-- **`/update (update_settlement_trail)` (BAP -> BPP)**: BAP updates settlement trail reflecting partial refund.
-- **Dispatch**: Remaining items packed, assigned, picked, and marked out for delivery.
-- **`on_cancel (on_cancel_rto)` [Unsolicited] (BPP -> BAP)**: Delivery fails (buyer unreachable / refused delivery), triggering RTO cancellation.
-- **`/update (update_settlement_trail_1)` (BAP -> BPP)**: BAP transmits RTO settlement terms (factoring in return shipping costs).
-- **`on_status (on_status_rto_delivered)` [Unsolicited] (BPP -> BAP)**: Parcel returned to merchant warehouse.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery`.
+- **`/cancel` (BAP -> BPP)**: A normal cancellation request, which is not accepted at this stage.
+- **`/cancel` (BAP -> BPP)**: A forced cancellation request.
+- **`/on_cancel` (BPP -> BAP)**: The seller cancels the order.
+- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the refund.
 
 ---
 
-### Flow 13: Forced Cancellation Flow
+### Flow 13: RTO and Part-Cancellation Flow
 
 #### 1. Short Description
-Handles emergency forced cancellations triggered by merchant system failures, unresolvable inventory collapse, or transport crises post-dispatch.
+The seller cancels some items it cannot supply, then delivery of the rest fails and the order returns to the seller (Return to Origin).
 
 #### 2. API Breakdown & Technical Actions
-- **Order Pipeline**: Order created, accepted, packed, agent assigned, and picked up.
-- **`/cancel (cancel_no)` (BAP -> BPP)**: Buyer attempts soft cancellation; rejected if out for delivery.
-- **`/cancel (cancel_yes)` (BAP -> BPP)**: System/emergency forced cancellation triggered.
-- **`/on_cancel (on_cancel_force)` (BPP -> BAP)**: Merchant terminates order immediately and confirms cancellation state.
-- **`/update (update_settlement_cancel)` (BAP -> BPP)**: BAP executes settlement trail refund to consumer.
+- **`/select` to `/on_confirm`**: As in Flow 1.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller cancels the unavailable items.
+- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the refund.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Packed` -> `Agent-assigned` -> `Order-picked-up` -> `Out-for-delivery`.
+- **`/on_cancel` [unsolicited] (BPP -> BAP)**: Delivery fails and the seller cancels the order as RTO (reason code `013`).
+- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the RTO.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `RTO-Delivered`.
 
 ---
 
-### Flow 14: Out of Stock Flow (Cart Rebalancing & Recovery)
+### Flow 14: Return Flow
 
 #### 1. Short Description
-Demonstrates cart recovery when an item is identified as out of stock during preliminary selection. The seller returns unavailable status, the buyer adjusts cart quantities or swaps items, and the checkout successfully proceeds.
+After delivery, the buyer returns an item. The seller approves the return, the item is picked up, and the refund is settled.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select (select0)` (BAP -> BPP)**: Initial selection of desired items.
-- **`/on_select (on_select_out_of_stock)` (BPP -> BAP)**: Seller flags depleted item (`quantity.available.count = 0`).
-- **`/select` (BAP -> BPP)**: Buyer adjusts cart to available items.
-- **`/on_select` (BPP -> BAP)**: Quote successfully generated.
-- **Checkout**: Order confirmed, packed, dispatched, tracked, and delivered.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
+- **`/update` (BAP -> BPP)**: Sends the return request with the item, quantity and return reason.
+- **`/on_update` (BPP -> BAP)**: The seller records the return request.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Return approved.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Return picked up.
+- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the refund.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Return received by the seller, which completes the return.
 
 ---
 
-### Flow 15: Out of Stock Flow (Error Code Rejection)
+### Flow 15: Replacement Flow
 
 #### 1. Short Description
-A lightweight selection rejection flow where the seller immediately denies checkout with standard ONDC error code `40002` (Out of Stock) or `30009`.
+After delivery, the buyer asks for a replacement. The item is checked and picked up (reverse QC), returned to the seller, and a replacement is delivered.
 
 #### 2. API Breakdown & Technical Actions
-- **`/select` (BAP -> BPP)**: Buyer requests item selection.
-- **`/on_select (on_select_out_of_stock)` (BPP -> BAP)**: Seller returns an error block containing code `40002` / `30009` and error descriptor, halting the session.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
+- **`/update` (BAP -> BPP)**: Sends the replacement request with reverse QC details.
+- **`/on_update` (BPP -> BAP)**: The seller records the request.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Return approved.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Item picked up after the reverse QC.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: Item received by the seller.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: replacement `Packed` -> replacement `Order-picked-up` -> replacement `Out-for-delivery` -> replacement `Order-delivered`.
 
 ---
 
-### Flow 16: Discovery Flow – Full Catalog City Discovery
+### Flow 16: Discovery Flow – Full Catalog
 
 #### 1. Short Description
-The foundational discovery flow for retail grocery. A consumer searches for groceries across an entire city or broad geolocation, and the seller returns its comprehensive product catalog, custom menus, categorized hierarchies, and serviceability rules.
+The buyer app searches a city and the seller returns its full catalog.
 
 #### 2. API Breakdown & Technical Actions
-- **`/search (search_1)` (BAP -> Gateway)**: BAP broadcasts a city-wide discovery query (`context.city = "std:080"`, `intent.category.id = "ONDC:RET10"`).
-- **`/on_search (on_search1)` (BPP -> BAP)**: Seller responds with full catalog:
-  - `bpp/providers[]`: Store identity, operating hours, geolocation (`L1`), and serviceability radiuses.
-  - `categories[]`: Hierarchical grocery categories (e.g. Atta/Flours, Fruits & Vegetables, Dairy).
-  - `items[]`: Item descriptions, barcodes/GTINs, prices, images, unitized measures, and packaged commodity statutory tags.
-  - `offers[]`: Available promotional discounts and bundle deals (e.g. Flat ₹50 off, Buy 2 Get 1).
+- **`/search` (BAP -> Gateway)**: Sends the search for the buyer's city and the domain.
+- **`/on_search` (BPP -> BAP)**: Returns the catalog: store details and serviceability, categories, items with prices and statutory details, and any offers.
 
 ---
 
-### Flow 17: Discovery Flow – Incremental Catalog Push
+### Flow 17: Discovery Flow – Incremental Catalog (Push)
 
 #### 1. Short Description
-Validates the merchant-initiated incremental catalog push mechanism. Sellers broadcast live updates regarding price alterations, flash discounts, stock replenishments, or temporary store closures without requiring a full catalog reload.
+After the first search, the seller pushes catalog changes as they happen, without resending the whole catalog.
 
 #### 2. API Breakdown & Technical Actions
-- **`/search (search_inc)` (BAP -> Gateway)**: Preliminary search establishing active listening.
-- **`on_search (on_search_inc)` [Unsolicited] (BPP -> BAP)**: Seller pushes differential item pricing or inventory adjustments.
-- **`on_search (on_search_inc_close)` [Unsolicited] (BPP -> BAP)**: Seller signals temporary store closure (`serviceability` tags set to disabled for active hours).
-- **`on_search (on_search_inc_open)` [Unsolicited] (BPP -> BAP)**: Seller re-enables store operations and serviceability.
-- **`/search (search_inc1)` (BAP -> Gateway)**: Verification query confirming catalog state consistency.
+- **`/search` (BAP -> Gateway)**: Starts the catalog session for incremental updates.
+- **`/on_search` [unsolicited] (BPP -> BAP)**: Pushes changed items, for example new prices or stock.
+- **`/on_search` [unsolicited] (BPP -> BAP)**: Marks the store as closed.
+- **`/on_search` [unsolicited] (BPP -> BAP)**: Marks the store as open again.
+- **`/search` (BAP -> Gateway)**: A follow-up search to confirm the catalog is in sync.
 
 ---
 
-### Flow 18: Discovery Flow – Incremental Catalog Refresh Pull
+### Flow 18: Discovery Flow – Incremental Catalog Refresh (Pull)
 
 #### 1. Short Description
-Validates the buyer application pull mechanism for catalog synchronization. The buyer requests catalog updates modified after a given timestamp, enabling efficient bandwidth utilization and consistent local price caches.
+The buyer app asks the seller for only the items that changed after a given time.
 
 #### 2. API Breakdown & Technical Actions
-- **`/search (search_1)` -> `/on_search (on_search1)`**: Baseline full catalog discovery.
-- **`/search (search_inc_pull)` (BAP -> BPP)**: Targeted point-to-point search passing `tags` with `mode = "incremental_refresh"` and `last_updated_at` timestamp.
-- **`/on_search (on_search_inc_pull)` (BPP -> BAP)**: Seller responds containing strictly those grocery items whose pricing, quantity, or metadata changed since the requested cutoff.
+- **`/search` (BAP -> Gateway)**: Sends the search for the buyer's city and the domain.
+- **`/on_search` (BPP -> BAP)**: Returns the catalog: store details and serviceability, categories, items with prices and statutory details, and any offers.
+- **`/search` (BAP -> BPP)**: Asks for only the items changed after a given time.
+- **`/on_search` (BPP -> BAP)**: Returns only the changed items.
 
 ---
 
-### Flow 19: Catalog Rejection Flow (Statutory Non-Compliance)
+### Flow 19: Catalog Rejection Flow
 
 #### 1. Short Description
-Validates regulatory safeguards in the grocery domain. When a seller's published catalog fails statutory compliance rules under the Legal Metrology (Packaged Commodities) Rules or FSSAI guidelines, the buyer app automatically rejects the catalog.
+The buyer app finds errors in a seller's catalog and rejects it, telling the seller what is wrong.
 
 #### 2. API Breakdown & Technical Actions
-- **`/search` (BAP -> Gateway)**: Discovery query.
-- **`/on_search` (BPP -> BAP)**: Seller returns catalog with non-compliant listings (e.g. missing manufacturer declaration, net weight, ingredients, or FSSAI registration number).
-- **`catalog_rejection` (BAP Internal / Log)**: Compliance engine flags statutory defects and drops the catalog from buyer search results.
+- **`/search` (BAP -> Gateway)**: Sends the search for the buyer's city and the domain.
+- **`/on_search` (BPP -> BAP)**: Returns the catalog: store details and serviceability, categories, items with prices and statutory details, and any offers.
+- **`/catalog_rejection` (BAP -> BPP)**: Sent on the same transaction after `/on_search`. Lists each problem with an error type (for example `ITEM-ERROR`), error code (for example `91001`), message, and the path of the faulty field.
 
 ---
 
-### Flow 20: Delivery Flow with IGM 1.0.0 Resolution
+### Flow 20: Delivery Flow with IGM 1.0.0
 
 #### 1. Short Description
-Integrates the complete grocery purchase and fulfillment pipeline with the linear IGM 1.0.0 complaint resolution framework.
+A delivered order followed by a complaint handled under IGM 1.0.0.
 
 #### 2. API Breakdown & Technical Actions
-- **Delivery Steps (1–12)**: Order placed, paid, packed, dispatched, and delivered.
-- **`/issue (issue_open_100)` (BAP -> BPP)**: Customer files complaint (e.g. damaged parcel packaging) with photo evidence.
-- **`/on_issue (on_issue_processing_100)` (BPP -> BAP)**: Seller assigns ticket ID and expected TAT.
-- **`on_issue_status (on_issue_resolved_100)` [Unsolicited] (BPP -> BAP)**: Merchant publishes resolution (`RESOLVED`) with credit/refund action.
-- **`/issue (issue_close_100)` (BAP -> BPP)**: Buyer verifies resolution and closes the grievance.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
+- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
+- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
+- **`/on_issue_status` [unsolicited] (BPP -> BAP)**: The seller sends the resolution.
+- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
 
 ---
 
-### Flow 21: Delivery Flow with IGM 2.0.0 – Evidence Exchange & Replacement
+### Flow 21: Delivery Flow with IGM 2.0.0 – No Action
 
 #### 1. Short Description
-Advanced IGM 2.0.0 interaction featuring dynamic evidence gathering. The seller requests additional verification pictures, the buyer provides them, and the seller issues an automated item replacement fulfillment.
+A complaint under IGM 2.0.0 that the seller resolves with an explanation and no further action, which the buyer accepts.
 
 #### 2. API Breakdown & Technical Actions
-- **Delivery Steps (1–12)**: Order delivered.
-- **`/issue (issue_open)` (BAP -> BPP)**: Customer files complaint citing wrong item delivered.
-- **`/on_issue (on_issue_processing)` (BPP -> BAP)**: Complaint acknowledged.
-- **`on_issue (on_issue_need_more_info)` [Unsolicited] (BPP -> BAP)**: Seller requests batch label and barcode photo.
-- **`/issue (issue_info_provided)` (BAP -> BPP)**: Buyer uploads requested photos.
-- **`/on_issue (on_issue_provided)` (BPP -> BAP)**: Seller acknowledges receipt of evidence.
-- **`on_issue (on_issue_resolution)` [Unsolicited] (BPP -> BAP)**: Seller validates proof and proposes item replacement (`action_triggered = "REPLACEMENT"`).
-- **`/issue (issue_resolution_accept)` (BAP -> BPP)**: Buyer accepts resolution.
-- **`/on_issue (on_issue_resolved)` -> `/issue (issue_close)`**: Ticket closed as resolved.
-- **`on_update (on_update_igm_replacement)` [Unsolicited] (BPP -> BAP)**: Seller automatically generates replacement fulfillment order.
+- **`/select` to `Order-delivered`**: As in Flow 1 (order placed and delivered).
+- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
+- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution with no further action.
+- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
+- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
+- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: final order status after the complaint is closed.
 
 ---
 
-### Flow 22: Delivery Flow with IGM 2.0.0 – Resolution Accepted (No Action)
+### Flow 22: Delivery Flow with IGM 2.0.0 – Rejection and Escalation
 
 #### 1. Short Description
-Demonstrates IGM 2.0.0 handling where a customer complaint is investigated, a formal operational clarification is provided without secondary physical actions (`NO_ACTION`), and the customer accepts the resolution.
+The buyer rejects the seller's resolution and escalates the complaint. The final resolution leads to a return.
 
 #### 2. API Breakdown & Technical Actions
-- **Delivery Steps (1–14)**: Order placed, delivered, and live-tracked.
-- **`/issue (issue_open_2)` (BAP -> BPP)**: Customer registers grievance.
-- **`/on_issue (on_issue_processing)` (BPP -> BAP)**: Grievance under investigation.
-- **`on_issue (on_issue_resolution_igm_3)` [Unsolicited] (BPP -> BAP)**: Seller provides resolution with detailed explanation (`action_triggered = "NO_ACTION"`).
-- **`/issue (issue_resolution_accept_igm_3)` (BAP -> BPP)**: Customer accepts explanation.
-- **`/on_issue (on_issue_resolved_igm_3)` -> `/issue (issue_close_igm_3)`**: Grievance closed.
-- **`on_status (on_status_igm_3)` [Unsolicited] (BPP -> BAP)**: Order audit status finalized.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
+- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
+- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution.
+- **`/issue` (BAP -> BPP)**: The buyer rejects the resolution.
+- **`/on_issue` (BPP -> BAP)**: The seller reprocesses the issue.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a new resolution.
+- **`/issue` (BAP -> BPP)**: The buyer escalates the issue.
+- **`/on_issue` (BPP -> BAP)**: The escalated issue is being processed.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: A final resolution is proposed.
+- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
+- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
+- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller starts the return on the order.
 
 ---
 
-### Flow 23: Delivery Flow with IGM 2.0.0 – Dispute Escalation & Mandated Return
+### Flow 23: Delivery Flow with IGM 2.0.0
 
 #### 1. Short Description
-A multi-tier grievance escalation workflow under IGM 2.0.0. The buyer rejects initial merchant resolutions, escalates the complaint to higher dispute resolution authorities (Level 2 Grievance Officer / Arbitrator), achieves a binding resolution, and executes an official return.
+A complaint under IGM 2.0.0 where the seller asks for more information, proposes a replacement, and the buyer accepts.
 
 #### 2. API Breakdown & Technical Actions
-- **Delivery Steps (1–12)**: Order completed.
-- **`/issue (issue_open)` -> `/on_issue (processing)`**: Initial grievance filed.
-- **`on_issue (on_issue_resolution)` [Unsolicited] (BPP -> BAP)**: Seller proposes initial settlement.
-- **`/issue (issue_resolution_reject)` (BAP -> BPP)**: Buyer rejects resolution.
-- **`/on_issue (on_issue_processing_1)` -> `on_issue (on_issue_resolution_1)`**: Seller reconsiders.
-- **`/issue (issue_escalate)` (BAP -> BPP)**: Buyer escalates dispute to Level 2 Grievance Redressal Officer.
-- **`/on_issue (on_issue_processing_2)` -> `on_issue (on_issue_resolution_2)`**: Arbitrator / GRO issues binding resolution.
-- **`/issue (issue_resolution_accept)` (BAP -> BPP)**: Resolution accepted.
-- **`/on_issue (on_issue_resolved)` -> `/issue (issue_close)`**: Grievance officially marked resolved.
-- **`on_update (on_update_igm_return)` [Unsolicited] (BPP -> BAP)**: Mandated return and refund workflow executed for contested items.
+- **`/select` to `Order-picked-up`**: As in Flow 1.
+- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
+- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
+- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller asks for more information.
+- **`/issue` (BAP -> BPP)**: The buyer provides the information.
+- **`/on_issue` (BPP -> BAP)**: The seller acknowledges the information.
+- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution.
+- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
+- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
+- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
+- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller starts the replacement on the order.
