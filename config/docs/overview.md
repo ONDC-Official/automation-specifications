@@ -14,4 +14,4 @@ ONDC:NTS10 carries the Reconciliation and Settlement Framework (RSF 2.1.0) betwe
 ## Use Cases
 - RSF
 - RECON: recon, on_recon (disagree), recon (agree), on_recon (agree)
-- ERROR (on_recon): recon, on_recon with an error
+- ERROR (on_recon): recon, on_recon with an error.
