@@ -4507,6 +4507,8 @@ _TESTS_:
         - PTL
     - _NAME_: REQUIRED_MESSAGE_CODE
       attr: $.message.order.fulfillments[*].state.descriptor.code
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present && attr all in enumList
       enumList:
         - Pending
@@ -4531,135 +4533,179 @@ _TESTS_:
         - Order-delivered
     - _NAME_: REQUIRED_MESSAGE_TRACKING
       attr: $.message.order.fulfillments[*].tracking
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_NAME
       attr: $.message.order.fulfillments[*].start.person.name
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_ID_32
       attr: $.message.order.fulfillments[*].start.location.id
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_GPS
       attr: $.message.order.fulfillments[*].start.location.gps
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_NAME_34
       attr: $.message.order.fulfillments[*].start.location.address.name
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_BUILDING
       attr: $.message.order.fulfillments[*].start.location.address.building
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_LOCALITY
       attr: $.message.order.fulfillments[*].start.location.address.locality
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_CITY
       attr: $.message.order.fulfillments[*].start.location.address.city
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_STATE_38
       attr: $.message.order.fulfillments[*].start.location.address.state
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_COUNTRY
       attr: $.message.order.fulfillments[*].start.location.address.country
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_AREA_CODE
       attr: $.message.order.fulfillments[*].start.location.address.area_code
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_PHONE
       attr: $.message.order.fulfillments[*].start.contact.phone
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_EMAIL
       attr: $.message.order.fulfillments[*].start.contact.email
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_DURATION_43
       attr: $.message.order.fulfillments[*].start.time.duration
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_START
       attr: $.message.order.fulfillments[*].start.time.range.start
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_END
       attr: $.message.order.fulfillments[*].start.time.range.end
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "ndrPath are present"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_NAME_46
       attr: $.message.order.fulfillments[*].end.person.name
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_GPS_47
       attr: $.message.order.fulfillments[*].end.location.gps
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_NAME_48
       attr: $.message.order.fulfillments[*].end.location.address.name
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_BUILDING_49
       attr: $.message.order.fulfillments[*].end.location.address.building
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_LOCALITY_50
       attr: $.message.order.fulfillments[*].end.location.address.locality
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_CITY_51
       attr: $.message.order.fulfillments[*].end.location.address.city
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_STATE_52
       attr: $.message.order.fulfillments[*].end.location.address.state
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_COUNTRY_53
       attr: $.message.order.fulfillments[*].end.location.address.country
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_AREA_CODE_54
       attr: $.message.order.fulfillments[*].end.location.address.area_code
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_PHONE_55
       attr: $.message.order.fulfillments[*].end.contact.phone
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_START_56
       attr: $.message.order.fulfillments[*].end.time.range.start
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_END_57
       attr: $.message.order.fulfillments[*].end.time.range.end
       fulfillmentType: $.message.order.fulfillments[*].type
       fulType:
         - Delivery
-      _CONTINUE_: "!(fulfillmentType all in fulType)"
+      ndrPath: $.message.order.fulfillments[*].end.ndr.buyer_response
+      _CONTINUE_: "!(fulfillmentType all in fulType) || (ndrPath are present)"
       _RETURN_: attr are present
     - _NAME_: REQUIRED_MESSAGE_NAME_58
       attr: $.message.order.billing.name
