@@ -269,7 +269,7 @@ _TESTS_:
       _CONTINUE_: "!(settledStatus any in settledValue)"
       _RETURN_:
         - _NAME_: REQUIRED_RECON_SETTLEMENT_REF_NO_FOR_SETTLED
-          attr: $.message.orders[*].settlements[*].settlement_ref_no
+          attr: $.message.orders[*].settlements[?(@.status=='SETTLED')].settlement_ref_no
           _RETURN_: attr are present
     - _NAME_: RECON_ORDER_UNIQUE
       _RETURN_:
@@ -489,7 +489,7 @@ _TESTS_:
           _CONTINUE_: "!(settledStatus any in settledValue)"
           _RETURN_:
             - _NAME_: REQUIRED_ON_RECON_SETTLEMENT_REF_NO_FOR_SETTLED
-              attr: $.message.orders[*].settlements[*].settlement_ref_no
+              attr: $.message.orders[*].settlements[?(@.status=='SETTLED')].settlement_ref_no
               _RETURN_: attr are present
         - _NAME_: ON_RECON_ORDER_UNIQUE
           _RETURN_:
