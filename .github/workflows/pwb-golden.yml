@@ -1,0 +1,56 @@
+name: Golden diff (every domain)
+
+# A change to the pinned tools must not alter what any deployed domain generates, unless the
+# change is listed in tooling/golden/explained-diffs.yaml. This builds every branch in
+# tooling/golden/branches.lock with main's tools and with this PR's tools, and diffs the two.
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'tooling/**'
+  workflow_dispatch:
+
+jobs:
+  golden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout this PR (all branches, for git archive)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Checkout main's tooling
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .golden-base
+          sparse-checkout: tooling
+
+      - name: Install both tool sets
+        run: |
+          npm ci --prefix .golden-base/tooling --no-audit --no-fund
+          npm ci --prefix tooling --no-audit --no-fund
+
+      - name: Build with main's tools
+        run: GOLDEN_JOBS=4 tooling/golden/golden.sh build "$RUNNER_TEMP/golden-base" .golden-base/tooling
+
+      - name: Build with this PR's tools
+        run: GOLDEN_JOBS=4 tooling/golden/golden.sh build "$RUNNER_TEMP/golden-new" tooling
+
+      - name: Diff
+        run: tooling/golden/golden.sh diff "$RUNNER_TEMP/golden-base" "$RUNNER_TEMP/golden-new"
+
+      - name: Upload diff report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-diff
+          path: ${{ runner.temp }}/golden-new/_diff
+          retention-days: 14
