@@ -1,3 +1,148 @@
-# ONDC:TRV10 2.1.0 — Release Notes
+### Change Logs: On_Demand API specs
 
-no current list notes to update
+| Version                         | TRV10_2.1.0_030924 |
+| :------------------------------ | :----------------- |
+| Updates in API Specs on dev doc | 11th October 2024 |
+
+##### On_Demand:
+- Added intermediate stop flow
+- Added update stop flow
+
+### 30 October
+- Added Pre Order Bid flow
+- Added Post Order Tip flow
+- Added Ride with multiple stops
+
+****5th February 2025****
+  - Added flow for `purple tags` use-case.
+
+****12th February 2025****
+- Added on_update call with agent details in both on_demand & schedule rental.
+- Added the end-OTP to on_demand rental & schedule trip & rental examples.
+- In on_demand Rentals, Removed timestamp form start type fulfillment.
+- Updated stops with soft & confirm updates
+- Added `feature_list` tag group at item level.
+- Added 2 new flows for No Acceptance for Soft_Update & Soft_Cancel.
+- Updated the end type fulfilment to accommodate intercity use-case.
+- Added new categories
+  - ON_DEMAND_TRIP
+  - ON_DEMAND_RENTAL
+  - SCHEDULED_TRIP
+  - SCHEDULED_RENTAL
+
+****27th March 2025****
+  - Fix select, call with add_ons for flow  On-Demand - Assign driver post on-confirm(Self-Pickup)
+  - Fix select, call with add_ons for flow On-Demand - Ride with multiple stops
+  - Fix select, call with add_ons for flow Schedule - Trip
+  - category_ids are missing for examples in flow - On-Demand - Purple Tags (Assign driver on on-confirm)
+  - Fix collected_by in on_init call for flow, BPP Collecting - Payment Confirmation
+  - Fix incorrect, quote ttl formatP200s. 
+  - Fix incorrect, SETTLEMENT_WINDOW value from PT2D to P2D. 
+  - Fix category ON_DEMAND to ON_DEMAND_TRIP for On-Demand - Purple Tags (Assign driver on on-confirm)
+  - Fix cancellation_reason_id: 7 in flow  for both action & on_action calls, On-Demand - Ride cancellation by rider
+  - categories is missing in on_search for flow On-Demand - Ride with multiple stops
+  - In last on_status, the fulfilment state for type end should be CLAIMED not  UNCLAIMED for flow Schedule - Trip
+  - Fix stops, in examples with extra object
+    - time:
+      timestamp: '2024-11-07T00:32:19.000Z'
+  - Added `track` & `on_track` to attribute-ui.
+
+****30th April 2025**** 
+  - Enabled fulfillments selection in select API.
+  - Added `cancellation_terms` at provider & item level for on_search API.
+  - Updated vehicle details as optional for action API calls
+
+****20th May 2025****
+  - Added optional field `vehicle.energy_type` in fulfillments.
+  - Added `params.amount` field in payment object for Self-Pickup flow.
+  - Added end location in search call for Purple Tags flow. 
+  - Updated `payments.collected_by` for Ride cancellation by Driver Flow
+
+****1st Dec 2025****
+  - Added a new flow for `Female Driver` with optional customer and agent gender fields.
+    ```
+      "fulfillment": {
+            "customer": {
+              "person": {
+                "gender": "FEMALE"
+              }
+            },
+            "agent": {
+              "person": {
+                "gender": "FEMALE"
+              }
+            }
+      }  
+    ```
+
+****6th March 2026****
+  - Added On-Demand - Technical Cancellation Flow
+
+****19th June 2026****
+  - Added location.address (mandatory) & other fields in search call (optional). Refer any flow in Flow UI
+  - Added names and images to provider details (optional). Refer Flow "assign driver on on_confirm" in Flow UI
+  - Added invoice document on ride completion (mandatory). Refer Flow "assign driver on on_confirm" in Flow UI
+  - Added driver name (mandatory), photo (conditionally mandatory based on driver image availability), rating (optional) once a driver is assigned. Refer Flow "assign driver on on_confirm" in Flow UI
+
+****29th June 2026****
+  - Added a new flow with add-ons feature to illustrate features such as Add on Ride Insurance offered by the seller app.   Refer - On-Demand - Assign driver on on-confirm (Add Ons)
+
+****3rd July 2026****
+  - Added a new flow On-Demand with Buyer app collecting the payment for the ride - Assign driver on on-confirm (BAP Collecting)
+
+****6th July 2026****
+  - Added new flows
+  - On-Demand - Assign driver on on-confirm(BAP Collecting, Pre-Order)
+  - On-Demand - Assign driver on on-confirm(BAP Collecting, Quote-Update)
+  - Updatd tag group FARE_POLICY with FREE_WAIT_TIME_PERIOD tag.
+
+****22nd July 2026****
+  - Removed ROUTE_INFO tag group from Schedule - Rental flow
+  - Added optional tag DEAD_KM_FARE in FARE_POLICY tag group.
+
+****28th July 2026****
+  - Added the missing fields under fulfillments.stops for the Ride Cancellation by Rider and Ride Cancellation by Driver flows.
+
+****3rd Aug 2026****
+  - Updated BAP_TERMS & BPP_TEMRS with STATIC_TERMS & OFFLINE_CONTRACT only.
+  - Added new flows
+  - Ride cancellation by rider (BAP Collecting)
+  - Support flow (support <-> on_support can be used either way as a support API call, or unsolicited on_support)
+  - Updated the Invoice sharing document construct. Refer Flow "assign driver on on_confirm" in Flow UI
+  - Enabled creds for agent to share additional info as an optional flow. Refer Flow "assign driver on on_confirm" in Flow UI
+
+****17th Aug 2026****
+  - Added cancellation code 999 for "Others". When cancellation code 999 is used, short_desc is mandatory to specify the cancellation reason.
+  For example:
+  ```
+    cancellation:
+      reason: 
+        descriptor:
+          code: "999"
+          short_desc: "Customer requested cancellation"
+  ```
+  - Added enums for support/ on_support calls.
+  - SOS
+  - LONG_HALT
+  - ROUTE_DEV
+
+****24th Aug 2026****
+  - Added new flow: On-Demand - Rating(Success)
+
+****22nd Sep 2026****
+  - Updated BAP_TERMS and BPP_TERMS with the BFF construct, reverting to the older TLC format.
+
+****5th Oct 2026****
+  - Added new enums for quote title
+    - SCHEDULING_CHARGE
+    - NEGOTIATED_FARE_DELTA
+
+****7th Oct 2026****
+  - Moved `SETTLEMENT_AMOUNT`, `SETTLEMENT_BANK_CODE`, and `SETTLEMENT_BANK_ACCOUNT_NUMBER` from the `init` call to the `on_init` call when the payment is collected by the BAP.
+
+****14th Oct 2026****  
+  -  Updated the rating API construct.
+  
+---
+
+
