@@ -1,3 +1,213 @@
-# ONDC:TRV14 2.0.0 — Release Notes
+# Change Log: TRV14 API specs
 
-List notable changes in this version.
+| Version | TRV14_2.0.0_100125 |
+| :------ | :----------------- |
+
+### 10th January 2025
+
+- Updated the technical cancellation flow with status/on_status calls.
+
+### 3rd February 2025
+
+- Added User Cancellation Flow.
+- Updated the technical cancellation flow with an optional soft cancel/on_cancel call.
+- Added `images` & `rating` as part of locations.
+- Added new categories standard and premium without a descriptor code.
+- Added Partial Cancellation Flow.
+- Added parent/child hierarchy in examples.
+- Added new item as `ADD_ON`.
+- Added `additional details` form in on_select call.
+
+### 7th February 2025
+
+- Added seller side pagination flow.
+
+### 14th February 2025
+
+- Updated the `cancellation_terms` with `fulfillment_states` & introduced `cancel_by` key.
+- Introduced new fulfillment states:
+  - `CONFIRMED`
+  - `IN_PROGRESS`
+  - `COMPLETED`
+- Updated the attribute-ui.
+- Updated order level status from `COMPLETE` to `COMPLETED`.
+
+### 27th February 2025
+
+- Updated technical cancellation code to `000`.
+- Added `cancellation` as part of on_cancel calls.
+- Added `created_at` & `updated_at` as part of on_cancel calls.
+
+### 27th March 2025
+
+- Updated `COURT_JURISDICTION` value from city name to city code: `std:011`.
+- Added paymentID for `payments` collected by the BAP in `init` call.
+- Fixed payment status in confirm call.
+
+### 2nd April 2025
+
+- Added `Cancellation Rejected` flow.
+
+### 25th April 2025
+
+- Added the new flow `Search and register for incremental pull`.
+- Enabled search request with start & end range.
+
+### 13th May 2025
+
+- Removed unused fulfillment id `F2` from API calls.
+
+### 20th June 2025
+
+- Added new API examples for rating & on_rating.
+- Added two new flows for Rating:
+  - Rating Success
+  - Rating Error
+
+### 17th July 2025
+
+- Added new tag `ADDITIONAL_DETAILS_REQUIRED` as part of `FARE_POLICY` tag group.
+
+### 4th August 2025
+
+- Added new Purchase Journey flow without forms.
+
+### 12th August 2025
+
+- Added `location_ids` to `ADD_ON` item.
+
+### 18th August 2025
+
+- Updated form IDs in Purchase Journey (Culture-Heritage) flow.
+
+### 29th August 2025
+
+- Updated `parent_item_id`s in on_search calls.
+- Updated the form fields for `Additional Details` form.
+
+### 19th September 2025
+
+- Added the `TNC_LINK` tag under the `INFO` tag group.
+
+### 24th September 2025
+
+- Added the `ERROR_UI` tab containing the list of error codes.
+- Updated the cancellation reason codes.
+
+### 8th October 2025
+
+- Updated `message.catalog.providers.descriptor.images` from mandatory to optional.
+
+### 24th October 2025
+
+- Added additional flow for `Order Level Forms`.
+
+### 28th October 2025
+
+- Added missing tags in the tags section.
+
+### 16th December 2025
+
+- Updated the order level status from `COMPLETE` to `COMPLETED` in enums section.
+
+### 6th January 2026
+
+- Updated the category / sub-category list.
+- Updated `multiple_sumbissions` to `multiple_submissions`.
+- Updated category references in items by removing the parent category and keeping only the child category.
+  For example:
+  From:
+  ```yaml
+  - C1
+  - C2
+  ```
+  To:
+  ```yaml
+  - C2
+  ```
+- Updated court jurisdiction from city code to city name.
+
+### 19th January 2026
+
+- Added missing categories in unsolicited `on_search` examples.
+
+### 16th February 2026
+
+- Added new sub-categories:
+  - **Culture and Heritage**:
+    - Handicraft
+    - Handloom
+  - **Entertainment & Shows**:
+    - Exhibitions
+  - **Sporting & Outdoor**:
+    - Camping
+  - **Tours & Sightseeing**:
+    - Farm Tour
+    - Wine Tour
+    - Tour Guide
+
+### 19th March 2026
+
+- Introduced a new stops type, `CHECKPOINT` (optional).
+- Introduced a new tag (optional, without standard codes) in `INFO` to accommodate additional item-level information:
+  ```yaml
+  - descriptor:
+      name: What to pack
+    value: Expect the weather to be very cold, so pack winter clothes.
+  ```
+- Added `agent.person` (optional) details at Fulfillment level:
+  ```yaml
+  agent:
+    person:
+      name: 'John Doe'
+      descriptor:
+        name: John Doe
+        short_desc: Descriptoion about host details
+        images:
+          - url: https://api.unreserved-entry-pass.com/sites/default/files/event/logo/event_logo_2.png
+            size_type: xs
+  ```
+- Added `creds` (optional) in Items.
+
+### 1st April 2026
+
+- Added `CONVENIENCE_FEE` as part of quote's title.
+
+### 23rd June 2026
+
+- Added root level category `EXPERIENCE`.
+- Added `id` and `parent_stop_id` fields to stops within fulfillments for the sequence of activities.
+- Added support for operational hours in `location` field to capture opening hours, closing hours, and holiday schedules.
+- Added mandatory city code in locations.
+
+### 4th August 2026
+
+- Added feature to charge margin fee.
+- Added ability for a seller to define mandatory fields (either one of Email or Mobile Number).
+- Updated payment type enum values by replacing hyphens (`-`) with underscores (`_`) (e.g., `PRE-ORDER` to `PRE_ORDER`).
+
+### 17th August 2026
+
+- Updated quote title from `BASE_FARE` to `BASE_PRICE`.
+
+### 18th August 2026
+
+- Removed categories:
+  - `EXHIBITIONS`
+  - `QUIZZES / COMPETITIONS`
+  - `TRAINING / EDUCATION`
+  - `NETWORKING`
+  - `SEMINAR / CONFERENCE`
+
+### 31st August 2026
+
+- Updated the category and subcategory listings.
+
+### 11th September 2026
+
+- Added new flow `Unreserved Entry Pass - Purchase Journey (BAP Convenience fee)`.
+- Added `convenience_terms` at the item level with the `convenience_eligible` field. The default value of `convenience_eligible` is `false`.
+
+### 2nd November 2026
+
+- Added a new error code (`93209`) for exceeding the margin limit specified by the seller.
