@@ -3,7 +3,44 @@ flows:
     id: Cancel_Health_Insurance(Family)
     meta:
       order: 11
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search2
+        - on_search2
+        - family_information_form
+        - search4
+        - on_search4
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - cancel
+        - on_cancel
+        - on_update_unsolicited7
+      display:
+        actions:
+          cancel: Request policy cancellation
+          on_cancel: Receive the cancellation confirmation
+          on_update_unsolicited7: Receive a cancellation status update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -15,7 +52,44 @@ flows:
     id: Cancel_Health_Insurance(Individual)
     meta:
       order: 10
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search
+        - on_search
+        - individual_information_form
+        - search3
+        - on_search3
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - cancel
+        - on_cancel
+        - on_update_unsolicited7
+      display:
+        actions:
+          cancel: Request policy cancellation
+          on_cancel: Receive the cancellation confirmation
+          on_update_unsolicited7: Receive a cancellation status update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -27,7 +101,48 @@ flows:
     id: Claim_Health_Insurance(Family)
     meta:
       order: 7
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search2
+        - on_search2
+        - family_information_form
+        - search4
+        - on_search4
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - claim_form
+        - on_update_unsolicited2
+        - on_update_unsolicited3
+        - on_status_unsolicited
+        - on_update_unsolicited4
+      display:
+        actions:
+          claim_form: Submit identity and personal details for claim verification
+          on_update_unsolicited2: Receive the processed claim order with claim form documents
+          on_update_unsolicited3: Receive a claim order update with documentation
+          on_status_unsolicited: Receive a claim status update with document references
+          on_update_unsolicited4: Receive the claim processing status update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -39,7 +154,48 @@ flows:
     id: Claim_Health_Insurance(Individual)
     meta:
       order: 6
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search
+        - on_search
+        - individual_information_form
+        - search3
+        - on_search3
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - claim_form
+        - on_update_unsolicited2
+        - on_update_unsolicited3
+        - on_status_unsolicited
+        - on_update_unsolicited4
+      display:
+        actions:
+          claim_form: Submit identity and personal details for claim verification
+          on_update_unsolicited2: Receive the processed claim order with claim form documents
+          on_update_unsolicited3: Receive a claim order update with documentation
+          on_status_unsolicited: Receive a claim status update with document references
+          on_update_unsolicited4: Receive the claim processing status update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -51,7 +207,67 @@ flows:
     id: Health_Insurance_Application(Family)
     meta:
       order: 1
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+      secondary_flows:
+        - Claim_Health_Insurance(Family)
+        - Renew_Health_Insurance(Family)
+        - Cancel_Health_Insurance(Family)
+        - Health_Insurance_Application(Family)_With_IGM(v-1.0.0)
+      display:
+        preferred: true
+        sections:
+          - name: Product Discovery
+            actions:
+              search2: Search for Health Insurance products
+              on_search2: Receive Health Insurance product catalogue
+          - name: Personal Details Form
+            actions:
+              family_information_form: Submit family personal details
+          - name: Personalized Offer Generation
+            actions:
+              search4: Request personalized Health Insurance offers
+              on_search4: Receive personalized Health Insurance offers
+          - name: Offer Selection
+            actions:
+              select: Select a Health Insurance offer
+              on_select: Receive the selected Health Insurance offer quote
+          - name: Pre-Existing Disease Form
+            actions:
+              ped_details_form: Submit pre-existing disease details
+          - name: Offer Finalization
+            actions:
+              select2: Finalize the selected Health Insurance offer
+              on_select2: Receive the finalized Health Insurance offer quote
+          - name: EKYC Step
+            actions:
+              Ekyc_details_form: Submit EKYC details
+              on_status_unsolicited4: Receive EKYC verification status update
+              init: Initialize the Health Insurance order
+              on_init: Receive the initialized Health Insurance order
+          - name: Proposer Details Form
+            actions:
+              Proposer_Details_form: Submit proposer details
+              init2: Initialize the order with proposer details
+              on_init2: Receive the order updated with proposer details
+          - name: Nominee Details Form
+            actions:
+              nominee_details_form: Submit nominee details
+              init4: Initialize the order with nominee details
+              on_init4: Receive the order updated with nominee details
+          - name: Manual Review and Quote update
+            optional: true
+            actions:
+              manual_review_form: Submit documents for manual review
+              on_status_unsolicited8: Receive manual review status update
+          - name: Policy Confirmation And Payment
+            actions:
+              confirm: Confirm the Health Insurance policy purchase
+              on_confirm: Receive the confirmed Health Insurance policy order
+              payment_form: Submit payment for the Health Insurance policy
+          - name: Policy Sharing
+            actions:
+              on_update: Receive the shared Health Insurance policy document
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -60,10 +276,65 @@ flows:
     config:
       $ref: ./HEALTH INSURANCE/Health_Insurance_Application_Family_.yaml
   - type: playground
+    id: Payment_Failure_Health_Insurance(Family)
+    meta:
+      order: 14
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: A family health insurance journey that follows the standard application flow up to on_confirm, then exercises a payment-failure path with a Not-Pay option, an unsolicited on_update marking the payment FAILED, a BAP update retry, and an on_update returning a fresh NOT-PAID payment link.
+    config:
+      $ref: ./HEALTH INSURANCE/Payment_Failure_Health_Insurance_Family_.yaml
+
+  - type: playground
     id: Health_Insurance_Application(Family)_With_IGM(v-1.0.0)
     meta:
       order: 13
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search2
+        - on_search2
+        - family_information_form
+        - search4
+        - on_search4
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Health Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -74,7 +345,67 @@ flows:
     id: Health_Insurance_Application(Individual)
     meta:
       order: 0
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+      secondary_flows:
+        - Claim_Health_Insurance(Individual)
+        - Renew_Health_Insurance(Individual)
+        - Cancel_Health_Insurance(Individual)
+        - Health_Insurance_Application(Individual)_With_IGM(v-1.0.0)
+      display:
+        preferred: true
+        sections:
+          - name: Product Discovery
+            actions:
+              search: Search for Health Insurance products
+              on_search: Receive Health Insurance product catalogue
+          - name: Personal Details Form
+            actions:
+              individual_information_form: Submit individual personal details
+          - name: Personalized Offer Generation
+            actions:
+              search3: Request personalized Health Insurance offers
+              on_search3: Receive personalized Health Insurance offers
+          - name: Offer Selection
+            actions:
+              select: Select a Health Insurance offer
+              on_select: Receive the selected Health Insurance offer quote
+          - name: Pre-Existing Disease Form
+            actions:
+              ped_details_form: Submit pre-existing disease details
+          - name: Offer Finalization
+            actions:
+              select2: Finalize the selected Health Insurance offer
+              on_select2: Receive the finalized Health Insurance offer quote
+          - name: EKYC Step
+            actions:
+              Ekyc_details_form: Submit EKYC details
+              on_status_unsolicited4: Receive EKYC verification status update
+              init: Initialize the Health Insurance order
+              on_init: Receive the initialized Health Insurance order
+          - name: Proposer Details Form
+            actions:
+              Proposer_Details_form: Submit proposer details
+              init2: Initialize the order with proposer details
+              on_init2: Receive the order updated with proposer details
+          - name: Nominee Details Form
+            actions:
+              nominee_details_form: Submit nominee details
+              init4: Initialize the order with nominee details
+              on_init4: Receive the order updated with nominee details
+          - name: Manual Review and Quote update
+            optional: true
+            actions:
+              manual_review_form: Submit documents for manual review
+              on_status_unsolicited8: Receive manual review status update
+          - name: Policy Confirmation And Payment
+            actions:
+              confirm: Confirm the Health Insurance policy purchase
+              on_confirm: Receive the confirmed Health Insurance policy order
+              payment_form: Submit payment for the Health Insurance policy
+          - name: Policy Sharing
+            actions:
+              on_update: Receive the shared Health Insurance policy document
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -83,10 +414,90 @@ flows:
     config:
       $ref: ./HEALTH INSURANCE/Health_Insurance_Application_Individual_.yaml
   - type: playground
+    id: Payment_Failure_Health_Insurance(Individual)
+    meta:
+      order: 15
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+
+    description: An individual health insurance journey that follows the standard application flow up to on_confirm, then exercises a payment-failure path with a Not-Pay option, an unsolicited on_update marking the payment FAILED, a BAP update retry, and an on_update returning a fresh NOT-PAID payment link.
+    config:
+      $ref: ./HEALTH INSURANCE/Payment_Failure_Health_Insurance_Individual_.yaml
+
+  - type: playground
+    id: Health_Insurance_Application(Individual)_Offer_Update
+    meta:
+      order: 22
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: An individual health insurance journey that follows the standard application flow, and after manual underwriting review the BPP issues an additional init/on_init round confirming the reviewed order before enrollment is confirmed.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_Individual_Offer_Update.yaml
+
+  - type: playground
+    id: Health_Insurance_Application(Individual)_Offer_Update_Rejected
+    meta:
+      order: 23
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: An individual health insurance journey that follows the standard application flow up to manual underwriting review, then the BPP rejects the additional init request with error 81208 (Policy booking rejection), ending the flow without proceeding to confirmation.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_Individual_Offer_Update_Rejected.yaml
+
+  - type: playground
     id: Health_Insurance_Application(Individual)_With_IGM(v-1.0.0)
     meta:
       order: 12
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search
+        - on_search
+        - individual_information_form
+        - search3
+        - on_search3
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Health Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -97,7 +508,8 @@ flows:
     id: Health_Insurance_Application(PRE-ORDER-Family)
     meta:
       order: 4
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -109,7 +521,8 @@ flows:
     id: Health_Insurance_Application(PRE-ORDER-Family-With-ManualReview)
     meta:
       order: 5
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -121,7 +534,8 @@ flows:
     id: Health_Insurance_Application(PRE-ORDER-Individual)
     meta:
       order: 2
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -133,7 +547,8 @@ flows:
     id: Health_Insurance_Application(PRE-ORDER-Individual-With-ManualReview)
     meta:
       order: 3
-    usecase: HEALTH INSURANCE
+      type: PRIMARY
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -142,10 +557,117 @@ flows:
     config:
       $ref: ./HEALTH INSURANCE/Health_Insurance_Application_PRE-ORDER-Individual-With-ManualReview_.yaml
   - type: playground
+    id: Payment_Failure_Health_Insurance(PRE-ORDER-Family-With-ManualReview)
+    meta:
+      order: 16
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: A family health insurance PRE-ORDER journey that follows the standard application flow up to on_init, then exercises a payment-failure path - an unsolicited on_status marks the payment FAILED with an ERROR_INFORMATION reason, the BAP retries with a fresh NOT-PAID init, and the BPP responds with a new NOT-PAID payment link on on_init.
+    config:
+      $ref: ./HEALTH INSURANCE/Payment_Failure_Health_Insurance_PRE-ORDER-Family-With-ManualReview_.yaml
+  - type: playground
+    id: Payment_Failure_Health_Insurance(PRE-ORDER-Individual-With-ManualReview)
+    meta:
+      order: 17
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: An individual health insurance PRE-ORDER journey (with manual review) that follows the standard application flow up to on_init, then exercises a payment-failure path - an unsolicited on_status marks the payment FAILED with an ERROR_INFORMATION reason, the BAP retries with a fresh NOT-PAID init, and the BPP responds with a new NOT-PAID payment link on on_init.
+    config:
+      $ref: ./HEALTH INSURANCE/Payment_Failure_Health_Insurance_PRE-ORDER-Individual-With-ManualReview_.yaml
+  - type: playground
+    id: Health_Insurance_Application(PRE-ORDER-Family-Without-CIS)
+    meta:
+      order: 18
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: A family health insurance PRE-ORDER application journey (with manual underwriting review) without the CIS_AND_PAYMENT step - after the manual review completes, the BPP directly sends an unsolicited on_status marking the payment PAID and the buyer confirms the policy, with no consumer information form or its init/on_init round-trip.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_PRE-ORDER-Family-Without-CIS_.yaml
+  - type: playground
+    id: Health_Insurance_Application(PRE-ORDER-Individual-Without-CIS)
+    meta:
+      order: 19
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: An individual health insurance PRE-ORDER application journey (with manual underwriting review) without the CIS_AND_PAYMENT step - after the manual review completes, the BPP directly sends an unsolicited on_status marking the payment PAID and the buyer confirms the policy, with no consumer information form or its init/on_init round-trip.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_PRE-ORDER-Individual-Without-CIS_.yaml
+  - type: playground
+    id: Health_Insurance_Application(PRE-ORDER-Family-Without-PED)
+    meta:
+      order: 20
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: A family health insurance PRE-ORDER application journey without the Pre-Existing Disease (PED) declaration form - after offer selection, the flow proceeds directly to EKYC and order initialization, through nominee details, payment, and confirmation, with no PED form or its round-trip.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_PRE-ORDER-Family_Without_PED.yaml
+  - type: playground
+    id: Health_Insurance_Application(PRE-ORDER-Individual-Without-PED)
+    meta:
+      order: 21
+      type: PRIMARY
+    usecase: Health Insurance
+    tags:
+      - WORKBENCH
+    description: An individual health insurance PRE-ORDER application journey without the Pre-Existing Disease (PED) declaration form - after offer selection, the flow proceeds directly to EKYC and order initialization, through nominee details, payment, and confirmation.
+    config:
+      $ref: ./HEALTH INSURANCE/Health_Insurance_Application_PRE-ORDER-Individual_Without_PED.yaml
+  - type: playground
     id: Renew_Health_Insurance(Family)
     meta:
       order: 9
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search2
+        - on_search2
+        - family_information_form
+        - search4
+        - on_search4
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - on_update_unsolicited
+        - renew_form
+        - on_update_unsolicited5
+        - on_status_unsolicited2
+        - on_update_unsolicited6
+      display:
+        actions:
+          on_update_unsolicited: Receive the renewal order confirmation with form documents
+          renew_form: Submit identity details for renewal authorization
+          on_update_unsolicited5: Receive the completed renewal policy details
+          on_status_unsolicited2: Receive a renewal order status update
+          on_update_unsolicited6: Receive a renewal progress update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -157,7 +679,48 @@ flows:
     id: Renew_Health_Insurance(Individual)
     meta:
       order: 8
-    usecase: HEALTH INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search
+        - on_search
+        - individual_information_form
+        - search3
+        - on_search3
+        - select
+        - on_select
+        - ped_details_form
+        - select2
+        - on_select2
+        - Ekyc_details_form
+        - on_status_unsolicited4
+        - init
+        - on_init
+        - Proposer_Details_form
+        - init2
+        - on_init2
+        - nominee_details_form
+        - init4
+        - on_init4
+        - manual_review_form
+        - on_status_unsolicited8
+        - confirm
+        - on_confirm
+        - payment_form
+        - on_update
+      visible_actions:
+        - on_update_unsolicited
+        - renew_form
+        - on_update_unsolicited5
+        - on_status_unsolicited2
+        - on_update_unsolicited6
+      display:
+        actions:
+          on_update_unsolicited: Receive the renewal order confirmation with form documents
+          renew_form: Submit identity details for renewal authorization
+          on_update_unsolicited5: Receive the completed renewal policy details
+          on_status_unsolicited2: Receive a renewal order status update
+          on_update_unsolicited6: Receive a renewal progress update
+    usecase: Health Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -169,7 +732,49 @@ flows:
     id: Cancel_Motor_Insurance
     meta:
       order: 3
-    usecase: MOTOR INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+        - confirm_motor
+        - on_confirm_motor
+        - payment_form_motor
+      visible_actions:
+        - on_update_unsolicited_motor
+        - cancel_motor
+        - on_cancel_motor
+        - on_update_unsolicited5_motor
+      display:
+        actions:
+          on_update_unsolicited_motor: Receive the cancellation URL from the insurer
+          cancel_motor: Request cancellation of the Motor Insurance policy
+          on_cancel_motor: Receive the terms of cancellation from the insurer
+          on_update_unsolicited5_motor: Accept the cancellation terms and receive the latest order update
+    usecase: Motor Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -181,7 +786,53 @@ flows:
     id: Claim_Motor_Insurance
     meta:
       order: 2
-    usecase: MOTOR INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+        - confirm_motor
+        - on_confirm_motor
+        - payment_form_motor
+      visible_actions:
+        - on_update_unsolicited_motor
+        - claim_form_motor
+        - on_update_unsolicited2_motor
+        - on_update_unsolicited3_motor
+        - on_status_unsolicited_motor
+        - on_update_unsolicited4_motor
+      display:
+        actions:
+          on_update_unsolicited_motor: Receive the claim form URL from the insurer
+          claim_form_motor: Submit claim details through the redirected claim form
+          on_update_unsolicited2_motor: "Receive a claim status update — initiated"
+          on_update_unsolicited3_motor: "Receive a claim status update — processing"
+          on_status_unsolicited_motor: "Receive a claim status update — processed"
+          on_update_unsolicited4_motor: Receive the final claim processing status update
+    usecase: Motor Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -193,7 +844,76 @@ flows:
     id: Motor_Insurance_Application
     meta:
       order: 0
-    usecase: MOTOR INSURANCE
+      type: PRIMARY
+      secondary_flows:
+        - Claim_Motor_Insurance
+        - Cancel_Motor_Insurance
+        - Motor_Insurance_Application(PRE-ORDER)
+        - Motor_Insurance_Application_With_IGM
+        - Payment_Failure_Motor_Insurance
+        - Payment_Failure_Motor_Insurance(PRE-ORDER)
+      display:
+        preferred: true
+        sections:
+          - name: Product Discovery
+            actions:
+              search_motor: Search for Motor Insurance products
+              on_search_motor: Receive Motor Insurance product catalogue
+          - name: Personal and Vehicle Details Form
+            actions:
+              vehicle_details_form: Submit personal and vehicle details
+          - name: Personalized Offer Generation
+            actions:
+              search2_motor: Request personalized Motor Insurance offers
+              on_search2_motor: Receive personalized Motor Insurance offers
+          - name: Offer Selection
+            actions:
+              select_motor: Select a Motor Insurance offer
+              on_select_motor: Receive the selected Motor Insurance offer quote
+          - name: Manual Review Form
+            actions:
+              manual_review_form_motor: Submit documents for manual review
+          - name: Manual Review Status Check
+            actions:
+              on_status_unsolicited3_motor: Receive manual review status update
+          - name: Offer Finalization
+            actions:
+              select2_motor: Finalize the selected Motor Insurance offer
+              on_select2_motor: Receive the finalized Motor Insurance offer quote
+          - name: PAN and DoB Form
+            actions:
+              pan_details_form: Submit PAN and date of birth details
+              select3_motor: Confirm PAN and DoB details for the offer
+              on_select3_motor: Receive the offer quote updated with PAN and DoB details
+          - name: EKYC Step
+            actions:
+              kyc_details_form: Submit EKYC details
+              on_status_unsolicited4_motor: Receive EKYC verification status update
+              init_motor: Initialize the Motor Insurance order
+              on_init_motor: Receive the initialized Motor Insurance order
+          - name: Vehicle Information Form
+            actions:
+              vehicle_nominee_details_form: Submit vehicle and nominee details
+              init2_motor: Initialize the order with vehicle and nominee details
+              on_init2_motor: Receive the order updated with vehicle and nominee details
+          - name: Personal Details Form
+            actions:
+              personal_details_form: Submit personal details
+              init3_motor: Initialize the order with personal details
+              on_init3_motor: Receive the order updated with personal details
+          - name: CIS Form
+            actions:
+              consumer_information_form: Submit consumer information statement (CIS) details
+              on_status_unsolicited5_motor: Receive consumer information statement status update
+          - name: Policy Confirmation And Payment
+            actions:
+              confirm_motor: Confirm the Motor Insurance policy purchase
+              on_confirm_motor: Receive the confirmed Motor Insurance policy order
+              payment_form_motor: Submit payment for the Motor Insurance policy
+          - name: Policy Sharing
+            actions:
+              on_update_unsolicited_motor: Receive the shared Motor Insurance policy document
+    usecase: Motor Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -202,10 +922,152 @@ flows:
     config:
       $ref: ./MOTOR INSURANCE/Motor_Insurance_Application.yaml
   - type: playground
+    id: Payment_Failure_Motor_Insurance
+    meta:
+      order: 5
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+        - confirm_motor
+        - on_confirm_motor
+        - payment_form_motor
+      visible_actions:
+        - on_update_payment_failed_motor
+        - update_payment_motor
+        - on_update_payment_retry_motor
+      display:
+        actions:
+          on_update_payment_failed_motor: Receive notification that the payment has failed
+          update_payment_motor: Retry the payment
+          on_update_payment_retry_motor: Receive the updated order with a new payment link
+    usecase: Motor Insurance
+    tags:
+      - WORKBENCH
+    description: A motor insurance journey that follows the standard application flow up to on_confirm, then exercises a payment-failure path with a Not-Pay option, an unsolicited on_update marking the payment FAILED, a BAP update retry, and an on_update returning a fresh NOT-PAID payment link.
+    config:
+      $ref: ./MOTOR INSURANCE/Payment_Failure_Motor_Insurance.yaml
+  - type: playground
+    id: Payment_Failure_Motor_Insurance(PRE-ORDER)
+    meta:
+      order: 6
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+      visible_actions:
+        - init4_motor
+        - on_init4_motor
+      display:
+        actions:
+          init4_motor: Retry the payment by reinitializing the order
+          on_init4_motor: Receive the order updated with a new payment link
+    usecase: Motor Insurance
+    tags:
+      - WORKBENCH
+    description: A motor insurance journey that follows the standard application flow , then exercises a payment-failure path with a Not-Pay option, an unsolicited on_status marking the payment FAILED, a BAP init retry, and an on_init returning a fresh NOT-PAID payment link.
+    config:
+      $ref: ./MOTOR INSURANCE/Payment_Failure_Motor_Insurance_PRE-ORDER.yaml
+  - type: playground
     id: Motor_Insurance_Application_With_IGM
     meta:
       order: 4
-    usecase: MOTOR INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+        - confirm_motor
+        - on_confirm_motor
+        - payment_form_motor
+        - on_update_unsolicited_motor
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Motor Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Motor Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -216,7 +1078,42 @@ flows:
     id: Motor_Insurance_Application(PRE-ORDER)
     meta:
       order: 1
-    usecase: MOTOR INSURANCE
+      type: SECONDARY
+      hide_actions:
+        - search_motor
+        - on_search_motor
+        - vehicle_details_form
+        - search2_motor
+        - on_search2_motor
+        - select_motor
+        - on_select_motor
+        - manual_review_form_motor
+        - on_status_unsolicited3_motor
+        - select2_motor
+        - on_select2_motor
+        - pan_details_form
+        - select3_motor
+        - on_select3_motor
+        - kyc_details_form
+        - on_status_unsolicited4_motor
+        - init_motor
+        - on_init_motor
+        - vehicle_nominee_details_form
+        - init2_motor
+        - on_init2_motor
+        - personal_details_form
+        - init3_motor
+        - on_init3_motor
+        - consumer_information_form
+        - on_status_unsolicited5_motor
+      visible_actions:
+        - confirm_motor2
+        - on_confirm_motor2
+      display:
+        actions:
+          confirm_motor2: Confirm the Motor Insurance pre-order policy purchase
+          on_confirm_motor2: Receive the confirmed Motor Insurance pre-order policy
+    usecase: Motor Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -227,8 +1124,21 @@ flows:
   - type: playground
     id: CD_Balance_Error_Accidental_Insurance
     meta:
-      order: 0
-    usecase: ACCIDENTAL INSURANCE
+      order: 3
+      type: PRIMARY
+      display:
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_accidental: Search for Accidental Insurance offers
+              on_search_purchase_journey_accidental: Receive Accidental Insurance offer catalogue
+              select: Select an Accidental Insurance offer
+              on_select_accidental: Receive the selected Accidental Insurance offer quote
+          - name: Insurance Plan Booking Initialization - CD Balance Check Failure
+            actions:
+              init_accidental: Initialize the Accidental Insurance plan booking
+              on_init_cd_balance_error: Receive CD Balance check failure (insufficient balance)
+    usecase: Accidental Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -240,7 +1150,13 @@ flows:
     id: Discovery_of_Insurer_Providers_and_Master_Policies
     meta:
       order: 0
-    usecase: ACCIDENTAL INSURANCE
+      type: PREREQUISITE
+      prerequisite_kind: mandatory
+      display:
+        actions:
+          search_insurence_accidental_provider: Search for Accidental Insurance providers and master policies
+          on_search_insurence_provider_accidental: Receive Accidental Insurance master policy catalogue
+    usecase: Accidental Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -251,8 +1167,13 @@ flows:
   - type: playground
     id: Discovery_of_Products_from_Master_Policies (Accidental Insurance)
     meta:
-      order: 0
-    usecase: ACCIDENTAL INSURANCE
+      order: 1
+      type: PRIMARY
+      display:
+        actions:
+          search_discover_product_accidental: Share personal and insurance details for Accidental Insurance offers
+          on_search_discover_product_accidental: Receive personalized Accidental Insurance offers
+    usecase: Accidental Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -263,8 +1184,31 @@ flows:
   - type: playground
     id: Purchase_Journey_Accidental_Insurance
     meta:
-      order: 0
-    usecase: ACCIDENTAL INSURANCE
+      order: 2
+      type: PRIMARY
+      secondary_flows:
+        - Purchase_Journey_Accidental_Insurance_with_igm_1.0.0
+      display:
+        preferred: true
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_accidental: Search for Accidental Insurance offers
+              on_search_purchase_journey_accidental: Receive Accidental Insurance offer catalogue
+              select: Select an Accidental Insurance offer
+              on_select_accidental: Receive the selected Accidental Insurance offer quote
+          - name: Insurance Plan Booking Initialization
+            actions:
+              init_accidental: Initialize the Accidental Insurance plan booking
+              on_init_accidental: Receive the initialized Accidental Insurance order
+          - name: Insurance Plan Booking Confirmation
+            actions:
+              confirm_accidental: Confirm the Accidental Insurance plan booking
+              on_confirm_accidental: Receive the confirmed Accidental Insurance order
+          - name: Policy Document Sharing
+            actions:
+              on_update_accidental: Receive the shared Accidental Insurance policy document
+    usecase: Accidental Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -272,11 +1216,66 @@ flows:
     description: Purchase Journey Accidental Insurance
     config:
       $ref: ./ACCIDENTAL INSURANCE/Purchase_Journey_Accidental_Insurance.yaml
+
+  # __________IGM 1.0.0 on Accidenatl_insurance____________ 
+  - type: playground
+    id: Purchase_Journey_Accidental_Insurance_with_igm_1.0.0
+    meta:
+      order: 4
+      type: SECONDARY
+      hide_actions:
+        - search_purchase_journey_accidental
+        - on_search_purchase_journey_accidental
+        - select
+        - on_select_accidental
+        - init_accidental
+        - on_init_accidental
+        - confirm_accidental
+        - on_confirm_accidental
+        - on_update_accidental
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Accidental Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Accidental Insurance
+    tags:
+      - WORKBENCH
+      - MANDATORY
+      # - REPORTABLE
+    description: Discovery of Transit insurance with IGM 1.0.0.
+    config:
+      $ref: ./ACCIDENTAL INSURANCE/Purchase_Journey_Accidental_Insurance_with_igm_1.0.0.yaml 
+
+
   - type: playground
     id: CD_Balance_Error_Hospicash_Insurance
     meta:
-      order: 0
-    usecase: HOSPICASH INSURANCE
+      order: 3
+      type: PRIMARY
+      display:
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_hospicash: Search for Hospicash Insurance offers
+              on_search_purchase_journey_hospicash: Receive Hospicash Insurance offer catalogue
+              select: Select a Hospicash Insurance offer
+              on_select_hospicash: Receive the selected Hospicash Insurance offer quote
+          - name: Insurance Plan Booking Initialization - CD Balance Check Failure
+            actions:
+              init_hospicash: Initialize the Hospicash Insurance plan booking
+              on_init_cd_balance_error: Receive CD Balance check failure (insufficient balance)
+    usecase: Hospicash Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -288,7 +1287,13 @@ flows:
     id: Discovery_of_Insurer_Providers_and_Master_Policies
     meta:
       order: 0
-    usecase: HOSPICASH INSURANCE
+      type: PREREQUISITE
+      prerequisite_kind: mandatory
+      display:
+        actions:
+          search_insurence_accidental_provider: Search for Hospicash Insurance providers and master policies
+          on_search_insurence_provider_accidental: Receive Hospicash Insurance master policy catalogue
+    usecase: Hospicash Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -299,8 +1304,13 @@ flows:
   - type: playground
     id: Discovery_of_Products_from_Master_Policies (Hospicash Insurance)
     meta:
-      order: 0
-    usecase: HOSPICASH INSURANCE
+      order: 1
+      type: PRIMARY
+      display:
+        actions:
+          search_discover_product_hospicash: Share personal and insurance details for Hospicash Insurance offers
+          on_search_discover_product_hospicash: Receive personalized Hospicash Insurance offers
+    usecase: Hospicash Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -311,8 +1321,31 @@ flows:
   - type: playground
     id: Purchase_Journey_Hospicash_Insurance
     meta:
-      order: 0
-    usecase: HOSPICASH INSURANCE
+      order: 2
+      type: PRIMARY
+      secondary_flows:
+        - Purchase_Journey_Hospicash_Insurance_with_igm_1.0.0
+      display:
+        preferred: true
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_hospicash: Search for Hospicash Insurance offers
+              on_search_purchase_journey_hospicash: Receive Hospicash Insurance offer catalogue
+              select: Select a Hospicash Insurance offer
+              on_select_hospicash: Receive the selected Hospicash Insurance offer quote
+          - name: Insurance Plan Booking Initialization
+            actions:
+              init_hospicash: Initialize the Hospicash Insurance plan booking
+              on_init_hospicash: Receive the initialized Hospicash Insurance order
+          - name: Insurance Plan Booking Confirmation
+            actions:
+              confirm_hospicash: Confirm the Hospicash Insurance plan booking
+              on_confirm_hospicash: Receive the confirmed Hospicash Insurance order
+          - name: Policy Document Sharing
+            actions:
+              on_update_hospicash: Receive the shared Hospicash Insurance policy document
+    usecase: Hospicash Insurance
     tags:
       - PRAMAAN
       - MANDATORY
@@ -321,11 +1354,66 @@ flows:
     description: Purchase Journey Hospicash Insurance
     config:
       $ref: ./HOSPICASH INSURANCE/Purchase_Journey_Hospicash_Insurance.yaml
+
+  # __________IGM 1.0.0 on Hospicash Insurance____________  
+  - type: playground
+    id: Purchase_Journey_Hospicash_Insurance_with_igm_1.0.0
+    meta:
+      order: 4
+      type: SECONDARY
+      hide_actions:
+        - search_purchase_journey_hospicash
+        - on_search_purchase_journey_hospicash
+        - select
+        - on_select_hospicash
+        - init_hospicash
+        - on_init_hospicash
+        - confirm_hospicash
+        - on_confirm_hospicash
+        - on_update_hospicash
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Hospicash Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Hospicash Insurance
+    tags:
+      # - PRAMAAN
+      - MANDATORY
+      # - REPORTABLE
+      - WORKBENCH
+    description: Discovery of Hospicash insurance with IGM 1.0.0.
+    config:
+      $ref: ./HOSPICASH INSURANCE/Purchase_Journey_Hospicash_Insurance_with_igm_1.0.0.yaml
+
   - type: playground
     id: CD_Balance_Error_Transit_Insurance
     meta:
-      order: 0
-    usecase: TRANSIT INSURANCE
+      order: 3
+      type: PRIMARY
+      display:
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_transit: Search for Transit Insurance offers
+              on_search_purchase_journey_transit: Receive Transit Insurance offer catalogue
+              select: Select a Transit Insurance offer
+              on_select: Receive the selected Transit Insurance offer quote
+          - name: Insurance Plan Booking Initialization - CD Balance Check Failure
+            actions:
+              init: Initialize the Transit Insurance plan booking
+              on_init_cd_balance_error: Receive CD Balance check failure (insufficient balance)
+    usecase: Transit Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -337,7 +1425,13 @@ flows:
     id: Discovery_of_Insurer_Providers_and_Master_Policies
     meta:
       order: 0
-    usecase: TRANSIT INSURANCE
+      type: PREREQUISITE
+      prerequisite_kind: mandatory
+      display:
+        actions:
+          search_insurence_transit_provider: Search for Transit Insurance providers and master policies
+          on_search_insurence_provider_transit: Receive Transit Insurance master policy catalogue
+    usecase: Transit Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -348,8 +1442,13 @@ flows:
   - type: playground
     id: Discovery_of_Products_from_Master_Policies (Transit Insurance)
     meta:
-      order: 0
-    usecase: TRANSIT INSURANCE
+      order: 1
+      type: PRIMARY
+      display:
+        actions:
+          search_discover_product_transit: Share personal and insurance details for Transit Insurance offers
+          on_search_discover_product_tranist: Receive personalized Transit Insurance offers
+    usecase: Transit Insurance
     tags:
       - WORKBENCH
       - MANDATORY
@@ -360,8 +1459,31 @@ flows:
   - type: playground
     id: Purchase_Journey_Transit_Insurance
     meta:
-      order: 0
-    usecase: TRANSIT INSURANCE
+      order: 2
+      type: PRIMARY
+      secondary_flows:
+        - Purchase_Journey_Transit_Insurance_with_igm_1.0.0
+      display:
+        preferred: true
+        sections:
+          - name: Select Preferred Offer
+            actions:
+              search_purchase_journey_transit: Search for Transit Insurance offers
+              on_search_purchase_journey_transit: Receive Transit Insurance offer catalogue
+              select: Select a Transit Insurance offer
+              on_select: Receive the selected Transit Insurance offer quote
+          - name: Insurance Plan Booking Initialization
+            actions:
+              init: Initialize the Transit Insurance plan booking
+              on_init: Receive the initialized Transit Insurance order
+          - name: Insurance Plan Booking Confirmation
+            actions:
+              confirm: Confirm the Transit Insurance plan booking
+              on_confirm: Receive the confirmed Transit Insurance order
+          - name: Policy Document Sharing
+            actions:
+              on_update: Receive the shared Transit Insurance policy document
+    usecase: Transit Insurance
     tags:
       - PRAMAAN
       - MANDATORY
@@ -370,3 +1492,44 @@ flows:
     description: Purchase Journey Transit Insurance
     config:
       $ref: ./TRANSIT INSURANCE/Purchase_Journey_Transit_Insurance.yaml
+
+  # __________IGM 1.0.0 on Transit Insurance____________      
+  - type: playground
+    id: Purchase_Journey_Transit_Insurance_with_igm_1.0.0
+    meta:
+      order: 4
+      type: SECONDARY
+      hide_actions:
+        - search_purchase_journey_transit
+        - on_search_purchase_journey_transit
+        - select
+        - on_select
+        - init
+        - on_init
+        - confirm
+        - on_confirm
+        - on_update
+      visible_actions:
+        - issue_open_100
+        - on_issue_processing_100
+        - issue_status_processing_100
+        - on_issue_status_processing_100
+        - on_issue_resolved_100
+        - issue_close_100
+      display:
+        actions:
+          issue_open_100: Raise a grievance on the Transit Insurance order
+          on_issue_processing_100: Receive grievance acknowledgement and resolution actions
+          issue_status_processing_100: Request the grievance status
+          on_issue_status_processing_100: Receive the grievance status update
+          on_issue_resolved_100: Receive grievance resolution confirmation
+          issue_close_100: Close the resolved grievance
+    usecase: Transit Insurance
+    tags:
+      # - PRAMAAN
+      - MANDATORY
+      # - REPORTABLE
+      - WORKBENCH
+    description: Discovery of Transit insurance with IGM 1.0.0.
+    config:
+      $ref: ./TRANSIT INSURANCE/Purchase_Journey_Transit_Insurance_with_igm_1.0.0.yaml
