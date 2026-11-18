@@ -887,15 +887,6 @@ message:
 
 ---
 
-### 13. Issue Grievance Management (IGM 2.0.0)
-
-For disputes regarding denied check-in, room cleanliness, amenities misrepresentation, or refund processing:
-- **`POST /issue`**: The Buyer App logs a grievance ticket specifying complainant details, issue category (`FULFILLMENT`, `PAYMENT`), and description.
-- **`POST /on_issue`**: The Hotel Seller App returns a grievance tracking ID and contact details of its Grievance Redressal Officer (GRO).
-- **`POST /issue_status` & `POST /on_issue_status`**: Tracks dispute resolution progress and corrective actions.
-
----
-
 ## Domain Specific Tags & Data Models
 
 ### 1. The Inclusions & Exclusions Taxonomy
