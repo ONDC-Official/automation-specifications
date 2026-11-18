@@ -887,7 +887,7 @@ message:
 
 ---
 
-### 13. Integrated Grievance Mechanism (IGM 2.0.0)
+### 13. Issue Grievance Management (IGM 2.0.0)
 
 For disputes regarding denied check-in, room cleanliness, amenities misrepresentation, or refund processing:
 - **`POST /issue`**: The Buyer App logs a grievance ticket specifying complainant details, issue category (`FULFILLMENT`, `PAYMENT`), and description.
