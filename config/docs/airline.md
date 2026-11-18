@@ -32,7 +32,7 @@ This domain serves the **intercity public transport sector**, covering long-dist
 - **Code-Based Discovery**: Operators use standardized codes (airline IATA codes, bus station codes) to tag inventory; consumers and platforms use these to search efficiently.
 - **Ticket Inventory Management**: Whether booking one seat or ten, the system tracks availability, holds, and fulfillment per transaction—critical for managing overbooking and real-time availability.
 - **Cancellation Workflows**: Both parties (buyer and seller) can initiate cancellations with different rules and refund implications; the domain specifies how these are processed.
-- **Service Quality and Dispute Resolution**: Post-booking ratings and IGM (Integrated Grievance Mechanism) enable feedback loops and fair dispute handling across the network.
+- **Service Quality and Dispute Resolution**: Post-booking ratings and IGM (Issue Grievance Management) enable feedback loops and fair dispute handling across the network.
 
 ## Example Scenario
 
@@ -597,29 +597,6 @@ sequenceDiagram
 - **`POST /track` & `/on_track`**: Provides real-time flight telemetry or live radar tracking URLs.
 - **`POST /rating` & `/on_rating`**: Captures passenger feedback ratings (1–5 stars) on seat cleanliness, punctuality, and cabin crew service.
 - **`POST /support` & `/on_support`**: Delivers airline 24x7 escalation contact numbers, support email addresses, and instant chat links.
-
----
-
-### 12. Integrated Grievance Mechanism (IGM 2.0.0)
-
-For passenger complaints, baggage loss, or refund disputes, `ONDC:TRV12` implements the IGM 2.0.0 protocol:
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant BAP as Buyer App (BAP)
-    participant BPP as Seller App (BPP)
-    
-    BAP->>BPP: POST /issue (Ticket dispute, complainant details, issue category)
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_issue (Grievance ticket ID, Grievance Redressal Officer contact)
-    BAP-->>BPP: 200 OK ACK
-
-    opt Status Tracking
-        BAP->>BPP: POST /issue_status (Query resolution progress)
-        BPP->>BAP: POST /on_issue_status (Respondent action, resolution terms)
-    end
-```
 
 ---
 

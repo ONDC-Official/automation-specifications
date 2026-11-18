@@ -423,7 +423,7 @@ sequenceDiagram
 
 ---
 
-### 3.3 Integrated Grievance Mechanism (IGM 2.0.0)
+### 3.3 Issue Grievance Management (IGM 2.0.0)
 
 ```mermaid
 sequenceDiagram
@@ -1332,15 +1332,6 @@ message:
 ```
 
 The BPP acknowledges the rating via synchronous HTTP 200 `ACK` and confirms feedback recording via `POST /on_rating`.
-
----
-
-### 4.13 Integrated Grievance Mechanism (IGM 2.0.0)
-
-For passenger complaints, lost baggage, boarding refusal, or refund disputes:
-- **`POST /issue`**: The Buyer App files a formal grievance ticket containing complainant contact info, issue category (`FULFILLMENT`, `PAYMENT`), and description.
-- **`POST /on_issue`**: The Seller App returns a grievance ticket ID, SLA resolution time, and the contact details of its designated Grievance Redressal Officer (GRO).
-- **`POST /issue_status` & `POST /on_issue_status`**: Tracks dispute resolution progress and refund processing.
 
 ---
 
