@@ -5893,7 +5893,35 @@ steps:
           timestamp: 2026-02-27T06:38:36.957Z
           transaction_id: 6954fcaf-e90a-464e-bb88-93b4e4886200
         message:
+          update_target:
+            - path: issue.actions
+              action: APPENDED
           issue:
+            id: ISSUE-1
+            status: RESOLVED
+            level: ISSUE
+            created_at: 2023-01-15T10:00:00.469Z
+            updated_at: 2023-01-15T10:00:00.469Z
+            expected_response_time:
+              duration: PT2H
+            expected_resolution_time:
+              duration: P1D
+            refs:
+              - ref_id: O1
+                ref_type: ORDER
+              - ref_id: P1
+                ref_type: PROVIDER
+              - ref_id: F1
+                ref_type: FULFILLMENT
+              - ref_id: I1
+                ref_type: ITEM
+                tags:
+                  - descriptor:
+                      code: message.order.items
+                    list:
+                      - descriptor:
+                          code: quantity.selected.count
+                        value: "2"
             actors:
               - id: CUST1
                 type: CONSUMER
