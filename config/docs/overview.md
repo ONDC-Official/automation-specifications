@@ -1,155 +1,525 @@
 # Logistics (P2H2P)
 
----
-
-## Overview
-
-Point-to-Hub-to-Point (P2H2P) logistics covers shipments that are picked up, routed through one or more hubs, and then delivered. It is the typical model for intercity, courier and B2B shipments, where a package travels over a network of sorting hubs before the last mile.
-
-A seller app that needs a shipment moved searches the network, compares the services and prices that Logistics Service Providers offer, and books one. The provider issues an AWB number and shipping label, picks up the package, moves it through its hub network, and keeps the seller app updated until delivery. ONDC lets seller apps and logistics providers work through one common, open protocol instead of building a separate integration with each other.
+> Point-to-hub-to-point (intercity) delivery on ONDC, domain `ONDC:LOG11`, as defined in the **ONDC API Contract for Logistics, v1.2.5**.
 
 ---
 
-## Participants
+## 1. Overview
 
-| Participant | What This Means |
-|---|---|
-| **Logistics Buyer (LBNP)** | The buyer application on the logistics network, usually a retail or B2B seller app that needs a shipment delivered. It searches for logistics services, books one, shares shipment readiness, and tracks the order. Acts as the BAP. |
-| **Logistics Service Provider (LSP)** | A courier or logistics provider (or its seller application) offering hub-based delivery on the network. It quotes prices and delivery terms, issues the AWB number and shipping label, moves the shipment through its hubs, and sends status updates. Acts as the BPP. |
-| **End customer** | The person or business receiving the shipment. They don't talk to the network directly, but delivery details, delivery attempts and proof of delivery all relate to them. |
+In a **point-to-hub-to-point (P2H2P)** shipment, the package doesn't go straight from the seller to the buyer. It is picked up, taken to the LSP's source hub, moved through its network to a destination hub, and then delivered. This is the model for intercity and courier shipments, which usually take a day or more.
 
----
+```mermaid
+flowchart LR
+    PK["<b>Pickup location</b><br/><small>the merchant</small>"]:::bpp
+    SH["<b>Source hub</b><br/><small>In-transit</small>"]:::hub
+    DH["<b>Destination hub</b><br/><small>At-destination-hub</small>"]:::hub
+    DL["<b>Delivery location</b><br/><small>the customer</small>"]:::bap
+    PK -- "picked up" --> SH -- "between hubs" --> DH -- "out for delivery" --> DL
+    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
+    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
+    classDef hub fill:#64748b1a,stroke:#64748b,stroke-width:1.5px
+```
 
-## How P2H2P Differs from P2P
+Because the package is sorted and handled at hubs, it needs suitable packaging and an **AWB number** to identify it along the way. Both are part of every P2H2P order.
 
-- **Routing through hubs**: the shipment moves from the pickup location to an origin hub, through the provider's network to a destination hub, and then to the delivery location.
-- **AWB number and shipping label**: the LSP shares an AWB (air waybill) number and a shipping label for the package from `/on_confirm` onwards. The Logistics Buyer prints the label and attaches it to the package before pickup.
-- **Longer, multi-day timelines**: categories such as Express Delivery and Standard Delivery are common. Hub-related states such as `In-transit`, `At-destination-hub` and `Out-for-delivery` appear in the journey.
-- **Failed delivery handling**: P2H2P adds flows for delivery attempts, non-delivery reports (NDR), weight differential and reverse quality check.
+A logistics order always sits behind a retail order. When a customer buys from a seller on ONDC, the seller's app has to get the goods delivered. To do that, it becomes a **buyer on the logistics network** and books a shipment from a **Logistics Service Provider (LSP)**. It shares the retail order's details with the LSP as the *linked order*.
 
----
+```mermaid
+flowchart LR
+    subgraph RET["Retail order"]
+        direction TB
+        RB["<b>Retail buyer app</b><br/><small>the customer places an order</small>"]:::bap
+        RS["<b>Retail seller app</b><br/><small>sells the goods</small>"]:::bpp
+        RB -- "order" --> RS
+    end
+    subgraph LOG["Logistics order · ONDC:LOG11"]
+        direction TB
+        LB["<b>Logistics buyer (LBNP)</b><br/><small>BAP · books the shipment</small>"]:::bap
+        LSP["<b>Logistics provider (LSP)</b><br/><small>BPP · moves it through its hubs</small>"]:::bpp
+        LB -- "logistics order<br/>+ linked retail order" --> LSP
+    end
+    RS == "same app,<br/>now the buyer" ==> LB
+    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
+    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
+```
 
-## The User Journey
+The retail seller app sells on the retail network and buys on the logistics network. In the logistics transaction it is the BAP, and the LSP is the BPP.
 
-The P2H2P journey runs from discovering a delivery service, through booking and hub transit, to the final delivery. It has the following stages:
+**Why a separate domain:** since version 1.2.5, P2H2P shipments use their own domain code, `ONDC:LOG11`. This lets the Gateway send a P2H2P search only to P2H2P providers. Direct, hyperlocal shipments use `ONDC:LOG10`.
 
-### 1. Service Discovery
+**Version:** 1.2.5 builds on 1.2.0, and most APIs are backward compatible. The one exception is the updated RTO flow, described in [Return to Origin](#9-return-to-origin-rto). Because of it, the two versions run side by side.
 
-The Logistics Buyer searches for providers that can deliver between the pickup and delivery locations, often in different cities.
+### Participants
 
-**Network interaction:**
-
-- **`/search`**: The LBNP sends the pickup and delivery locations, the package details (such as weight and dimensions), and the requested category.
-- **`/on_search`**: Each LSP returns its catalogue: the delivery categories it serves, the price of each option, the expected turnaround time, and the features it supports.
-
-### 2. Order Initialization
-
-**Network interaction:**
-
-- **`/init`**: The LBNP sends the chosen item, the pickup and delivery fulfillment details, billing information and the payment method.
-- **`/on_init`**: The LSP returns the final quote, the fulfillment route, the payment terms and the cancellation terms for the order.
-
-### 3. Order Confirmation
-
-**Network interaction:**
-
-- **`/confirm`**: The LBNP confirms the order.
-- **`/on_confirm`**: The LSP accepts the order and returns the finalised order with the AWB number and shipping label. The fulfillment state is now **`Pending`**.
-
-### 4. Ready to Ship
-
-Once the package is packed and labelled, the Logistics Buyer tells the LSP.
-
-**Network interaction:**
-
-- **`/update`**: The LBNP marks the shipment as ready to ship.
-- **`/on_update`**: The LSP acknowledges it and arranges pickup. The fulfillment state becomes **`Searching-for-Agent`**.
-
-### 5. Pickup, Hub Transit and Delivery
-
-The LSP sends unsolicited status updates as the shipment moves through its network.
-
-**Network interaction:**
-
-- **`/on_status`**: Pickup progress: **`Agent-assigned`**, **`At-pickup`**, **`Order-picked-up`**.
-- **`/on_status`**: Hub transit: **`In-transit`** between hubs, then **`At-destination-hub`**.
-- **`/track`** and **`/on_track`**: The LBNP can request tracking information for the shipment at any point.
-- **`/on_status`**: Last mile: **`Out-for-delivery`**, **`At-delivery`**, and finally **`Order-delivered`**.
-
-The full list of fulfillment states in the spec also includes `Out-for-pickup`, `Pickup-failed`, `Pickup-rescheduled`, `Delivery-failed`, `Delivery-rescheduled` and `Cancelled`.
+| Participant | Role |
+| --- | --- |
+| **Logistics buyer (LBNP)** | The buyer app (BAP) on the logistics network, usually the seller app of the retail order. It searches for shipping options, books one, says when the package is ready to ship, and tracks the shipment. |
+| **Logistics Service Provider (LSP)** | The seller app (BPP) on the logistics network, typically a courier. It quotes prices and delivery times, provides the AWB number and shipping label, moves the package through its hubs, and reports progress until delivery. |
+| **Rider** | The LSP's agent for pickup and last-mile delivery. The rider doesn't call any API, but the states the LSP reports, such as `Out-for-pickup` and `Out-for-delivery`, follow the rider's progress. |
+| **End seller and end buyer** | The merchant who hands over the package and the customer who receives it. They confirm the handover with pickup and delivery codes, such as an OTP. |
 
 ---
 
-## Additional Scenarios
+## 2. Key Terms
 
-### 1. Order Cancellation
-
-- **By the buyer**: the LBNP sends **`/cancel`** with the order ID and a reason. The LSP confirms with **`/on_cancel`**, applying the agreed cancellation terms.
-- **By the provider**: the LSP sends an unsolicited **`/on_cancel`** with the reason and the updated order.
-- **B2B order cancellation** has its own flow.
-
-### 2. Failed Delivery Attempt and NDR
-
-When a pickup or delivery attempt fails, the LSP raises a non-delivery report (NDR) and the end customer's response decides what happens next.
-
-**Network interaction:**
-
-- **`/on_update`**: The LSP reports the failed attempt with a reason code, and any delay to the fulfillment.
-- **`/update`**: The LBNP passes on the end customer's response, for example a request to re-attempt delivery.
-- **`/on_update`**: The LSP acknowledges the response. It then either re-attempts delivery or moves to RTO.
-
-### 3. Return to Origin (RTO)
-
-When a delivery can't be completed, the shipment is returned to the pickup location.
-
-**Network interaction:**
-
-- **`/on_cancel`**: The LSP cancels the forward delivery and creates a linked **RTO** fulfillment in state **`RTO-Initiated`**.
-- **`/on_status`**: The LSP reports RTO progress until the package is **`RTO-Delivered`** back to the origin, or **`RTO-Disposed`**.
-
-### 4. Reverse Quality Check (Reverse QC)
-
-For failed deliveries where goods have to go back to the logistics hub, for example because the buyer is unavailable, the Reverse QC flow covers the return order and its status updates.
-
-### 5. Weight Differential
-
-When the actual weight of the shipment differs from the declared weight, the LSP charges the difference.
-
-**Network interaction:**
-
-- **`/on_update`**: The LSP reports the weight discrepancy and the differential charge.
-- **`/update`** and **`/on_update`**: The order and quote are updated with the adjusted charges.
-
-### 6. Other Supported Flows
-
-The spec also covers:
-
-- **B2B orders**
-- **Rate card**: `/search` and `/on_search` only, to fetch prices.
-- **Cash on delivery**
-- **Prepaid payment**: a wallet that the Logistics Buyer prepays.
-- **Electronic proof of delivery (e-POD)**
-- **E-way bill**
-- **Static OTP**: OTP verification at pickup, delivery and RTO.
-- **Call masking**
-- **SLA metrics**
-- **Codified static terms**
-- **Exchange of customer support details**
-- **Seller credentials**
-- **Reverse charge mechanism (RCM)**
-
-Each one has its own flow in the API Walkthrough.
+| Term | Meaning |
+| --- | --- |
+| **AWB number** | The air waybill number that identifies the shipment through the LSP's network. It is required for `ONDC:LOG11` and is 11 to 16 digits long. It can come from either side: the LBNP in `/confirm` or `/update`, or the LSP in `/on_confirm` or `/on_update`. |
+| **Shipping label** | The label the LSP provides to put on the package, as an image or a PDF. The LSP can send several labels in different page sizes. |
+| **Shipment type** | `flyer` (a soft packet) or `box`. It decides how the weight for pricing is worked out. See [Weight for pricing](#weight-for-pricing). |
+| **Ready to ship (RTS)** | The `ready_to_ship` tag says the package is packed and can be picked up. The LSP arranges pickup only after RTS. |
+| **S2D TAT** | Ship-to-delivery turnaround time: how long the LSP takes to deliver once it has the shipment. It is quoted per category, or per option, in `/on_search`. |
+| **Linked order** | The retail order being shipped: its ID, items, weight, dimensions, declared value and category. |
+| **NDR** | Non-delivery report: what happens after a failed delivery attempt. See [Failed Attempts and NDR](#6-failed-attempts-and-ndr). |
+| **RTO** | Return to origin: what happens to a package that can't be delivered. |
+| **Baseline and enhanced features** | Every participant must support the baseline features. Enhanced features are optional and have a feature ID, for example `00E` for the pickup and delivery attempt trail. See [Enhanced Features](#12-enhanced-features). |
 
 ---
 
-## Issue and Grievance Management
+## 3. Delivery Categories and Pricing
 
-Either side can raise an issue against an order, for example a delayed, damaged, lost or undelivered shipment. The resolution is handled through the IGM APIs.
+| Category | How the package travels |
+| --- | --- |
+| **Express Delivery** | By air. P2H2P only. |
+| **Standard Delivery** | By surface. Its sub-categories are Immediate, Same Day and Next Day Delivery. |
+
+- **A search for Express Delivery** returns every P2H2P option the LSP can offer.
+- **A search for Standard Delivery** returns every option the LSP can offer in that category, including its sub-categories.
+- **Rate card:** an LSP can also publish a rate card from pickup to delivery location by weight slab, with separate rates for Standard and Express, and for forward and return shipments (feature `004`).
+
+### Weight for Pricing
+
+For P2H2P, the LSP prices a shipment on its dead weight or its volumetric weight (its size), depending on the shipment type.
+
+```mermaid
+flowchart TB
+    T{"Shipment type"}
+    T -- "flyer" --> F{"Dead weight<br/>under 1 kg?"}
+    F -- "yes" --> F1["Priced on the<br/><b>dead weight</b>"]:::ok
+    F -- "no" --> F2["Priced on the <b>higher of</b><br/>dead weight and volumetric weight"]:::warn
+    T -- "box" --> B1["Priced on the <b>higher of</b><br/>dead weight and volumetric weight"]:::warn
+    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
+    classDef warn fill:#f973161a,stroke:#f97316,stroke-width:1.5px
+```
+
+**Example:** a seller ships 500 g in a 22 × 20 × 18 cm box. The volumetric weight is 22 × 20 × 18 / 5000 ≈ 1.58 kg. That is higher than the dead weight, so the shipment is priced on the volumetric weight. A large box takes up space and handling in the LSP's network even when it is light.
+
+---
+
+## 4. The Order Journey
+
+### Journey at a Glance
+
+```mermaid
+flowchart LR
+    subgraph S1["1 · Discover"]
+        direction TB
+        A1["search"] --> A2["on_search"]
+    end
+    subgraph S2["2 · Book"]
+        direction TB
+        B1["init → on_init"] --> B2["confirm → on_confirm"]
+    end
+    subgraph S3["3 · Ready to ship"]
+        direction TB
+        C1["update → on_update<br/><small>AWB, shipping label</small>"]
+    end
+    subgraph S4["4 · Pickup"]
+        direction TB
+        D1["on_status<br/><small>Agent-assigned,<br/>Out-for-pickup,<br/>Order-picked-up</small>"]
+    end
+    subgraph S5["5 · Hubs"]
+        direction TB
+        E1["on_status<br/><small>In-transit,<br/>At-destination-hub</small>"]
+    end
+    subgraph S6["6 · Deliver"]
+        direction TB
+        F1["track → on_track"] --> F2["on_status<br/><small>Out-for-delivery,<br/>Order-delivered</small>"]
+    end
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    class A1,B1,B2,C1,F1 bap
+    class A2,D1,E1,F2 bpp
+    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
+    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
+```
+
+Blue boxes are calls the LBNP starts, and green boxes are callbacks or updates from the LSP.
+
+### The Complete Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant LB as LBNP<br/>(logistics buyer · BAP)
+    participant GW as Gateway
+    participant LSP as LSP<br/>(logistics provider · BPP)
+    Note over LB,LSP: Discover
+    LB->>GW: search (pickup, drop, category, package)
+    GW->>LSP: search (sent only to P2H2P providers)
+    LSP-->>LB: on_search (options, prices, S2D TAT, RTO price)
+    Note over LB,LSP: Book
+    LB->>LSP: init (chosen option, addresses, billing, payment)
+    LSP-->>LB: on_init (final quote, payment and cancellation terms)
+    LB->>LSP: confirm (order Created, linked order, shipment type)
+    LSP-->>LB: on_confirm (order Accepted, fulfillment Pending)
+    Note over LB,LSP: Ready to ship
+    LB->>LSP: update (ready_to_ship = yes)
+    LSP-->>LB: on_update (Searching-for-Agent, AWB, shipping label)
+    Note over LB,LSP: Pickup
+    LSP-->>LB: on_status (Agent-assigned)
+    LSP-->>LB: on_status (Out-for-pickup)
+    LSP-->>LB: on_status (Order-picked-up)
+    Note over LB,LSP: Hubs
+    LSP-->>LB: on_status (In-transit, at the source hub)
+    LSP-->>LB: on_status (At-destination-hub)
+    LB->>LSP: track
+    LSP-->>LB: on_track (tracking URL)
+    Note over LB,LSP: Deliver
+    LSP-->>LB: on_status (Out-for-delivery)
+    LSP-->>LB: on_status (Order-delivered, order Completed)
+```
+
+The **ORDER FLOW BASE LINE** flow in the API Walkthrough follows this sequence.
+
+### Stage 1: Discover
+
+The LBNP asks which providers can ship between two points, and at what price.
+
+**Network interaction:**
+
+- **`/search`**: The LBNP sends the pickup and drop locations (GPS coordinates and area code), the category, the package's weight, dimensions and declared value, and the payment type. The Gateway sends the search only to P2H2P providers.
+- **`/on_search`**: Each LSP checks whether it can serve the route. If it can, it returns its catalog. The catalog lists each shipping option with a tax-inclusive price and the S2D TAT. Each option comes with a linked RTO price, so the LBNP knows the return cost up front. If the shipment must be dropped off at the LSP's location, the catalog gives that location. An LSP that can't serve the route doesn't respond.
+
+### Stage 2: Book
+
+The LBNP picks an option, gets the final quote, and places the order.
+
+**Network interaction:**
+
+- **`/init`**: The LBNP sends the chosen option, the full pickup and drop addresses and contacts, its billing details, including its GST number, and the payment type. The LSP checks serviceability again and returns an error if it can't serve the locations.
+- **`/on_init`**: The LSP returns the itemised quote: the delivery charge and tax, whose total must equal the sum of the line items. The quote also gives how long it is valid, along with the payment terms and cancellation terms. The price must match `/on_search` and can't change until the order is confirmed.
+- **`/confirm`**: The LBNP creates the order in state **`Created`**, with an order ID that is unique across the network. It sends:
+  - the linked retail order;
+  - the shipment type, weight and dimensions, which are mandatory for intercity shipments;
+  - the pickup and delivery codes and the `ready_to_ship` status;
+  - whether a failed delivery should return to the pickup location;
+  - its acceptance of the LSP's terms.
+
+  If the weight or dimensions differ from the search, the LSP can reply with **NACK 60011**. The LSP creates the shipment manifest.
+- **`/on_confirm`**: The LSP returns the same order ID in state **`Accepted`**, with the fulfillment in **`Pending`**, and confirms the S2D TAT. For an inter-state shipment, it also gives the e-way bill number, where one applies.
+
+The payment type is one of `ON-ORDER` (prepaid, typically from a wallet), `ON-FULFILLMENT` (cash on delivery) or `POST-FULFILLMENT` (billed after delivery).
+
+#### Confirming an Order Safely
+
+The contract sets rules so that neither side keeps an order the other side doesn't have. `/confirm` and `/on_confirm` must be idempotent: sending the same call again must not create a second order.
+
+```mermaid
+flowchart TB
+    C["LBNP sends <b>/confirm</b>"]:::bap --> V{"LSP validates<br/>the order"}
+    V -- "valid" --> A1["ACK<br/><small>LSP creates the order</small>"]:::ok
+    V -- "invalid" --> N1["NACK 66002<br/><small>LBNP cancels with reason 996</small>"]:::bad
+    V -- "no response, or 66001" --> R1["LBNP retries /confirm<br/><small>then cancels with reason 996</small>"]:::warn
+    A1 --> OC["LSP sends <b>/on_confirm</b>"]:::bpp --> V2{"LBNP validates<br/>the order"}
+    V2 -- "valid" --> A2["ACK<br/><small>the order is live</small>"]:::ok
+    V2 -- "invalid" --> N2["NACK 63002<br/><small>LSP cancels with reason 997</small>"]:::bad
+    V2 -- "no response, or 63001" --> R2["LSP retries /on_confirm<br/><small>then cancels with reason 997</small>"]:::warn
+    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
+    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
+    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
+    classDef bad fill:#ef44441a,stroke:#ef4444,stroke-width:1.5px
+    classDef warn fill:#f973161a,stroke:#f97316,stroke-width:1.5px
+```
+
+### Stage 3: Ready to Ship
+
+The LSP arranges pickup only once the package is packed. The LBNP can say the package is ready in `/confirm`, or later with `/update`.
+
+**Network interaction:**
+
+- **`/update`**: The LBNP sets `ready_to_ship` to `yes` and sends the pickup code, and the AWB number if it generates one.
+- **`/on_update`**: The LSP moves the order to **`In-progress`** and the fulfillment to **`Searching-for-Agent`**. It returns the pickup time slot, the AWB number if it generates one, and the shipping labels for the package.
+
+If the package was already ready at `/confirm`, the LSP sends the pickup slot and the shipping labels in `/on_confirm` instead.
+
+### Stage 4: Pickup
+
+The LSP sends unsolicited `/on_status` updates as pickup progresses.
+
+**Network interaction:**
+
+- **`/on_status`**: **`Agent-assigned`**, when a rider is assigned.
+- **`/on_status`**: **`Out-for-pickup`**, when the rider sets out for the pickup location.
+- **`/on_status`**: **`Order-picked-up`**, once the rider has the package and the pickup code is verified.
+
+If a pickup attempt fails, the LSP reports **`Pickup-failed`** with a reason code, and then **`Pickup-rescheduled`** with the new pickup slot. See [Failed Attempts and NDR](#6-failed-attempts-and-ndr).
+
+### Stage 5: Hubs
+
+**Network interaction:**
+
+- **`/on_status`**: **`In-transit`**, when the package reaches the source hub and starts moving through the LSP's network.
+- **`/on_status`**: **`At-destination-hub`**, when the package reaches the hub that serves the delivery location.
+- **`/track`** and **`/on_track`**: The LBNP asks where the shipment is. For P2H2P, the LSP returns a tracking URL rather than live GPS coordinates. If tracking isn't enabled for the order yet, the LSP can reply with **NACK 60012**.
+
+### Stage 6: Deliver
+
+**Network interaction:**
+
+- **`/on_status`**: **`Out-for-delivery`**, when the rider sets out for the delivery location.
+- **`/on_status`**: **`Order-delivered`**, after the handover, and after the delivery code check if one was set. The order is now **`Completed`**.
+
+If a delivery attempt fails, the LSP reports **`Delivery-failed`**, and the NDR process decides what happens next.
+
+---
+
+## 5. Order and Fulfillment States
+
+Each `/on_confirm`, `/on_update`, `/on_status` and `/on_cancel` carries two states: the **order** state and the **fulfillment** state. In the diagram, each box around a group of fulfillment states shows the order state at that point. Dotted lines show a failed attempt.
+
+```mermaid
+flowchart TB
+    subgraph O1["Order: Created → Accepted"]
+        P["Pending"]
+    end
+    subgraph O2["Order: In-progress"]
+        S["Searching-for-Agent"] --> A["Agent-assigned"] --> OP["Out-for-pickup"] --> PU["Order-picked-up"] --> IT["In-transit"] --> DH["At-destination-hub"] --> OD["Out-for-delivery"]
+        OP -.-> PF["Pickup-failed"]:::bad -.-> PR["Pickup-rescheduled"]:::warn -. "next attempt" .-> PU
+        OD -.-> DF["Delivery-failed"]:::bad -.-> DR["Delivery-rescheduled"]:::warn
+    end
+    subgraph O3["Order: Completed"]
+        D["Order-delivered"]:::ok
+    end
+    P -- "ready to ship" --> S
+    OD -- "handed over" --> D
+    DR -. "next attempt" .-> D
+    DF -. "buyer declines" .-> R["<b>RTO</b><br/><small>see Return to Origin</small>"]:::rto
+    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
+    classDef bad fill:#ef44441a,stroke:#ef4444,stroke-width:1.5px
+    classDef warn fill:#f973161a,stroke:#f97316,stroke-width:1.5px
+    classDef rto fill:#f973161a,stroke:#f97316,stroke-width:1.5px
+```
+
+When an order is cancelled, both the order and the fulfillment move to `Cancelled`. See [Cancellation](#8-cancellation).
+
+| Fulfillment state | When the LSP sets it | Order state |
+| --- | --- | --- |
+| `Pending` | The default, from `/on_confirm` | `Created` or `Accepted` |
+| `Searching-for-Agent` | After the package is ready to ship | `In-progress` |
+| `Agent-assigned` | A rider is assigned | `In-progress` |
+| `Out-for-pickup` | The rider is on the way to the pickup | `In-progress` |
+| `Pickup-failed` | A pickup was attempted but failed | `In-progress` |
+| `Pickup-rescheduled` | The pickup is rescheduled | `In-progress` |
+| `Order-picked-up` | The rider picks up the package | `In-progress` |
+| `In-transit` | The package is at the source hub | `In-progress` |
+| `At-destination-hub` | The package is at the destination hub | `In-progress` |
+| `Out-for-delivery` | The rider is on the way to the delivery | `In-progress` |
+| `Delivery-failed` | A delivery was attempted but failed | `In-progress` |
+| `Delivery-rescheduled` | The delivery is rescheduled | `In-progress` |
+| `Order-delivered` | The package is delivered | `Completed` |
+| `Cancelled` | The order is cancelled | `Cancelled` |
+
+**Who sets the order state:** the LBNP creates the order as `Created` in `/confirm`, and the LSP returns it as `Accepted` in `/on_confirm`. The LSP never holds an order in `Created`.
+
+---
+
+## 6. Failed Attempts and NDR
+
+Feature `00E`, the pickup and delivery attempt trail, records every failed attempt for intercity orders. A failed delivery starts a **non-delivery report (NDR)**: someone asks the buyer what to do, and the answer decides whether the LSP tries again or returns the package.
+
+Who talks to the end buyer is agreed up front. The LBNP proposes the owner, itself or the LSP, in `/init`, and the LSP confirms it in `/on_init`.
+
+```mermaid
+sequenceDiagram
+    participant LB as LBNP<br/>(logistics buyer · BAP)
+    participant LSP as LSP<br/>(logistics provider · BPP)
+    actor EB as End buyer
+    LSP-->>LB: on_status (Delivery-failed)
+    LSP-->>LB: on_update (attempt made, delay reason code)
+    alt The LBNP owns buyer communication
+        LB->>EB: asks what to do (WhatsApp, IVR, SMS)
+        alt The buyer wants another attempt (BPR)
+            LB->>LSP: update (BPR, optional reattempt date)
+            LSP-->>LB: on_update (acknowledged)
+            LSP-->>LB: on_status (Delivery-rescheduled)
+            LSP-->>LB: on_status (Order-delivered)
+        else The buyer declines (BNR)
+            LB->>LSP: update (BNR)
+            LSP-->>LB: on_cancel (RTO starts)
+        end
+    else The LSP owns buyer communication
+        Note over LSP,EB: The LSP contacts the buyer outside the network<br/>and reattempts under its own process
+    end
+```
+
+- **BPR and BNR:** the buyer's positive response and the buyer's negative response.
+- **Pickup failures** work the same way: the LSP reports the failed attempt with a reason code and updates the pickup slot.
+- The attempt details can arrive in `/on_update` or in `/on_status`.
+
+See **PICKUP DELIVERY ATTEMPT** in the API Walkthrough.
+
+---
+
+## 7. Weight Differential
+
+The LSP may find at a hub that the package is heavier or bigger than declared. Under feature `021`, it charges the difference with an unsolicited update.
+
+```mermaid
+sequenceDiagram
+    participant LB as LBNP<br/>(logistics buyer · BAP)
+    participant LSP as LSP<br/>(logistics provider · BPP)
+    LSP-->>LB: on_update (extra charge and its tax, actual weight and size, proof images)
+    alt The LBNP accepts
+        LB-->>LSP: ACK
+        Note over LB,LSP: The extra charge is added to the shipment's cost
+    else The LBNP disagrees
+        LB-->>LSP: NACK 62504
+        Note over LB,LSP: The LSP reverts the quote, weight and size, and the agreed terms apply
+    end
+```
+
+- The update can also come in `/on_status`. If the difference changes the RTO charge, the LSP sends it in `/on_cancel`.
+- Once accepted, the extra charge can also affect cancellation fees if the order is cancelled later.
+
+See **WEIGHT DIFFERENTIAL FLOW** in the API Walkthrough.
+
+---
+
+## 8. Cancellation
+
+Either side can cancel an order. The LBNP asks with `/cancel`, and the LSP cancels on its own with an unsolicited `/on_cancel`.
+
+```mermaid
+sequenceDiagram
+    participant LB as LBNP<br/>(logistics buyer · BAP)
+    participant LSP as LSP<br/>(logistics provider · BPP)
+    alt The LBNP cancels
+        LB->>LSP: cancel (order ID, cancellation reason)
+        LSP-->>LB: on_cancel (order Cancelled, final quote)
+    else The LSP cancels
+        LSP-->>LB: on_cancel, unsolicited (order Cancelled, reason)
+    end
+```
+
+- If the reason code isn't valid, the LSP can reply with **NACK 60009**.
+- If the LBNP cancels for a missed delivery time (reason **175**) but the LSP hasn't missed it, the LSP can reply with **NACK 60010**.
+- `/on_cancel` records the fulfillment's state just before the cancellation (`precancel_state`). Its quote shows the final amount, including any cancellation fee.
+
+See **BUYER SIDE ORDER CANCELLATION**, **SELLER SIDE ORDER CANCELLATION** and, for fees by fulfillment state, **CANCELLATION TERMS FLOW** (feature `01A`).
+
+---
+
+## 9. Return to Origin (RTO)
+
+If the package can't be delivered, for example because the buyer declines it after a failed attempt, the LSP starts an RTO. It sends an unsolicited `/on_cancel` with an RTO reason code.
+
+```mermaid
+flowchart TB
+    T["<b>/on_cancel</b> from the LSP<br/><small>RTO reason code · the quote now includes the RTO charge</small>"]:::bpp
+    T --> F["<b>Delivery</b> fulfillment<br/><small>ends in state RTO</small>"]:::muted
+    T --> R1["<b>RTO</b> fulfillment, newly created<br/><small>RTO-Initiated</small>"]:::rto
+    R1 -- "without return (baseline)" --> R2["<b>RTO-Disposed</b>"]:::rto
+    R1 -- "with return (feature 022)" --> R3["<b>RTO-Delivered</b><br/><small>back at the pickup location</small>"]:::rto
+    R2 --> C["Order: <b>Completed</b>"]:::ok
+    R3 --> C
+    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
+    classDef muted fill:#64748b1a,stroke:#64748b,stroke-width:1.5px
+    classDef rto fill:#f973161a,stroke:#f97316,stroke-width:1.5px
+    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
+```
+
+- **Two fulfillments:** the LSP creates a separate fulfillment of type `RTO`, linked to the delivery fulfillment through the `rto_event` tag. The delivery fulfillment ends in state `RTO`, and the RTO fulfillment starts at `RTO-Initiated`.
+- **Order state:** stays as it was (`In-progress`) until the RTO fulfillment reaches `RTO-Disposed` or `RTO-Delivered`. Then the order is `Completed`.
+- **Quote:** the RTO charge, the RTO price quoted in `/on_search`, is added to the order's quote. A weight differential can change it too.
+- **With or without return:** by default the package is not brought back (`RTO-Disposed`). An LSP that supports **RTO with return** (feature `022`) brings it back to the pickup location (`RTO-Delivered`). The LBNP marks which fulfillments should come back with `return_to_origin` in `/confirm`.
+- **Accepting the request:** the LBNP must accept a valid RTO request. Under feature `022`, if the RTO charge differs from the `/on_search` quote, the LBNP can reply with **NACK 62503**, and the LSP must resend the request with the correct charge.
+- **E-way bill:** for an RTO fulfillment, the LSP creates a new e-way bill number (feature `019`).
+- **Retail order:** when the delivery was booked over ONDC (on-network logistics), the RTO also leads to an `/on_cancel` on the linked retail order.
+
+See **RTO FLOW** and, for verifying the return with an OTP, **STATIC OTP RTO DELIVERY** (feature `00A`).
+
+---
+
+## 10. Reverse QC
+
+When the LSP picks up a returned item, a fulfillment of type `Return`, the rider can check its condition first. This is feature `01B`.
+
+```mermaid
+flowchart LR
+    C["<b>/confirm</b><br/><small>the LBNP sends a checklist:<br/>product details and questions</small>"]:::bap --> I["Rider inspects<br/>the item at pickup"]
+    I -- "passes" --> P["<b>/on_status</b> Order-picked-up<br/><small>with the rider's answers</small>"]:::ok
+    I -- "fails" --> F["<b>/on_status</b> Pickup-failed<br/><small>with the rider's answers</small>"]:::bad
+    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
+    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
+    classDef bad fill:#ef44441a,stroke:#ef4444,stroke-width:1.5px
+```
+
+The checklist is the LBNP's quality-check procedure, sent in a fixed, coded format, so the rider's answers can be matched to its questions. See **REVERSE QC** in the API Walkthrough.
+
+---
+
+## 11. Changing an Order
+
+The LBNP uses `/update`, and the LSP replies with `/on_update`, to:
+
+- say the package is ready to ship, and share the AWB number if the LBNP generates it;
+- change the delivery instructions;
+- change the linked retail order, for example when part of the retail order is cancelled or returned and the weight or items change;
+- change how pickup or delivery is verified;
+- pass on the buyer's response after a failed delivery attempt (see [Failed Attempts and NDR](#6-failed-attempts-and-ndr)).
+
+---
+
+## 12. Enhanced Features
+
+Enhanced features are optional, so each side tells the other which ones it supports. This is called **feature discovery**.
+
+```mermaid
+sequenceDiagram
+    participant LB as LBNP<br/>(logistics buyer · BAP)
+    participant LSP as LSP<br/>(logistics provider · BPP)
+    LB->>LSP: search with lbnp_features (feature IDs the LBNP supports)
+    LSP-->>LB: on_search with lsp_features (feature IDs the LSP supports)
+    Note over LB: Keeps each LSP's list and uses only<br/>features both sides support
+    LB->>LSP: a call that uses a feature the LSP doesn't support
+    LSP-->>LB: NACK 61001
+```
+
+If the LSP sends an update that uses a feature the LBNP doesn't support, the LBNP can reply with **NACK 64001**. The **FEATURE DISCOVERY** flow shows the exchange.
+
+| Feature | What It Adds | Flow in the API Walkthrough |
+| --- | --- | --- |
+| `004` Rate card for P2H2P | A price list by weight slab, with separate Standard and Express rates and separate forward and return rates | RATE CARD (P2H2P) |
+| `008` Cash on delivery | The rider collects the order value. Payment terms for the logistics order and the retail order are kept separate. | CASH ON DELIVERY FLOW |
+| `009` Static OTP (pickup and delivery) | A fixed OTP, set by the LBNP, that the seller gives at pickup and the buyer gives at delivery | STATIC OTP PICKUP DELIVERY |
+| `00A` Static OTP (RTO) | A fixed OTP that the seller gives when an RTO package comes back | STATIC OTP RTO DELIVERY |
+| `00D` Payment wallet | Prepaid payment from a wallet the LSP keeps for the LBNP: blocked in `/on_init`, debited in `/on_confirm` | PREPAID PAYMENT FLOW |
+| `00E` Pickup and delivery attempt trail | Failed attempts, reason codes and the NDR process | PICKUP DELIVERY ATTEMPT |
+| `00F` ePOD | Electronic proof of pickup and delivery, such as a photo, the rider's GPS position or the recipient's name | E-POD |
+| `010` Call masking | Contact modes other than a phone number, such as IVR | Call-Masking |
+| `014` Seller credentials | Tags orders from specific sellers, for example women-owned or tribal-owned businesses | ORDER FLOW BASE LINE SELLER CREDS |
+| `019` E-way bill | Several e-way bills per order. The LBNP sends each item's HSN code and e-way bill exemption, and the seller's GSTIN. | E-WAY BILL |
+| `01A` Cancellation terms | Cancellation fees by fulfillment state and reason | CANCELLATION TERMS FLOW |
+| `01B` Reverse QC | A quality check on returned items at pickup | REVERSE QC |
+| `01C` SLA metrics | Service levels the LBNP defines, with penalties | ORDER FLOW BASE LINE SLA METRICS |
+| `01D` Special capabilities | What the LSP can handle, such as fragile or dangerous goods, cold storage, open-box delivery and cash on delivery | ORDER FLOW BASE LINE PUBLIC SPECIAL CAPABILITIES |
+| `01E` RCM self-declaration | The LSP's declaration for the GST reverse charge mechanism | ORDER FLOW RCM |
+| `01F` Codified static terms | The LSP's standard terms, published in `/on_search` | ORDER FLOW CODIFIED STATIC TERMS |
+| `020` Customer support details | Support contacts exchanged in `/confirm` and `/on_confirm` | ORDER FLOW EXCHANGE CUSTOMER SUPPORT DETAILS |
+| `021` Differential weight charges | Extra charges when the actual weight or size differs from the declared one | WEIGHT DIFFERENTIAL FLOW |
+
+The API Walkthrough also has **ORDER FLOW B2B** and **B2B ORDER CANCELLATION**, for business-to-business shipments.
+
+---
+
+## 13. Issue and Grievance Management
+
+Either side can raise an issue about an order, for example a delayed, damaged, lost or undelivered shipment. Issues are handled with the IGM APIs.
 
 **Network interaction:**
 
 - **`/issue`**: The LBNP raises an issue for an order, with its category, a description and the expected resolution time.
-- **`/on_issue`**: The LSP responds with the actions taken and a proposed resolution. It keeps sending updates until the issue is resolved.
-- **`/issue`**: The LBNP accepts or escalates the resolution, and closes the issue.
+- **`/on_issue`**: The LSP replies with the actions it has taken and a proposed resolution, and keeps sending updates until the issue is resolved.
+- **`/issue`**: The LBNP accepts the resolution or escalates it, and closes the issue.
 
-The spec includes flows for IGM v1.0.0 and v2.0.0. These cover issues that are resolved, rejected, or closed with no action.
+If an order is cancelled through an issue, the LSP can refer to the resolved issue in `/on_cancel` and in later updates. The API Walkthrough has flows for IGM v1.0.0 and v2.0.0, covering issues that are resolved, rejected or closed with no action.
