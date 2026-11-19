@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Station Code Based Flow
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)

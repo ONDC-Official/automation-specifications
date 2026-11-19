@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Purchase Journey Code Based Flow With IGM No Action v-2.0.0
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -64,13 +65,6 @@ sequenceDiagram
 
     rect rgb(253, 245, 255)
     Note over BAP,BPP: Phase 6: Integrated Grievance Management (IGM)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
     BAP->>BPP: POST /issue
     BPP-->>BAP: 200 OK (ACK)
     BPP->>BAP: POST /on_issue

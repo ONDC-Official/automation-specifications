@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Airlines - Seller App Pagination Flow
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)

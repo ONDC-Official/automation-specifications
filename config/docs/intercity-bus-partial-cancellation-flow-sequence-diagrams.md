@@ -1,10 +1,11 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Partial Cancellation Flow
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
     participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
+    participant BPP as Bus Operator (BPP)
 
     rect rgb(240, 248, 255)
     Note over BAP,BPP: Phase 1: Discovery & Route Search
@@ -15,13 +16,16 @@ sequenceDiagram
     BPP-->>BG: 200 OK (ACK)
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
+    BAP->>BG: POST /search
+    BG-->>BAP: 200 OK (ACK)
+    BG->>BPP: POST /search
+    BPP-->>BG: 200 OK (ACK)
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
+    BAP->>BG: POST /search
+    BG-->>BAP: 200 OK (ACK)
+    BG->>BPP: POST /search
+    BPP-->>BG: 200 OK (ACK)
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
     end
@@ -55,23 +59,15 @@ sequenceDiagram
     BAP->>User: Display confirmed booking and PNR/ticket pass
     end
 
-    rect rgb(245, 248, 255)
-    Note over BAP,BPP: Phase 5: Order Status Tracking
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
-
-    rect rgb(253, 245, 255)
-    Note over BAP,BPP: Phase 6: Integrated Grievance Management (IGM)
-    BAP->>BPP: POST /issue
+    rect rgb(255, 245, 245)
+    Note over BAP,BPP: Phase 5: Granular Partial Ticket Cancellation
+    BAP->>BPP: POST /update
     BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
+    BPP->>BAP: POST /on_update
     BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
+    BAP->>BPP: POST /update
     BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_update
+    BAP-->>BPP: 200 OK (ACK)
     end
 ```

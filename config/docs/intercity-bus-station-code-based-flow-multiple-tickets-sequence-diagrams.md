@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Station Code Based Flow Multiple Tickets
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -58,15 +59,14 @@ sequenceDiagram
     BAP->>User: Display confirmed booking and PNR/ticket pass
     end
 
-    rect rgb(255, 245, 245)
-    Note over BAP,BPP: Phase 5: Granular Partial Ticket Cancellation
-    BAP->>BPP: POST /update
+    rect rgb(245, 248, 255)
+    Note over BAP,BPP: Phase 5: Order Status Tracking
+    BAP->>BPP: POST /status
     BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_update
+    BPP->>BAP: POST /on_status
     BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /update
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_update
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_status
     BAP-->>BPP: 200 OK (ACK)
     end
 ```

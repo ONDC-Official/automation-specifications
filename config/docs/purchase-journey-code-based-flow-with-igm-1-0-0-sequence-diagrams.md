@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Purchase Journey(Code Based Flow) WITH IGM(v-1.0.0)
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -69,25 +70,7 @@ sequenceDiagram
     BPP->>BAP: POST /on_issue
     BAP-->>BPP: 200 OK (ACK)
     Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
+    BPP->>BAP: POST /on_issue_status
     BAP-->>BPP: 200 OK (ACK)
     BAP->>BPP: POST /issue
     BPP-->>BAP: 200 OK (ACK)

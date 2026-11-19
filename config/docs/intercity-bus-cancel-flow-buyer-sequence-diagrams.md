@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Cancel Flow(Buyer)
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -60,7 +61,12 @@ sequenceDiagram
 
     rect rgb(255, 245, 245)
     Note over BAP,BPP: Phase 5: Cancellation & Refund Processing
-    Note over BPP: Unsolicited notification broadcast
+    BAP->>BPP: POST /cancel
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_cancel
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /cancel
+    BPP-->>BAP: 200 OK (ACK)
     BPP->>BAP: POST /on_cancel
     BAP-->>BPP: 200 OK (ACK)
     end
