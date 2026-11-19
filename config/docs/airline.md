@@ -206,9 +206,7 @@ The airline and Buyer App (BAP) remain responsible for complying with applicable
 
 The Standard Booking Journey enables travelers to search for flights using standard 3-letter IATA airport codes (e.g. DEL to BOM), select flights and fare families, provide passenger manifests, complete payment, and receive confirmed PNR and e-tickets.
 
-#### 2. Visual Interaction Map & Sequence Diagram
-
-##### Protocol Interaction Architecture
+#### 2. Visual Interaction Map
 
 ```mermaid
 flowchart TD
@@ -242,50 +240,6 @@ flowchart TD
     Phase1 ==>|"Direct Callback Initiates Peer-to-Peer Booking"| Phase2
 ```
 
-##### End-to-End Sequence Diagram (Up to Confirmation)
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant BAP as Travel Platform (Buyer App / BAP)
-    participant Gateway as Network Gateway
-    participant BPP as Airline (Seller App / BPP)
-
-    rect rgb(240, 248, 255)
-    Note over BAP,BPP: Phase 1: Search & Inventory Discovery (Broadcast via Gateway)
-    BAP->>Gateway: POST /search (Sector, Travel Date, Passenger Counts)
-    Gateway-->>BAP: 200 OK (ACK) / 400 (NACK)
-    Gateway->>BPP: POST /search (Broadcast Intent to Registered Airlines)
-    BPP-->>Gateway: 200 OK (ACK) / 400 (NACK)
-    end
-
-    rect rgb(245, 255, 250)
-    Note over BAP,BPP: Phase 2: Selection & Price Quotation (Direct Peer-to-Peer)
-    BPP->>BAP: POST /on_search (Flight Catalog, Cabin Classes, Fare Families)
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select (Selected Flight ID, Fare Tier, Ancillaries)
-    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
-    BPP->>BAP: POST /on_select (Itemized Fare Quote, Taxes, Interactive Seat Grid)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-
-    rect rgb(255, 250, 240)
-    Note over BAP,BPP: Phase 3: Passenger Manifest & Initialization (Direct Peer-to-Peer)
-    BAP->>BPP: POST /init (Passenger Names, DOB, Gender, Contact & Billing)
-    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
-    BPP->>BAP: POST /on_init (Draft Order, Payment Terms, Hold Validity Window)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-
-    rect rgb(240, 255, 240)
-    Note over BAP,BPP: Phase 4: Payment Capture & Ticket Issuance (Direct Peer-to-Peer)
-    BAP->>BPP: POST /confirm (Payment ID, Settlement Details, Capture Proof)
-    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
-    BPP->>BAP: POST /on_confirm (Active Order, PNR & Electronic Ticket Tokens)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-```
-
 #### 3. API Breakdown & Technical Actions
 
 - **`/search` (Buyer App [BAP] → Gateway → Seller App [BPP])**: Triggered when a traveler searches for flights. The Buyer App (BAP) specifies origin and destination airport IATA codes (`stops[type=START].location.descriptor.code` and `stops[type=END].location.descriptor.code`), departure date, and passenger counts.
@@ -305,32 +259,25 @@ sequenceDiagram
 
 When an airline or flight aggregator has a large catalog of flights for a popular route, the results are split across multiple pages. The Seller App (BPP) streams catalog pages sequentially using pagination tokens so the Buyer App (BAP) can render flight results smoothly without network timeouts.
 
-#### 2. Sequence Diagram
+#### 2. Process Flow
+
+```
+[BAP: POST /search] ──► [Network Gateway Broadcast] ──► [Airline Catalog Engine] ──► [Streaming POST /on_search Page 1..N] ──► [BAP: Incremental Flight Display]
+```
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant BAP as Travel Platform (Buyer App / BAP)
-    participant Gateway as Network Gateway
-    participant BPP as Airline (Seller App / BPP)
+flowchart LR
+    classDef client fill:#EBF5FB,stroke:#2980B9,stroke-width:2px,color:#1B4F72,font-weight:bold;
+    classDef gateway fill:#FEF9E7,stroke:#F39C12,stroke-width:2px,color:#7D6608,font-weight:bold;
+    classDef provider fill:#EAFAF1,stroke:#27AE60,stroke-width:2px,color:#145A32,font-weight:bold;
 
-    rect rgb(240, 248, 255)
-    Note over BAP,BPP: Step 1: Flight Search Broadcast (via Gateway)
-    BAP->>Gateway: POST /search (Sector, Travel Date, Passenger Counts)
-    Gateway-->>BAP: 200 OK (ACK) / 400 (NACK)
-    Gateway->>BPP: POST /search (Broadcast Flight Search Request)
-    BPP-->>Gateway: 200 OK (ACK) / 400 (NACK)
-    end
+    BAP["Travel Platform<br/>(Buyer App / BAP)"]:::client
+    GW["Network Gateway"]:::gateway
+    BPP["Airline<br/>(Seller App / BPP)"]:::provider
 
-    rect rgb(245, 255, 250)
-    Note over BAP,BPP: Step 2: Paginated Catalog Streaming (Direct Peer-to-Peer)
-    BPP->>BAP: POST /on_search (Page 1 of N, Initial Flight Options)
-    BAP-->>BPP: 200 OK (ACK)
-    BPP->>BAP: POST /on_search (Page 2 of N, Next Flight Batch)
-    BAP-->>BPP: 200 OK (ACK)
-    BPP->>BAP: POST /on_search (Page N of N, Final Flight Batch)
-    BAP-->>BPP: 200 OK (ACK)
-    end
+    BAP -->|"1. POST /search"| GW
+    GW -->|"2. POST /search"| BPP
+    BPP -->|"3. Streaming /on_search (Page 1..N)"| BAP
 ```
 
 #### 3. API Breakdown & Technical Actions
@@ -350,29 +297,24 @@ sequenceDiagram
 
 When a traveler initiates a booking cancellation, the network executes a two-step cancellation workflow: a soft-cancel preview to calculate refund and penalties, followed by a confirm-cancel to finalize ticket cancellation.
 
-#### 2. Sequence Diagram
+#### 2. Process Flow
+
+```
+[Cancel Request (SOFT-CANCEL)] ───► [Refund Quote Preview (/on_cancel)] ───► [Confirm Cancel (CONFIRM-CANCEL)] ───► [PNR Cancelled & Refund Issued]
+```
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant BAP as Travel Platform (Buyer App / BAP)
-    participant BPP as Airline (Seller App / BPP)
+flowchart LR
+    classDef client fill:#EBF5FB,stroke:#2980B9,stroke-width:2px,color:#1B4F72,font-weight:bold;
+    classDef provider fill:#EAFAF1,stroke:#27AE60,stroke-width:2px,color:#145A32,font-weight:bold;
 
-    rect rgb(255, 250, 240)
-    Note over BAP,BPP: Step 1: Soft Cancel (Quote Preview)
-    BAP->>BPP: POST /cancel (SOFT-CANCEL, Cancellation Reason Code)
-    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
-    BPP->>BAP: POST /on_cancel (Itemized Refund Quote Preview & Penalties)
-    BAP-->>BPP: 200 OK (ACK)
-    end
+    BAP["Travel Platform<br/>(Buyer App / BAP)"]:::client
+    BPP["Airline<br/>(Seller App / BPP)"]:::provider
 
-    rect rgb(255, 245, 245)
-    Note over BAP,BPP: Step 2: Confirm Cancel (Final Cancellation)
-    BAP->>BPP: POST /cancel (CONFIRM-CANCEL, Approved Refund)
-    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
-    BPP->>BAP: POST /on_cancel (Order CANCELLED, Voided PNR, Refund Settlement Ledger)
-    BAP-->>BPP: 200 OK (ACK)
-    end
+    BAP -->|"1. POST /cancel (SOFT-CANCEL)"| BPP
+    BPP -->|"2. POST /on_cancel (Refund Quote)"| BAP
+    BAP -->|"3. POST /cancel (CONFIRM-CANCEL)"| BPP
+    BPP -->|"4. POST /on_cancel (Order Cancelled)"| BAP
 ```
 
 #### 3. API Breakdown & Technical Actions
@@ -390,19 +332,21 @@ sequenceDiagram
 
 If an airline cancels a scheduled flight due to severe weather, air traffic constraints, or technical maintenance, the Seller App (BPP) triggers an unsolicited cancellation pushing full refund details to the passenger.
 
-#### 2. Sequence Diagram
+#### 2. Process Flow
+
+```
+[Flight Disrupted / Grounded] ───► [Unsolicited POST /on_cancel (Reason Code 008)] ───► [100% Full Refund Issued to BAP]
+```
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant BAP as Travel Platform (Buyer App / BAP)
-    participant BPP as Airline (Seller App / BPP)
+flowchart LR
+    classDef client fill:#EBF5FB,stroke:#2980B9,stroke-width:2px,color:#1B4F72,font-weight:bold;
+    classDef provider fill:#EAFAF1,stroke:#27AE60,stroke-width:2px,color:#145A32,font-weight:bold;
 
-    rect rgb(255, 240, 240)
-    Note over BAP,BPP: Unsolicited Flight Cancellation & Disruption
-    BPP->>BAP: POST /on_cancel (Unsolicited Full Refund, Reason Code 008)
-    BAP-->>BPP: 200 OK (ACK)
-    end
+    BPP["Airline Carrier (BPP)<br/>Flight Disrupted / Cancelled"]:::provider
+    BAP["Travel Platform (BAP)<br/>Passenger Notified & Refunded"]:::client
+
+    BPP -->|"Unsolicited POST /on_cancel (Reason 008, 100% Refund)"| BAP
 ```
 
 #### 3. API Breakdown & Technical Actions
