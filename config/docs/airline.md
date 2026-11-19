@@ -1,630 +1,410 @@
-# Airline
+# Airlines
+
+---
 
 ## Overview
 
-ONDC:TRV12 is the travel domain for booking intercity public transport—airlines and buses—on the ONDC network. It lets consumers search, book, and manage tickets across multiple transport operators in a single platform, while enabling airlines and bus companies to list and sell seats directly to end users.
+Airline ticketing encompasses scheduled passenger flights offered by airline carriers. Each airline independently manages its flight schedules, seat inventory, pricing, fare rules, baggage policies, and flight operations.
 
-## Sector & Purpose
+The network enables airlines and travel platforms to connect through a common, open protocol instead of building separate integrations with each other. A travel platform integrates with the network as a Buyer App (BAP) to discover, compare, and book flight seats from participating airlines. Airlines integrate once as a Seller App (BPP) to make their seat inventory available to participating travel platforms.
 
-This domain serves the **intercity public transport sector**, covering long-distance flights and bus services. The core problem it solves is fragmentation: today, consumers must visit separate websites or apps for each airline, each bus operator. ONDC:TRV12 unifies that experience, allowing any consumer-facing application (airline app, travel portal, marketplace) to tap into inventory from multiple operators through a single standardized network, while operators gain access to new distribution channels without building separate integrations.
+The airline remains responsible for the flight service, including flight operations, schedule management, inventory availability, seat allocation, pricing, PNR issuance, and passenger servicing. The network standardizes the interactions for searching, comparing, selecting, booking, and servicing airline tickets across participating network participants.
 
-## Real-World Actors
-
-- **Consumers**: People booking trips between cities—whether flying across regions or taking long-distance buses. They want options, convenience, and clear pricing.
-- **Airlines**: Operators with seat inventory to sell; they list flights and manage bookings, cancellations, and customer service through the ONDC network.
-- **Bus Operators**: Intercity bus companies offering routes; they list schedules and seat availability just like airlines.
-- **Platforms**: Travel booking apps, OTA sites, or marketplaces that aggregate these options for consumers and handle the transaction experience.
-
-## Use Cases
-
-- Searching for airline flights by route and date, browsing available airlines and prices
-- Booking single or multiple airline tickets in one transaction (families, groups)
-- Searching for intercity bus services and booking seats
-- Cancelling bookings—initiated by either the consumer or the operator
-- Partial cancellations when a customer wants to cancel only some tickets in a multi-ticket order
-- Rating and reviewing flights or bus rides after travel
-- Code-based search flows (searching by station codes for buses, airline codes for flights)
-- Resolving disputes or service issues through the ONDC complaint mechanism (IGM)
-
-## Key Concepts
-
-- **Airline and Bus Booking as Parallel Flows**: The domain handles two distinct transport modes with different attributes (flights have aircraft classes and routing; buses have station stops and route types), but both follow similar booking and cancellation workflows.
-- **Code-Based Discovery**: Operators use standardized codes (airline IATA codes, bus station codes) to tag inventory; consumers and platforms use these to search efficiently.
-- **Ticket Inventory Management**: Whether booking one seat or ten, the system tracks availability, holds, and fulfillment per transaction—critical for managing overbooking and real-time availability.
-- **Cancellation Workflows**: Both parties (buyer and seller) can initiate cancellations with different rules and refund implications; the domain specifies how these are processed.
-- **Service Quality and Dispute Resolution**: Post-booking ratings and IGM (Issue Grievance Management) enable feedback loops and fair dispute handling across the network.
-
-## Example Scenario
-
-**A family booking a multi-city trip on the ONDC network:**
-
-A consumer uses a travel platform integrated with ONDC:TRV12 to book flights from Mumbai to Delhi for four people. The platform queries multiple airlines' inventory, finds a suitable flight, and completes the booking in one transaction—all four tickets together. Two weeks later, one family member's plans change; the consumer cancels that one ticket through the ONDC platform, which sends the cancellation to the airline. The airline processes a partial refund per its policy.
-
-After the trip, the family rates the airline's service (on-time, courteous crew, good food) through the ONDC platform. The rating feeds back into the network, helping other consumers see service quality signals.
-
-Later, when planning an intercity bus trip for a similar multi-city journey, the same consumer uses the same ONDC platform to search buses between intermediate cities—the discovery and booking flow is comparable to the airline experience, but adapted for bus routes and station-based stops. The unified experience across transport modes is the real-world value ONDC:TRV12 delivers.
+This guide explains the airline ticketing use case and end-to-end journey from a business and product perspective, before covering the corresponding technical specifications and API flows.
 
 ---
 
-## Complete API Contract & Architecture Guide
+## Participants
 
-The `ONDC:TRV12` specification (v2.0.0) standardizes communication between **Buyer Applications (BAP)** and **Seller Applications (BPP / Airlines & Aggregators)** across the entire flight booking lifecycle.
+| Participant | What This Means |
+|---|---|
+| **Travel Platform (Buyer App / BAP)** | A consumer-facing application (travel portal, consumer app, or fintech platform) that enables travelers to search for flights, compare fare options, select seats and ancillaries, provide passenger manifests, and manage bookings by connecting with participating airlines through the network. |
+| **Airline (Seller App / BPP)** | The airline operator or ticketing provider that publishes flight schedules, manages seat inventory, issues PNRs and e-tickets, and operates flights. The airline is responsible for flight operations, pricing, fare families (Saver, Flex), baggage policies, seat allocation, and servicing. |
 
-Every transaction follows the Beckn asynchronous protocol:
-1. The requester makes a `POST` call.
-2. The receiver immediately replies with a synchronous HTTP 200 `ACK` (or `NACK` if validation fails).
-3. The receiver performs the business processing and sends the result back via an asynchronous callback `POST /on_<action>` to the requester's webhook URL.
-4. The requester acknowledges the callback with a synchronous HTTP 200 `ACK`.
+---
+
+## The User Journey
+
+The airline booking journey enables a traveler to search for flights between airports, compare fare families, select seats and ancillaries, provide passenger details, complete payment, and receive confirmed e-tickets and PNR.
+
+```
+[Search Flights] ───► [Compare Offers] ───► [Select Fare & Add-ons] ───► [Provide Passenger Info] ───► [Payment & Confirmation] ───► [PNR & E-Ticket Issued]
+```
+
+The journey consists of the following stages:
+
+### 1. Flight Search and Discovery
+
+Through the Travel Platform (Buyer App / BAP), the traveler provides flight search criteria:
+
+| Category | Field | Key | Mandatory | Type / Values |
+|---|---|---|---|---|
+| Routing | Origin Airport Code | `stops[type=START].location.descriptor.code` | Yes | Text (3-letter IATA, e.g. `DEL`) |
+| | Destination Airport Code | `stops[type=END].location.descriptor.code` | Yes | Text (3-letter IATA, e.g. `BOM`) |
+| Schedule | Departure Date & Time | `stops[type=START].time.timestamp` | Yes | ISO 8601 Date / Timestamp |
+| Passengers | Adult Count | `passengers.adult` | Yes | Number (Minimum 1) |
+| | Child Count | `passengers.child` | No | Number |
+| | Infant Count | `passengers.infant` | No | Number |
+| Cabin | Travel Class | `travel_class` | No | ENUM (`ECONOMY`, `PREMIUM_ECONOMY`, `BUSINESS`) |
+
+The Travel Platform (Buyer App / BAP) transmits the search request to discover available flights across participating airlines.
+
+**Network interaction:**
+
+- **`/search`**: The Buyer App (BAP) broadcasts the flight search intent to the Gateway using standard IATA 3-letter airport codes, travel dates, and passenger counts. The Gateway routes this request to registered airlines.
+- **`/on_search`**: Participating Seller Apps (BPP) respond asynchronously with flight catalogs containing available flights, departure/arrival schedules, cabin classes, and fare families.
+
+### 2. Flight Offers and Fare Comparison
+
+Airlines return flight offers that may include:
+
+- Direct flights and connecting itineraries
+- Multiple cabin classes (Economy, Premium Economy, Business)
+- Fare families (e.g., Saver, Flex, Corporate)
+- Baggage allowances (Cabin baggage, Check-in baggage)
+- Change and cancellation rules (Refundable vs. Non-refundable)
+
+The Travel Platform (Buyer App / BAP) presents the available flight options and fare families for the traveler to compare.
+
+### 3. Flight Selection and Ancillaries
+
+The traveler selects a specific flight itinerary and fare family through the Travel Platform (Buyer App / BAP).
+
+The traveler may also select optional ancillaries, such as preferred seats, in-flight meals, or additional baggage allowance.
+
+**Network interaction:**
+
+- **`/select`**: The Buyer App (BAP) sends the selected flight item ID, chosen fare tier, and requested ancillaries to the airline.
+- **`/on_select`**: The Seller App (BPP) responds with an itemized quote breakdown (base price, taxes, convenience fees, seat charges) and confirms inventory availability.
+
+### 4. Passenger Details and Manifest
+
+The traveler provides passenger information required for the airline flight manifest:
+
+| Category | Field | Key | Mandatory | Format / Rules |
+|---|---|---|---|---|
+| Personal | Passenger Name | `person.name` | Yes | `<Title>\|<First Name>\|<Middle Name>\|<Last Name>` (e.g. `Mr\|John\|M\|Doe`) |
+| | Date of Birth | `person.dob` | Yes | Date (`YYYY-MM-DD`) |
+| | Gender | `person.gender` | Yes | ENUM (`MALE`, `FEMALE`, `TRANSGENDER`) |
+| Contact | Phone Number | `contact.phone` | Yes | 10-digit mobile number |
+| | Email Address | `contact.email` | Yes | Valid email address |
+| Billing | Billing Name & Address | `billing` | Yes | Address lines, city, state, postal code |
+
+**Network interaction:**
+
+- **`/init`**: The Buyer App (BAP) initializes the draft booking order, passing the passenger manifest, contact details, and billing information.
+- **`/on_init`**: The Seller App (BPP) validates the passenger manifest, creates a draft reservation, locks the fare for a defined validity window, and returns payment terms and cancellation policies.
+
+### 5. Booking Confirmation and Ticketing
+
+Once the traveler completes payment through the checkout interface, the Travel Platform (Buyer App / BAP) confirms the booking with the airline.
+
+The airline validates the transaction, allocates seats, generates the airline reservation reference (PNR), and issues electronic tickets.
+
+**Network interaction:**
+
+- **`/confirm`**: The Buyer App (BAP) transmits the payment confirmation details and finalized order payload.
+- **`/on_confirm`**: The Seller App (BPP) confirms the booking, changes the order status to `CONFIRMED`, and returns the official PNR, e-ticket tokens, and allocated seat numbers.
+
+### 6. Post-Booking Servicing and Status
+
+After confirmation, the traveler can view booking details, check flight schedules, and track departure updates through the Travel Platform (Buyer App / BAP).
+
+**Network interaction:**
+
+- **`/status`**: The Buyer App (BAP) queries the current status of an active flight booking.
+- **`/on_status`**: The Seller App (BPP) returns real-time fulfillment status, departure terminal, gate updates, and web check-in availability.
+
+---
+
+## Additional Scenarios
+
+The airline ticketing lifecycle supports operational modifications, cancellations, and disruptions post-booking.
+
+### 1. User Cancellation (Full Cancellation)
+
+A traveler can cancel a confirmed flight booking prior to departure, subject to the airline's cancellation policy and fare rules.
+
+```
+[Cancel Request] ───► [Soft Cancel Preview] ───► [Review Refund Quote] ───► [Confirm Cancel] ───► [PNR Cancelled & Refund Issued]
+```
+
+The network supports a two-step cancellation process:
+1. **Soft Cancel (`SOFT-CANCEL`)**: The Buyer App (BAP) requests a cancellation preview. The airline calculates applicable cancellation fees based on time remaining before departure and returns the net refund quote.
+2. **Confirm Cancel (`CONFIRM-CANCEL`)**: After the traveler reviews and approves the refund amount, the Buyer App (BAP) confirms the cancellation. The airline cancels the PNR, marks the order `CANCELLED`, and initiates the refund.
+
+**Network interaction:**
+
+- **`/cancel` (Soft Cancel)**: The Buyer App (BAP) initiates a soft cancellation request.
+- **`/on_cancel`**: The Seller App (BPP) responds with the cancellation quote preview, itemizing the base refund, cancellation charges, and net refundable balance.
+- **`/cancel` (Confirm Cancel)**: The Buyer App (BAP) submits the final confirmed cancellation.
+- **`/on_cancel`**: The Seller App (BPP) confirms ticket cancellation, releases the seat inventory, and updates the order status to `CANCELLED`.
+
+### 2. Partial Ticket Cancellation
+
+In a multi-passenger booking, a traveler may choose to cancel tickets for specific passengers while retaining the booking for the remaining travelers.
+
+```
+[Partial Cancel Request] ───► [/update Specific Passenger IDs] ───► [Recalculate Remaining Seats] ───► [Updated Order & Partial Refund]
+```
+
+**Network interaction:**
+
+- **`/update`**: The Buyer App (BAP) sends a partial cancellation request specifying the specific passenger item IDs to be cancelled.
+- **`/on_update`**: The Seller App (BPP) updates the order, cancels the designated passenger seats, calculates the partial refund, and returns the updated order state.
+
+### 3. Technical Cancellation
+
+If a transaction fails due to payment authorization timeouts, network latency, or an expired confirmation window, the system triggers an automated technical cancellation.
+
+```
+[Confirmation Timeout] ───► [/status Check] ───► [Auto-Cancel Code 000] ───► [Seat Holds Released]
+```
+
+**Network interaction:**
+
+- **`/status` & `/on_status`**: The Buyer App (BAP) queries order state after an unacknowledged confirmation call.
+- **`/cancel` & `/on_cancel`**: If confirmation expired, an automated cancellation is issued with technical cancellation code `000` to release any temporary seat holds.
+
+### 4. Merchant Flight Disruption or Cancellation
+
+When an airline reschedules or cancels a flight due to operational reasons, air traffic control, or severe weather, the airline notifies the passenger.
+
+```
+[Airline Disruption / Weather] ───► [Unsolicited on_cancel] ───► [100% Full Refund Issued]
+```
+
+**Network interaction:**
+
+- **`/on_cancel` (Unsolicited)**: The Seller App (BPP) pushes an unsolicited cancellation callback with reason code `008` (Flight/Venue Closure) or schedule change, providing a 100% full refund with zero cancellation penalty.
+
+---
+
+## Issue and Grievance Management
+
+A passenger can raise a grievance through the Buyer App (BAP) for issues related to their flight booking or the network transaction. The Buyer App (BAP) routes the grievance to the relevant airline partner through the network's grievance mechanism.
+
+The airline is responsible for investigating and resolving the grievance. The airline communicates the grievance status and resolution to the Buyer App (BAP), which makes the relevant information available to the passenger.
+
+The grievance process can include:
+
+- **Grievance Registration**: The passenger raises an issue through the Buyer App (BAP).
+- **Grievance Routing**: The Buyer App (BAP) routes the grievance to the relevant airline.
+- **Resolution**: The airline investigates the issue and takes the required action.
+- **Status Updates**: The airline communicates progress and resolution status to the Buyer App (BAP).
+- **Closure**: The Buyer App (BAP) communicates the resolution to the passenger and closes the grievance when appropriate.
+
+The airline and Buyer App (BAP) remain responsible for complying with applicable grievance redressal requirements. Applicable guidelines provide for passenger grievance redressal mechanisms and identify the airline and Buyer App's designated grievance channels.
+
+---
+
+## Detailed Protocol Flows
+
+### Flow 1: Airlines – Standard Booking Journey (Code Based Flow)
+
+#### 1. Short Description
+
+The Standard Booking Journey enables travelers to search for flights using standard 3-letter IATA airport codes (e.g. DEL to BOM), select flights and fare families, provide passenger manifests, complete payment, and receive confirmed PNR and e-tickets.
+
+#### 2. Visual Interaction Map & Sequence Diagram
+
+##### Protocol Interaction Architecture
+
+```mermaid
+flowchart TD
+    classDef client fill:#EBF5FB,stroke:#2980B9,stroke-width:2px,color:#1B4F72,font-weight:bold;
+    classDef gateway fill:#FEF9E7,stroke:#F39C12,stroke-width:2px,color:#7D6608,font-weight:bold;
+    classDef provider fill:#EAFAF1,stroke:#27AE60,stroke-width:2px,color:#145A32,font-weight:bold;
+
+    subgraph Phase1 ["Phase 1: Flight Search & Discovery (Broadcast via Gateway)"]
+        direction LR
+        BAP1["Travel Platform<br/>(Buyer App / BAP)"]:::client
+        GW["Network Gateway"]:::gateway
+        BPP1["Airline Carrier<br/>(Seller App / BPP)"]:::provider
+        
+        BAP1 -->|"1. POST /search"| GW
+        GW -.->|"HTTP 200 (ACK/NACK)"| BAP1
+        GW -->|"2. POST /search"| BPP1
+        BPP1 -.->|"HTTP 200 (ACK/NACK)"| GW
+    end
+
+    subgraph Phase2 ["Phase 2: Booking Lifecycle (Direct Peer-to-Peer BAP ↔ BPP)"]
+        direction TB
+        BAP2["Travel Platform<br/>(Buyer App / BAP)"]:::client
+        BPP2["Airline Carrier<br/>(Seller App / BPP)"]:::provider
+
+        BPP2 -->|"3. POST /on_search (Flight Catalog)"| BAP2
+        BAP2 <-->|"4 & 5. Selection & Fare Quote (POST /select ⇄ /on_select)"| BPP2
+        BAP2 <-->|"6 & 7. Passenger Manifest & Init (POST /init ⇄ /on_init)"| BPP2
+        BAP2 <-->|"8 & 9. Payment & Ticket Issuance (POST /confirm ⇄ /on_confirm)"| BPP2
+    end
+
+    Phase1 ==>|"Direct Callback Initiates Peer-to-Peer Booking"| Phase2
+```
+
+##### End-to-End Sequence Diagram (Up to Confirmation)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant BAP as Buyer App (BAP)
-    participant Gateway as Gateway
-    participant BPP as Seller App (BPP)
-    
+    participant BAP as Travel Platform (Buyer App / BAP)
+    participant Gateway as Network Gateway
+    participant BPP as Airline (Seller App / BPP)
+
     rect rgb(240, 248, 255)
-    Note over BAP,BPP: Phase 1: Search & Flight Discovery
-    BAP->>Gateway: POST /search (Airport codes, date, traveler counts)
-    Gateway-->>BAP: 200 OK ACK
-    Gateway->>BPP: POST /search
-    BPP-->>Gateway: 200 OK ACK
-    BPP->>BAP: POST /on_search (Flight catalog, fare families, baggage)
-    BAP-->>BPP: 200 OK ACK
+    Note over BAP,BPP: Phase 1: Search & Inventory Discovery (Broadcast via Gateway)
+    BAP->>Gateway: POST /search (Sector, Travel Date, Passenger Counts)
+    Gateway-->>BAP: 200 OK (ACK) / 400 (NACK)
+    Gateway->>BPP: POST /search (Broadcast Intent to Registered Airlines)
+    BPP-->>Gateway: 200 OK (ACK) / 400 (NACK)
     end
 
     rect rgb(245, 255, 250)
-    Note over BAP,BPP: Phase 2: Selection & Price Quotation
-    BAP->>BPP: POST /select (Chosen fare family, flight ID, add-ons)
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_select (Itemized fare quote, taxes, seat grid)
-    BAP-->>BPP: 200 OK ACK
+    Note over BAP,BPP: Phase 2: Selection & Price Quotation (Direct Peer-to-Peer)
+    BPP->>BAP: POST /on_search (Flight Catalog, Cabin Classes, Fare Families)
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /select (Selected Flight ID, Fare Tier, Ancillaries)
+    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
+    BPP->>BAP: POST /on_select (Itemized Fare Quote, Taxes, Interactive Seat Grid)
+    BAP-->>BPP: 200 OK (ACK)
     end
 
     rect rgb(255, 250, 240)
-    Note over BAP,BPP: Phase 3: Passenger Manifest & Initialization
-    BAP->>BPP: POST /init (Passenger details, DOB, contact, billing)
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_init (Draft order, payment terms, cancellation rules)
-    BAP-->>BPP: 200 OK ACK
+    Note over BAP,BPP: Phase 3: Passenger Manifest & Initialization (Direct Peer-to-Peer)
+    BAP->>BPP: POST /init (Passenger Names, DOB, Gender, Contact & Billing)
+    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
+    BPP->>BAP: POST /on_init (Draft Order, Payment Terms, Hold Validity Window)
+    BAP-->>BPP: 200 OK (ACK)
     end
 
     rect rgb(240, 255, 240)
-    Note over BAP,BPP: Phase 4: Payment Confirmation & Ticket Issuance
-    BAP->>BPP: POST /confirm (Payment proof, transaction ID)
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_confirm (Active order, PNR / E-Ticket token, seat allocations)
-    BAP-->>BPP: 200 OK ACK
-    end
-
-    rect rgb(255, 245, 245)
-    Note over BAP,BPP: Phase 5: Post-Booking, Status & Cancellations
-    opt Order Status Check
-        BAP->>BPP: POST /status
-        BPP->>BAP: POST /on_status (Fulfillment progress, gate updates)
-    end
-    opt Two-Step Cancellation (Soft Cancel → Confirm Cancel)
-        BAP->>BPP: POST /cancel (SOFT_CANCEL)
-        BPP->>BAP: POST /on_cancel (Refund quote preview & charges)
-        BAP->>BPP: POST /cancel (CONFIRM_CANCEL)
-        BPP->>BAP: POST /on_cancel (Confirmed cancellation & refund ledger)
-    end
+    Note over BAP,BPP: Phase 4: Payment Capture & Ticket Issuance (Direct Peer-to-Peer)
+    BAP->>BPP: POST /confirm (Payment ID, Settlement Details, Capture Proof)
+    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
+    BPP->>BAP: POST /on_confirm (Active Order, PNR & Electronic Ticket Tokens)
+    BAP-->>BPP: 200 OK (ACK)
     end
 ```
 
----
+#### 3. API Breakdown & Technical Actions
 
-### Complete Transaction Lifecycle Matrix
-
-| Phase | Action API | Sender → Receiver | Callback API | Callback Sender → Receiver | Primary Business Purpose |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Discovery** | `POST /search` | BAP → Gateway / BPP | `POST /on_search` | BPP → BAP | Broadcast or direct flight search by airport IATA codes, dates, and traveler counts. |
-| **Selection** | `POST /select` | BAP → BPP | `POST /on_select` | BPP → BAP | Select flight itinerary, fare families (Saver/Flex), add-ons, and request seat grid. |
-| **Initialization** | `POST /init` | BAP → BPP | `POST /on_init` | BPP → BAP | Submit passenger manifests, formatted names, DOB, contact info, and billing address. |
-| **Confirmation** | `POST /confirm` | BAP → BPP | `POST /on_confirm` | BPP → BAP | Authorize booking with payment confirmation; receives issued PNR and e-ticket authorization. |
-| **Status** | `POST /status` | BAP → BPP | `POST /on_status` | BPP → BAP | Poll order lifecycle state (`CONFIRMED`, `IN_PROGRESS`, `COMPLETED`), flight delays, or gate changes. |
-| **Cancellation** | `POST /cancel` | BAP → BPP | `POST /on_cancel` | BPP → BAP | Two-step cancellation flow (`SOFT_CANCEL` quote preview followed by `CONFIRM_CANCEL`). |
-| **Seller Cancellation** | *Unsolicited* | — | `POST /on_cancel` | BPP → BAP | Airline-initiated flight cancellation (weather/technical disruption) with full refund breakup. |
-| **Order Update** | `POST /update` | BAP → BPP | `POST /on_update` | BPP → BAP | Update traveler contact details, re-issue tickets, or add ancillary services post-booking. |
-| **Tracking** | `POST /track` | BAP → BPP | `POST /on_track` | BPP → BAP | Live flight telemetry tracking and flight radar links. |
-| **Feedback** | `POST /rating` | BAP → BPP | `POST /on_rating` | BPP → BAP | Submit customer feedback and ratings post-journey. |
-| **Support** | `POST /support` | BAP → BPP | `POST /on_support` | BPP → BAP | Retrieve customer service telephone, email, and live support channels. |
-| **Grievance (IGM)** | `POST /issue` | BAP → BPP | `POST /on_issue` | BPP → BAP | Raise passenger grievance ticket (IGM 2.0.0) with grievance officer details. |
-| **IGM Status** | `POST /issue_status` | BAP → BPP | `POST /on_issue_status`| BPP → BAP | Track dispute resolution progress, refund escalation, and respondent actions. |
+- **`/search` (Buyer App [BAP] → Gateway → Seller App [BPP])**: Triggered when a traveler searches for flights. The Buyer App (BAP) specifies origin and destination airport IATA codes (`stops[type=START].location.descriptor.code` and `stops[type=END].location.descriptor.code`), departure date, and passenger counts.
+- **`/on_search` (Seller App [BPP] → Buyer App [BAP])**: The airline returns its flight catalog. Each flight option contains departure/arrival times, aircraft model, cabin classes, and available fare families (e.g., Saver, Flex) with associated baggage allowances.
+- **`/select` (Buyer App [BAP] → Seller App [BPP])**: The traveler selects a specific flight and fare tier. The Buyer App (BAP) sends the item ID and any requested ancillary items (meals, extra baggage, seat selection).
+- **`/on_select` (Seller App [BPP] → Buyer App [BAP])**: The airline validates inventory availability and returns an itemized price quotation including base price, taxes, airline surcharges, and seat selection fees.
+- **`/init` (Buyer App [BAP] → Seller App [BPP])**: The Buyer App (BAP) passes the passenger manifest. Passenger names must strictly follow the format `<Title>|<First Name>|<Middle Name>|<Last Name>` along with date of birth (`YYYY-MM-DD`), gender, and contact details.
+- **`/on_init` (Seller App [BPP] → Buyer App [BAP])**: The airline creates a provisional booking, locks the fare for a defined duration, and provides payment collection instructions and applicable cancellation terms.
+- **`/confirm` (Buyer App [BAP] → Seller App [BPP])**: Transmitted after successful payment capture. Contains the payment status, payment transaction ID, and final order confirmation request.
+- **`/on_confirm` (Seller App [BPP] → Buyer App [BAP])**: The airline books the reservation in its passenger service system (PSS), assigns seat numbers, sets order status to `CONFIRMED`, and returns the airline PNR and e-ticket numbers.
 
 ---
 
-### Common Beckn Context Object
+### Flow 2: Airlines – Seller App Pagination Flow
 
-Every request and response envelope contains a mandatory `context` object. It provides network routing, tracing, cryptographic verification, and lifecycle auditing:
+#### 1. Short Description
 
-```yaml
-context:
-  domain: "ONDC:TRV12"                              # Fixed travel domain code
-  version: "2.0.0"                                  # Specification version
-  action: "search"                                  # Current protocol action
-  country:
-    code: "IND"                                     # Country code (ISO 3166-1 alpha-3)
-  city:
-    code: "std:080"                                 # Originating city STD code (e.g., std:080 for Bengaluru)
-  bap_id: "travel-buyer-app.com"                    # Subscriber ID of the Buyer App
-  bap_uri: "https://travel-buyer-app.com/beckn/v1"  # Buyer App callback webhook URL
-  bpp_id: "airline-seller-app.com"                  # Subscriber ID of the Airline Seller App
-  bpp_uri: "https://airline-seller-app.com/beckn"   # Seller App webhook URL
-  transaction_id: "6743e9e2-4fb5-487c-92b7-13ba80"  # Shared UUID across all calls in a transaction
-  message_id: "7381c78e-1eb4-47bb-96b4-ac2fce74e5"  # Unique UUID generated for each API request-response pair
-  timestamp: "2026-11-13T10:00:00.000Z"             # ISO 8601 UTC timestamp of message generation
-  ttl: "PT30S"                                      # Message validity duration (ISO 8601 duration)
-```
+When an airline or flight aggregator has a large catalog of flights for a popular route, the results are split across multiple pages. The Seller App (BPP) streams catalog pages sequentially using pagination tokens so the Buyer App (BAP) can render flight results smoothly without network timeouts.
 
----
-
-### Synchronous Response Contract (`ACK` vs `NACK`)
-
-Every HTTP POST request in the ONDC network must be synchronously acknowledged within **5000 milliseconds**.
-
-#### Successful Acknowledgment (`ACK`):
-```json
-{
-  "message": {
-    "ack": {
-      "status": "ACK"
-    }
-  }
-}
-```
-
-#### Synchronous Rejection (`NACK`):
-When request schema validation, signature verification, or context integrity fails:
-```json
-{
-  "message": {
-    "ack": {
-      "status": "NACK"
-    }
-  },
-  "error": {
-    "type": "GATEWAY",
-    "code": "30000",
-    "message": "Invalid Signature / Invalid Context Validation Failed"
-  }
-}
-```
-
----
-
-### Cryptographic Security & Authorization Headers
-
-All network traffic between BAPs, Gateways, and BPPs must be signed using the Beckn cryptographic standard:
-- **Hashing**: BLAKE-512 digest of the raw HTTP request body.
-- **Signing Algorithm**: `Ed25519` asymmetric key pair.
-- **Header**:
-  ```http
-  Authorization: Signature keyId="subscriber_id|unique_key_id|ed25519",algorithm="ed25519",created="1700000000",expires="1700000030",headers="(created) (expires) digest",signature="base64_encoded_signature..."
-  ```
-- Receivers fetch the sender's public key from the ONDC Registry to verify request authenticity before generating an `ACK`.
-
----
-
-## Detailed API Specifications & Payloads
-
-### 1. `POST /search` — Intent & Flight Discovery
-
-- **Flow**: Buyer App (BAP) → Gateway → Seller App (BPP)
-- **Business Role**: When a traveler enters their trip requirements on the Buyer App (e.g., fly from Delhi to Bengaluru on October 15th for 2 adults and 1 child in Economy class), the BAP broadcasts a `/search` request across the network.
-- **Key Payload Elements (`message.intent`)**:
-  - `fulfillment.stops`: Origin and destination airport definitions:
-    - `type: START`: Origin airport code (IATA code in `location.descriptor.code`, e.g. `DEL`) and scheduled date/time timestamp.
-    - `type: END`: Destination airport code (e.g. `BLR`).
-  - `fulfillment.vehicle.category`: Explicitly declared as `AIRLINE`.
-  - `category.descriptor.code`: Cabin class requested (`ECONOMY`, `PREMIUM_ECONOMY`, `BUSINESS`, `FIRST`).
-  - `provider.items`: Passenger breakdown counts (`ADULT_TICKET`, `CHILD_TICKET`, `INFANT_TICKET`).
-  - `payment.tags`:
-    - `BUYER_FINDER_FEES`: Buyer platform commission (`BUYER_FINDER_FEES_PERCENTAGE` or `BUYER_FINDER_FEES_AMOUNT`).
-    - `SETTLEMENT_TERMS`: Default settlement rules, delay interest rate (`DELAY_INTEREST`), and legal terms URL (`STATIC_TERMS`).
-  - `tags.PAGINATION`: Used when requesting subsequent pages (`PAGINATION_ID`, `REQUESTED_PAGE_NUMBER`).
-
-```yaml
-# Example: POST /search
-message:
-  intent:
-    category:
-      descriptor:
-        code: ECONOMY
-    fulfillment:
-      stops:
-        - type: START
-          location:
-            descriptor:
-              code: DEL
-          time:
-            label: "Date Of Journey"
-            timestamp: "2026-11-20T00:00:00.000Z"
-        - type: END
-          location:
-            descriptor:
-              code: BLR
-      vehicle:
-        category: AIRLINE
-    provider:
-      items:
-        - descriptor:
-            name: Adult
-            code: ADULT_TICKET
-          quantity:
-            selected:
-              count: 2
-        - descriptor:
-            name: Child
-            code: CHILD_TICKET
-          quantity:
-            selected:
-              count: 1
-    payment:
-      tags:
-        - descriptor:
-            code: BUYER_FINDER_FEES
-          list:
-            - descriptor:
-                code: BUYER_FINDER_FEES_PERCENTAGE
-              value: "1.5"
-```
-
----
-
-### 2. `POST /on_search` — Airline Catalog & Flight Inventory
-
-- **Flow**: Seller App (BPP) → Buyer App (BAP)
-- **Business Role**: The airline or aggregator returns all matching available flights, routes, fare families (Saver, Flexi, Super 6E), baggage entitlements, and pricing options.
-- **Key Payload Elements (`message.catalog`)**:
-  - `bpp/providers`: Airline operator identity, brand logo, and descriptor.
-  - `fulfillments`: Flight leg (`type: TRIP`), flight vehicle code (e.g. `6E-284`), operating carrier (`tags.INFO.OPERATED_BY`), departure/arrival airport stops with exact terminals and timestamps.
-  - `items`: Fare families and purchase options:
-    - Base ticket items (`id: I1`, code: `ADULT_TICKET`, price, duration, refund eligibility).
-    - Sub-fare items mapped via `parent_item_id` representing fare families with varying flexibility.
-    - `tags.GENERAL_INFO`: Baggage allowances (`CABIN_BAGGAGE: "7 Kg"`, `CHECK_IN_BAGGAGE: "15 Kg"`).
-    - `tags.FARE_TYPE`: Supported concession tariffs (`REGULAR`, `STUDENT`, `SENIOR_CITIZEN`, `ARMED_FORCES`, `DOCTORS_NURSES`).
-  - `tags.PAGINATION`: Pagination state (`PAGINATION_ID`, `CURRENT_PAGE_NUMBER`, `MAX_PAGE_NUMBER`).
-
-```yaml
-# Example: POST /on_search (Catalog snippet)
-message:
-  catalog:
-    bpp/providers:
-      - id: "P1"
-        descriptor:
-          name: "IndiGo Airlines"
-          images:
-            - url: "https://airline.com/logo.png"
-        fulfillments:
-          - id: "F1"
-            type: TRIP
-            vehicle:
-              category: AIRLINE
-              code: "6E-284"
-            stops:
-              - type: START
-                location:
-                  descriptor:
-                    name: "Indira Gandhi International Airport"
-                    code: "DEL"
-                time:
-                  timestamp: "2026-11-20T06:00:00.000Z"
-              - type: END
-                location:
-                  descriptor:
-                    name: "Kempegowda International Airport"
-                    code: "BLR"
-                time:
-                  timestamp: "2026-11-20T08:45:00.000Z"
-        items:
-          - id: "I1-SAVER"
-            parent_item_id: "I1"
-            descriptor:
-              name: "Saver Fare - Adult"
-              code: "ADULT_TICKET"
-            price:
-              currency: "INR"
-              value: "4500"
-            tags:
-              - descriptor:
-                  code: GENERAL_INFO
-                list:
-                  - descriptor:
-                      code: CABIN_BAGGAGE
-                    value: "7 Kg"
-                  - descriptor:
-                      code: CHECK_IN_BAGGAGE
-                    value: "15 Kg"
-```
-
----
-
-### 3. `POST /select` — Flight & Ancillary Selection
-
-- **Flow**: Buyer App (BAP) → Seller App (BPP)
-- **Business Role**: The passenger picks their preferred flight schedule, specific fare category (e.g. Flexi fare), passenger counts, and optional add-on ancillaries (meals, extra luggage allowance).
-- **Key Payload Elements (`message.order`)**:
-  - `provider.id`: Target airline ID.
-  - `items`: Selected tickets with `parent_item_id`, passenger count (`quantity.selected.count`), and requested `add_ons` (e.g., meal `A1`, priority boarding `A2`).
-  - `fulfillments`: Flight journey identifier (`id: F1`, stops).
-
-```yaml
-# Example: POST /select
-message:
-  order:
-    provider:
-      id: "P1"
-    items:
-      - parent_item_id: "I1"
-        quantity:
-          selected:
-            count: 2
-        add_ons:
-          - id: "MEAL-VEG"
-            quantity:
-              selected:
-                count: 2
-    fulfillments:
-      - id: "F1"
-```
-
----
-
-### 4. `POST /on_select` — Itemized Quotation & Seat Grid Matrix
-
-- **Flow**: Seller App (BPP) → Buyer App (BAP)
-- **Business Role**: The airline validates live seat inventory, places a temporary soft-lock on the seats, returns an itemized price quote with all statutory taxes, and delivers the cabin seat layout map.
-- **Key Payload Elements (`message.order`)**:
-  - `quote.price`: Total price for the selection.
-  - `quote.breakup`:
-    - `title: BASE_FARE`: Core airfare per passenger item.
-    - `title: TAX`: Itemized statutory charges (`cgst`, `sgst`, `fuel tax`, `cess`, user development fee).
-    - `title: SELLER_FEES`: Convenience or service fee.
-    - `title: OTHER_CHARGES`: Selected add-ons and luggage fees.
-  - `fulfillments[].tags`:
-    - `SEAT_GRID`: Complete cabin layout with coordinate mapping (`X`, `Y`, `Z`), seat numbers (`12A`, `12B`), price differentials (`SEAT_PRICE`), availability (`AVAILABLE: true/false`), and gender-restricted indicators (`RESTRICTED_GENDER: FEMALE`).
-    - `VEHICLE_GRID`: Fuselage grid bounds (`X_MAX`, `Y_MAX`, `X_LOBBY_START`).
-
-```yaml
-# Example: POST /on_select (Quote & Seat Grid snippet)
-message:
-  order:
-    quote:
-      price:
-        currency: "INR"
-        value: "10500"
-      breakup:
-        - title: BASE_FARE
-          item:
-            id: "I1"
-            quantity:
-              selected:
-                count: 2
-          price:
-            currency: "INR"
-            value: "9000"
-        - title: TAX
-          item:
-            id: "I1"
-            tags:
-              - descriptor:
-                  code: TAX
-                list:
-                  - descriptor:
-                      name: "cgst"
-                    value: "250"
-                  - descriptor:
-                      name: "sgst"
-                    value: "250"
-                  - descriptor:
-                      name: "fuel tax"
-                    value: "500"
-          price:
-            currency: "INR"
-            value: "1000"
-        - title: OTHER_CHARGES
-          item:
-            id: "MEAL-VEG"
-          price:
-            currency: "INR"
-            value: "500"
-```
-
----
-
-### 5. `POST /init` — Passenger Manifest & Billing Details
-
-- **Flow**: Buyer App (BAP) → Seller App (BPP)
-- **Business Role**: Submits traveler identity information, contact details, and billing details to prepare the final ticket booking.
-- **Key Payload Elements (`message.order`)**:
-  - `billing`: Name, tax invoice details (GSTIN), address, email, and phone.
-  - `fulfillments`:
-    - Journey leg (`id: F1`, `type: TRIP`, flight number).
-    - Passenger tickets (`id: FT_1`, `id: FT_2`, `type: TICKET`):
-      - `customer.person.name`: **Mandatory pipe-separated format**: `<Title> | <First Name> | <Middle Name> | <Last Name>`.
-      - `customer.person.age`: Traveler age.
-      - `customer.person.gender`: `MALE`, `FEMALE`, or `OTHER`.
-      - `customer.person.dob`: Date of birth (`YYYY-MM-DD`), required for age verification, infant fare validation, and concession checks.
-      - `customer.contact`: Mobile number and email address.
-
-```yaml
-# Example: POST /init
-message:
-  order:
-    provider:
-      id: "P1"
-    items:
-      - id: "I1-1"
-        parent_item_id: "I1"
-        quantity:
-          selected:
-            count: 1
-    fulfillments:
-      - id: "F1"
-        type: TRIP
-      - id: "FT_1"
-        type: TICKET
-        customer:
-          person:
-            name: "Mr. | Joe | Wick | Adams"
-            age: "32"
-            gender: "MALE"
-            dob: "1994-05-18"
-          contact:
-            phone: "+919876543210"
-            email: "joe.adams@example.com"
-    billing:
-      name: "Joe Adams"
-      address: "123 MG Road, Bengaluru"
-      phone: "+919876543210"
-      email: "joe.adams@example.com"
-```
-
----
-
-### 6. `POST /on_init` — Draft Order & Settlement Terms
-
-- **Flow**: Seller App (BPP) → Buyer App (BAP)
-- **Business Role**: The airline confirms that all traveler information satisfies airline regulatory and safety checks, locks the inventory, and provides finalized payment settlement parameters and cancellation fee slabs.
-- **Key Payload Elements (`message.order`)**:
-  - `payment`:
-    - `collected_by`: `BAP` (Buyer App collects passenger payment) or `BPP`.
-    - `status`: `NOT-PAID`.
-    - `type`: `PRE-FULFILLMENT`.
-    - `tags.SETTLEMENT_TERMS`: Settlement basis, bank escrow window, and delay interest terms.
-  - `cancellation_terms`: Exact tiered deduction rules (e.g. cancellation 48h prior vs 2h prior).
-
----
-
-### 7. `POST /confirm` — Payment Authorization & Order Placement
-
-- **Flow**: Buyer App (BAP) → Seller App (BPP)
-- **Business Role**: Dispatched immediately after the passenger completes payment on the Buyer App to commit the booking and instruct the airline to issue tickets.
-- **Key Payload Elements (`message.order`)**:
-  - `items` & `fulfillments`: Full traveler manifest matching `init`.
-  - `payment`:
-    - `status`: Updated to `PAID`.
-    - `params.transaction_id`: Gateway payment reference ID.
-    - `params.amount`: Exact verified paid amount.
-    - `params.currency`: `INR`.
-
-```yaml
-# Example: POST /confirm (Payment block)
-payment:
-  status: "PAID"
-  type: "PRE-FULFILLMENT"
-  collected_by: "BAP"
-  params:
-    transaction_id: "TXN-9841205128"
-    amount: "10500"
-    currency: "INR"
-```
-
----
-
-### 8. `POST /on_confirm` — Ticket Issuance & PNR Allocation
-
-- **Flow**: Seller App (BPP) → Buyer App (BAP)
-- **Business Role**: The airline generates the confirmed Airline PNR, e-ticket numbers, and assigned seat details, confirming the flight reservation.
-- **Key Payload Elements (`message.order`)**:
-  - `id`: Permanent booking order ID (e.g., `O1`).
-  - `status`: `CONFIRMED`.
-  - `created_at` & `updated_at`: Order generation timestamps.
-  - `fulfillments`:
-    - Journey leg (`type: TRIP`, state `CONFIRMED`, vehicle code `6E-284`, `tags.INFO.OPERATED_BY`).
-    - Ticket fulfillments (`type: TICKET`):
-      - `stops[].authorization.token`: Airline PNR string or QR code token for airport gate entry.
-      - `tags.SEAT_GRID`: Assigned seat number (`SEAT_NUMBER: "14B"`).
-  - `quote`: Finalized financial ledger.
-
----
-
-### 9. `POST /status` & `POST /on_status` — Live Order & Flight Updates
-
-- **Flow**: BAP ↔ BPP
-- **Business Role**: Provides real-time flight tracking, gate change alerts, terminal notifications, and fulfillment progression tracking (`CONFIRMED` → `IN_PROGRESS` → `COMPLETED`).
-- **Usage**:
-  - BAP sends `order_id` in `/status`.
-  - BPP responds via `/on_status` with revised timestamps, flight status updates, terminal changes, or boarding gate announcements.
-
----
-
-### 10. `POST /cancel` & `POST /on_cancel` — Two-Step Cancellation Engine
-
-The cancellation protocol guarantees that passengers always see transparent refund amounts before finalizing a cancellation:
+#### 2. Sequence Diagram
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant BAP as Buyer App (BAP)
-    participant BPP as Seller App (BPP)
-    
-    Note over BAP,BPP: Step 1: Soft Cancellation (Quote Preview)
-    BAP->>BPP: POST /cancel (descriptor.code: "SOFT_CANCEL", reason: "001")
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_cancel (status: "CONFIRMED", refund preview in quote.breakup)
-    BAP-->>BPP: 200 OK ACK
-    Note over BAP: Traveler reviews refund amount and confirms
+    participant BAP as Travel Platform (Buyer App / BAP)
+    participant Gateway as Network Gateway
+    participant BPP as Airline (Seller App / BPP)
 
-    Note over BAP,BPP: Step 2: Confirmed Cancellation (Commit)
-    BAP->>BPP: POST /cancel (descriptor.code: "CONFIRM_CANCEL", reason: "001")
-    BPP-->>BAP: 200 OK ACK
-    BPP->>BAP: POST /on_cancel (status: "CANCELLED", voided PNR, final refund ledger)
-    BAP-->>BPP: 200 OK ACK
+    rect rgb(240, 248, 255)
+    Note over BAP,BPP: Step 1: Flight Search Broadcast (via Gateway)
+    BAP->>Gateway: POST /search (Sector, Travel Date, Passenger Counts)
+    Gateway-->>BAP: 200 OK (ACK) / 400 (NACK)
+    Gateway->>BPP: POST /search (Broadcast Flight Search Request)
+    BPP-->>Gateway: 200 OK (ACK) / 400 (NACK)
+    end
+
+    rect rgb(245, 255, 250)
+    Note over BAP,BPP: Step 2: Paginated Catalog Streaming (Direct Peer-to-Peer)
+    BPP->>BAP: POST /on_search (Page 1 of N, Initial Flight Options)
+    BAP-->>BPP: 200 OK (ACK)
+    BPP->>BAP: POST /on_search (Page 2 of N, Next Flight Batch)
+    BAP-->>BPP: 200 OK (ACK)
+    BPP->>BAP: POST /on_search (Page N of N, Final Flight Batch)
+    BAP-->>BPP: 200 OK (ACK)
+    end
 ```
 
-#### Step 1: Soft Cancel (`SOFT_CANCEL`)
-- Buyer App sends `/cancel` with `descriptor.code: "SOFT_CANCEL"` and `cancellation_reason_id`.
-- Seller App returns `/on_cancel` with order status remaining `CONFIRMED` and `quote.breakup` providing:
-  - `title: REFUND` (negative value reflecting refunded fare and taxes).
-  - `title: CANCELLATION_CHARGES` (applicable airline cancellation penalties).
-- **Purpose**: Displays the exact refund amount to the passenger before they make an irreversible decision.
+#### 3. API Breakdown & Technical Actions
 
-#### Step 2: Confirmed Cancel (`CONFIRM_CANCEL`)
-- Buyer App sends `/cancel` with `descriptor.code: "CONFIRM_CANCEL"`.
-- Seller App responds via `/on_cancel` with order status updated to `CANCELLED`, voided PNR, and the final refund settlement order.
-
-#### Unsolicited Seller-Side Cancellation
-- If an airline cancels a flight (due to weather, technical faults, or operational disruption), the BPP triggers an unsolicited `POST /on_cancel` directly to the BAP.
-- The order status is set to `CANCELLED`, cancellation reason code is provided, and `quote.breakup` contains a 100% full refund with zero cancellation charges.
+- **`/search` (Buyer App [BAP] → Gateway → Seller App [BPP])**: Initial flight search request for the specified sector broadcast across the Gateway to registered airlines.
+- **Sequential `/on_search` Callbacks (Seller App [BPP] → Buyer App [BAP])**: The airline delivers catalog pages in consecutive asynchronous callbacks directly to the Buyer App (BAP). Each payload contains:
+  - `PAGINATION_ID`: Unique session identifier correlating the pages.
+  - `CURRENT_PAGE_NUMBER`: Index of the current batch (e.g., `1`, `2`, `3`).
+  - `MAX_PAGE_NUMBER`: Total page count for the search response.
+  The Buyer App (BAP) acknowledges each callback with HTTP 200 `ACK` and renders the flight options incrementally.
 
 ---
 
-### 11. Ancillary APIs: `/update`, `/track`, `/rating`, `/support`
+### Flow 3: Airlines – User Cancellation Flow
 
-- **`POST /update` & `/on_update`**: Modifies passenger contact details post-booking or purchases additional baggage/meal ancillaries.
-- **`POST /track` & `/on_track`**: Provides real-time flight telemetry or live radar tracking URLs.
-- **`POST /rating` & `/on_rating`**: Captures passenger feedback ratings (1–5 stars) on seat cleanliness, punctuality, and cabin crew service.
-- **`POST /support` & `/on_support`**: Delivers airline 24x7 escalation contact numbers, support email addresses, and instant chat links.
+#### 1. Short Description
+
+When a traveler initiates a booking cancellation, the network executes a two-step cancellation workflow: a soft-cancel preview to calculate refund and penalties, followed by a confirm-cancel to finalize ticket cancellation.
+
+#### 2. Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant BAP as Travel Platform (Buyer App / BAP)
+    participant BPP as Airline (Seller App / BPP)
+
+    rect rgb(255, 250, 240)
+    Note over BAP,BPP: Step 1: Soft Cancel (Quote Preview)
+    BAP->>BPP: POST /cancel (SOFT-CANCEL, Cancellation Reason Code)
+    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
+    BPP->>BAP: POST /on_cancel (Itemized Refund Quote Preview & Penalties)
+    BAP-->>BPP: 200 OK (ACK)
+    end
+
+    rect rgb(255, 245, 245)
+    Note over BAP,BPP: Step 2: Confirm Cancel (Final Cancellation)
+    BAP->>BPP: POST /cancel (CONFIRM-CANCEL, Approved Refund)
+    BPP-->>BAP: 200 OK (ACK) / 400 (NACK)
+    BPP->>BAP: POST /on_cancel (Order CANCELLED, Voided PNR, Refund Settlement Ledger)
+    BAP-->>BPP: 200 OK (ACK)
+    end
+```
+
+#### 3. API Breakdown & Technical Actions
+
+- **`/cancel` [Soft Cancel] (Buyer App [BAP] → Seller App [BPP])**: The Buyer App (BAP) initiates cancellation preview by setting `descriptor.code = "SOFT-CANCEL"` and passing the relevant cancellation reason code (e.g. `001` for change of plans).
+- **`/on_cancel` [Quote Preview] (Seller App [BPP] → Buyer App [BAP])**: The airline calculates deductions based on the fare rules and time window. The response returns an itemized refund quote showing original fare, cancellation fees, and net refund balance.
+- **`/cancel` [Confirm Cancel] (Buyer App [BAP] → Seller App [BPP])**: After traveler confirmation, the Buyer App (BAP) sends `descriptor.code = "CONFIRM-CANCEL"`.
+- **`/on_cancel` [Confirmed Cancellation] (Seller App [BPP] → Buyer App [BAP])**: The airline releases the reserved seats, cancels the PNR in its system, sets order status to `CANCELLED`, and provides the final refund disbursement ledger.
 
 ---
 
-## Special Domain Rules & Implementation Checklist
+### Flow 4: Airlines – Seller Cancellation Flow
 
-### 1. Passenger Name Formatting Standard
-In accordance with global civil aviation and ticketing standards, all traveler names in `fulfillments.customer.person.name` must strictly follow a pipe-delimited format:
-- Format: `<Title> | <First Name> | <Middle Name> | <Last Name>`
-- Examples:
-  - `Mr. | Rajesh | Kumar | Sharma`
-  - `Ms. | Priya | | Patel` *(middle name omitted)*
-  - `Dr. | Sarah | Jane | Connor`
+#### 1. Short Description
 
-### 2. Dual-Level Fulfillment Model
-An airline order contains two distinct fulfillment layers:
-1. **Journey Fulfillment (`type: TRIP`)**: Represents the physical flight sector (flight number e.g. `6E-284`, operating carrier `IndiGo`, departure/arrival airport IATA codes, and scheduled departure/arrival timestamps).
-2. **Ticket Fulfillment (`type: TICKET`)**: Individual traveler fulfillment instances (`FT_1`, `FT_2`) containing the traveler's demographic data, assigned seat number, and issued PNR/e-ticket authorization token.
+If an airline cancels a scheduled flight due to severe weather, air traffic constraints, or technical maintenance, the Seller App (BPP) triggers an unsolicited cancellation pushing full refund details to the passenger.
 
-### 3. Concessionary Fare Types (`FARE_TYPE`)
-Sellers and Buyers support distinct passenger fare categories via `FARE_TYPE` tags:
-- `REGULAR`: Standard adult fare.
-- `STUDENT`: Student concessions with additional baggage allowances.
-- `SENIOR_CITIZEN`: Age-verified senior citizen discounted fares.
-- `ARMED_FORCES`: Active military and veteran concessionary fares.
-- `DOCTORS_NURSES`: Healthcare professional concessional fares.
+#### 2. Sequence Diagram
 
-### 4. Interactive Cabin Seat Layout Matrix
-The `SEAT_GRID` tag structures the aircraft cabin:
-- Coordinates: `X` (row), `Y` (column), `Z` (deck).
-- Metadata: `SEAT_NUMBER` (e.g., `12A`), `SEAT_PRICE`, `AVAILABLE` (`true`/`false`).
-- Safety & Policy Constraints: `RESTRICTED_GENDER: "FEMALE"` (designated female-only seating rows), `SINGLE_SEAT: "true"`.
+```mermaid
+sequenceDiagram
+    autonumber
+    participant BAP as Travel Platform (Buyer App / BAP)
+    participant BPP as Airline (Seller App / BPP)
+
+    rect rgb(255, 240, 240)
+    Note over BAP,BPP: Unsolicited Flight Cancellation & Disruption
+    BPP->>BAP: POST /on_cancel (Unsolicited Full Refund, Reason Code 008)
+    BAP-->>BPP: 200 OK (ACK)
+    end
+```
+
+#### 3. API Breakdown & Technical Actions
+
+- **`/on_cancel` [Unsolicited] (Seller App [BPP] → Buyer App [BAP])**: Fired directly by the airline upon flight cancellation. The payload contains `order.status = "CANCELLED"`, `cancellation.cancelled_by = "PROVIDER"`, reason code `008` (Venue/Flight Closure), and a 100% full refund breakup without cancellation charges.
