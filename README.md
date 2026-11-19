@@ -1,6 +1,6 @@
 # Workflows
 
-GitHub Actions workflows for the ONDC spec pipeline. All workflows operate on the same `config/` directory convention and produce or consume `build.yaml` as the resolved artifact.
+GitHub Actions workflows for the ONDC spec pipeline. All workflows operate on the same `config/` directory convention and produce or consume `build.yaml` as the resolved artifact
 
 ---
 
