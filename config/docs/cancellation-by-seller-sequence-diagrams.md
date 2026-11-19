@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Cancellation by Seller
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)

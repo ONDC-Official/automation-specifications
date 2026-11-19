@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Rating(Success)
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -58,14 +59,12 @@ sequenceDiagram
     BAP->>User: Display confirmed booking and PNR/ticket pass
     end
 
-    rect rgb(245, 248, 255)
-    Note over BAP,BPP: Phase 5: Order Status Tracking
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+    rect rgb(255, 255, 240)
+    Note over BAP,BPP: Phase 5: Post-Trip Rating & Feedback
     Note over BPP: Unsolicited notification broadcast
     BPP->>BAP: POST /on_status
     BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /rating
+    BPP-->>BAP: 200 OK (ACK)
     end
 ```

@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Seller Cancellation
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -58,45 +59,10 @@ sequenceDiagram
     BAP->>User: Display confirmed booking and PNR/ticket pass
     end
 
-    rect rgb(245, 248, 255)
-    Note over BAP,BPP: Phase 5: Order Status Tracking
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+    rect rgb(255, 245, 245)
+    Note over BAP,BPP: Phase 5: Cancellation & Refund Processing
     Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
+    BPP->>BAP: POST /on_cancel
     BAP-->>BPP: 200 OK (ACK)
-    end
-
-    rect rgb(253, 245, 255)
-    Note over BAP,BPP: Phase 6: Integrated Grievance Management (IGM)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
     end
 ```

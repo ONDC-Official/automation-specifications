@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity(Bus) Station Code Based Flow WITH IGM(v-1.0.0)
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -45,7 +46,40 @@ sequenceDiagram
     Note over BAP,BPP: Phase 3: Passenger Manifest & Booking Initialization
     BAP->>BPP: POST /init
     BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init (NACK: Error 90203 - Soft Lock Expired)
+    BPP->>BAP: POST /on_init
     BAP-->>BPP: 200 OK (ACK)
+    end
+
+    rect rgb(240, 255, 240)
+    Note over BAP,BPP: Phase 4: Payment & Order Confirmation
+    BAP->>BPP: POST /confirm
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_confirm
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>User: Display confirmed booking and PNR/ticket pass
+    end
+
+    rect rgb(245, 248, 255)
+    Note over BAP,BPP: Phase 5: Order Status Tracking
+    BAP->>BPP: POST /status
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_status
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_status
+    BAP-->>BPP: 200 OK (ACK)
+    end
+
+    rect rgb(253, 245, 255)
+    Note over BAP,BPP: Phase 6: Integrated Grievance Management (IGM)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_issue_status
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
     end
 ```

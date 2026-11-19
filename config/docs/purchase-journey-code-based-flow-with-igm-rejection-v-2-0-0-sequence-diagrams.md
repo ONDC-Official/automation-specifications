@@ -1,10 +1,11 @@
 ```mermaid
 sequenceDiagram
+    title Purchase Journey Code Based Flow With IGM Rejection v-2.0.0
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
     participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
+    participant BPP as Airline Carrier (BPP)
 
     rect rgb(240, 248, 255)
     Note over BAP,BPP: Phase 1: Discovery & Route Search
@@ -15,16 +16,13 @@ sequenceDiagram
     BPP-->>BG: 200 OK (ACK)
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_search
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
     BPP->>BAP: POST /on_search
     BAP-->>BPP: 200 OK (ACK)
     end
@@ -60,10 +58,6 @@ sequenceDiagram
 
     rect rgb(245, 248, 255)
     Note over BAP,BPP: Phase 5: Order Status Tracking
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
     Note over BPP: Unsolicited notification broadcast
     BPP->>BAP: POST /on_status
     BAP-->>BPP: 200 OK (ACK)
@@ -71,6 +65,20 @@ sequenceDiagram
 
     rect rgb(253, 245, 255)
     Note over BAP,BPP: Phase 6: Integrated Grievance Management (IGM)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
     BAP->>BPP: POST /issue
     BPP-->>BAP: 200 OK (ACK)
     BPP->>BAP: POST /on_issue

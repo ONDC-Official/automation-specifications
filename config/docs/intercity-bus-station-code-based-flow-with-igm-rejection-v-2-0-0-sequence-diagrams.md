@@ -1,5 +1,6 @@
 ```mermaid
 sequenceDiagram
+    title Intercity Bus Station Code Based Flow With IGM Rejection v-2.0.0
     autonumber
     actor User as Traveler / Customer
     participant BAP as Buyer App (BAP)
@@ -76,7 +77,25 @@ sequenceDiagram
     BPP->>BAP: POST /on_issue
     BAP-->>BPP: 200 OK (ACK)
     Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue_status
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    Note over BPP: Unsolicited notification broadcast
+    BPP->>BAP: POST /on_issue
+    BAP-->>BPP: 200 OK (ACK)
+    BAP->>BPP: POST /issue
+    BPP-->>BAP: 200 OK (ACK)
+    BPP->>BAP: POST /on_issue
     BAP-->>BPP: 200 OK (ACK)
     BAP->>BPP: POST /issue
     BPP-->>BAP: 200 OK (ACK)
