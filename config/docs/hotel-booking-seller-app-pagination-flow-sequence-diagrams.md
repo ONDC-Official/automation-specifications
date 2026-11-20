@@ -5,160 +5,89 @@ Not meant to be shown as its own docs page — the frontend filters this slug ou
 Brief / Additional Resources / Changelog tab lists and instead looks up the section matching the
 selected API call's `action_id` (the `##` heading below) to render that step's diagram.
 
-One `## <action_id>` heading per step of `Hotel_Booking_Seller_App_Pagination_Flow.yaml`, in that flow's own step order, each
-followed by its Mermaid `sequenceDiagram`.
+One `## <action_id>` heading per step of `Hotel_Booking_Seller_App_Pagination_Flow.yaml`, in that flow's own step order, each followed by its Mermaid `sequenceDiagram`: the whole flow, with that call's own message(s) highlighted — same convention as the other domains' per-step sequence-diagram docs.
 
 ## search_1
 
 ```mermaid
 sequenceDiagram
-    title Hotel Booking Seller App Pagination Flow
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    rect rgb(191, 223, 255)
-    User->>BAP: Provide destination city and stay dates
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_search (Batch 1: Initial Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 2: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 3: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 4: Final Hotel Catalog Batch)
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Gateway: /search (city, stay dates)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: initial hotel catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final catalog batch)
 ```
 
 ## on_search_1
 
 ```mermaid
 sequenceDiagram
-    title Hotel Booking Seller App Pagination Flow
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    User->>BAP: Provide destination city and stay dates
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_search (Batch 1: Initial Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 2: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 3: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 4: Final Hotel Catalog Batch)
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (city, stay dates)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: initial hotel catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final catalog batch)
 ```
 
 ## on_search_2
 
 ```mermaid
 sequenceDiagram
-    title Hotel Booking Seller App Pagination Flow
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    User->>BAP: Provide destination city and stay dates
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search (Batch 1: Initial Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 2: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 3: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 4: Final Hotel Catalog Batch)
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (city, stay dates)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: initial hotel catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (additional catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final catalog batch)
 ```
 
 ## on_search_3
 
 ```mermaid
 sequenceDiagram
-    title Hotel Booking Seller App Pagination Flow
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    User->>BAP: Provide destination city and stay dates
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search (Batch 1: Initial Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 2: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 3: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 4: Final Hotel Catalog Batch)
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (city, stay dates)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: initial hotel catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (additional catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (additional catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final catalog batch)
 ```
 
 ## on_search_4
 
 ```mermaid
 sequenceDiagram
-    title Hotel Booking Seller App Pagination Flow
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    User->>BAP: Provide destination city and stay dates
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search (Batch 1: Initial Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 2: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 3: Additional Hotel Catalog)
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search (Batch 4: Final Hotel Catalog Batch)
-    BAP-->>BPP: 200 OK (ACK)
-    end
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (city, stay dates)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: initial hotel catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (additional catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (additional catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final catalog batch)
+  end
 ```

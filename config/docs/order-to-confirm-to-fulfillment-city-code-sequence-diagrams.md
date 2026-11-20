@@ -5,320 +5,175 @@ Not meant to be shown as its own docs page — the frontend filters this slug ou
 Brief / Additional Resources / Changelog tab lists and instead looks up the section matching the
 selected API call's `action_id` (the `##` heading below) to render that step's diagram.
 
-One `## <action_id>` heading per step of `Order_to_Confirm_to_Fulfillment__City_Code_.yaml`, in that flow's own step order, each
-followed by its Mermaid `sequenceDiagram`.
+One `## <action_id>` heading per step of `Order_to_Confirm_to_Fulfillment__City_Code_.yaml`, in that flow's own step order, each followed by its Mermaid `sequenceDiagram`: the whole flow, with that call's own message(s) highlighted — same convention as the other domains' per-step sequence-diagram docs.
 
 ## select_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## on_select_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## init_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## on_init_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## confirm_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## on_confirm_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    end
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## status_5
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## on_status_city_code
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
 ```
 
 ## on_status_unsoliciated
 
 ```mermaid
 sequenceDiagram
-    title Order to Confirm to Fulfillment (City Code)
-    autonumber
-    actor User as Traveler / Guest
-    participant BAP as Accommodation Booking App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Hotel Provider (BPP)
-
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and hotel voucher
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
+  participant Buyer App (BAP)
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Seller App (BPP): /select (hotel rooms, stay dates)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, room availability)
+  Buyer App (BAP)->>Seller App (BPP): /init (guest details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place hotel reservation)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, voucher issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active reservation)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): booking status update
+  end
 ```
