@@ -5,1638 +5,855 @@ Not meant to be shown as its own docs page — the frontend filters this slug ou
 Brief / Additional Resources / Changelog tab lists and instead looks up the section matching the
 selected API call's `action_id` (the `##` heading below) to render that step's diagram.
 
-One `## <action_id>` heading per step of `Intercity_Bus__Station_Code_Based_Flow_With_IGM_No_Action_v-2.0.0.yaml`, in that flow's own step order, each
-followed by its Mermaid `sequenceDiagram`.
+One `## <action_id>` heading per step of `Intercity_Bus__Station_Code_Based_Flow_With_IGM_No_Action_v-2.0.0.yaml`, in that flow's own step order, each followed by its Mermaid `sequenceDiagram`: the whole flow, with that call's own message(s) highlighted — same convention as the other domains' per-step sequence-diagram docs.
 
 ## search_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    rect rgb(191, 223, 255)
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  end
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## search_BUS_202
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_BUS_202
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  end
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## search_BUS_203
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_BUS_203
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## select_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_select_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## select_BUS_202
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_select_BUS_202
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## init_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_init_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## confirm_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_confirm_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    end
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## status_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_status_BUS_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_status_unsolicited_201
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_open_2
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_processing
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_resolution_igm_3
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_resolution_accept_igm_3
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_resolved_igm_3
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_close_igm_3
 
 ```mermaid
 sequenceDiagram
-    title Intercity Bus Station Code Based Flow With IGM No Action v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Bus Operator (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    BAP->>BPP: POST /status
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (bus search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (incremental search / filter)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 2: bus catalog)
+  Buyer App (BAP)->>Gateway: /search (final search pull)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 3: bus catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select bus route & seat)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (boarding & dropping points)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with stops)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place bus booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Buyer App (BAP)->>Seller App (BPP): /status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (active bus pass)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): trip status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
+  end
 ```

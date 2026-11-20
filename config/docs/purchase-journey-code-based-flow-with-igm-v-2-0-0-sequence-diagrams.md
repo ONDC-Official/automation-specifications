@@ -5,1638 +5,809 @@ Not meant to be shown as its own docs page — the frontend filters this slug ou
 Brief / Additional Resources / Changelog tab lists and instead looks up the section matching the
 selected API call's `action_id` (the `##` heading below) to render that step's diagram.
 
-One `## <action_id>` heading per step of `Purchase_Journey_Code_Based_Flow_With_IGM_v-2.0.0.yaml`, in that flow's own step order, each
-followed by its Mermaid `sequenceDiagram`.
+One `## <action_id>` heading per step of `Purchase_Journey_Code_Based_Flow_With_IGM_v-2.0.0.yaml`, in that flow's own step order, each followed by its Mermaid `sequenceDiagram`: the whole flow, with that call's own message(s) highlighted — same convention as the other domains' per-step sequence-diagram docs.
 
 ## search_1_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    rect rgb(191, 223, 255)
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_1_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_2_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_3_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_search_4_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## select_1_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_select_1_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## select_2_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_select_2_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## init_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_init_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## confirm_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_confirm_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_status_unsoliciated_Airline_200
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_open
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_processing
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_need_more_info
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_info_provided
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_provided
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_resolution
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_resolution_accept
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  end
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## on_issue_resolved
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    end
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  rect rgb(191, 223, 255)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  end
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
 ```
 
 ## issue_close
 
 ```mermaid
 sequenceDiagram
-    title Purchase Journey Code Based Flow With IGM v-2.0.0
-    autonumber
-    actor User as Traveler / Customer
-    participant BAP as Buyer App (BAP)
-    participant BG as ONDC Gateway
-    participant BPP as Airline Carrier (BPP)
-
-    User->>BAP: Provide journey search parameters
-    BAP->>BG: POST /search
-    BG-->>BAP: 200 OK (ACK)
-    BG->>BPP: POST /search
-    BPP-->>BG: 200 OK (ACK)
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_search
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /select
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_select
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /init
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_init
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /confirm
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_confirm
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>User: Display confirmed booking and PNR/ticket pass
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_status
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    Note over BPP: Unsolicited notification broadcast
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    BPP->>BAP: POST /on_issue
-    BAP-->>BPP: 200 OK (ACK)
-    rect rgb(191, 223, 255)
-    BAP->>BPP: POST /issue
-    BPP-->>BAP: 200 OK (ACK)
-    end
+  participant Buyer App (BAP)
+  participant Gateway
+  participant Seller App (BPP)
+  Buyer App (BAP)->>Gateway: /search (flight search)
+  Gateway->>Seller App (BPP): /search (forwarded)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (batch 1: flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 2 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 3 (flight catalog)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (unsolicited): batch 4 (final flight catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (select flight)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (quote, seat availability)
+  Buyer App (BAP)->>Seller App (BPP): /select (add-on services, meals/baggage)
+  Seller App (BPP)-->>Buyer App (BAP): /on_select (updated quote with add-ons)
+  Buyer App (BAP)->>Seller App (BPP): /init (passenger details, billing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (final quote, payment terms)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (place flight booking)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (booking confirmed, ticket issued)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): flight status update
+  Buyer App (BAP)->>Seller App (BPP): /issue (open complaint)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): need more info
+  Buyer App (BAP)->>Seller App (BPP): /issue (info provided)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (processing updated info)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (unsolicited): resolution
+  Buyer App (BAP)->>Seller App (BPP): /issue (accept resolution)
+  Seller App (BPP)-->>Buyer App (BAP): /on_issue (resolved)
+  rect rgb(191, 223, 255)
+  Buyer App (BAP)->>Seller App (BPP): /issue (close)
+  end
 ```
