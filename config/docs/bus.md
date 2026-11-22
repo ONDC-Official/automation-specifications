@@ -24,7 +24,7 @@ This guide covers the Bus use case (`message.intent.fulfillment.vehicle.category
 |---|---|
 | **Buyer App (BAP)** | Sends `search`, `select`, `init`, `confirm`, `status` and `cancel`. Collects the payment (`collected_by: BAP`) and passes the buyer's billing details. |
 | **Seller App (BPP)** | Answers with `on_search`, `on_select`, `on_init`, `on_confirm`, `on_status` and `on_cancel`. Returns the catalog, quote, order, QR authorization and cancellation state. Can also send `on_status` on its own (unsolicited). |
-| **Gateway** | Receives the BAP's `search` and forwards it to the Seller App. All later calls go directly between BAP and BPP. |
+| **Gateway** | Receives the BAP's first `search` (by city, `search1`) and forwards it to the Seller App. The second `search` (point A to point B, `search2`) and all later calls go directly between BAP and BPP (peer-to-peer). |
 
 ---
 
@@ -66,7 +66,7 @@ This guide covers the Bus use case (`message.intent.fulfillment.vehicle.category
 
 **Network interaction:**
 
-- **`/search`**: The Buyer App (BAP) sends the search intent to the Gateway, which forwards it to the Seller App (BPP). The flow `ORDER_TO_CONFIRM_TO_JOURNEY_COMPLETION` sends `search` twice (`search1_BUS_200`, `search2_BUS_200`).
+- **`/search`**: The flow `ORDER_TO_CONFIRM_TO_JOURNEY_COMPLETION` sends `search` twice. `search1_BUS_200` (search for the buses of a city) goes from the Buyer App (BAP) to the Gateway, which forwards it to the Seller App (BPP). `search2_BUS_200` (search from point A to point B) goes directly from the BAP to the BPP.
 - **`/on_search`**: The Seller App (BPP) returns its catalog.
 
 ### 2. Route Catalog
@@ -215,11 +215,12 @@ flowchart TD
         BPP2["Seller App<br/>(BPP)"]:::provider
 
         BPP2 -->|"3. POST /on_search (route catalog)"| BAP2
-        BAP2 <-->|"4 & 5. Select & Quote (POST /select ⇄ /on_select)"| BPP2
-        BAP2 <-->|"6 & 7. Billing & Payment Terms (POST /init ⇄ /on_init)"| BPP2
-        BAP2 <-->|"8 & 9. Payment & Ticket (POST /confirm ⇄ /on_confirm)"| BPP2
-        BAP2 <-->|"10 & 11. Order Status (POST /status ⇄ /on_status)"| BPP2
-        BPP2 -.->|"12. Unsolicited POST /on_status"| BAP2
+        BAP2 <-->|"4 & 5. Second search, peer-to-peer (POST /search ⇄ /on_search)"| BPP2
+        BAP2 <-->|"6 & 7. Select & Quote (POST /select ⇄ /on_select)"| BPP2
+        BAP2 <-->|"8 & 9. Billing & Payment Terms (POST /init ⇄ /on_init)"| BPP2
+        BAP2 <-->|"10 & 11. Payment & Confirmation (POST /confirm ⇄ /on_confirm)"| BPP2
+        BAP2 <-->|"12 & 13. Order Status (POST /status ⇄ /on_status)"| BPP2
+        BPP2 -.->|"14. Unsolicited POST /on_status"| BAP2
     end
 
     Phase1 ==>|"Callback Starts Direct Booking"| Phase2

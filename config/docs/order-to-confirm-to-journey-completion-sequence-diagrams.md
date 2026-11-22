@@ -15,22 +15,21 @@ sequenceDiagram
   participant Gateway
   participant Seller App (BPP)
   rect rgb(191, 223, 255)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_search1_BUS_200
@@ -40,23 +39,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
   end
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## search2_BUS_200
@@ -66,23 +64,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
   rect rgb(191, 223, 255)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_search2_BUS_200
@@ -92,23 +89,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
   end
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## select_BUS_200
@@ -118,23 +114,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
   rect rgb(191, 223, 255)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_select_BUS_200
@@ -144,23 +139,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
   end
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## init_BUS_200
@@ -170,23 +164,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
   rect rgb(191, 223, 255)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_init_BUS_200
@@ -196,23 +189,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   end
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## confirm_BUS_200
@@ -222,23 +214,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   rect rgb(191, 223, 255)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_confirm_BUS_200
@@ -248,23 +239,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   end
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## status_BUS_200
@@ -274,23 +264,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## on_status_BUS_200
@@ -300,23 +289,22 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
 ```
 
 ## unsoliciated_on_status_BUS_200
@@ -326,21 +314,20 @@ sequenceDiagram
   participant Buyer App (BAP)
   participant Gateway
   participant Seller App (BPP)
-  Buyer App (BAP)->>Gateway: /search (catalog search)
+  Buyer App (BAP)->>Gateway: /search (by city)
   Gateway->>Seller App (BPP): /search (forwarded)
   Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
-  Buyer App (BAP)->>Gateway: /search (station-to-station search)
-  Gateway->>Seller App (BPP): /search (forwarded)
-  Seller App (BPP)-->>Buyer App (BAP): /on_search (fares for station pair)
-  Buyer App (BAP)->>Seller App (BPP): /select (select ticket)
+  Buyer App (BAP)->>Seller App (BPP): /search (A to B, peer-to-peer)
+  Seller App (BPP)-->>Buyer App (BAP): /on_search (catalog)
+  Buyer App (BAP)->>Seller App (BPP): /select (item I1 x 2)
   Seller App (BPP)-->>Buyer App (BAP): /on_select (quote)
-  Buyer App (BAP)->>Seller App (BPP): /init (initialise order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_init (order details)
-  Buyer App (BAP)->>Seller App (BPP): /confirm (confirm order)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order confirmed)
+  Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
+  Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order status)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status ACTIVE)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order status
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE
   end
 ```
