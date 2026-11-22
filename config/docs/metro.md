@@ -26,7 +26,7 @@ The use case is marked `TO_BE_DEPRECATED` in `x-status` of `config/index.yaml`.
 |---|---|
 | **Buyer App (BAP)** | Owns the `search`, `select`, `init`, `confirm`, `status`, `cancel`, `update` and `issue` calls. Collects payment (`payments[].collected_by: BAP`). |
 | **Seller App (BPP)** | Owns the `on_search`, `on_select`, `on_init`, `on_confirm`, `on_status`, `on_cancel`, `on_update`, `on_issue` and `on_issue_status` calls, including the unsolicited ones. Owns the catalog, fares, QR tickets and order states. |
-| **Gateway** | Sits between the BAP and the BPP for `search` only. The `search` payloads carry no `bpp_id` or `bpp_uri`; `on_search` and every later call do. |
+| **Gateway** | Sits between the BAP and the BPP for the first `search` (by city, `search1`) only. The second `search` (station to station, `search2`) is peer-to-peer between BAP and BPP, as are all later calls. |
 
 ---
 
@@ -87,7 +87,7 @@ The Buyer App searches without stops to get the operator's network.
 
 - **`/select`**: The Buyer App (BAP) sends the provider, item and quantity (example: `I1`, count `2`).
 - **`/on_select`**: The Seller App (BPP) returns the priced order:
-  - `items[]` with `descriptor.code`, `price`, `quantity.selected.count`, `fulfillment_ids` (`F1`, `F2`) and `time`
+  - `items[]` with `descriptor.code`, `price`, `quantity.selected.count`, `fulfillment_ids` (the ids of the `TRIP` fulfillments) and `time`
   - one `TRIP` fulfillment per ticket, each with `stops[]` from `START` to `END` (`INTERMEDIATE_STOP` between) and `vehicle.category: METRO`
   - `quote.price` and `quote.breakup[]` with `title: BASE_FARE`, the item, and its price
   - `cancellation_terms[].external_ref` (`mimetype: text/html`, `url`)
@@ -143,7 +143,7 @@ The `W/O search_1 & select` flows skip this stage; their `init` takes the provid
 ### 1. User Cancellation (Full Cancellation)
 
 ```
-[cancel SOFT_CANCEL] ───► [on_cancel: SOFT_CANCEL + refund preview] ───► [cancel CONFIRM_CANCEL] ───► [on_cancel: CANCELLED]
+[cancel SOFT_CANCEL] ───► [on_cancel: SOFT_CANCEL + refund breakdown] ───► [cancel CONFIRM_CANCEL] ───► [on_cancel: CANCELLED]
 ```
 
 - **`/cancel` (soft)**: `descriptor.code: SOFT_CANCEL`, `cancellation_reason_id` (example `005`), `order_id`.
@@ -165,13 +165,13 @@ The `W/O search_1 & select` flows skip this stage; their `init` takes the provid
 ### 3. Partial Cancellation (via `/update`)
 
 ```
-[update SOFT_CANCEL on F2] ───► [on_update: SOFT_CANCEL + refund preview] ───► [update CONFIRM_CANCEL on F2] ───► [on_update: ACTIVE, F2 CANCELLED]
+[update SOFT_CANCEL for one fulfillment] ───► [on_update: SOFT_CANCEL + refund breakdown] ───► [update CONFIRM_CANCEL] ───► [on_update: ACTIVE, fulfillment CANCELLED]
 ```
 
-- **`/update` (soft)**: `update_target: order.fulfillments`, `order.id`, fulfillment `F2` (`type: TRIP`), `order.cancellation.reason.id: 001`, `order.cancellation.reason.descriptor.code: SOFT_CANCEL`.
-- **`/on_update` (soft)**: `order.status: SOFT_CANCEL`; quote with `BASE_FARE`, `CANCELLATION_CHARGES` and `REFUND` (item with `fulfillment_ids: [F2]`); `cancellation_terms` with `cancel_by.duration` and `cancellation_fee.percentage`.
+- **`/update` (soft)**: `update_target: order.fulfillments`, `order.id`, one fulfillment (`type: TRIP`), `order.cancellation.reason.id: 001`, `order.cancellation.reason.descriptor.code: SOFT_CANCEL`.
+- **`/on_update` (soft)**: `order.status: SOFT_CANCEL`; quote with `BASE_FARE`, `CANCELLATION_CHARGES` and `REFUND` (the `REFUND` item carries `fulfillment_ids` of the cancelled fulfillment); `cancellation_terms` with `cancel_by.duration` and `cancellation_fee.percentage`.
 - **`/update` (confirm)**: same target with `descriptor.code: CONFIRM_CANCEL`.
-- **`/on_update` (confirm)**: `order.status: ACTIVE`; fulfillment `F2` has `state.descriptor.code: CANCELLED`; the other fulfillment stays in the order.
+- **`/on_update` (confirm)**: `order.status: ACTIVE`; the cancelled fulfillment has `state.descriptor.code: CANCELLED`; the other fulfillment stays in the order.
 
 ### 4. Seller Offline Cancellation
 
@@ -255,7 +255,7 @@ flowchart TD
         BAP2["Buyer App<br/>(BAP)"]:::client
         BPP2["Metro Operator<br/>(BPP)"]:::provider
         BPP2 -->|"3. POST /on_search (stations)"| BAP2
-        BAP2 <-->|"4. /search (stops) ⇄ /on_search (SJT item)"| BPP2
+        BAP2 <-->|"4. /search (stops, peer-to-peer) ⇄ /on_search (SJT item)"| BPP2
         BAP2 <-->|"5. /select ⇄ /on_select (quote)"| BPP2
         BAP2 <-->|"6. /init ⇄ /on_init"| BPP2
         BAP2 <-->|"7. /confirm ⇄ /on_confirm (QR)"| BPP2
@@ -268,7 +268,7 @@ flowchart TD
 
 #### 3. API Breakdown & Technical Actions
 
-- **`/search` and `/on_search`** (`search1`, `on_search1`, `search2`, `on_search2_Sjt`): catalog, then station pair; the second `on_search` returns item `I1` (`SJT`).
+- **`/search` and `/on_search`** (`search1`, `on_search1`, `search2`, `on_search2_Sjt`): catalog (by city, via Gateway), then station pair (peer-to-peer, direct to the BPP); the second `on_search` returns item `I1` (`SJT`).
 - **`/select` and `/on_select`**: item, quantity and quote with `BASE_FARE`; one `TRIP` fulfillment per ticket.
 - **`/init` and `/on_init`**: billing and `NOT-PAID` payment; the seller returns `payments[].id`.
 - **`/confirm` and `/on_confirm`**: `PAID` payment; the seller returns `order.status: ACTIVE` and QR authorization `UNCLAIMED`.
@@ -292,7 +292,7 @@ flowchart LR
     BAP["Buyer App<br/>(BAP)"]:::client
     BPP["Metro Operator<br/>(BPP)"]:::provider
 
-    BAP -->|"1. /search (stops)"| BPP
+    BAP -->|"1. /search (stops, peer-to-peer)"| BPP
     BPP -->|"2. /on_search (RJT item)"| BAP
     BAP -->|"3. /select, /init, /confirm"| BPP
     BPP -->|"4. /on_select, /on_init, /on_confirm (QR)"| BAP
@@ -323,7 +323,7 @@ flowchart LR
     BPP["Metro Operator<br/>(BPP)"]:::provider
 
     BAP -->|"1. POST /cancel (SOFT_CANCEL)"| BPP
-    BPP -->|"2. POST /on_cancel (SOFT_CANCEL, refund preview)"| BAP
+    BPP -->|"2. POST /on_cancel (SOFT_CANCEL, refund breakdown)"| BAP
     BAP -->|"3. POST /cancel (CONFIRM_CANCEL)"| BPP
     BPP -->|"4. POST /on_cancel (CANCELLED)"| BAP
 ```
@@ -370,7 +370,7 @@ flowchart LR
 
 #### 1. Short Description
 
-A two-ticket order in which one fulfillment (`F2`) is cancelled through `update`. Both the full flow and its `W/O search_1 & select` variant exist.
+A two-ticket order in which one fulfillment is cancelled through `update`. Both the full flow and its `W/O search_1 & select` variant exist.
 
 #### 2. Process Flow
 
@@ -382,16 +382,16 @@ flowchart LR
     BAP["Buyer App<br/>(BAP)"]:::client
     BPP["Metro Operator<br/>(BPP)"]:::provider
 
-    BAP -->|"1. POST /update (SOFT_CANCEL on F2)"| BPP
-    BPP -->|"2. POST /on_update (SOFT_CANCEL, refund preview)"| BAP
-    BAP -->|"3. POST /update (CONFIRM_CANCEL on F2)"| BPP
-    BPP -->|"4. POST /on_update (ACTIVE, F2 CANCELLED)"| BAP
+    BAP -->|"1. POST /update (SOFT_CANCEL, one fulfillment)"| BPP
+    BPP -->|"2. POST /on_update (SOFT_CANCEL, refund breakdown)"| BAP
+    BAP -->|"3. POST /update (CONFIRM_CANCEL)"| BPP
+    BPP -->|"4. POST /on_update (ACTIVE, fulfillment CANCELLED)"| BAP
 ```
 
 #### 3. API Breakdown & Technical Actions
 
 - **`/update`** (`update_METRO_201`, `update_METRO_202`): `update_target: order.fulfillments`, reason id `001`.
-- **`/on_update`** (`on_update_METRO_201`, `on_update_METRO_202`): quote with `BASE_FARE`, `CANCELLATION_CHARGES`, `REFUND`; final state `ACTIVE` with `F2` `CANCELLED`.
+- **`/on_update`** (`on_update_METRO_201`, `on_update_METRO_202`): quote with `BASE_FARE`, `CANCELLATION_CHARGES`, `REFUND`; final order state `ACTIVE` with the cancelled fulfillment in state `CANCELLED`.
 
 ---
 
