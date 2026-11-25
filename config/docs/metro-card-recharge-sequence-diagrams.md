@@ -21,7 +21,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
 ```
 
 ## on_select_METRO_RECHARGE_210
@@ -38,7 +38,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
 ```
 
 ## init_METRO_RECHARGE_210
@@ -55,7 +55,7 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
 ```
 
 ## on_init_METRO_RECHARGE_210
@@ -72,7 +72,7 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
 ```
 
 ## confirm_METRO_RECHARGE_210
@@ -89,7 +89,7 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
 ```
 
 ## on_confirm_METRO_RECHARGE_210
@@ -105,6 +105,6 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; ONLINE COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, ONLINE COMPLETED)
   end
 ```

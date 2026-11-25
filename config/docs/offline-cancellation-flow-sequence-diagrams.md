@@ -23,7 +23,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -43,7 +43,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -63,7 +63,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -83,7 +83,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -103,7 +103,7 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -123,7 +123,7 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -143,7 +143,7 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
 
@@ -162,7 +162,7 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
 ```
@@ -181,7 +181,7 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, cancelled_by CONSUMER
   end
