@@ -24,12 +24,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_search
@@ -49,12 +49,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## select
@@ -74,12 +74,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_select
@@ -99,12 +99,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## init
@@ -124,12 +124,12 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_init
@@ -149,12 +149,12 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## confirm
@@ -174,12 +174,12 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_confirm
@@ -198,13 +198,13 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   end
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## issue_open_100
@@ -222,14 +222,14 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_issue_processing_100
@@ -247,14 +247,14 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_issue_resolved_100
@@ -272,14 +272,14 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   end
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## issue_close_100
@@ -297,14 +297,14 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_cancel_seller_cancellation
@@ -322,12 +322,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP submits an issue to the BPP to report a complaint or problem with the order, establishing the issue for tracking and resolution.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue (The BPP responds to a grievance opened by the BAP with the issue details, available actions, and resolution options.)
   Seller App (BPP)-->>Buyer App (BAP): /on_issue_status (unsolicited): The BPP sends an unsolicited issue status callback to the BAP with grievance resolution actions and status updates for the ride transaction.
   Buyer App (BAP)->>Seller App (BPP): /issue (The BAP reports an issue to the BPP regarding the confirmed ride order, creating a formal grievance record with problem details, expected response timelines, and resolution expectations.)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
   end
 ```
