@@ -24,8 +24,8 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_search
@@ -45,8 +45,8 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## select
@@ -66,8 +66,8 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_select
@@ -87,8 +87,8 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## init
@@ -108,8 +108,8 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_init
@@ -129,8 +129,8 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## confirm
@@ -150,8 +150,8 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_confirm_ride
@@ -170,9 +170,9 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
 ```
 
 ## on_cancel_async
@@ -190,8 +190,8 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_ASSIGNED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_ASSIGNED)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (unsolicited): order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by PROVIDER
   end
 ```

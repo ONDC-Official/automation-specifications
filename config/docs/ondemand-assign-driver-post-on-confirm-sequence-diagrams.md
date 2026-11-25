@@ -24,19 +24,19 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -57,19 +57,19 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -90,19 +90,19 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -123,19 +123,19 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -156,19 +156,19 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -189,19 +189,19 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -222,19 +222,19 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -254,20 +254,20 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -286,21 +286,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -319,21 +319,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   end
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -352,21 +352,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -385,21 +385,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -418,21 +418,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -451,21 +451,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -484,21 +484,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -517,21 +517,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -550,21 +550,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -583,21 +583,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   end
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -616,21 +616,21 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
 
@@ -649,20 +649,20 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   end
   Buyer App (BAP)->>Seller App (BPP): /rating
 ```
@@ -682,19 +682,19 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Seller App (BPP)-->>Buyer App (BAP): /on_track (unsolicited): tracking
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_STARTED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_STARTED
   Seller App (BPP)-->>Buyer App (BAP): /on_support (unsolicited)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENDED
   Buyer App (BAP)->>Seller App (BPP): /status (order status)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED; fulfillment state RIDE_ENDED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (order.status COMPLETED, fulfillment state RIDE_ENDED)
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /rating
   end

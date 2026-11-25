@@ -24,16 +24,16 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_search_schedule_trip
@@ -53,16 +53,16 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## select
@@ -82,16 +82,16 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_select
@@ -111,16 +111,16 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## init
@@ -140,16 +140,16 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_init
@@ -169,16 +169,16 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## confirm
@@ -198,16 +198,16 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_confirm_rental
@@ -226,17 +226,17 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_update_ride_assigned
@@ -254,18 +254,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   end
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## track
@@ -283,18 +283,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_track
@@ -312,18 +312,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   rect rgb(191, 223, 255)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_status_unsolicited
@@ -341,18 +341,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_status_ride_arrived
@@ -370,18 +370,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   end
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## cancel
@@ -399,18 +399,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_cancel_ride_cancel
@@ -428,18 +428,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   end
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## cancel_hard
@@ -457,18 +457,18 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
 ```
 
 ## on_cancel_hard
@@ -486,16 +486,16 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment ON_FULFILLMENT NOT_PAID, collected_by BPP)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; fulfillment state RIDE_CONFIRMED)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE; fulfillment state RIDE_ASSIGNED
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, fulfillment state RIDE_CONFIRMED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (unsolicited): order.status ACTIVE, fulfillment state RIDE_ASSIGNED
   Buyer App (BAP)->>Seller App (BPP): /track (track order)
   Seller App (BPP)-->>Buyer App (BAP): /on_track (tracking)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ENROUTE_PICKUP
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; fulfillment state RIDE_ARRIVED_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ENROUTE_PICKUP
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, fulfillment state RIDE_ARRIVED_PICKUP
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor SOFT_CANCEL, reason None)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL; fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status SOFT_CANCEL, fulfillment state RIDE_ARRIVED_PICKUP, cancelled_by CONSUMER)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason None)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED; fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCELLED, fulfillment state RIDE_CANCELLED, cancelled_by CONSUMER)
   end
 ```
