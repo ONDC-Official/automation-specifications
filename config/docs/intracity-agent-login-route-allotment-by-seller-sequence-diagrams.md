@@ -19,7 +19,7 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init
   Buyer App (BAP)->>Seller App (BPP): /confirm
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; AGENT_TICKETING ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, AGENT_TICKETING ACTIVE)
 ```
 
 ## on_init_BUS_Agent_login_210
@@ -34,7 +34,7 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; AGENT_TICKETING ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, AGENT_TICKETING ACTIVE)
 ```
 
 ## confirm_BUS_Agent_login_210
@@ -49,7 +49,7 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; AGENT_TICKETING ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, AGENT_TICKETING ACTIVE)
 ```
 
 ## on_confirm_BUS_Agent_login_210
@@ -63,6 +63,6 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init
   Buyer App (BAP)->>Seller App (BPP): /confirm
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; AGENT_TICKETING ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, AGENT_TICKETING ACTIVE)
   end
 ```

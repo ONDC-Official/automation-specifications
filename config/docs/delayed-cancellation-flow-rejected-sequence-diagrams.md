@@ -23,10 +23,10 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_search2_METRO_210
@@ -45,10 +45,10 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## select_METRO_210
@@ -67,10 +67,10 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_select_METRO_210
@@ -89,10 +89,10 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## init_METRO_210
@@ -111,10 +111,10 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_init_METRO_210
@@ -133,10 +133,10 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## confirm_METRO_210
@@ -155,10 +155,10 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_confirm_delayed_METRO_210
@@ -176,11 +176,11 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   end
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## cancel_hard_METRO_210
@@ -197,12 +197,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_cancel_init_METRO_210
@@ -219,12 +219,12 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
 ```
 
 ## on_status_cancel_METRO_210
@@ -241,10 +241,10 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   Buyer App (BAP)->>Seller App (BPP): /cancel (descriptor CONFIRM_CANCEL, reason 000)
-  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED; TICKET ACTIVE, cancelled_by CONSUMER)
+  Seller App (BPP)-->>Buyer App (BAP): /on_cancel (order.status CANCEL_INITIATED, TICKET ACTIVE, cancelled_by CONSUMER)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET ACTIVE, cancelled_by CONSUMER
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET ACTIVE, cancelled_by CONSUMER
   end
 ```

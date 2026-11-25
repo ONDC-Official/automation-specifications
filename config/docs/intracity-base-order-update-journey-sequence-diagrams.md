@@ -17,7 +17,7 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /update (update_target order.quote)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (order.status COMPLETED; AGENT_TICKETING COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (order.status COMPLETED, AGENT_TICKETING COMPLETED)
 ```
 
 ## on_update_BUS_Base_Order_Update_210
@@ -29,6 +29,6 @@ sequenceDiagram
   participant Seller App (BPP)
   Buyer App (BAP)->>Seller App (BPP): /update (update_target order.quote)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_update (order.status COMPLETED; AGENT_TICKETING COMPLETED)
+  Seller App (BPP)-->>Buyer App (BAP): /on_update (order.status COMPLETED, AGENT_TICKETING COMPLETED)
   end
 ```

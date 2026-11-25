@@ -23,9 +23,9 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_search2_METRO_210
@@ -44,9 +44,9 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## select_METRO_210
@@ -65,9 +65,9 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_select_METRO_210
@@ -86,9 +86,9 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## init_METRO_210
@@ -107,9 +107,9 @@ sequenceDiagram
   end
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_init_METRO_210
@@ -128,9 +128,9 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   end
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## confirm_METRO_210
@@ -149,9 +149,9 @@ sequenceDiagram
   rect rgb(191, 223, 255)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_confirm_METRO_210
@@ -169,10 +169,10 @@ sequenceDiagram
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_status_active_METRO_210
@@ -189,11 +189,11 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
   end
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
 ```
 
 ## on_status_complete_METRO_210
@@ -210,9 +210,9 @@ sequenceDiagram
   Buyer App (BAP)->>Seller App (BPP): /init (payment NOT-PAID)
   Seller App (BPP)-->>Buyer App (BAP): /on_init (payment NOT-PAID)
   Buyer App (BAP)->>Seller App (BPP): /confirm (payment PAID)
-  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE; TICKET ACTIVE)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE; TICKET CHECKED_IN
+  Seller App (BPP)-->>Buyer App (BAP): /on_confirm (order.status ACTIVE, TICKET ACTIVE)
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status ACTIVE, TICKET CHECKED_IN
   rect rgb(191, 223, 255)
-  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED; TICKET CHECKED_OUT
+  Seller App (BPP)-->>Buyer App (BAP): /on_status (unsolicited): order.status COMPLETED, TICKET CHECKED_OUT
   end
 ```
