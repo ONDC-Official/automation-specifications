@@ -1,6 +1,6 @@
 # ONDC:RET10 — version 1.2.0
 
-**Branch:** `draft-RET10-1.2.0`  
+**Branch:** `release-eks-RET10-1.2.0`  
 **Use Cases:** GROCERY
 
 ---
