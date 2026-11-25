@@ -10,25 +10,6 @@ In a **point-to-point (P2P)** shipment, a rider picks up a package at the mercha
 
 A logistics order always sits behind a retail order. When a customer buys from a seller on ONDC, the seller's app has to get the goods delivered. To do that, it becomes a **buyer on the logistics network** and books a delivery from a **Logistics Service Provider (LSP)**. It shares the retail order's details with the LSP as the *linked order*.
 
-```mermaid
-flowchart LR
-    subgraph RET["Retail order"]
-        direction TB
-        RB["<b>Retail buyer app</b><br/><small>the customer places an order</small>"]:::bap
-        RS["<b>Retail seller app</b><br/><small>sells the goods</small>"]:::bpp
-        RB -- "order" --> RS
-    end
-    subgraph LOG["Logistics order · ONDC:LOG10"]
-        direction TB
-        LB["<b>Logistics buyer (LBNP)</b><br/><small>BAP · books the delivery</small>"]:::bap
-        LSP["<b>Logistics provider (LSP)</b><br/><small>BPP · picks up and delivers</small>"]:::bpp
-        LB -- "logistics order<br/>+ linked retail order" --> LSP
-    end
-    RS == "same app,<br/>now the buyer" ==> LB
-    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
-    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
-```
-
 The retail seller app sells on the retail network and buys on the logistics network. In the logistics transaction it is the BAP, and the LSP is the BPP.
 
 **Why a separate domain:** since version 1.2.5, P2P shipments use their own domain code, `ONDC:LOG10`. This lets the Gateway send a P2P search only to P2P providers. Hub-based shipments use `ONDC:LOG11`.
@@ -63,15 +44,12 @@ The retail seller app sells on the retail network and buys on the logistics netw
 
 The LBNP asks for a delivery category in `/search`, and the LSP quotes its options for each category in `/on_search`.
 
-```mermaid
-flowchart TB
-    SD["<b>Standard Delivery</b><br/><small>by surface · the parent category</small>"]:::cat
-    SD --> ID["<b>Immediate Delivery</b><br/><small>S2D TAT of 60 minutes or less,<br/>delivered the same day</small>"]:::p2p
-    SD --> SDD["<b>Same Day Delivery</b><br/><small>delivered the same day</small>"]:::p2p
-    SD --> NDD["<b>Next Day Delivery</b><br/><small>delivered the next day</small>"]:::p2p
-    classDef cat fill:#0081cc1f,stroke:#0081cc,stroke-width:2px
-    classDef p2p fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
-```
+| Category | What the LSP offers |
+| --- | --- |
+| **Standard Delivery** | By surface. The parent category for the three below. |
+| **Immediate Delivery** | S2D TAT of 60 minutes or less, delivered the same day. |
+| **Same Day Delivery** | Delivered the same day. |
+| **Next Day Delivery** | Delivered the next day. |
 
 - **A search for Standard Delivery** returns every option the LSP can offer, including Immediate, Same Day and Next Day Delivery.
 - **A search for a specific category** returns the options for that category only. An LSP with no option for it doesn't respond.
@@ -82,71 +60,17 @@ flowchart TB
 
 ## 4. The Order Journey
 
-### Journey at a Glance
-
-```mermaid
-flowchart LR
-    subgraph S1["1 · Discover"]
-        direction TB
-        A1["search"] --> A2["on_search"]
-    end
-    subgraph S2["2 · Book"]
-        direction TB
-        B1["init → on_init"] --> B2["confirm → on_confirm"]
-    end
-    subgraph S3["3 · Ready to ship"]
-        direction TB
-        C1["update → on_update"]
-    end
-    subgraph S4["4 · Pickup"]
-        direction TB
-        D1["on_status<br/><small>Agent-assigned, At-pickup,<br/>Order-picked-up</small>"]
-    end
-    subgraph S5["5 · Deliver"]
-        direction TB
-        E1["track → on_track"] --> E2["on_status<br/><small>At-delivery,<br/>Order-delivered</small>"]
-    end
-    S1 --> S2 --> S3 --> S4 --> S5
-    class A1,B1,B2,C1,E1 bap
-    class A2,D1,E2 bpp
-    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
-    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
-```
-
-Blue boxes are calls the LBNP starts, and green boxes are callbacks or updates from the LSP.
-
 ### The Complete Flow
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant LB as LBNP<br/>(logistics buyer · BAP)
-    participant GW as Gateway
-    participant LSP as LSP<br/>(logistics provider · BPP)
-    Note over LB,LSP: Discover
-    LB->>GW: search (pickup, drop, category, package)
-    GW->>LSP: search (sent only to P2P providers)
-    LSP-->>LB: on_search (options, prices, S2D TAT, RTO price)
-    Note over LB,LSP: Book
-    LB->>LSP: init (chosen option, addresses, billing, payment)
-    LSP-->>LB: on_init (final quote, payment and cancellation terms)
-    LB->>LSP: confirm (order Created, linked order)
-    LSP-->>LB: on_confirm (order Accepted, fulfillment Pending)
-    Note over LB,LSP: Ready to ship
-    LB->>LSP: update (ready_to_ship = yes)
-    LSP-->>LB: on_update (Searching-for-Agent, pickup slot)
-    Note over LB,LSP: Pickup
-    LSP-->>LB: on_status (Agent-assigned)
-    LSP-->>LB: on_status (At-pickup)
-    LSP-->>LB: on_status (Order-picked-up)
-    Note over LB,LSP: Deliver
-    LB->>LSP: track
-    LSP-->>LB: on_track (rider's live location)
-    LSP-->>LB: on_status (At-delivery)
-    LSP-->>LB: on_status (Order-delivered, order Completed)
-```
+A complete order passes through these calls, in this order:
 
-The **ORDER FLOW BASE LINE** flow in the API Walkthrough follows this sequence.
+1. **Discover:** the LBNP sends `/search` through the Gateway, which sends it only to P2P providers, and each LSP that can serve the route replies with `/on_search`: its options, prices, S2D TAT and RTO price.
+2. **Book:** the LBNP sends `/init` with the chosen option, addresses, billing and payment type, and the LSP replies with `/on_init`: the final quote and the payment and cancellation terms. The LBNP then sends `/confirm` with the order in state `Created` and the linked retail order, and the LSP replies with `/on_confirm`: the order `Accepted`, with the fulfillment `Pending`.
+3. **Ready to ship:** the LBNP sends `/update` with `ready_to_ship` set to `yes`, and the LSP replies with `/on_update`: the fulfillment moves to `Searching-for-Agent`, with a pickup time slot.
+4. **Pickup:** the LSP sends unsolicited `/on_status` updates: `Agent-assigned`, `At-pickup` and `Order-picked-up`.
+5. **Deliver:** the LBNP can call `/track`, and the LSP replies with `/on_track` (the rider's live location). The LSP keeps sending `/on_status`: `At-delivery` and then `Order-delivered`, at which point the order is `Completed`.
+
+The **ORDER FLOW BASE LINE** flow in the API Walkthrough follows this sequence. Every flow in the API Walkthrough also has its own sequence diagram: pick a step and open the **Sequence Diagram** tab to see the whole flow, with that step highlighted.
 
 ### Stage 1: Discover
 
@@ -174,22 +98,10 @@ The payment type is one of `ON-ORDER` (prepaid, typically from a wallet), `ON-FU
 
 The contract sets rules so that neither side keeps an order the other side doesn't have. `/confirm` and `/on_confirm` must be idempotent: sending the same call again must not create a second order.
 
-```mermaid
-flowchart TB
-    C["LBNP sends <b>/confirm</b>"]:::bap --> V{"LSP validates<br/>the order"}
-    V -- "valid" --> A1["ACK<br/><small>LSP creates the order</small>"]:::ok
-    V -- "invalid" --> N1["NACK 66002<br/><small>LBNP cancels with reason 996</small>"]:::bad
-    V -- "no response, or 66001" --> R1["LBNP retries /confirm<br/><small>then cancels with reason 996</small>"]:::warn
-    A1 --> OC["LSP sends <b>/on_confirm</b>"]:::bpp --> V2{"LBNP validates<br/>the order"}
-    V2 -- "valid" --> A2["ACK<br/><small>the order is live</small>"]:::ok
-    V2 -- "invalid" --> N2["NACK 63002<br/><small>LSP cancels with reason 997</small>"]:::bad
-    V2 -- "no response, or 63001" --> R2["LSP retries /on_confirm<br/><small>then cancels with reason 997</small>"]:::warn
-    classDef bap fill:#3b82f61a,stroke:#3b82f6,stroke-width:1.5px
-    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
-    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
-    classDef bad fill:#ef44441a,stroke:#ef4444,stroke-width:1.5px
-    classDef warn fill:#f973161a,stroke:#f97316,stroke-width:1.5px
-```
+- **If the LSP can't accept `/confirm`:** it replies with **NACK 66002**, and the LBNP cancels the order with reason **996**.
+- **If `/confirm` gets no response, or NACK 66001:** the LBNP retries `/confirm`. If that also fails, it cancels with reason **996**.
+- **If the LBNP can't accept `/on_confirm`:** it replies with **NACK 63002**, and the LSP cancels the order with reason **997**.
+- **If `/on_confirm` gets no response, or NACK 63001:** the LSP retries `/on_confirm`. If that also fails, it cancels with reason **997**.
 
 ### Stage 3: Ready to Ship
 
@@ -234,25 +146,7 @@ The LSP sends unsolicited `/on_status` updates as the rider moves.
 
 ## 5. Order and Fulfillment States
 
-Each `/on_confirm`, `/on_update`, `/on_status` and `/on_cancel` carries two states: the **order** state and the **fulfillment** state. In the diagram, each box around a group of fulfillment states shows the order state at that point.
-
-```mermaid
-flowchart TB
-    subgraph O1["Order: Created → Accepted"]
-        P["Pending"]
-    end
-    subgraph O2["Order: In-progress"]
-        S["Searching-for-Agent"] --> A["Agent-assigned"] --> AP["At-pickup"] --> PU["Order-picked-up"] --> AD["At-delivery"]
-    end
-    subgraph O3["Order: Completed"]
-        D["Order-delivered"]:::ok
-    end
-    P -- "ready to ship" --> S
-    AD -- "handed over" --> D
-    AD -. "delivery fails" .-> R["<b>RTO</b><br/><small>see Return to Origin</small>"]:::rto
-    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
-    classDef rto fill:#f973161a,stroke:#f97316,stroke-width:1.5px
-```
+Each `/on_confirm`, `/on_update`, `/on_status` and `/on_cancel` carries two states: the **order** state and the **fulfillment** state. On the normal path the fulfillment moves `Pending` → `Searching-for-Agent` → `Agent-assigned` → `At-pickup` → `Order-picked-up` → `At-delivery` → `Order-delivered`. If the delivery fails, the LSP starts a [Return to Origin](#7-return-to-origin-rto).
 
 When an order is cancelled, both the order and the fulfillment move to `Cancelled`. See [Cancellation](#6-cancellation).
 
@@ -276,18 +170,6 @@ When an order is cancelled, both the order and the fulfillment move to `Cancelle
 
 Either side can cancel an order. The LBNP asks with `/cancel`, and the LSP cancels on its own with an unsolicited `/on_cancel`.
 
-```mermaid
-sequenceDiagram
-    participant LB as LBNP<br/>(logistics buyer · BAP)
-    participant LSP as LSP<br/>(logistics provider · BPP)
-    alt The LBNP cancels
-        LB->>LSP: cancel (order ID, cancellation reason)
-        LSP-->>LB: on_cancel (order Cancelled, final quote)
-    else The LSP cancels
-        LSP-->>LB: on_cancel, unsolicited (order Cancelled, reason)
-    end
-```
-
 - If the reason code isn't valid, the LSP can reply with **NACK 60009**.
 - If the LBNP cancels for a missed delivery time (reason **175**) but the LSP hasn't missed it, the LSP can reply with **NACK 60010**.
 - `/on_cancel` records the fulfillment's state just before the cancellation (`precancel_state`). Its quote shows the final amount, including any cancellation fee.
@@ -299,21 +181,6 @@ See **BUYER SIDE ORDER CANCELLATION**, **SELLER SIDE ORDER CANCELLATION** and, f
 ## 7. Return to Origin (RTO)
 
 If the package can't be delivered, for example because the buyer refuses it or can't be reached, the LSP starts an RTO. It sends an unsolicited `/on_cancel` with an RTO reason code.
-
-```mermaid
-flowchart TB
-    T["<b>/on_cancel</b> from the LSP<br/><small>RTO reason code · the quote now includes the RTO charge</small>"]:::bpp
-    T --> F["<b>Delivery</b> fulfillment<br/><small>ends in state RTO</small>"]:::muted
-    T --> R1["<b>RTO</b> fulfillment, newly created<br/><small>RTO-Initiated</small>"]:::rto
-    R1 -- "without return (baseline)" --> R2["<b>RTO-Disposed</b>"]:::rto
-    R1 -- "with return (feature 022)" --> R3["<b>RTO-Delivered</b><br/><small>back at the pickup location</small>"]:::rto
-    R2 --> C["Order: <b>Completed</b>"]:::ok
-    R3 --> C
-    classDef bpp fill:#10b9811a,stroke:#10b981,stroke-width:1.5px
-    classDef muted fill:#64748b1a,stroke:#64748b,stroke-width:1.5px
-    classDef rto fill:#f973161a,stroke:#f97316,stroke-width:1.5px
-    classDef ok fill:#22c55e1a,stroke:#22c55e,stroke-width:1.5px
-```
 
 - **Two fulfillments:** the LSP creates a separate fulfillment of type `RTO`, linked to the delivery fulfillment through the `rto_event` tag. The delivery fulfillment ends in state `RTO`, and the RTO fulfillment starts at `RTO-Initiated`.
 - **Order state:** stays as it was (`In-progress`) until the RTO fulfillment reaches `RTO-Disposed` or `RTO-Delivered`. Then the order is `Completed`.
@@ -342,16 +209,9 @@ The LBNP uses `/update`, and the LSP replies with `/on_update`, to:
 
 Enhanced features are optional, so each side tells the other which ones it supports. This is called **feature discovery**.
 
-```mermaid
-sequenceDiagram
-    participant LB as LBNP<br/>(logistics buyer · BAP)
-    participant LSP as LSP<br/>(logistics provider · BPP)
-    LB->>LSP: search with lbnp_features (feature IDs the LBNP supports)
-    LSP-->>LB: on_search with lsp_features (feature IDs the LSP supports)
-    Note over LB: Keeps each LSP's list and uses only<br/>features both sides support
-    LB->>LSP: a call that uses a feature the LSP doesn't support
-    LSP-->>LB: NACK 61001
-```
+1. In `/search`, the LBNP lists the feature IDs it supports in the `lbnp_features` tag.
+2. In `/on_search`, each LSP lists the feature IDs it supports in the `lsp_features` tag.
+3. The LBNP keeps each LSP's list and uses only features that both sides support. If it sends a call that uses a feature the LSP doesn't support, the LSP replies with **NACK 61001**.
 
 If the LSP sends an update that uses a feature the LBNP doesn't support, the LBNP can reply with **NACK 64001**. The **FEATURE DISCOVERY** flow shows the exchange.
 
