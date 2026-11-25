@@ -1,0 +1,208 @@
+# b2b order cancellation — Sequence Diagrams
+
+Internal data file consumed by the Developer Guide's "Sequence Diagram" tab (API Walkthrough).
+Not meant to be shown as its own docs page — the frontend filters this slug out of the Use Case
+Brief / Additional Resources / Changelog tab lists and instead looks up the section matching the
+selected API call's `action_id` (the `##` heading below) to render that step's diagram.
+
+One `## <action_id>` heading per step of `B2B_ORDER_CANCELLATION.yaml`, in that flow's own step order, each followed by its Mermaid `sequenceDiagram`: the whole flow, with that call's own message(s) highlighted — same convention as the other domains' per-step sequence-diagram docs.
+
+## search_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  rect rgb(191, 223, 255)
+  LBNP->>LSP: /search
+  end
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## on_search_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  rect rgb(191, 223, 255)
+  LSP-->>LBNP: /on_search
+  end
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## init_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  rect rgb(191, 223, 255)
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  end
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## on_init_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  rect rgb(191, 223, 255)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  end
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## confirm_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  rect rgb(191, 223, 255)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  end
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## on_confirm_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  rect rgb(191, 223, 255)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  end
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## update_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  rect rgb(191, 223, 255)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  end
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## on_update_B2B_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  rect rgb(191, 223, 255)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  end
+  LBNP->>LSP: /cancel (order ID, reason code)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## buyer_side_cancel_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  rect rgb(191, 223, 255)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  end
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+```
+
+## buyer_side_on_cancel_LOGISTICS
+
+```mermaid
+sequenceDiagram
+  participant LBNP as Logistics Buyer (LBNP · BAP)
+  participant LSP as Logistics Provider (LSP · BPP)
+  LBNP->>LSP: /search
+  LSP-->>LBNP: /on_search
+  LBNP->>LSP: /init (chosen option, addresses, billing)
+  LSP-->>LBNP: /on_init (quote, payment and cancellation terms)
+  LBNP->>LSP: /confirm (order Created, linked order)
+  LSP-->>LBNP: /on_confirm (order Accepted, Pending)
+  LBNP->>LSP: /update (ready_to_ship = yes)
+  LSP-->>LBNP: /on_update (In-progress, Searching-for-Agent)
+  LBNP->>LSP: /cancel (order ID, reason code)
+  rect rgb(191, 223, 255)
+  LSP-->>LBNP: /on_cancel (order Cancelled)
+  end
+```
