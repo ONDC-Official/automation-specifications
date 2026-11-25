@@ -1,369 +1,197 @@
 # Retail Electronics (ONDC:RET14 1.2.0)
 
-## Overview
+> **Buy electronics from any seller, through any app.** ONDC lets one buyer app show catalogs from many electronics sellers, and lets one seller reach buyers on every buyer app, all through a single open protocol.
 
-Retail Electronics (`ONDC:RET14`) covers the online sale of mobile phones, computers, audio devices, cameras, accessories and other consumer electronics.
+## At a Glance
 
-Electronics are high-value products with detailed specifications, brand warranties and serial numbers. Buyers often use financing or EMI options, and returns and replacements usually involve a quality check of the product.
-
-ONDC lets buyer apps and seller apps connect through a common, open protocol instead of building separate integrations with each other. A buyer app integrates once with the network and can show catalogs from many sellers. A seller app integrates once and can reach buyers on every participating buyer app.
-
-The seller remains responsible for its catalog, prices, stock, packing, delivery and after-sales service. ONDC standardizes the network messages used to discover products, place orders, track delivery, and handle cancellations, returns and grievances.
-
-This guide explains the electronics journey from a business point of view first, and then covers the API flows defined in this specification (version 1.2.0).
-
----
-
-## Participants
-
-| Participant | What This Means |
+| | |
 |---|---|
-| **Buyer App (BAP)** | The consumer-facing application where the buyer searches for electronics, builds a cart, pays, tracks the order and raises complaints. It can be a shopping app, payments app, or any app that offers electronics to its users. |
-| **Seller App (BPP)** | The application representing sellers such as electronics retailers, brand stores and authorised dealers. It publishes the catalog, checks stock and serviceability, prices the order, confirms it, manages packing and delivery, and handles cancellations, returns and replacements. |
-| **Logistics Provider** | The delivery partner that picks up and delivers the order. Usually the seller arranges delivery. |
-| **Gateway** | Network infrastructure that forwards a buyer app's `/search` to all relevant seller apps based on domain and city. |
+| **Domain** | `ONDC:RET14` (Retail Electronics) |
+| **Version** | `1.2.0` |
+| **What is sold** | Mobile phones, computers, audio devices, cameras, chargers, power banks and other accessories |
+| **Use case** | `ELECTRONICS` |
+| **Delivery model** | Seller-managed delivery, within the city or across cities |
+| **Payment** | Prepaid, collected by the buyer app (`payment.type` `ON-ORDER`, `collected_by` `BAP`) |
+| **Fulfillment types offered** | `Delivery` (seller delivers) |
+| **Flows in this spec** | 12 (11 mandatory): ordering, delivery, cancellation, RTO, returns, catalog sync and grievances |
+| **Grievances** | IGM 1.0.0 and IGM 2.0.0 |
+
+**Why electronics is different:** products are high-value and are bought on their specifications, so catalogs carry brand, model, detailed specifications and warranty. Units have serial numbers, buyers often pay in instalments, and returns and replacements need a quality check of the product before they are accepted.
+
+**Who is responsible for what:** the seller owns its catalog, prices, stock, packing, delivery and after-sales service. ONDC standardizes the messages used to discover products, place orders, track delivery, and handle cancellations, returns and grievances.
 
 ---
 
-## The User Journey
+## Who Is Involved
 
-A buyer discovers sellers, builds a cart, pays, and receives the order with status updates along the way. The journey has the following stages.
+![Who is involved in a RET14 order: buyer, buyer app, Gateway, seller app, electronics seller and logistics provider](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-participants.svg)
 
-### 1. Discovery and Catalog
+| Participant | Role in RET14 |
+|---|---|
+| **Buyer App (BAP)** | Where the buyer searches, builds a cart, pays, tracks the order and raises complaints. It usually collects the payment and settles with the seller later. |
+| **Seller App (BPP)** | Represents electronics retailers, brand stores and authorised dealers. It publishes the catalog, checks stock and serviceability, prices and confirms the order, manages packing and delivery, and handles cancellations, RTO, returns. |
+| **Logistics Provider** | Picks up from the store and delivers to the buyer. Arranged by the seller app. |
+| **Gateway** | Forwards a buyer app's `/search` to every seller app serving that city for `ONDC:RET14`. |
 
-The buyer searches for an item, a category (for example "Smartphone" or "Bluetooth headphones") or a seller. The buyer app sends the search with the buyer's location.
+### How the Two Apps Talk
 
-Seller apps that serve that location reply with their catalog, which can include:
+Every call is **asynchronous**. The sender gets only an acknowledgement on the same HTTP call. The real answer comes later as a separate call in the other direction, named `on_<action>`.
 
-- Store details and serviceable area
-- Products with images, specifications, brand and model
+- An **ACK** only means the message passed schema and signature checks. It is not a business "yes".
+- A **business failure**, such as an out-of-stock item, comes back inside the callback as an `error` object (for example `40002` in Flow 2).
+
+| Concept | What it means in RET14 |
+|---|---|
+| `context.domain` | Always `ONDC:RET14`. `context.core_version` is `1.2.0`. |
+| `context.transaction_id` | One ID for one cart's whole journey, from `/select` through delivery, cancellation, return and grievance. |
+| `context.message_id` | Pairs a request with its callback: `/select` with M2 is answered by `/on_select` with M2. |
+| **Solicited and unsolicited** | A solicited callback answers a request. An unsolicited one is pushed by the seller app on its own, for example `/on_status` when the order is packed, or `/on_search` when a price changes. |
+| **Order and fulfillment** | The order has one `state`. Each **fulfillment** inside it has its own `state` and `type`: `Delivery` for the forward shipment, `Cancel` for items the seller cancelled, `RTO` for a failed delivery going back, `Return` for items the buyer returned. |
+| **Quote and breakup** | `quote.price` is the order total. `quote.breakup` has one line per item plus `delivery`, `packing`, `tax`, `discount` and `misc` lines (`@ondc/org/title_type`). |
+| **Quote trail** | When a cancel, RTO or return lowers the order value, the seller app records the change as a quote trail. The buyer app works out the refund from it. |
+
+---
+
+## Order Lifecycle
+
+A electronics order goes through two phases. In **pre-order** the two apps agree on the cart, price and terms; nothing is committed. The **order** starts at `/confirm`, after the buyer has paid. From then on the order has an ID and a state, and every change is a message on the same `transaction_id`.
+
+![RET14 order lifecycle: Discover, Select, Init, Confirm, Fulfil, then After the order and Settle](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-order-lifecycle.svg)
+
+| Phase | Buyer app sends | Seller app answers | What is decided in RET14 |
+|---|---|---|---|
+| Discover | `/search` (through the Gateway) | `/on_search` | Which sellers serve the buyer, with their items, prices and stock |
+| Select | `/select` | `/on_select` | Stock and serviceability for the cart; item prices, delivery and packing charges, taxes; delivery time (`@ondc/org/TAT`) |
+| Init | `/init` | `/on_init` | Delivery address and billing; final quote; payment, cancellation, return and settlement terms |
+| Confirm | `/confirm` | `/on_confirm` | Payment `PAID`; the order is `Created`, its delivery fulfillment is `Pending` |
+| Fulfil | `/track` | `/on_status` (unsolicited), `/on_track` | Accepted, packed, agent assigned, picked up, out for delivery, delivered |
+| After order | `/cancel`, `/update`, `/issue` | `/on_cancel`, `/on_update`, `/on_issue` | Cancellation, part-cancellation, RTO, returns, refunds, complaints |
+| Settle | — (off-network) | — | The buyer app pays the seller as agreed in `/on_init`, less the agreed buyer app fee and taxes such as TCS or TDS |
+
+If the buyer changes the delivery address, or `/on_init` comes back with a smaller cart, the buyer app must send `/select` again.
+
+### Order States
+
+The order `state` is what the buyer sees. It follows the state of the order's fulfillments.
+
+![Order states: Created, Accepted, In-progress, Completed, with Cancelled and returns](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-order-states.svg)
+
+| Order state | Meaning |
+|---|---|
+| `Created` | `/on_confirm` sent. The seller app has the order; the seller hasn't accepted it yet. |
+| `Accepted` | The seller accepted the order. Cancellation terms from `/on_init` apply from here. |
+| `In-progress` | The order is being packed, picked up or delivered. |
+| `Completed` | The order is delivered. Only returns can change it now. |
+| `Cancelled` | The whole order is cancelled: by the buyer before shipping, or because delivery failed (RTO). |
+
+### Delivery Fulfillment States
+
+The seller app reports every step of the delivery fulfillment in an unsolicited `/on_status`, one message per change. The seller arranges delivery through its own fleet or a logistics provider, within the city or across cities.
+
+![Delivery fulfillment states from Pending to Order-delivered, with cancel and RTO branches](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-fulfillment-states.svg)
+
+| Fulfillment state | When it is set | Order state | Sent in |
+|---|---|---|---|
+| `Pending` | As soon as the order is confirmed | `Created`, then `Accepted` | `/on_confirm`, `/on_status` |
+| `Packed` | Items packed and ready for pickup | `In-progress` | `/on_status` |
+| `Agent-assigned` | Delivery agent assigned; name and phone shared | `In-progress` | `/on_status` |
+| `Order-picked-up` | Agent collected the order from the store | `In-progress` | `/on_status` |
+| `Out-for-delivery` | Agent on the way to the buyer | `In-progress` | `/on_status` |
+| `Order-delivered` | Handed over, with the delivery time | `Completed` | `/on_status` |
+| `Cancelled` | Fulfillment cancelled, or RTO started | `Cancelled` | `/on_cancel` |
+
+### Lifecycle Rules for RET14 Implementations
+
+1. **Terminal states are frozen.** Nothing changes a `Cancelled` order. A `Completed` order changes only through returns.
+2. **One message per change.** Every status change is an unsolicited `/on_status`. Every change to order details (part-cancel, return) is an `/on_update`. Changes are never batched.
+3. **`/on_update` and `/on_status` carry the full picture:** every item and fulfillment with its current state, the quote and breakup, the quote trail and the settlement trail.
+4. **The order value never goes up after confirmation.** It only goes down, and only by reducing an item's quantity.
+5. **Cancellation fees follow the terms in `/on_init`,** which are set per fulfillment state and reason code.
+6. **Refunds are settled with `/update`.** After a part-cancel, RTO or return, the buyer app sends `/update` with the settlement details for the refund (Flows 4 and 5).
+
+---
+
+## Scenarios: Where the Order Branches
+
+These are the points in a RET14 order where more than one outcome is possible, with the flow that tests each path. The green **refund trigger** badge marks the point: the seller app sends the updated quote there, and the buyer app works out the refund from the quote trail.
+
+### 1. Select: Is Everything in Stock?
+
+High-value items are stocked in small numbers, so the seller app re-checks every item at `/select`.
+
+![Select scenario: all in stock goes to /init; out of stock returns error 40002 and the buyer fixes the cart](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-scenario-select.svg)
+
+### 2. Cancellation: Who Cancels, and When
+
+![Cancellation: buyer cancels, seller part-cancels, delivery fails (RTO)](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-scenario-cancellation.svg)
+
+### 3. Return to Origin (RTO): Delivery Failed
+
+RTO starts when the buyer refuses the order or can't be reached at the address.
+
+![RTO: delivery fails, /on_cancel with reason 013, refund settlement, RTO-Delivered](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-scenario-rto.svg)
+
+If the items are not taken back to the store, the RTO fulfillment ends in `RTO-Disposed` instead of `RTO-Delivered`.
+
+### 4. Return: After Delivery
+
+A buyer can return a delivered item within its return window from the catalog (`@ondc/org/return_window`), for the full order or part of it. The buyer app sends `/update` with the item, quantity and reason. The seller app creates a new **Return** fulfillment and reports each step in an unsolicited `/on_update`.
+
+![Return states: Return_Initiated, Return_Approved, Return_Picked, Return_Delivered, or Liquidated](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-scenario-return.svg)
+
+The order stays `Completed` throughout. The refund is triggered at `Return_Picked` (pickup) or `Liquidated` (no pickup).
+
+### 5. Complaints (IGM)
+
+A buyer can raise a complaint about a delivered order, for example a defective device, a missing accessory or a wrong model. It runs on its own `/issue` and `/on_issue` messages, on the same order.
+
+![IGM complaint flow with info request, rejection, escalation and outcomes](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-scenario-igm.svg)
+
+| Version | How it works in RET14 |
+|---|---|
+| **IGM 1.0.0** | The buyer opens an issue, the seller acknowledges it and sends the resolution through `/on_issue_status`, and the buyer closes it (Flow 9). |
+| **IGM 2.0.0** | Adds information requests, resolution acceptance or rejection, and escalation. An accepted resolution can start a replacement or a return on the order through `/on_update` (Flows 10, 11 and 12). |
+
+---
+
+## The Electronics Catalog
+
+### What the Catalog Contains
+
+Each seller app's `/on_search` can include:
+
+- Seller name, location and serviceable area
+- Products with images, brand, model and detailed specifications
 - Variants such as colour, storage or memory
 - MRP, selling price and stock availability
-- Warranty, return and replacement terms, and statutory details such as manufacturer and country of origin
+- Warranty, return and replacement terms
+- Statutory details such as manufacturer and country of origin
 
-**Network interaction:**
+### Keeping Catalogs Fresh
 
-- **`/search`**: The buyer app sends the buyer's search intent and location to the network.
-- **`/on_search`**: Each seller app returns its catalog for the buyer's location.
+Sellers don't need to resend the whole catalog for every change.
 
-### 2. Item Selection and Quote
-
-The buyer adds items from one seller to the cart. The seller checks stock and whether it can deliver to the buyer's location, and returns a price quote.
-
-**Network interaction:**
-
-- **`/select`**: The buyer app sends the selected items, quantities, seller location and delivery location.
-- **`/on_select`**: The seller returns the quote, broken down into item prices, delivery charges, packing charges and taxes, along with the expected delivery time.
-
-### 3. Order Initialization
-
-The buyer enters the delivery address, contact details and billing details.
-
-**Network interaction:**
-
-- **`/init`**: The buyer app sends the full delivery address, contact details and billing details.
-- **`/on_init`**: The seller fixes the final quote and shares the order terms, such as cancellation and return terms, payment collection details and settlement details.
-
-### 4. Order Confirmation and Payment
-
-The buyer pays online.
-
-**Network interaction:**
-
-- **`/confirm`**: The buyer app places the order with the payment status (`PAID` for prepaid).
-- **`/on_confirm`**: The seller confirms the order. The order is `Created` and its fulfillment is `Pending`.
-
-### 5. Order Processing and Packing
-
-The seller processes the order and packs it. The seller keeps the buyer app updated through unsolicited `/on_status` messages.
-
-| Status update | What it means |
-|---|---|
-| **Pending** | The seller has received the order and it is waiting to be processed. |
-| **Packed** | Items are packed and ready for pickup. |
-
-### 6. Delivery Assignment and Tracking
-
-A delivery agent is assigned and collects the order.
-
-| Status update | What it means |
-|---|---|
-| **Agent-assigned** | A delivery agent is assigned. The agent's name and phone number are shared. |
-| **Order-picked-up** | The agent has collected the order from the seller. |
-| **Out-for-delivery** | The agent is on the way to the buyer. |
-
-The buyer app can request live tracking at any point.
-
-**Network interaction:**
-
-- **`/track`**: The buyer app asks for tracking details.
-- **`/on_track`**: The seller returns the tracking link or the agent's current location.
-
-### 7. Delivery and Order Completion
-
-The agent hands over the order to the buyer. The seller sends **`Order-delivered`** through `/on_status`, with the delivery time. The order is now `Completed`.
-
-### 8. Settlement
-
-After delivery, the buyer app settles the order amount with the seller as per the settlement terms agreed in `/on_init`, after deducting the agreed buyer app fee and any applicable taxes such as TCS or TDS.
-
----
-
-## Additional Scenarios
-
-Beyond the standard delivery journey, this specification supports the following scenarios.
-
-### 1. Out of Stock
-
-If an item is not available when the buyer selects it, the seller can handle it in this way:
-
-- **Error response**: The seller rejects the selection in `/on_select` with an out-of-stock error code (for example `40002`).
-
-### 2. Buyer Cancellation
-
-The buyer cancels the order before it is shipped, with a cancellation reason. The seller checks its cancellation terms, cancels the order, and shares any cancellation charges and the refund amount.
-
-### 3. RTO and Part-Cancellation
-
-If some items are not available after confirmation, the seller cancels only those items through an unsolicited `/on_update`, and the buyer app updates the settlement for the partial refund. If delivery then fails (for example the buyer cannot be reached), the seller cancels the order as Return to Origin (RTO) through an unsolicited `/on_cancel`, the buyer app updates the settlement, and the seller confirms when the order is back.
-
-### 4. Return
-
-After delivery, the buyer can return eligible items (the full order or some items) within the return window. The seller approves the return, the items are picked up, and the refund is settled once the seller receives them.
-
-### 5. Incremental Catalog Updates
-
-Sellers do not need to resend the full catalog for every change:
-
-- **Push**: The seller sends unsolicited `/on_search` updates for changes such as price or stock, and when a store closes or reopens.
-- **Pull**: The buyer app asks for only the items changed after a given time, and the seller returns just those items.
-
----
-
-## Issue and Grievance Management
-
-A buyer can raise a complaint through the buyer app about an order, an item or the delivery. The buyer app sends it to the seller app, which investigates and resolves it.
-
-The grievance process includes:
-
-- **Registration**: The buyer raises the issue, with a description and photos where relevant.
-- **Acknowledgement**: The seller confirms receipt and starts processing the issue.
-- **Information exchange** (IGM 2.0.0): The seller can ask for more information, and the buyer can provide it.
-- **Resolution**: The seller proposes a resolution, such as a refund, a replacement, or an explanation with no further action.
-- **Acceptance, rejection or escalation** (IGM 2.0.0): The buyer can accept or reject the resolution, and can escalate an unresolved issue to the next level.
-- **Closure**: The buyer app closes the issue once it is resolved.
-
-This specification supports both IGM versions:
-
-| Version | How it works |
-|---|---|
-| **IGM 1.0.0** | A simple sequence: the buyer opens an issue, the seller acknowledges it, sends the resolution through `/on_issue_status`, and the buyer closes it. |
-| **IGM 2.0.0** | Adds information requests, resolution acceptance or rejection, and escalation. An accepted resolution can trigger a follow-up action on the order, such as a replacement or a return, through `/on_update`. |
+![Catalog sync: push with unsolicited /on_search, or pull with /search for changed items](https://raw.githubusercontent.com/ONDC-Official/automation-specifications/draft-RET14-1.2.0/config/docs/assets/ret14-catalog-sync.svg)
 
 ---
 
 ## Flow Summary
 
-| # | Flow | Requirement | What it covers |
-|---|---|---|---|
-| 1 | Delivery Flow | Mandatory | The standard order: the buyer selects items, gets a quote, pays online, and receives the order through seller-managed delivery |
-| 2 | Out of Stock Flow (Error Code) | Mandatory | The seller rejects the selection straight away because an item is out of stock |
-| 3 | Buyer Cancellation Flow | Mandatory | The buyer cancels a confirmed order before it is shipped |
-| 4 | RTO and Part-Cancellation Flow | Mandatory | The seller cancels some items it cannot supply, then delivery of the rest fails and the order returns to the seller (Return to Origin) |
-| 5 | Return Flow | Mandatory | After delivery, the buyer returns an item |
-| 6 | Discovery Flow – Full Catalog | Mandatory | The buyer app searches a city and the seller returns its full catalog |
-| 7 | Discovery Flow – Incremental Catalog (Push) | Mandatory | After the first search, the seller pushes catalog changes as they happen, without resending the whole catalog |
-| 8 | Discovery Flow – Incremental Catalog Refresh (Pull) | – | The buyer app asks the seller for only the items that changed after a given time |
-| 9 | Delivery Flow with IGM 1.0.0 | Mandatory | A delivered order followed by a complaint handled under IGM 1.0.0 |
-| 10 | Delivery Flow with IGM 2.0.0 – No Action | Mandatory | A complaint under IGM 2.0.0 that the seller resolves with an explanation and no further action, which the buyer accepts |
-| 11 | Delivery Flow with IGM 2.0.0 – Rejection and Escalation | Mandatory | The buyer rejects the seller's resolution and escalates the complaint |
-| 12 | Delivery Flow with IGM 2.0.0 | Mandatory | A complaint under IGM 2.0.0 where the seller asks for more information, proposes a replacement, and the buyer accepts |
+11 of the 12 flows are mandatory. The API Walkthrough shows the step-by-step calls for each one.
 
-In the flows below, **[unsolicited]** marks a message the sender pushes on its own, not as a reply to a request.
+| # | Flow | Group | Status | What it covers |
+|---|---|---|---|---|
+| 1 | Delivery Flow | Ordering | Mandatory | The standard order: the buyer selects items, gets a quote, pays online, and receives the order through seller-managed delivery |
+| 2 | Out of Stock Flow (Error Code) | Ordering | Mandatory | The seller rejects the selection straight away because an item is out of stock |
+| 3 | Buyer Cancellation Flow | After the order | Mandatory | The buyer cancels a confirmed order before it is shipped |
+| 4 | RTO and Part-Cancellation Flow | After the order | Mandatory | The seller cancels some items it cannot supply, then delivery of the rest fails and the order returns to the seller (Return to Origin) |
+| 5 | Return Flow | After the order | Mandatory | After delivery, the buyer returns an item |
+| 6 | Discovery Flow – Full Catalog | Catalog | Mandatory | The buyer app searches a city and the seller returns its full catalog |
+| 7 | Discovery Flow – Incremental Catalog (Push) | Catalog | Mandatory | After the first search, the seller pushes catalog changes as they happen, without resending the whole catalog |
+| 8 | Discovery Flow – Incremental Catalog Refresh (Pull) | Catalog | — | The buyer app asks the seller for only the items that changed after a given time |
+| 9 | Delivery Flow with IGM 1.0.0 | Grievances | Mandatory | A delivered order followed by a complaint handled under IGM 1.0.0 |
+| 10 | Delivery Flow with IGM 2.0.0 – No Action | Grievances | Mandatory | A complaint under IGM 2.0.0 that the seller resolves with an explanation and no further action, which the buyer accepts |
+| 11 | Delivery Flow with IGM 2.0.0 – Rejection and Escalation | Grievances | Mandatory | The buyer rejects the seller's resolution and escalates the complaint |
+| 12 | Delivery Flow with IGM 2.0.0 | Grievances | Mandatory | A complaint under IGM 2.0.0 where the seller asks for more information, proposes a replacement, and the buyer accepts |
 
----
-
-## Detailed Protocol Flows
-
-### Flow 1: Delivery Flow
-
-#### 1. Short Description
-The standard order: the buyer selects items, gets a quote, pays online, and receives the order through seller-managed delivery. Most other order flows build on these steps.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` (BAP -> BPP)**: Sends the selected items, quantities, store location (`location_id`) and delivery location (GPS and area code).
-- **`/on_select` (BPP -> BAP)**: Returns the quote (`quote.breakup`) with item prices, delivery and packing charges, taxes, and the expected delivery time (`@ondc/org/TAT`).
-- **`/init` (BAP -> BPP)**: Sends the delivery address, contact details and billing details.
-- **`/on_init` (BPP -> BAP)**: Returns the final quote, order terms, and payment and settlement details.
-- **`/confirm` (BAP -> BPP)**: Places the order with payment status `PAID`.
-- **`/on_confirm` (BPP -> BAP)**: Confirms the order (`Created`, fulfillment `Pending`).
-- **`/on_status` [unsolicited] (BPP -> BAP)**: `Pending` -> `Packed` -> `Agent-assigned` -> `Order-picked-up`.
-- **`/track` & `/on_track` (BAP <-> BPP)**: The buyer app requests and receives live tracking details.
-- **`/on_status` [unsolicited] (BPP -> BAP)**: `Out-for-delivery` -> `Order-delivered`.
-
----
-
-### Flow 2: Out of Stock Flow (Error Code)
-
-#### 1. Short Description
-The seller rejects the selection straight away because an item is out of stock.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` (BAP -> BPP)**: Sends the original cart.
-- **`/on_select` (BPP -> BAP)**: Reports the unavailable item with an out-of-stock error (for example `40002`).
-
----
-
-### Flow 3: Buyer Cancellation Flow
-
-#### 1. Short Description
-The buyer cancels a confirmed order before it is shipped.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `/on_confirm`**: As in Flow 1.
-- **`/cancel` (BAP -> BPP)**: Sends the order ID and the cancellation reason code.
-- **`/on_cancel` (BPP -> BAP)**: Cancels the order (`Cancelled`) and returns any cancellation charges and the refund amount.
-
----
-
-### Flow 4: RTO and Part-Cancellation Flow
-
-#### 1. Short Description
-The seller cancels some items it cannot supply, then delivery of the rest fails and the order returns to the seller (Return to Origin).
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `/on_confirm`**: As in Flow 1.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller cancels the unavailable items.
-- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the refund.
-- **`/on_status` [unsolicited] (BPP -> BAP)**: `Pending` -> `Packed` -> `Agent-assigned` -> `Order-picked-up` -> `Out-for-delivery`.
-- **`/on_cancel` [unsolicited] (BPP -> BAP)**: Delivery fails and the seller cancels the order as RTO (reason code `013`).
-- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the RTO.
-- **`/on_status` [unsolicited] (BPP -> BAP)**: `RTO-Delivered`.
-
----
-
-### Flow 5: Return Flow
-
-#### 1. Short Description
-After delivery, the buyer returns an item. The seller approves the return, the item is picked up, and the refund is settled.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `/on_confirm`**: As in Flow 1.
-- **`/on_status` [unsolicited] (BPP -> BAP)**: `Accepted` -> `Packed` -> `Agent-assigned` -> `Order-picked-up` -> `Out-for-delivery` -> `Order-delivered`.
-- **`/update` (BAP -> BPP)**: Sends the return request with the item, quantity and return reason.
-- **`/on_update` (BPP -> BAP)**: The seller records the return request.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: Return approved.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: Return picked up.
-- **`/update` (BAP -> BPP)**: The buyer app updates the settlement for the refund.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: Return received by the seller, which completes the return.
-
----
-
-### Flow 6: Discovery Flow – Full Catalog
-
-#### 1. Short Description
-The buyer app searches a city and the seller returns its full catalog.
-
-#### 2. API Breakdown & Technical Actions
-- **`/search` (BAP -> Gateway)**: Sends the search for the buyer's city and the domain.
-- **`/on_search` (BPP -> BAP)**: Returns the catalog: store details and serviceability, categories, items with prices and statutory details, and any offers.
-
----
-
-### Flow 7: Discovery Flow – Incremental Catalog (Push)
-
-#### 1. Short Description
-After the first search, the seller pushes catalog changes as they happen, without resending the whole catalog.
-
-#### 2. API Breakdown & Technical Actions
-- **`/search` (BAP -> Gateway)**: Starts the catalog session for incremental updates.
-- **`/on_search` [unsolicited] (BPP -> BAP)**: Pushes changed items, for example new prices or stock.
-- **`/on_search` [unsolicited] (BPP -> BAP)**: Marks the store as closed.
-- **`/search` (BAP -> Gateway)**: A follow-up search to confirm the catalog is in sync.
-
----
-
-### Flow 8: Discovery Flow – Incremental Catalog Refresh (Pull)
-
-#### 1. Short Description
-The buyer app asks the seller for only the items that changed after a given time.
-
-#### 2. API Breakdown & Technical Actions
-- **`/search` (BAP -> Gateway)**: Sends the search for the buyer's city and the domain.
-- **`/on_search` (BPP -> BAP)**: Returns the catalog: store details and serviceability, categories, items with prices and statutory details, and any offers.
-- **`/search` (BAP -> BPP)**: Asks for only the items changed after a given time.
-- **`/on_search` (BPP -> BAP)**: Returns only the changed items.
-
----
-
-### Flow 9: Delivery Flow with IGM 1.0.0
-
-#### 1. Short Description
-A delivered order followed by a complaint handled under IGM 1.0.0.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `Order-delivered`**: As in Flow 1 (order placed and delivered).
-- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
-- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
-- **`/on_issue_status` [unsolicited] (BPP -> BAP)**: The seller sends the resolution.
-- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
-
----
-
-### Flow 10: Delivery Flow with IGM 2.0.0 – No Action
-
-#### 1. Short Description
-A complaint under IGM 2.0.0 that the seller resolves with an explanation and no further action, which the buyer accepts.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `Order-delivered`**: As in Flow 1 (order placed and delivered).
-- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
-- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution with no further action.
-- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
-- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
-- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
-- **`/on_status` [unsolicited] (BPP -> BAP)**: final order status after the complaint is closed.
-
----
-
-### Flow 11: Delivery Flow with IGM 2.0.0 – Rejection and Escalation
-
-#### 1. Short Description
-The buyer rejects the seller's resolution and escalates the complaint. The final resolution leads to a return.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `Order-delivered`**: As in Flow 1 (order placed and delivered).
-- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
-- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution.
-- **`/issue` (BAP -> BPP)**: The buyer rejects the resolution.
-- **`/on_issue` (BPP -> BAP)**: The seller reprocesses the issue.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a new resolution.
-- **`/issue` (BAP -> BPP)**: The buyer escalates the issue.
-- **`/on_issue` (BPP -> BAP)**: The escalated issue is being processed.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: A final resolution is proposed.
-- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
-- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
-- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller starts the return on the order.
-
----
-
-### Flow 12: Delivery Flow with IGM 2.0.0
-
-#### 1. Short Description
-A complaint under IGM 2.0.0 where the seller asks for more information, proposes a replacement, and the buyer accepts.
-
-#### 2. API Breakdown & Technical Actions
-- **`/select` to `Order-delivered`**: As in Flow 1 (order placed and delivered).
-- **`/issue` (BAP -> BPP)**: The buyer opens a complaint.
-- **`/on_issue` (BPP -> BAP)**: The seller acknowledges it and starts processing.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller asks for more information.
-- **`/issue` (BAP -> BPP)**: The buyer provides the information.
-- **`/on_issue` (BPP -> BAP)**: The seller acknowledges the information.
-- **`/on_issue` [unsolicited] (BPP -> BAP)**: The seller proposes a resolution.
-- **`/issue` (BAP -> BPP)**: The buyer accepts the resolution.
-- **`/on_issue` (BPP -> BAP)**: The issue is marked resolved.
-- **`/issue` (BAP -> BPP)**: The buyer closes the issue.
-- **`/on_update` [unsolicited] (BPP -> BAP)**: The seller starts the replacement on the order.
+— means the flow is not tagged mandatory or optional in this spec.
