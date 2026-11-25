@@ -1,6 +1,6 @@
 # ONDC:RET14 — version 1.2.0
 
-**Branch:** `draft-RET14-1.2.0`  
+**Branch:** `release-eks-RET14-1.2.0`  
 **Use Cases:** ELECTRONICS
 
 ---
