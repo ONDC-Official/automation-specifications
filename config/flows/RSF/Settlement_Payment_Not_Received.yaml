@@ -73,6 +73,15 @@ steps:
         type: object
         additionalProperties: false
         properties:
+          bap_id:
+            type: string
+            description: Subscriber ID of the collector app (BAP)
+            default: bap.example.com
+          bap_uri:
+            type: string
+            description: Subscriber URL of the collector app (BAP)
+            default: https://bap.example.com
+            pattern: ^https?://([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*|localhost)(:\d+)?(/.*)?$
           order_id:
             type: string
             description: ID of the order that was not paid
@@ -87,6 +96,8 @@ steps:
             default: '500'
             pattern: ^(?!0+(\.0+)?$)\d+(\.\d{1,2})?$
         required:
+        - bap_id
+        - bap_uri
         - transaction_id
         - diff_amount
   examples:
