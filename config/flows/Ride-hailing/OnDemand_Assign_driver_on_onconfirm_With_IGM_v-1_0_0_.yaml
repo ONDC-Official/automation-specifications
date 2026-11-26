@@ -21,7 +21,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP initiates a search to discover available ride services by
+    description:
+      The BAP initiates a search to discover available ride services by
       specifying the trip intent, pickup and dropoff locations, and payment
       method. This establishes the transaction foundation for subsequent ride
       fulfillment and driver assignment.
@@ -249,7 +250,8 @@ steps:
               payment:
                 collected_by: BPP
         type: request
-        description: The BAP initiates a search to discover available ride services by
+        description:
+          The BAP initiates a search to discover available ride services by
           specifying the trip intent, pickup and dropoff locations, and payment
           method. This establishes the transaction foundation for subsequent
           ride fulfillment and driver assignment.
@@ -773,7 +775,8 @@ steps:
                         code: STATIC_TERMS
                       value: https://example-test-bpp.com/static-terms.txt
         type: request
-        description: The service provider responds with a catalog of available ride
+        description:
+          The service provider responds with a catalog of available ride
           options matching the search parameters, including vehicle details,
           pricing, and fulfillment terms.
   - api: select
@@ -863,7 +866,8 @@ steps:
               provider:
                 id: P1
         type: request
-        description: The BAP communicates the customer's ride selection, including
+        description:
+          The BAP communicates the customer's ride selection, including
           chosen items and pricing, to the BPP for order confirmation.
   - api: on_select
     action_id: on_select
@@ -1089,7 +1093,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -1118,14 +1123,16 @@ steps:
                   value: "146"
                 ttl: PT200S
         type: request
-        description: The BPP returns the selected ride service's pricing quote and
+        description:
+          The BPP returns the selected ride service's pricing quote and
           fulfillment details in response to the BAP's selection request.
   - api: init
     action_id: init
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP initiates an order by confirming terms and conditions with
+    description:
+      The BAP initiates an order by confirming terms and conditions with
       the BPP, establishing transaction details including pickup location,
       destination, fulfillment preferences, and payment arrangement for the
       ride. This init request formalizes the buyer's intent to proceed with the
@@ -1337,7 +1344,8 @@ steps:
               provider:
                 id: P1
         type: request
-        description: The BAP initiates an order by confirming terms and conditions with
+        description:
+          The BAP initiates an order by confirming terms and conditions with
           the BPP, establishing transaction details including pickup location,
           destination, fulfillment preferences, and payment arrangement for the
           ride. This init request formalizes the buyer's intent to proceed with
@@ -1347,11 +1355,12 @@ steps:
     owner: BPP
     responseFor: init
     unsolicited: false
-    description: The BPP sends the initialized order with pricing quote, fulfillment
+    description:
+      The BPP sends the initialized order with pricing quote, fulfillment
       options, and cancellation terms, establishing the transaction framework
       and agreed-upon conditions before buyer confirmation.
     mock:
-      generate: YXN5bmMgZnVuY3Rpb24gYXBwbHlSb3V0ZUluZm8oZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgdHJ5IHsKICAgIGNvbnN0IHVud3JhcCA9ICh2YWx1ZSkgPT4gKEFycmF5LmlzQXJyYXkodmFsdWUpID8gdmFsdWVbMF0gOiB2YWx1ZSk7CiAgICBjb25zdCBlbmNvZGVkUG9seWxpbmUgPSB1bndyYXAoc2Vzc2lvbkRhdGE/LnJvdXRlX2VuY29kZWRfcG9seWxpbmUpOwogICAgY29uc3Qgd2F5cG9pbnRzID0gdW53cmFwKHNlc3Npb25EYXRhPy5yb3V0ZV93YXlwb2ludHMpOwogICAgaWYgKHR5cGVvZiBlbmNvZGVkUG9seWxpbmUgIT09ICJzdHJpbmciIHx8ICFlbmNvZGVkUG9seWxpbmUpIHJldHVybjsKICAgIGlmICh0eXBlb2Ygd2F5cG9pbnRzICE9PSAic3RyaW5nIiB8fCAhd2F5cG9pbnRzKSByZXR1cm47CiAgICBjb25zdCBmdWxmaWxsbWVudHMgPSBkZWZhdWx0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50czsKICAgIGlmICghQXJyYXkuaXNBcnJheShmdWxmaWxsbWVudHMpKSByZXR1cm47CiAgICBmb3IgKGNvbnN0IGZ1bGZpbGxtZW50IG9mIGZ1bGZpbGxtZW50cykgewogICAgICBpZiAoIUFycmF5LmlzQXJyYXkoZnVsZmlsbG1lbnQudGFncykpIGNvbnRpbnVlOwogICAgICBjb25zdCByb3V0ZVRhZyA9IGZ1bGZpbGxtZW50LnRhZ3MuZmluZCgKICAgICAgICAodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJST1VURV9JTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KQogICAgICApOwogICAgICBpZiAoIXJvdXRlVGFnKSBjb250aW51ZTsKICAgICAgZm9yIChjb25zdCBlbnRyeSBvZiByb3V0ZVRhZy5saXN0KSB7CiAgICAgICAgaWYgKGVudHJ5Py5kZXNjcmlwdG9yPy5jb2RlID09PSAiRU5DT0RFRF9QT0xZTElORSIpIGVudHJ5LnZhbHVlID0gZW5jb2RlZFBvbHlsaW5lOwogICAgICAgIGlmIChlbnRyeT8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIldBWVBPSU5UUyIpIGVudHJ5LnZhbHVlID0gd2F5cG9pbnRzOwogICAgICB9CiAgICB9CiAgfSBjYXRjaCAoZXJyb3IpIHsKICAgIHJldHVybjsKICB9Cn0KCmZ1bmN0aW9uIGJ1aWxkQnBwVGVybXMoc2Vzc2lvbkRhdGEpIHsKICAvLyBfX0lOSVRfQ09QWV9PTl9TRUFSQ0hfVEVSTVNfXwogIGNvbnN0IGluaXRUYWdzID0gc2Vzc2lvbkRhdGE/LmluaXRfdGFncz8uZmxhdCgpID8/IFtdOwoKICBjb25zdCBiYXBUZXJtcyA9IGluaXRUYWdzLmZpbmQoCiAgICAodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCQVBfVEVSTVMiCiAgKTsKICBjb25zdCBiYXBMaXN0ID0gYmFwVGVybXM/Lmxpc3QgPz8gW107CgogIGNvbnN0IGhhc09mZmxpbmVDb250cmFjdCA9IGJhcExpc3Quc29tZSgKICAgIChlbnRyeSkgPT4gZW50cnk/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJPRkZMSU5FX0NPTlRSQUNUIgogICk7CgogIGlmIChoYXNPZmZsaW5lQ29udHJhY3QpIHsKICAgIHJldHVybiAoc2Vzc2lvbkRhdGE/Lm9uX3NlYXJjaF90YWdzPy5mbGF0KCkgPz8gW10pLm1hcCgodGFnKSA9PiB7CiAgICAgIGlmICh0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCUFBfVEVSTVMiKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgIC4uLnRhZywKICAgICAgICAgIGxpc3Q6IFsuLi5iYXBMaXN0XQogICAgICAgIH07CiAgICAgIH0KCiAgICAgIHJldHVybiB0YWc7CiAgICB9KTsKICB9CgogIGNvbnN0IGFwcGVuZGVkQ29kZXMgPSBbCiAgICAiU0VUVExFTUVOVF9CQU5LX0NPREUiLAogICAgIlNFVFRMRU1FTlRfQkFOS19BQ0NPVU5UX05VTUJFUiIsCiAgICAiU0VUVExFTUVOVF9WSVJUVUFMX1BBWU1FTlRfQUREUkVTUyIsCiAgICAiU0VUVExFTUVOVF9BTU9VTlQiLAogIF07CiAgY29uc3QgYXBwZW5kZWRFbnRyaWVzID0gYXBwZW5kZWRDb2RlcwogICAgLm1hcCgoY29kZSkgPT4gYmFwTGlzdC5maW5kKChlbnRyeSkgPT4gZW50cnk/LmRlc2NyaXB0b3I/LmNvZGUgPT09IGNvZGUpKQogICAgLmZpbHRlcihCb29sZWFuKTsKCiAgcmV0dXJuIChzZXNzaW9uRGF0YT8ub25fc2VhcmNoX3RhZ3M/LmZsYXQoKSA/PyBbXSkubWFwKCh0YWcpID0+IHsKICAgIGlmICh0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCUFBfVEVSTVMiKSB7CiAgICAgIHJldHVybiB7CiAgICAgICAgLi4udGFnLAogICAgICAgIGxpc3Q6IFsuLi4odGFnLmxpc3QgPz8gW10pLCAuLi5hcHBlbmRlZEVudHJpZXNdCiAgICAgIH07CiAgICB9CgogICAgcmV0dXJuIHRhZzsKICB9KTsKfQoKYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgZGVmYXVsdFBheWxvYWQuY29udGV4dC5sb2NhdGlvbi5jaXR5LmNvZGUgPSBzZXNzaW9uRGF0YT8uY2l0eV9jb2RlPy5bMF07CgogIGNvbnN0IG9yZGVyID0gZGVmYXVsdFBheWxvYWQubWVzc2FnZS5vcmRlcjsKICBjb25zdCBwYXltZW50SWQgPSBNYXRoLnJhbmRvbSgpLnRvU3RyaW5nKDM2KS5zdWJzdHJpbmcoMiwgMTUpOwogIGNvbnN0IHNlbGVjdGVkRnVsZmlsbG1lbnQgPSBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzPy5bMF0gPz8ge307CgogIG9yZGVyLml0ZW1zID0gKHNlc3Npb25EYXRhPy5pdGVtcyA/PyBbXSkubWFwKChpdGVtKSA9PiB7CiAgICBpZiAoQXJyYXkuaXNBcnJheShpdGVtLnRhZ3MpKSBpdGVtLnRhZ3MgPSB1cGRhdGVJdGVtSW5mb1RhZ3MoaXRlbS50YWdzKTsKICAgIHJldHVybiBpdGVtOwogIH0pOwogIGlmIChvcmRlci5pdGVtc1swXSkgb3JkZXIuaXRlbXNbMF0ucGF5bWVudF9pZHMgPSBbcGF5bWVudElkXTsKCiAgY29uc3QgZnVsZmlsbG1lbnQgPSBvcmRlci5mdWxmaWxsbWVudHNbMF07CiAgZnVsZmlsbG1lbnQuaWQgPSBzZWxlY3RlZEZ1bGZpbGxtZW50LmlkOwogIGZ1bGZpbGxtZW50LnN0b3BzID0gc2VsZWN0ZWRGdWxmaWxsbWVudC5zdG9wczsKICBmdWxmaWxsbWVudC52ZWhpY2xlID0gc2VsZWN0ZWRGdWxmaWxsbWVudC52ZWhpY2xlOwogIGZ1bGZpbGxtZW50LnRhZ3MgPSBzZWxlY3RlZEZ1bGZpbGxtZW50LnRhZ3M7CiAgZnVsZmlsbG1lbnQudHlwZSA9IHNlbGVjdGVkRnVsZmlsbG1lbnQudHlwZTsKICBpZihzZXNzaW9uRGF0YS5pbml0X2N1c3RvbWVyWzBdKXsKICBmdWxmaWxsbWVudC5jdXN0b21lcj0gc2Vzc2lvbkRhdGEuaW5pdF9jdXN0b21lclswXTsKICB9IAogIG9yZGVyLnBheW1lbnRzWzBdLmlkID0gcGF5bWVudElkOwogIGNvbnN0IGNvbGxlY3RlZEJ5ID0gc2Vzc2lvbkRhdGE/LmNvbGxlY3RlZF9ieT8uWzBdOwogIGlmIChjb2xsZWN0ZWRCeSkgb3JkZXIucGF5bWVudHNbMF0uY29sbGVjdGVkX2J5ID0gY29sbGVjdGVkQnk7CgogIG9yZGVyLnF1b3RlID0gc2Vzc2lvbkRhdGE/LnF1b3RlPy5bMF07CgogIGlmIChzZXNzaW9uRGF0YT8uY2FuY2VsbGF0aW9uX3Rlcm1zKSB7CiAgICBvcmRlci5jYW5jZWxsYXRpb25fdGVybXMgPSBzZXNzaW9uRGF0YS5jYW5jZWxsYXRpb25fdGVybXNbMF07CiAgfQoKICBvcmRlci50YWdzID0gYnVpbGRCcHBUZXJtcyhzZXNzaW9uRGF0YSk7CgogIGF3YWl0IGFwcGx5Um91dGVJbmZvKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSk7CiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
+      generate: YXN5bmMgZnVuY3Rpb24gYXBwbHlSb3V0ZUluZm8oZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgdHJ5IHsKICAgIGNvbnN0IHVud3JhcCA9ICh2YWx1ZSkgPT4gKEFycmF5LmlzQXJyYXkodmFsdWUpID8gdmFsdWVbMF0gOiB2YWx1ZSk7CiAgICBjb25zdCBlbmNvZGVkUG9seWxpbmUgPSB1bndyYXAoc2Vzc2lvbkRhdGE/LnJvdXRlX2VuY29kZWRfcG9seWxpbmUpOwogICAgY29uc3Qgd2F5cG9pbnRzID0gdW53cmFwKHNlc3Npb25EYXRhPy5yb3V0ZV93YXlwb2ludHMpOwogICAgaWYgKHR5cGVvZiBlbmNvZGVkUG9seWxpbmUgIT09ICJzdHJpbmciIHx8ICFlbmNvZGVkUG9seWxpbmUpIHJldHVybjsKICAgIGlmICh0eXBlb2Ygd2F5cG9pbnRzICE9PSAic3RyaW5nIiB8fCAhd2F5cG9pbnRzKSByZXR1cm47CiAgICBjb25zdCBmdWxmaWxsbWVudHMgPSBkZWZhdWx0UGF5bG9hZD8ubWVzc2FnZT8ub3JkZXI/LmZ1bGZpbGxtZW50czsKICAgIGlmICghQXJyYXkuaXNBcnJheShmdWxmaWxsbWVudHMpKSByZXR1cm47CiAgICBmb3IgKGNvbnN0IGZ1bGZpbGxtZW50IG9mIGZ1bGZpbGxtZW50cykgewogICAgICBpZiAoIUFycmF5LmlzQXJyYXkoZnVsZmlsbG1lbnQudGFncykpIGNvbnRpbnVlOwogICAgICBjb25zdCByb3V0ZVRhZyA9IGZ1bGZpbGxtZW50LnRhZ3MuZmluZCgKICAgICAgICAodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJST1VURV9JTkZPIiAmJiBBcnJheS5pc0FycmF5KHRhZy5saXN0KQogICAgICApOwogICAgICBpZiAoIXJvdXRlVGFnKSBjb250aW51ZTsKICAgICAgZm9yIChjb25zdCBlbnRyeSBvZiByb3V0ZVRhZy5saXN0KSB7CiAgICAgICAgaWYgKGVudHJ5Py5kZXNjcmlwdG9yPy5jb2RlID09PSAiRU5DT0RFRF9QT0xZTElORSIpIGVudHJ5LnZhbHVlID0gZW5jb2RlZFBvbHlsaW5lOwogICAgICAgIGlmIChlbnRyeT8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIldBWVBPSU5UUyIpIGVudHJ5LnZhbHVlID0gd2F5cG9pbnRzOwogICAgICB9CiAgICB9CiAgfSBjYXRjaCAoZXJyb3IpIHsKICAgIHJldHVybjsKICB9Cn0KCmZ1bmN0aW9uIGJ1aWxkQnBwVGVybXMoc2Vzc2lvbkRhdGEpIHsKICAvLyBfX0lOSVRfQ09QWV9PTl9TRUFSQ0hfVEVSTVNfXwogIGNvbnN0IGluaXRUYWdzID0gc2Vzc2lvbkRhdGE/LmluaXRfdGFncz8uZmxhdCgpID8/IFtdOwoKICBjb25zdCBiYXBUZXJtcyA9IGluaXRUYWdzLmZpbmQoCiAgICAodGFnKSA9PiB0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCQVBfVEVSTVMiCiAgKTsKICBjb25zdCBiYXBMaXN0ID0gYmFwVGVybXM/Lmxpc3QgPz8gW107CgogIGNvbnN0IGhhc09mZmxpbmVDb250cmFjdCA9IGJhcExpc3Quc29tZSgKICAgIChlbnRyeSkgPT4gZW50cnk/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJPRkZMSU5FX0NPTlRSQUNUIgogICk7CgogIGlmIChoYXNPZmZsaW5lQ29udHJhY3QpIHsKICAgIHJldHVybiAoc2Vzc2lvbkRhdGE/Lm9uX3NlYXJjaF90YWdzPy5mbGF0KCkgPz8gW10pLm1hcCgodGFnKSA9PiB7CiAgICAgIGlmICh0YWc/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJCUFBfVEVSTVMiKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgIC4uLnRhZywKICAgICAgICAgIGxpc3Q6IFsuLi5iYXBMaXN0XQogICAgICAgIH07CiAgICAgIH0KCiAgICAgIHJldHVybiB0YWc7CiAgICB9KTsKICB9CgogIC8vIE5vdCBvZmZsaW5lOiBwdWxsIHRoZSBzYW1lIGZpZWxkcyBvbl9zZWFyY2ggdGFncyBhbmQgYXBwZW5kZWQgU0VUVExFTUVOVF9BTU9VTlQKICBjb25zdCBvblNlYXJjaEJwcFRlcm1zID0gc2Vzc2lvbkRhdGE/Lm9uX3NlYXJjaF90YWdzPy5mbGF0KCk/LmZpbmQoKHRlcm1zKSA9PiB7CiAgICByZXR1cm4gdGVybXMuZGVzY3JpcHRvci5jb2RlID09PSAiQlBQX1RFUk1TIgogIH0pCiAgY29uc3Qgb25TZWFyY2hMaXN0ID0gb25TZWFyY2hCcHBUZXJtcz8ubGlzdAogIGNvbnN0IHNldHRsZW1lbnRUZXJtcyA9IGJhcExpc3Q/LmZpbmQoKGxpKSA9PiB7CiAgICByZXR1cm4gbGkuZGVzY3JpcHRvci5jb2RlID09PSAiU0VUVExFTUVOVF9BTU9VTlQiCiAgfSkKICByZXR1cm4gWwogICAgewogICAgICAiZGVzY3JpcHRvciI6IHsKICAgICAgICAiY29kZSI6ICJCUFBfVEVSTVMiLAogICAgICAgICJuYW1lIjogIkJQUCBUZXJtcyBvZiBFbmdhZ2VtZW50IgogICAgICB9LAogICAgICAiZGlzcGxheSI6IGZhbHNlLAogICAgICAibGlzdCI6IFsKICAgICAgICAuLi5vblNlYXJjaExpc3QsCiAgICAgICAgc2V0dGxlbWVudFRlcm1zCiAgICAgIF0KICAgIH0KICBdCn0KCmFzeW5jIGZ1bmN0aW9uIGdlbmVyYXRlKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIGRlZmF1bHRQYXlsb2FkLmNvbnRleHQubG9jYXRpb24uY2l0eS5jb2RlID0gc2Vzc2lvbkRhdGE/LmNpdHlfY29kZT8uWzBdOwoKICBjb25zdCBvcmRlciA9IGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2Uub3JkZXI7CiAgY29uc3QgcGF5bWVudElkID0gTWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc3Vic3RyaW5nKDIsIDE1KTsKICBjb25zdCBzZWxlY3RlZEZ1bGZpbGxtZW50ID0gc2Vzc2lvbkRhdGE/LnNlbGVjdGVkX2Z1bGZpbGxtZW50cz8uWzBdID8/IHt9OwoKICBvcmRlci5pdGVtcyA9IChzZXNzaW9uRGF0YT8uaXRlbXMgPz8gW10pLm1hcCgoaXRlbSkgPT4gewogICAgaWYgKEFycmF5LmlzQXJyYXkoaXRlbS50YWdzKSkgaXRlbS50YWdzID0gdXBkYXRlSXRlbUluZm9UYWdzKGl0ZW0udGFncyk7CiAgICByZXR1cm4gaXRlbTsKICB9KTsKICBpZiAob3JkZXIuaXRlbXNbMF0pIG9yZGVyLml0ZW1zWzBdLnBheW1lbnRfaWRzID0gW3BheW1lbnRJZF07CgogIGNvbnN0IGZ1bGZpbGxtZW50ID0gb3JkZXIuZnVsZmlsbG1lbnRzWzBdOwogIGZ1bGZpbGxtZW50LmlkID0gc2VsZWN0ZWRGdWxmaWxsbWVudC5pZDsKICBmdWxmaWxsbWVudC5zdG9wcyA9IHNlbGVjdGVkRnVsZmlsbG1lbnQuc3RvcHM7CiAgZnVsZmlsbG1lbnQudmVoaWNsZSA9IHNlbGVjdGVkRnVsZmlsbG1lbnQudmVoaWNsZTsKICBmdWxmaWxsbWVudC50YWdzID0gc2VsZWN0ZWRGdWxmaWxsbWVudC50YWdzOwogIGZ1bGZpbGxtZW50LnR5cGUgPSBzZWxlY3RlZEZ1bGZpbGxtZW50LnR5cGU7CiAgaWYgKHNlc3Npb25EYXRhLmluaXRfY3VzdG9tZXJbMF0pIHsKICAgIGZ1bGZpbGxtZW50LmN1c3RvbWVyID0gc2Vzc2lvbkRhdGEuaW5pdF9jdXN0b21lclswXTsKICB9CiAgb3JkZXIucGF5bWVudHNbMF0uaWQgPSBwYXltZW50SWQ7CiAgY29uc3QgY29sbGVjdGVkQnkgPSBzZXNzaW9uRGF0YT8uY29sbGVjdGVkX2J5Py5bMF07CiAgaWYgKGNvbGxlY3RlZEJ5KSBvcmRlci5wYXltZW50c1swXS5jb2xsZWN0ZWRfYnkgPSBjb2xsZWN0ZWRCeTsKCiAgb3JkZXIucXVvdGUgPSBzZXNzaW9uRGF0YT8ucXVvdGU/LlswXTsKCiAgaWYgKHNlc3Npb25EYXRhPy5jYW5jZWxsYXRpb25fdGVybXMpIHsKICAgIG9yZGVyLmNhbmNlbGxhdGlvbl90ZXJtcyA9IHNlc3Npb25EYXRhLmNhbmNlbGxhdGlvbl90ZXJtc1swXTsKICB9CgogIG9yZGVyLnRhZ3MgPSBidWlsZEJwcFRlcm1zKHNlc3Npb25EYXRhKTsKCiAgYXdhaXQgYXBwbHlSb3V0ZUluZm8oZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKTsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0K
       validate: ZnVuY3Rpb24gdmFsaWRhdGUodGFyZ2V0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2luaXQiOwogIGNvbnN0IENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgPSAib25faW5pdCI7CiAgY29uc3QgQ1VSUkVOVF9TVEVQX0lOREVYID0gNTsKCiAgaWYgKCF0YXJnZXRQYXlsb2FkIHx8ICF0YXJnZXRQYXlsb2FkLmNvbnRleHQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgcGF5bG9hZCBjb250ZXh0IiB9OwogIH0KCiAgY29uc3QgbWVzc2FnZSA9IHRhcmdldFBheWxvYWQubWVzc2FnZTsKICBpZiAoIW1lc3NhZ2UpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgbWVzc2FnZSBvYmplY3QgaW4gcGF5bG9hZCIgfTsKICB9CgogIGZ1bmN0aW9uIGdldFNlc3Npb25Qcm92aWRlcklkKHNlc3Npb24pIHsKICAgIGlmICghc2Vzc2lvbiB8fCAhc2Vzc2lvbi5wcm92aWRlcikgcmV0dXJuIG51bGw7CiAgICBjb25zdCBwID0gc2Vzc2lvbi5wcm92aWRlcjsKICAgIGlmIChBcnJheS5pc0FycmF5KHApKSB7CiAgICAgIGlmIChwLmxlbmd0aCA9PT0gMCkgcmV0dXJuIG51bGw7CiAgICAgIGNvbnN0IGZpcnN0ID0gcFswXTsKICAgICAgcmV0dXJuIChmaXJzdCAmJiB0eXBlb2YgZmlyc3QgPT09ICdvYmplY3QnKSA/IGZpcnN0LmlkIDogZmlyc3Q7CiAgICB9CiAgICByZXR1cm4gKHAgJiYgdHlwZW9mIHAgPT09ICdvYmplY3QnKSA/IHAuaWQgOiBwOwogIH0KCiAgZnVuY3Rpb24gZ2V0U2Vzc2lvbkl0ZW1zKHNlc3Npb24pIHsKICAgIGlmICghc2Vzc2lvbikgcmV0dXJuIFtdOwogICAgY29uc3QgbGlzdHMgPSBbCiAgICAgIHNlc3Npb24ub25fc2VsZWN0X2l0ZW1zLAogICAgICBzZXNzaW9uLml0ZW1zLAogICAgICBzZXNzaW9uLnNlbGVjdGVkX2l0ZW1zLAogICAgICBzZXNzaW9uLm9yZGVyX2l0ZW1zCiAgICBdOwogICAgZm9yIChjb25zdCBsaXN0IG9mIGxpc3RzKSB7CiAgICAgIGlmIChsaXN0KSB7CiAgICAgICAgY29uc3QgYXJyID0gQXJyYXkuaXNBcnJheShsaXN0KSA/IChBcnJheS5pc0FycmF5KGxpc3RbMF0pID8gbGlzdFswXSA6IGxpc3QpIDogW2xpc3RdOwogICAgICAgIGlmIChhcnIuc29tZShpID0+IGkgJiYgaS5mdWxmaWxsbWVudF9pZCkpIHsKICAgICAgICAgIHJldHVybiBhcnI7CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgICBmb3IgKGNvbnN0IGxpc3Qgb2YgbGlzdHMpIHsKICAgICAgaWYgKGxpc3QpIHsKICAgICAgICBjb25zdCBhcnIgPSBBcnJheS5pc0FycmF5KGxpc3QpID8gKEFycmF5LmlzQXJyYXkobGlzdFswXSkgPyBsaXN0WzBdIDogbGlzdCkgOiBbbGlzdF07CiAgICAgICAgaWYgKGFyci5sZW5ndGggPiAwKSByZXR1cm4gYXJyOwogICAgICB9CiAgICB9CiAgICByZXR1cm4gW107CiAgfQoKICBmdW5jdGlvbiBnZXRTZXNzaW9uRnVsZmlsbG1lbnRzKHNlc3Npb24pIHsKICAgIGlmICghc2Vzc2lvbikgcmV0dXJuIFtdOwogICAgY29uc3QgbGlzdHMgPSBbCiAgICAgIHNlc3Npb24ub25fc2VsZWN0X2Z1bGZpbGxtZW50cywKICAgICAgc2Vzc2lvbi5mdWxmaWxsbWVudHMsCiAgICAgIHNlc3Npb24uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzLAogICAgICBzZXNzaW9uLm9uX3N0YXR1c19mdWxmaWxsbWVudHMKICAgIF07CiAgICBmb3IgKGNvbnN0IGxpc3Qgb2YgbGlzdHMpIHsKICAgICAgaWYgKGxpc3QpIHsKICAgICAgICBjb25zdCBhcnIgPSBBcnJheS5pc0FycmF5KGxpc3QpID8gKEFycmF5LmlzQXJyYXkobGlzdFswXSkgPyBsaXN0WzBdIDogbGlzdCkgOiBbbGlzdF07CiAgICAgICAgaWYgKGFyci5zb21lKGYgPT4gZiAmJiBmLmlkKSkgewogICAgICAgICAgcmV0dXJuIGFycjsKICAgICAgICB9CiAgICAgIH0KICAgIH0KICAgIGZvciAoY29uc3QgbGlzdCBvZiBsaXN0cykgewogICAgICBpZiAobGlzdCkgewogICAgICAgIGNvbnN0IGFyciA9IEFycmF5LmlzQXJyYXkobGlzdCkgPyAoQXJyYXkuaXNBcnJheShsaXN0WzBdKSA/IGxpc3RbMF0gOiBsaXN0KSA6IFtsaXN0XTsKICAgICAgICBpZiAoYXJyLmxlbmd0aCA+IDApIHJldHVybiBhcnI7CiAgICAgIH0KICAgIH0KICAgIHJldHVybiBbXTsKICB9CgogIGZ1bmN0aW9uIGdldFNlc3Npb25RdW90ZShzZXNzaW9uKSB7CiAgICBpZiAoIXNlc3Npb24gfHwgIXNlc3Npb24ucXVvdGUpIHJldHVybiBudWxsOwogICAgY29uc3QgcSA9IHNlc3Npb24ucXVvdGU7CiAgICBpZiAoQXJyYXkuaXNBcnJheShxKSkgewogICAgICBpZiAocS5sZW5ndGggPT09IDApIHJldHVybiBudWxsOwogICAgICByZXR1cm4gcVswXTsKICAgIH0KICAgIHJldHVybiBxOwogIH0KCiAgLy8gRGV0ZXJtaW5lIGlmIHdlIHNob3VsZCBza2lwIGNyb3NzLXN0ZXAgdmVyaWZpY2F0aW9uIGR1ZSB0byBtaXNtYXRjaGVkIHRyYW5zYWN0aW9ucyBpbiBtb2NrIGV4YW1wbGVzCiAgbGV0IHNraXBDcm9zc1N0ZXAgPSBmYWxzZTsKICBpZiAoc2Vzc2lvbkRhdGEpIHsKICAgIGNvbnN0IHByZXZUeElkID0gQXJyYXkuaXNBcnJheShzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkKSA/IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uSWRbMF0gOiBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbklkOwogICAgY29uc3QgYWN0aXZlVHhJZCA9IHByZXZUeElkIHx8IHNlc3Npb25EYXRhLnRyYW5zYWN0aW9uX2lkOwogICAgaWYgKGFjdGl2ZVR4SWQgJiYgdGFyZ2V0UGF5bG9hZC5jb250ZXh0LnRyYW5zYWN0aW9uX2lkICE9PSBhY3RpdmVUeElkKSB7CiAgICAgIHNraXBDcm9zc1N0ZXAgPSB0cnVlOwogICAgfQogIH0gZWxzZSB7CiAgICBza2lwQ3Jvc3NTdGVwID0gdHJ1ZTsKICB9CgogIGlmICghbWVzc2FnZS5vcmRlcikgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBtZXNzYWdlIG9yZGVyIGluIG9uX2luaXQiIH07CiAgfQogIGNvbnN0IG9yZGVyID0gbWVzc2FnZS5vcmRlcjsKICBpZiAoIW9yZGVyLml0ZW1zIHx8ICFBcnJheS5pc0FycmF5KG9yZGVyLml0ZW1zKSB8fCBvcmRlci5pdGVtcy5sZW5ndGggPT09IDApIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3Npbmcgb3IgZW1wdHkgaXRlbXMgbGlzdCBpbiBvbl9pbml0IG9yZGVyIiB9OwogIH0KICBmb3IgKGNvbnN0IGl0ZW0gb2Ygb3JkZXIuaXRlbXMpIHsKICB9CiAgaWYgKCFvcmRlci5mdWxmaWxsbWVudHMgfHwgIUFycmF5LmlzQXJyYXkob3JkZXIuZnVsZmlsbG1lbnRzKSB8fCBvcmRlci5mdWxmaWxsbWVudHMubGVuZ3RoID09PSAwKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIGZ1bGZpbGxtZW50cyBsaXN0IGluIG9uX2luaXQiIH07CiAgfQogIGlmICghb3JkZXIucXVvdGUgfHwgIW9yZGVyLnF1b3RlLnByaWNlKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHF1b3RlIG9yIHByaWNlIGluIG9uX2luaXQgb3JkZXIiIH07CiAgfQogIGlmICghb3JkZXIucXVvdGUuYnJlYWt1cCB8fCAhQXJyYXkuaXNBcnJheShvcmRlci5xdW90ZS5icmVha3VwKSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBicmVha3VwIGxpc3QgaW4gcXVvdGUiIH07CiAgfQoKICBpZiAoIXNraXBDcm9zc1N0ZXApIHsKICAgIGNvbnN0IHByZXZQcm92aWRlcklkID0gZ2V0U2Vzc2lvblByb3ZpZGVySWQoc2Vzc2lvbkRhdGEpOwogICAgaWYgKHByZXZQcm92aWRlcklkICYmIG9yZGVyLnByb3ZpZGVyPy5pZCAhPT0gcHJldlByb3ZpZGVySWQpIHsKICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAib25faW5pdCBwcm92aWRlciBJRCAiICsgb3JkZXIucHJvdmlkZXI/LmlkICsgIiBkb2VzIG5vdCBtYXRjaCBwcmV2aW91cyBwcm92aWRlciBJRCAiICsgcHJldlByb3ZpZGVySWQgfTsKICAgIH0KICAgIGNvbnN0IHNlbEl0ZW1zID0gZ2V0U2Vzc2lvbkl0ZW1zKHNlc3Npb25EYXRhKTsKICAgIGlmIChzZWxJdGVtcy5sZW5ndGggPiAwKSB7CiAgICAgIGZvciAoY29uc3QgaXRlbSBvZiBvcmRlci5pdGVtcykgewogICAgICAgIGNvbnN0IG1hdGNoID0gc2VsSXRlbXMuZmluZChzaSA9PiBzaS5pZCA9PT0gaXRlbS5pZCk7CiAgICAgICAgaWYgKCFtYXRjaCkgewogICAgICAgICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiSXRlbSAiICsgaXRlbS5pZCArICIgaW4gb25faW5pdCB3YXMgbm90IHByZXZpb3VzbHkgc2VsZWN0ZWQiIH07CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgICBjb25zdCBzZWxGdWxmaWxsbWVudHMgPSBnZXRTZXNzaW9uRnVsZmlsbG1lbnRzKHNlc3Npb25EYXRhKTsKICAgIGlmIChzZWxGdWxmaWxsbWVudHMubGVuZ3RoID4gMCkgewogICAgICBmb3IgKGNvbnN0IGZmIG9mIG9yZGVyLmZ1bGZpbGxtZW50cykgewogICAgICAgIGlmIChmZi5pZCkgewogICAgICAgICAgY29uc3QgbWF0Y2ggPSBzZWxGdWxmaWxsbWVudHMuZmluZChzZiA9PiBzZi5pZCA9PT0gZmYuaWQpOwogICAgICAgICAgaWYgKCFtYXRjaCkgewogICAgICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJGdWxmaWxsbWVudCBJRCAiICsgZmYuaWQgKyAiIGluIG9uX2luaXQgZG9lcyBub3QgbWF0Y2ggc2VsZWN0aW9uIiB9OwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgfQogICAgY29uc3Qgc2VsUXVvdGUgPSBnZXRTZXNzaW9uUXVvdGUoc2Vzc2lvbkRhdGEpOwogICAgaWYgKHNlbFF1b3RlICYmIG9yZGVyLnF1b3RlKSB7CiAgICAgIGlmIChOdW1iZXIob3JkZXIucXVvdGUucHJpY2U/LnZhbHVlKSAhPT0gTnVtYmVyKHNlbFF1b3RlLnByaWNlPy52YWx1ZSkpIHsKICAgICAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJvbl9pbml0IHF1b3RlIHByaWNlICgiICsgb3JkZXIucXVvdGUucHJpY2U/LnZhbHVlICsgIikgZG9lcyBub3QgbWF0Y2ggb3JpZ2luYWwgcXVvdGUgKCIgKyBzZWxRdW90ZS5wcmljZT8udmFsdWUgKyAiKSIgfTsKICAgICAgfQogICAgfQogIH0KICByZXR1cm4geyB2YWxpZDogdHJ1ZSwgY29kZTogMjAwLCBkZXNjcmlwdGlvbjogIlZhbGlkIHJlcXVlc3QiIH07Cn0=
       requirements: ZnVuY3Rpb24gbWVldHNSZXF1aXJlbWVudHMoc2Vzc2lvbkRhdGEpIHsKICBjb25zdCBDVVJSRU5UX1NURVBfQVBJID0gIm9uX2luaXQiOwogIGNvbnN0IENVUlJFTlRfU1RFUF9BQ1RJT05fSUQgPSAib25faW5pdCI7CiAgY29uc3QgQ1VSUkVOVF9TVEVQX0lOREVYID0gNTsKCiAgaWYgKCFzZXNzaW9uRGF0YSkgewogICAgcmV0dXJuIHsgdmFsaWQ6IGZhbHNlLCBjb2RlOiA0MDAsIGRlc2NyaXB0aW9uOiAiTWlzc2luZyBzZXNzaW9uIGRhdGEiIH07CiAgfQoKICBjb25zdCB0eElkID0gc2Vzc2lvbkRhdGEudHJhbnNhY3Rpb25JZCB8fCBzZXNzaW9uRGF0YS50cmFuc2FjdGlvbl9pZDsKICBpZiAoIXR4SWQpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3NpbmcgdHJhbnNhY3Rpb24gSUQgaW4gc2Vzc2lvbiIgfTsKICB9CgogIGNvbnN0IGl0ZW1zID0gc2Vzc2lvbkRhdGEuc2VsZWN0ZWRfaXRlbXMgfHwgc2Vzc2lvbkRhdGEuaXRlbXMgfHwgc2Vzc2lvbkRhdGEub25fc2VsZWN0X2l0ZW1zOwogIGlmICghaXRlbXMgfHwgKEFycmF5LmlzQXJyYXkoaXRlbXMpICYmIGl0ZW1zLmxlbmd0aCA9PT0gMCkpIHsKICAgIHJldHVybiB7IHZhbGlkOiBmYWxzZSwgY29kZTogNDAwLCBkZXNjcmlwdGlvbjogIk1pc3Npbmcgc2VsZWN0ZWQgaXRlbXMgaW4gc2Vzc2lvbiBiZWZvcmUgb25faW5pdCIgfTsKICB9CiAgY29uc3QgcXVvdGUgPSBzZXNzaW9uRGF0YS5xdW90ZTsKICBpZiAoIXF1b3RlIHx8IChBcnJheS5pc0FycmF5KHF1b3RlKSAmJiBxdW90ZS5sZW5ndGggPT09IDApKSB7CiAgICByZXR1cm4geyB2YWxpZDogZmFsc2UsIGNvZGU6IDQwMCwgZGVzY3JpcHRpb246ICJNaXNzaW5nIHF1b3RlIGluIHNlc3Npb24gYmVmb3JlIG9uX2luaXQiIH07CiAgfQogIHJldHVybiB7IHZhbGlkOiB0cnVlLCBjb2RlOiAyMDAsIGRlc2NyaXB0aW9uOiAiUmVxdWlyZW1lbnRzIG1ldCIgfTsKfQ==
       defaultPayload:
@@ -1480,7 +1489,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -1652,7 +1662,8 @@ steps:
                         code: SETTLEMENT_AMOUNT
                       value: "1.46"
         type: request
-        description: The BPP sends the initialized order with pricing quote, fulfillment
+        description:
+          The BPP sends the initialized order with pricing quote, fulfillment
           options, and cancellation terms, establishing the transaction
           framework and agreed-upon conditions before buyer confirmation.
   - api: confirm
@@ -1660,7 +1671,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP confirms the ride booking by submitting the finalized order
+    description:
+      The BAP confirms the ride booking by submitting the finalized order
       to the BPP, establishing the committed agreement on service terms and
       pickup/dropoff locations. This confirmation authorizes the BPP to proceed
       with driver assignment and ride fulfillment.
@@ -1857,7 +1869,8 @@ steps:
                         code: SETTLEMENT_AMOUNT
                       value: "1.46"
         type: request
-        description: The BAP confirms the ride booking by submitting the finalized order
+        description:
+          The BAP confirms the ride booking by submitting the finalized order
           to the BPP, establishing the committed agreement on service terms and
           pickup/dropoff locations. This confirmation authorizes the BPP to
           proceed with driver assignment and ride fulfillment.
@@ -1866,7 +1879,8 @@ steps:
     owner: BPP
     responseFor: confirm
     unsolicited: false
-    description: The BPP confirms the ride order and assigns a driver in response to
+    description:
+      The BPP confirms the ride order and assigns a driver in response to
       the BAP's confirmation request.
     mock:
       generate: Y29uc3QgQUdFTlQgPSB7CiAgY29udGFjdDogewogICAgcGhvbmU6ICI5ODU2Nzk4NTY3IgogIH0sCiAgcGVyc29uOiB7CiAgICBuYW1lOiAiSmFzb24gUm95IiwKICAgIGltYWdlOiB7CiAgICAgIHVybDogImh0dHBzOi8vZXhhbXBsZS1icHAuY29tL3NlbGxlci9pbWFnZXMvYWdlbnQvcHJvZmlsZS1pbWFnZS5wbmciLAogICAgICBzaXplX3R5cGU6ICJzbSIKICAgIH0KICB9LAogIHJhdGluZzogIjQuOCIKfTsKCmFzeW5jIGZ1bmN0aW9uIGFwcGx5Um91dGVJbmZvKGRlZmF1bHRQYXlsb2FkLCBzZXNzaW9uRGF0YSkgewogIHRyeSB7CiAgICBjb25zdCB1bndyYXAgPSAodmFsdWUpID0+IChBcnJheS5pc0FycmF5KHZhbHVlKSA/IHZhbHVlWzBdIDogdmFsdWUpOwogICAgY29uc3QgZW5jb2RlZFBvbHlsaW5lID0gdW53cmFwKHNlc3Npb25EYXRhPy5yb3V0ZV9lbmNvZGVkX3BvbHlsaW5lKTsKICAgIGNvbnN0IHdheXBvaW50cyA9IHVud3JhcChzZXNzaW9uRGF0YT8ucm91dGVfd2F5cG9pbnRzKTsKICAgIGlmICh0eXBlb2YgZW5jb2RlZFBvbHlsaW5lICE9PSAic3RyaW5nIiB8fCAhZW5jb2RlZFBvbHlsaW5lKSByZXR1cm47CiAgICBpZiAodHlwZW9mIHdheXBvaW50cyAhPT0gInN0cmluZyIgfHwgIXdheXBvaW50cykgcmV0dXJuOwogICAgY29uc3QgZnVsZmlsbG1lbnRzID0gZGVmYXVsdFBheWxvYWQ/Lm1lc3NhZ2U/Lm9yZGVyPy5mdWxmaWxsbWVudHM7CiAgICBpZiAoIUFycmF5LmlzQXJyYXkoZnVsZmlsbG1lbnRzKSkgcmV0dXJuOwogICAgZm9yIChjb25zdCBmdWxmaWxsbWVudCBvZiBmdWxmaWxsbWVudHMpIHsKICAgICAgaWYgKCFBcnJheS5pc0FycmF5KGZ1bGZpbGxtZW50LnRhZ3MpKSBjb250aW51ZTsKICAgICAgY29uc3Qgcm91dGVUYWcgPSBmdWxmaWxsbWVudC50YWdzLmZpbmQoCiAgICAgICAgKHRhZykgPT4gdGFnPy5kZXNjcmlwdG9yPy5jb2RlID09PSAiUk9VVEVfSU5GTyIgJiYgQXJyYXkuaXNBcnJheSh0YWcubGlzdCkKICAgICAgKTsKICAgICAgaWYgKCFyb3V0ZVRhZykgY29udGludWU7CiAgICAgIGZvciAoY29uc3QgZW50cnkgb2Ygcm91dGVUYWcubGlzdCkgewogICAgICAgIGlmIChlbnRyeT8uZGVzY3JpcHRvcj8uY29kZSA9PT0gIkVOQ09ERURfUE9MWUxJTkUiKSBlbnRyeS52YWx1ZSA9IGVuY29kZWRQb2x5bGluZTsKICAgICAgICBpZiAoZW50cnk/LmRlc2NyaXB0b3I/LmNvZGUgPT09ICJXQVlQT0lOVFMiKSBlbnRyeS52YWx1ZSA9IHdheXBvaW50czsKICAgICAgfQogICAgfQogIH0gY2F0Y2ggKGVycm9yKSB7CiAgICByZXR1cm47CiAgfQp9Cgphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LmxvY2F0aW9uLmNpdHkuY29kZSA9IHNlc3Npb25EYXRhPy5jaXR5X2NvZGU/LlswXTsKCiAgY29uc3Qgb3JkZXIgPSBkZWZhdWx0UGF5bG9hZC5tZXNzYWdlLm9yZGVyOwoKICBvcmRlci5pdGVtcyA9IChzZXNzaW9uRGF0YT8uaXRlbXMgPz8gW10pLm1hcCgoaXRlbSkgPT4gewogICAgaWYgKEFycmF5LmlzQXJyYXkoaXRlbS50YWdzKSkgaXRlbS50YWdzID0gdXBkYXRlSXRlbUluZm9UYWdzKGl0ZW0udGFncyk7CiAgICByZXR1cm4gaXRlbTsKICB9KTsKCiAgY29uc3Qgc2VsZWN0ZWRGdWxmaWxsbWVudHMgPSBzZXNzaW9uRGF0YT8uc2VsZWN0ZWRfZnVsZmlsbG1lbnRzID8/IFtdOwogIGlmIChzZWxlY3RlZEZ1bGZpbGxtZW50cy5sZW5ndGggPiAwKSB7CiAgICBvcmRlci5mdWxmaWxsbWVudHMgPSB1cGRhdGVGdWxmaWxsbWVudHMoc2VsZWN0ZWRGdWxmaWxsbWVudHMpOwogICAgb3JkZXIuZnVsZmlsbG1lbnRzWzBdLmFnZW50ID0gQUdFTlQ7CiAgICBvcmRlci5mdWxmaWxsbWVudHNbMF0uc3RhdGUgPSB7CiAgICAgIGRlc2NyaXB0b3I6IHsgY29kZTogIlJJREVfQVNTSUdORUQiIH0sCiAgICB9OwogIH0KCiAgY29uc3QgcXVvdGUgPSBzZXNzaW9uRGF0YT8ucXVvdGU/LlswXTsKICBpZiAocXVvdGUpIHsKICAgIChxdW90ZS5icmVha3VwID8/IFtdKS5mb3JFYWNoKChlbnRyeSkgPT4gewogICAgICBpZiAoZW50cnkudGl0bGUgPT09ICJBRERfT05TIikgewogICAgICAgIChlbnRyeS5pdGVtPy5hZGRfb25zID8/IFtdKS5mb3JFYWNoKChhZGRPbikgPT4gewogICAgICAgICAgaWYgKGFkZE9uLnF1YW50aXR5KSBkZWxldGUgYWRkT24ucXVhbnRpdHkudW5pdGl6ZWQ7CiAgICAgICAgfSk7CiAgICAgIH0KICAgIH0pOwogICAgb3JkZXIucXVvdGUgPSBxdW90ZTsKICB9CgogIGNvbnN0IGNhbmNlbGxhdGlvblRlcm1zID0gc2Vzc2lvbkRhdGE/LmNhbmNlbGxhdGlvbl90ZXJtczsKICBpZiAoY2FuY2VsbGF0aW9uVGVybXMpIHsKICAgIG9yZGVyLmNhbmNlbGxhdGlvbl90ZXJtcyA9IGNhbmNlbGxhdGlvblRlcm1zOwogIH0KCiAgb3JkZXIucGF5bWVudHMgPSBzZXNzaW9uRGF0YT8ucGF5bWVudHM7CiAgb3JkZXIudGFncyA9IHNlc3Npb25EYXRhPy5jb25maXJtX3RhZ3M/LmZsYXQoKTsKICBvcmRlci5pZCA9IE1hdGgucmFuZG9tKCkudG9TdHJpbmcoMzYpLnN1YnN0cmluZygyLCAxNSk7CiAgb3JkZXIuc3RhdHVzID0gIkFDVElWRSI7CiAgb3JkZXIuY3JlYXRlZF9hdCA9IGRlZmF1bHRQYXlsb2FkLmNvbnRleHQudGltZXN0YW1wOwogIG9yZGVyLnVwZGF0ZWRfYXQgPSBkZWZhdWx0UGF5bG9hZC5jb250ZXh0LnRpbWVzdGFtcDsKCiAgYXdhaXQgYXBwbHlSb3V0ZUluZm8oZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKTsKICByZXR1cm4gZGVmYXVsdFBheWxvYWQ7Cn0K
@@ -2069,7 +2083,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -2222,7 +2237,8 @@ steps:
               created_at: 2026-08-21T09:13:14.448Z
               updated_at: 2026-08-21T09:13:14.448Z
         type: request
-        description: The BPP confirms the ride order and assigns a driver in response to
+        description:
+          The BPP confirms the ride order and assigns a driver in response to
           the BAP's confirmation request.
   - api: on_track
     action_id: on_track_on_assign
@@ -2309,7 +2325,8 @@ steps:
                 gps: 12.453522,77.928328
                 updated_at: 2026-08-21T09:13:17.413Z
         type: request
-        description: The BPP sends real-time tracking updates to the BAP with driver
+        description:
+          The BPP sends real-time tracking updates to the BAP with driver
           location and order status for the assigned ride. This provides
           continuous visibility into fulfillment progress.
   - api: on_status
@@ -2317,7 +2334,8 @@ steps:
     owner: BPP
     responseFor: null
     unsolicited: true
-    description: The BPP sends an unsolicited status update to the BAP confirming
+    description:
+      The BPP sends an unsolicited status update to the BAP confirming
       the current order status along with driver assignment details for pickup
       and drop-off.
     mock:
@@ -2512,7 +2530,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -2665,7 +2684,8 @@ steps:
               created_at: 2026-08-21T09:13:14.448Z
               updated_at: 2026-08-21T09:13:17.438Z
         type: request
-        description: The BPP sends an unsolicited status update to the BAP confirming
+        description:
+          The BPP sends an unsolicited status update to the BAP confirming
           the current order status along with driver assignment details for
           pickup and drop-off.
   - api: track
@@ -2809,7 +2829,8 @@ steps:
                 gps: 12.453522,77.928328
                 updated_at: 2026-08-21T09:13:17.579Z
         type: request
-        description: The BPP sends a tracking response to the BAP with the current
+        description:
+          The BPP sends a tracking response to the BAP with the current
           fulfillment status of the ride. The response confirms the callback
           endpoint through which the BAP will receive ongoing tracking updates
           as the assigned driver progresses through the ride.
@@ -3013,7 +3034,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -3166,7 +3188,8 @@ steps:
               created_at: 2026-08-21T09:13:14.448Z
               updated_at: 2026-08-21T09:13:17.650Z
         type: request
-        description: The BPP proactively notifies the BAP of the confirmed order's
+        description:
+          The BPP proactively notifies the BAP of the confirmed order's
           current fulfillment status, including driver assignment and location
           updates.
   - api: on_status
@@ -3368,7 +3391,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -3521,7 +3545,8 @@ steps:
               created_at: 2026-08-21T09:13:14.448Z
               updated_at: 2026-08-21T09:13:17.761Z
         type: request
-        description: The BPP conveys the current order status and confirmed driver
+        description:
+          The BPP conveys the current order status and confirmed driver
           assignment to the BAP via an unsolicited on_status callback.
   - api: on_status
     action_id: on_status_ride_ended
@@ -3717,7 +3742,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -4099,7 +4125,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -4256,14 +4283,16 @@ steps:
               created_at: 2026-08-21T09:13:14.448Z
               updated_at: 2026-08-21T09:13:24.277Z
         type: request
-        description: The BPP sends the final fare, applying the charges selected for
+        description:
+          The BPP sends the final fare, applying the charges selected for
           this ride.
   - api: status
     action_id: status
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP polls the BPP for the current status of the confirmed ride
+    description:
+      The BAP polls the BPP for the current status of the confirmed ride
       order to monitor fulfillment progress and driver assignment details.
     mock:
       generate: YXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGUoZGVmYXVsdFBheWxvYWQsIHNlc3Npb25EYXRhKSB7CiAgZGVmYXVsdFBheWxvYWQuY29udGV4dC5sb2NhdGlvbi5jaXR5LmNvZGUgPSBzZXNzaW9uRGF0YT8uY2l0eV9jb2RlPy5bMF07CgogIGRlZmF1bHRQYXlsb2FkLm1lc3NhZ2UgPSB7CiAgICBvcmRlcl9pZDogc2Vzc2lvbkRhdGE/Lm9yZGVyX2lkPy5bMF0sCiAgfTsKCiAgcmV0dXJuIGRlZmF1bHRQYXlsb2FkOwp9Cg==
@@ -4323,7 +4352,8 @@ steps:
           message:
             order_id: 2n4t1p0jgva
         type: request
-        description: The BAP polls the BPP for the current status of the confirmed ride
+        description:
+          The BAP polls the BPP for the current status of the confirmed ride
           order to monitor fulfillment progress and driver assignment details.
   - api: on_status
     action_id: on_status_solicited
@@ -4525,7 +4555,8 @@ steps:
                         - descriptor:
                             code: ENCODED_POLYLINE
                             name: Path
-                          value: "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
+                          value:
+                            "{ttzDyixrMsAdG]dAKVEAa@QFSLYrB}JRaAt@{D\\gBn@aDdAeERe@FQLYZk@rBoDj@cAdD\
                             cGJS|A}C`AiBh@eAJUp@cCPsABQj@{E|@eHPmAx@yFFa@Ho@BQt\
                             @iF\\mDX_CBy@@aAAq@GeDBgADuADsA`@iFJiARuBT_ChAeMX}B\
                             Fi@@Gj@qAXcBLw@V_B?cATuA`A}El@aDHg@d@{BHYF]B?NDd@Lh\
@@ -4693,7 +4724,8 @@ steps:
                   mime_type: application/pdf
                   url: https://example-bpp.com/prod/seller/invoices/O1.pdf
         type: request
-        description: The BPP returns the current status of the ride order, including
+        description:
+          The BPP returns the current status of the ride order, including
           driver assignment and fulfillment progress, enabling the BAP to track
           the journey from pickup through drop-off.
   - api: issue
@@ -4884,7 +4916,8 @@ steps:
               created_at: 2026-08-21T09:13:24.497Z
               updated_at: 2026-08-21T09:13:24.497Z
         type: request
-        description: The BAP submits an issue to the BPP to report a complaint or
+        description:
+          The BAP submits an issue to the BPP to report a complaint or
           problem with the order, establishing the issue for tracking and
           resolution.
   - api: on_issue
@@ -4892,7 +4925,8 @@ steps:
     owner: BPP
     responseFor: issue_open_100
     unsolicited: false
-    description: The BPP responds to a grievance opened by the BAP with the issue
+    description:
+      The BPP responds to a grievance opened by the BAP with the issue
       details, available actions, and resolution options.
     mock:
       generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCiAgICAgIGRlZmF1bHRQYXlsb2FkLAogICAgICB7CiAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgaWdtX2FjdGlvbjogIm9uX2lzc3VlX3Byb2Nlc3NpbmciLAogICAgICB9LAogICAgICBzZXNzaW9uRGF0YT8udXNlcl9pbnB1dHMKICAgICk7Cn0=
@@ -4991,14 +5025,16 @@ steps:
               created_at: 2026-08-21T09:13:24.497Z
               updated_at: 2026-08-21T09:13:24.560Z
         type: request
-        description: The BPP responds to a grievance opened by the BAP with the issue
+        description:
+          The BPP responds to a grievance opened by the BAP with the issue
           details, available actions, and resolution options.
   - api: on_issue_status
     action_id: on_issue_resolved_100
     owner: BPP
     responseFor: null
     unsolicited: true
-    description: The BPP sends an unsolicited issue status callback to the BAP with
+    description:
+      The BPP sends an unsolicited issue status callback to the BAP with
       grievance resolution actions and status updates for the ride transaction.
     mock:
       generate: LyoqCiAqIEdlbmVyYXRlcyB0aGUgbW9jayBwYXlsb2FkIGZvciBhbiBBUEkgY2FsbCBpbiB0aGUgdHJhbnNhY3Rpb24gZmxvdy4KICogVGhpcyBmdW5jdGlvbiBhbGxvd3MgY3VzdG9taXphdGlvbiBvZiB0aGUgZGVmYXVsdCBwYXlsb2FkIHVzaW5nIHNlc3Npb24gZGF0YQogKiBmcm9tIHByZXZpb3VzIHN0ZXBzIGFuZCB1c2VyIGlucHV0cy4KICogCiAqIEBwYXJhbSB7T2JqZWN0fSBkZWZhdWx0UGF5bG9hZCAtIFRoZSBiYXNlIHBheWxvYWQgb2JqZWN0IHdpdGggY29udGV4dCBhbHJlYWR5IHBvcHVsYXRlZC4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhIC0gRGF0YSBjb2xsZWN0ZWQgZnJvbSBwcmV2aW91cyB0cmFuc2FjdGlvbiBzdGVwcy4KICogQHBhcmFtIHtPYmplY3R9IHNlc3Npb25EYXRhLnVzZXJfaW5wdXRzIC0gVXNlci1wcm92aWRlZCBpbnB1dCB2YWx1ZXMgZm9yIHRoaXMgc3RlcC4KICogQHBhcmFtIHsqfSBzZXNzaW9uRGF0YS5ba2V5XSAtIEFueSBzYXZlZCBkYXRhIGZyb20gcHJldmlvdXMgc3RlcHMgKGRlZmluZWQgaW4gc2F2ZURhdGEgY29uZmlnKS4KICogCiAqIEByZXR1cm5zIHtPYmplY3R9IFRoZSBnZW5lcmF0ZWQgcGF5bG9hZCBvYmplY3QgdG8gYmUgc2VudCBpbiB0aGUgQVBJIHJlcXVlc3QuCiAqLwphc3luYyBmdW5jdGlvbiBnZW5lcmF0ZShkZWZhdWx0UGF5bG9hZCwgc2Vzc2lvbkRhdGEpIHsKICByZXR1cm4gb25Jc3N1ZVN0YXR1c0dlbmVyYXRvcl8xMDAoCiAgICAgIGRlZmF1bHRQYXlsb2FkLAogICAgICB7CiAgICAgICAgLi4uc2Vzc2lvbkRhdGEsCiAgICAgICAgaWdtX2FjdGlvbjogIm9uX2lzc3VlX3Jlc29sdmVkIiwKICAgICAgfSwKICAgICAgc2Vzc2lvbkRhdGE/LnVzZXJfaW5wdXRzCiAgICApOwp9
@@ -5177,7 +5213,8 @@ steps:
                 action_triggered: REFUND
                 refund_amount: "147"
         type: request
-        description: The BPP sends an unsolicited issue status callback to the BAP with
+        description:
+          The BPP sends an unsolicited issue status callback to the BAP with
           grievance resolution actions and status updates for the ride
           transaction.
   - api: issue
@@ -5185,7 +5222,8 @@ steps:
     owner: BAP
     responseFor: null
     unsolicited: false
-    description: The BAP reports an issue to the BPP regarding the confirmed ride
+    description:
+      The BAP reports an issue to the BPP regarding the confirmed ride
       order, creating a formal grievance record with problem details, expected
       response timelines, and resolution expectations.
     mock:
@@ -5312,7 +5350,8 @@ steps:
                       person:
                         name: Joe Adams
         type: request
-        description: The BAP reports an issue to the BPP regarding the confirmed ride
+        description:
+          The BAP reports an issue to the BPP regarding the confirmed ride
           order, creating a formal grievance record with problem details,
           expected response timelines, and resolution expectations.
 transaction_history: []
@@ -5325,7 +5364,8 @@ extra_steps:
       owner: BPP
       responseFor: null
       unsolicited: true
-      description: Repeatable driver location push for the ride map (side-channel via
+      description:
+        Repeatable driver location push for the ride map (side-channel via
         trigger_extra).
       repeatCount: null
       mock:
